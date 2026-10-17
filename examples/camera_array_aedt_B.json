@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "units": "mm",
+  "N": 3,
+  "aedt": {
+    "path": "../outputs/camera_array_native_20261017/approved_two_layouts/baseline/CameraArray.aedt",
+    "design": "CameraArray",
+    "template_prefix": "C1_",
+    "origin_mm": [0, 0, 0]
+  },
+  "cameras": [
+    {"id": "C1", "position_mm": [0, 0, 0], "current_A": 0.1, "turns": 100, "movable": false},
+    {"id": "C2", "position_mm": [10.8, 0, 0], "current_A": 0.1, "turns": 100, "bounds_mm": [[9.8, -2, 0], [12.8, 2, 0]]},
+    {"id": "C3", "position_mm": [0, 10.8, 0], "current_A": 0.1, "turns": 100, "bounds_mm": [[-2, 9.8, 0], [2, 12.8, 0]]}
+  ],
+  "monitors": [
+    {"id": "B1", "quantity": "B", "position_mm": [7, 7, 5], "scale": 0.001},
+    {"id": "B2", "quantity": "B", "position_mm": [15, 7, 5], "scale": 0.001}
+  ],
+  "search": {"max_candidates": 8},
+  "low_fidelity": {"cell_mm": 0.7},
+  "maxwell": {"mesh_policy": "low-fidelity"}
+}

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "camera-magrun"
+version = "0.1.0"
+description = "Reusable coarse magnetic camera-pair solver and coil force diagnostics"
+requires-python = ">=3.11"
+dependencies = [
+  "cadquery>=2.7,<2.8", "numpy>=2.0", "scipy>=1.13", "pandas>=2.2",
+  "pyarrow>=16", "matplotlib>=3.9", "threadpoolctl>=3.5",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+maxwell = ["pyaedt==0.8.11"]
+
+[tool.setuptools.packages.find]
+include = ["camera_mag*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

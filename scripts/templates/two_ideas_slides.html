@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>摄像头磁仿真 · 两个加速思路的实测结果</title>
+<style>
+:root{--paper:#faf9f5;--ink:#17283c;--muted:#647386;--grid:#dfe5e9;--ref:#3466c8;--one:#cf751f;--response:#11877d;--bad:#b84855;--rule:#bec8d0;--font:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{background:#e5e8ec;color:var(--ink);font-family:var(--font)}button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid #c88d36;outline-offset:4px}button:disabled{opacity:.3;cursor:default}
+.toolbar{height:54px;display:flex;align-items:center;gap:12px;padding:0 22px;background:#fff;border-bottom:1px solid #d4dce3;position:relative;z-index:20}.toolbar .brand{font-size:14px;font-weight:700;letter-spacing:.04em;margin-right:auto}.toolbar button{border:0;background:transparent;padding:7px 9px;border-radius:4px;font-size:14px;color:#34475d}.toolbar button:hover{background:#edf1f5}.toolbar .pager{font-size:13px;font-variant-numeric:tabular-nums;min-width:52px;text-align:center}.toolbar .keyhint{font-size:12px;color:#6e7d8f;margin-right:8px}.viewport{position:relative;width:100%;height:calc(100% - 54px);display:flex;align-items:center;justify-content:center;padding:18px 22px 23px}.deck{position:relative;width:1280px;height:720px;flex-shrink:0;transform-origin:center center;background:var(--paper);box-shadow:0 16px 55px #34465924}.slide{width:1280px;height:720px;padding:43px 58px 28px;position:absolute;inset:0;display:none;flex-direction:column;background:var(--paper);overflow:hidden}.slide.active{display:flex}.slide h2{font-size:40px;line-height:1.2;letter-spacing:-.025em;font-weight:700;margin:0 0 12px}.subtitle{font-size:21px;color:#56677a;line-height:1.45;margin:0 0 19px}.main{flex:1;min-height:0}.foot{font-size:17px;color:#526476;line-height:1.5;border-top:1px solid var(--rule);padding-top:10px;margin-top:13px;flex-shrink:0}.foot strong{font-weight:700;color:var(--ink)}.two{display:grid;grid-template-columns:1fr 1fr;gap:34px;height:100%;min-height:0}.wide-left{grid-template-columns:1.55fr 1fr}.wide-right{grid-template-columns:1fr 1.6fr}.stack{display:flex;flex-direction:column;min-height:0}.figure{margin:0;min-width:0;min-height:0;display:flex;flex-direction:column;height:100%}.figure svg{width:100%;display:block;flex:1;min-height:0}.figure figcaption{font-size:17px;color:#5e7082;line-height:1.45;padding-top:6px;flex-shrink:0}.chart{height:100%;min-height:0}.chart svg{width:100%;height:100%;display:block}.svg-text{font-family:var(--font)}.minor{font-size:19px;line-height:1.5;color:#5b6d7e}.major{font-size:27px;line-height:1.55}.lead{font-size:32px;line-height:1.45;margin:0 0 18px;font-weight:600}.specs{margin:12px 0 0;display:grid;grid-template-columns:1fr 1fr;column-gap:20px;row-gap:22px}.specs dt{font-size:18px;color:#68798a;margin-bottom:6px}.specs dd{margin:0;font-size:27px;font-weight:600;line-height:1.35}.specs .span{grid-column:1/-1}.legend{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;font-size:18px;line-height:1.4}.legend span{display:inline-flex;align-items:center;gap:7px}.swatch{width:12px;height:12px;display:inline-block;border-radius:2px}.flow{display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid var(--rule);padding-top:14px;margin-top:12px;font-size:23px;font-weight:600}.flow .arrow{font-weight:400;color:#7e8c9a}.number{font-variant-numeric:tabular-nums}.emph{color:var(--one)}.teal{color:var(--response)}.ref{color:var(--ref)}.red{color:var(--bad)}.source{font-size:13px;color:#758391;margin-top:3px}.summary-line{border-left:4px solid var(--one);padding:8px 0 8px 18px;font-size:24px;line-height:1.4;margin-top:12px}.summary-line.teal-line{border-color:var(--response)}.equation{font-size:22px;line-height:1.65;padding:16px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin:16px 0;color:#364b60}.table{border-collapse:collapse;width:100%;font-size:21px;line-height:1.45}.table th{text-align:left;color:#597084;font-size:18px;font-weight:600;border-bottom:2px solid #a9bac8;padding:12px 10px}.table td{border-bottom:1px solid #d6dfe5;padding:15px 10px;vertical-align:top}.table .num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.table td:first-child,.table th:first-child{padding-left:0}.table td:last-child,.table th:last-child{padding-right:0}.table.compact{font-size:19px}.table.compact td{padding-top:12px;padding-bottom:12px}.source-list{list-style:none;padding:0;margin:0;display:grid;gap:15px}.source-list li{font-size:20px;line-height:1.4;padding-bottom:12px;border-bottom:1px solid #d7e0e6}.source-list a{color:var(--ref);text-decoration:none;border-bottom:1px solid #3466c851}.source-list .path{font-size:15px;color:#758493;margin-top:4px;overflow-wrap:anywhere}.status{padding:0 0 0 18px;border-left:4px solid var(--bad);font-size:22px;line-height:1.6}.status strong{display:block;font-size:28px;margin-bottom:7px}.status + .status{margin-top:30px}.statement{font-size:26px;line-height:1.6;margin:17px 0}.cover{background:#17283c;color:#fff;padding:58px 66px}.cover .kicker{font-size:20px;color:#9eb2c4;letter-spacing:.08em;margin:0 0 26px}.cover h1{font-size:61px;line-height:1.27;letter-spacing:-.02em;font-weight:650;margin:0;max-width:1080px}.cover .sub{font-size:26px;color:#b8c7d5;margin:22px 0 0;line-height:1.5}.cover .cover-evidence{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:50px;padding-top:22px;border-top:1px solid #587083}.cover .metric{font-size:55px;line-height:1.2;font-weight:650;letter-spacing:-.03em}.cover .metric-label{font-size:21px;color:#c2cfda;line-height:1.5;margin-top:10px}.cover .metric-note{font-size:18px;color:#93a8ba;line-height:1.5;margin-top:8px}.cover .cover-meta{margin-top:22px;font-size:16px;color:#91a6b9}.progress{position:absolute;bottom:0;left:0;height:4px;background:var(--response);transition:width .18s;z-index:30}.slide .top-index{display:none}.small-buttons{display:flex;gap:12px;margin-bottom:12px}.small-buttons button{background:transparent;border:0;border-bottom:2px solid #cbd4db;padding:5px 0;font-size:17px;color:#64798b}.small-buttons button[aria-pressed=true]{border-color:var(--ink);color:var(--ink);font-weight:600}.overlay{position:fixed;inset:54px 0 0;background:#132336b8;z-index:50;display:none;padding:30px;overflow:auto;align-items:flex-start;justify-content:center}.overlay.open{display:flex}.dialog{background:#fff;padding:28px 34px;width:min(100%,1050px);border-radius:6px;box-shadow:0 20px 80px #07182977}.dialog h2{font-size:24px;margin:0 0 10px}.dialog header{display:flex;align-items:center;justify-content:space-between}.dialog button.close{border:0;background:none;font-size:21px;padding:7px}.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;margin-top:12px}.toc-item{border:0;border-bottom:1px solid #dce4e9;background:transparent;text-align:left;padding:15px 2px;display:flex;align-items:center;gap:18px;font-size:17px;color:#344d62}.toc-item .toc-num{font-size:13px;color:#8396a7;min-width:24px}.toc-item:hover{color:var(--ref)}.notes{font-size:17px;line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere;margin:14px 0}.notes a{color:var(--ref)}.live{position:fixed;left:-9999px}.print-tip{font-size:14px;color:#6b7b8c;margin-top:10px}.stage-label{font-size:20px;font-weight:600;margin:0 0 7px}.big-value{font-size:46px;font-weight:650;line-height:1.2;color:var(--ink)}
+@media(max-width:680px){.toolbar{gap:4px;padding:0 10px}.toolbar .brand{font-size:12px;max-width:100px}.toolbar .keyhint,.toolbar .optional{display:none}.toolbar button{font-size:13px;padding:6px}.viewport{padding:6px}.toc-grid{grid-template-columns:1fr}.overlay{padding:12px}.dialog{padding:20px}.progress{height:3px}}
+@media print{@page{size:13.333in 7.5in;margin:0}html,body{width:1280px;height:auto;overflow:visible;background:#fff}.toolbar,.overlay,.progress,.live{display:none!important}.viewport{display:block;height:auto;width:1280px;padding:0}.deck{transform:none!important;box-shadow:none;width:1280px;height:auto}.slide,.slide.active{position:relative;display:flex!important;width:1280px;height:720px;break-after:page;page-break-after:always;overflow:hidden}.slide:last-child{break-after:auto;page-break-after:auto}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.small-buttons{display:none}}
+</style>
+</head>
+<body>
+<nav class="toolbar" aria-label="演示控制">
+ <span class="brand">Camera · 磁仿真实测</span><span class="keyhint">← → 翻页 · G 目录 · N 数据依据</span>
+ <button id="tocBtn" title="目录（G）">目录</button><button id="prevBtn" aria-label="上一页">←</button><span id="pager" class="pager">01 / 13</span><button id="nextBtn" aria-label="下一页">→</button>
+ <button id="notesBtn" title="当前页说明与原始数据（N）">数据依据</button><button id="fullscreenBtn" class="optional" title="全屏（F）">全屏</button><button id="printBtn" class="optional" title="打印全部幻灯片（P）">打印</button><button id="dataBtn" class="optional" title="下载图表使用的内嵌数据">数据 ↓</button>
+</nav>
+<main class="viewport"><div class="deck" id="deck">
+<section class="slide cover active" data-title="摄像头磁仿真的两个加速思路" aria-label="第 1 页 摄像头磁仿真的两个加速思路">
+ <p class="kicker">B0500 · ANSYS MAXWELL 2022 R2</p><h1>摄像头磁仿真<br>两个加速思路的实测结果</h1><p class="sub">低保真指导初始网格　／　单摄场库预测双摄力</p>
+ <div class="cover-evidence"><div><div class="metric" style="color:#efb25e">2.135 ×</div><div class="metric-label">Idea 1 · 2 mm 固定一轮流程的时间比</div><div class="metric-note">相对原默认流程，同时改变了停止规则</div></div><div><div class="metric" style="color:#7ccbc0">15.84 μN</div><div class="metric-label">Idea 2 · 距离差分力的最大参考差</div><div class="metric-note">快速扫距已跑通，尚未达到 10 μN 目标</div></div></div>
+ <div class="cover-meta">2026 年 10 月 3 日　·　两个相同模组　·　0.1 A / 100 匝　·　1 / 2 / 3 mm</div>
+</section>
+<section class="slide" data-title="测试模型与放置方式" aria-hidden="true">
+ <h2>测试模型与放置方式</h2><p class="subtitle">实际 STEP 电磁实体，两个相同模组同向沿 +X 放置</p>
+ <div class="main two wide-left"><figure class="figure"><div class="small-buttons" aria-label="CAD 视角"><button class="view-button" data-view="iso" aria-pressed="true">三维视角</button><button class="view-button" data-view="top" aria-pressed="false">俯视</button></div><div class="chart" id="cadModel"></div><figcaption>STEP 面三角化与透明显示；不是 Maxwell 四面体网格</figcaption></figure><div class="stack"><div class="legend"><span><i class="swatch" style="background:#637e96"></i>软磁轭铁</span><span><i class="swatch" style="background:#428ea2"></i>永磁体</span><span><i class="swatch" style="background:#d49037"></i>线圈</span></div><dl class="specs"><div class="span"><dt>电磁包围盒</dt><dd>8.8 × 8.8 × 3.4 mm</dd></div><div><dt>线圈电流</dt><dd>0.1 A</dd></div><div><dt>绕组匝数</dt><dd>100 匝</dd></div><div class="span"><dt>间隙与中心距</dt><dd>间隙 g = 1 / 2 / 3 mm<br>中心距 = 8.8 mm + g</dd></div><div><dt>永磁体 Br</dt><dd>1.2 T</dd></div><div><dt>回线 μr</dt><dd>1.05</dd></div></dl></div></div>
+ <div class="foot">每模组 6 个实体；正电流从 +Z 看为逆时针。材料使用测试基准，未做实物标定；间隙不是完整相机外壳间距。</div>
+</section>
+<section class="slide" data-title="总力与距离差分的验收口径" aria-hidden="true">
+ <h2>总力与距离差分的验收口径</h2><p class="subtitle">约 33 mN 的总力，与几十 μN 的距离效应，需要分别验收</p>
+ <div class="main two"><div class="chart" id="metricTotal"></div><div class="chart" id="metricDelta"></div></div>
+ <div class="foot"><strong>总 Fz 目标：相对细参考 ≤0.2%；差分目标：|预测 ΔFz − 参考 ΔFz| ≤10 μN。</strong><br>ΔFz(g) = Fz(g) − Fz(2 mm)；2 mm 是锚点，差分为零不是独立精度验证。曲线展示 A/B 均值。</div>
+</section>
+<section class="slide" data-title="Idea 1 低保真指导初始网格" aria-hidden="true">
+ <h2>Idea 1　低保真指导初始网格</h2><p class="subtitle">用场变化、法向磁通、饱和与线圈邻近程度分配局部预算</p>
+ <div class="main stack"><div class="two" style="flex:1;min-height:0"><figure class="figure"><div class="chart" id="lfField"></div><figcaption>0.7 mm 粗模型的离散 |B| 采样点，XY 投影</figcaption></figure><figure class="figure"><div class="chart" id="seedModel"></div><figcaption>真实面记录着色：0.2 / 0.28 / 0.4 mm；线圈 0.28 mm</figcaption></figure></div><div class="flow"><span>STEP 几何</span><span class="arrow">→</span><span>低保真物理特征</span><span class="arrow">→</span><span>面与空气网格预算</span><span class="arrow">→</span><span>Maxwell 计算力</span></div></div>
+ <div class="foot">未训练的物理规则；候选网格不导入 Maxwell 已求解网格。缓存复用时，低保真预处理约 2–3 s。着色表示目标长度，非实际网格密度。</div>
+</section>
+<section class="slide" data-title="相同停止条件下的加速收益" aria-hidden="true">
+ <h2>相同停止条件下，低保真引导加速 1.18 倍</h2><p class="subtitle">2 mm · 相同四核 · 能量误差目标 0.5% · 单线圈逐轮 Fz 变化目标 20 μN</p>
+ <div class="main two wide-left"><div class="chart" id="matchedTime"></div><div class="chart" id="matchedPass"></div></div>
+ <div class="foot"><strong>统一加密从 22 轮减到 7 轮，却比默认更慢。</strong>减少轮数不等于加速；每轮网格与非线性求解成本同样重要。完整时间含建模、求解与提取；细参考成本排除。每策略各运行一次。</div>
+</section>
+<section class="slide" data-title="激进网格的固定一轮实测" aria-hidden="true">
+ <h2>激进网格的一轮总力实测</h2><p class="subtitle">约 54 万初始四面体；2 mm 开发后冻结规则，验证 1 mm 与 3 mm</p>
+ <div class="main two"><div class="chart" id="onepassTime"></div><div class="chart" id="onepassError"></div></div>
+ <div class="foot"><strong>2 mm 完整流程：25.86 → 12.11 min，时间比 2.135 倍。</strong><br><span class="red">同时改变停止规则；一轮能量误差为 0.60%–0.63%，未获得原生自适应收敛。</span>1 / 3 mm 无匹配时间基线，不能扩展同样倍数。</div>
+</section>
+<section class="slide" data-title="一轮计算的距离差分边界" aria-hidden="true">
+ <h2>一轮总力通过，距离差分仍有边界</h2><p class="subtitle">与 2 mm 比较：1 mm 最大参考差 5.00 μN，3 mm 为 10.09 μN</p>
+ <div class="main two"><div class="chart" id="meshDelta"></div><div class="chart" id="meshDeltaError"></div></div>
+ <div class="foot"><strong>差分最大相对偏差约 29%。</strong>总力的 0.2% 验收不能直接转化为干扰力的相同精度。参考的逐轮变化 ≤10 μN 是诊断，不是严格误差上界。左图为 A/B 均值，右图保留各线圈。</div>
+</section>
+<section class="slide" data-title="Idea 2 单摄场复用与磁化响应" aria-hidden="true">
+ <h2>Idea 2　单摄场复用与磁化响应</h2><p class="subtitle">原生单摄基线和外场可复用，模组间磁化变化需要响应修正</p>
+ <div class="main two"><div class="stack"><div class="chart" id="reuseDiagram"></div><div class="equation">F = F单摄原生 + ∫J单摄 × B邻居原生 dV + δF磁化响应</div></div><figure class="figure"><div class="chart" id="airField"></div><figcaption>单摄 Maxwell 空气域 |B|，0.2 mm 查询网格；虚框是 2 mm 间隙时邻居的包围盒</figcaption></figure></div>
+ <div class="foot"><strong>δF 使用近似高斯体积算子，尚未建立 Maxwell 外场扰动响应库。</strong>双摄力没有参与拟合、缩放或材料调参；自响应缓存复用，间隙变化更新跨模组算子。</div>
+</section>
+<section class="slide" data-title="双摄预测与 Maxwell 差分对照" aria-hidden="true">
+ <h2>距离差分最大参考差仍为 15.84 μN</h2><p class="subtitle">加入磁化响应后显著改善直接叠加，但尚未达到 10 μN 目标</p>
+ <div class="main two"><div class="chart" id="reuseDelta"></div><div class="chart" id="reuseError"></div></div>
+ <div class="foot"><strong>总 Fz 最大误差仅 0.08694%，距离差分最大相对偏差仍约 31%。</strong><br>仅 1 / 2 / 3 mm 有本轮同标准的细参考比较；连线用于读趋势，不能证明连续间隙精度。左图为 A/B 均值，右图取每个间隙两线圈的最大偏差。</div>
+</section>
+<section class="slide" data-title="精度偏差的敏感性检查" aria-hidden="true">
+ <h2>细化响应单元没有解释主要偏差</h2><p class="subtitle">磁性单元从 392 增至 936，距离差分最多改变 0.70 μN</p>
+ <div class="main two"><div class="chart" id="responseResolution"></div><div class="stack"><p class="stage-label">对照检查的最大变化</p><table class="table compact"><thead><tr><th>检查量</th><th class="num">μN</th></tr></thead><tbody id="sensitivityRows"></tbody></table><p class="minor" style="margin:17px 0 0">同一近似空间算子中，线性与锚定非线性差分差 &lt;0.001 μN；不能据此证明对 Maxwell 的准确度。</p></div></div>
+ <div class="foot">旧单摄场加响应修正曾达到 13.46 μN，新场并未改善最终误差。<strong>响应近似与原生场离散仍需核实</strong>；小的积分或插值变化不是整体误差上界。</div>
+</section>
+<section class="slide" data-title="离线建库与在线查询成本" aria-hidden="true">
+ <h2>离线建库与在线查询成本</h2><p class="subtitle">一次单摄场库成本与每个新距离的成本，需要分开计算</p>
+ <div class="main two"><div class="stack"><p class="stage-label">基础单摄场库</p><div class="big-value">53.8 <span style="font-size:25px;font-weight:400">min</span></div><div class="chart" id="offlineCost"></div><p class="minor" style="margin:5px 0">0.5 mm 数据导出与响应验证另计；未采用的从头试算额外 20.6 min。</p></div><div class="stack"><div class="chart" id="queryCost"></div><div class="summary-line teal-line">完整启动 CLI，计算五个缓存距离：<strong>7.31 s</strong></div><p class="minor" style="margin:14px 0 0">单摄响应算子首次构建另计约 12.1 s。首次与缓存查询为进程内计时。</p></div></div>
+ <div class="foot">在线预测不启动 Maxwell。首次新距离含跨模组矩阵与力系数生成；缓存命中不是首次新距离性能。当前精度未与双摄求解等价，不据此宣称同精度加速倍数。</div>
+</section>
+<section class="slide" data-title="当前结论与下一步验证" aria-hidden="true">
+ <h2>当前结论与下一步验证</h2><p class="subtitle">把已经成立的收益与尚缺的证据分开</p>
+ <div class="main"><table class="table"><thead><tr><th style="width:16%">路线</th><th style="width:27%">已实测</th><th style="width:28%">尚缺证据</th><th>下一步</th></tr></thead><tbody><tr><td><strong class="emph">Idea 1</strong><br>网格播种</td><td>三个点一轮总力 ≤0.131%<br>2 mm 时间比 2.135 倍</td><td>物理排序自身的贡献<br>跨模型与重复运行收益</td><td>相同精度和停止规则对照<br>新距离、材料和 camera 验证</td></tr><tr><td><strong class="teal">Idea 2</strong><br>单摄场复用</td><td>离线扫距约 17 s 每点<br>差分最大参考差 15.84 μN</td><td>≤10 μN 差分精度<br>不同 camera 与姿态</td><td>单摄 Maxwell 外场扰动响应<br>共同网格或更严参考差分</td></tr></tbody></table><p class="statement" style="margin-top:28px"><strong>可组合的流程</strong>：单摄响应库快速筛选距离与姿态，再用物理信息播种的 Maxwell 网格确认关键点。</p></div>
+ <div class="foot">外场扰动响应库与组合流程是下一步建议，尚未验证求解次数、精度或成本；不能提前承诺 5–10 μN。当前证据仅覆盖相同 B0500、同方向、0.1 A / 100 匝。</div>
+</section>
+<section class="slide" data-title="数据依据与原生求解状态" aria-hidden="true">
+ <h2>数据依据与原生求解状态</h2><p class="subtitle">图表数据、CAD 表面与关键数值均内嵌；原始大型工程保留在项目目录</p>
+ <div class="main two wide-left"><ul class="source-list"><li><a href="../../docs/two_ideas_summary_zh.md" target="_blank" rel="noopener">两个思路的总结报告</a><div class="path">docs/two_ideas_summary_zh.md</div></li><li><a href="../mesh_seeding_2mm/comparison_summary.json" target="_blank" rel="noopener">相同停止条件的网格对照</a><div class="path">outputs/mesh_seeding_2mm/comparison_summary.json</div></li><li><a href="../mesh_seeding_onepass_holdouts/summary.json" target="_blank" rel="noopener">固定一轮与冻结规则的跨距离验证</a><div class="path">outputs/mesh_seeding_onepass_holdouts/summary.json</div></li><li><a href="../single_camera_reuse/summary.json" target="_blank" rel="noopener">单摄复用、查询与插值验证</a><div class="path">outputs/single_camera_reuse/summary.json</div></li><li><a href="../single_camera_reuse/reused_single/SingleFieldReference/frozen_source_audit.json" target="_blank" rel="noopener">第四轮保留场解的审计</a><div class="path">outputs/single_camera_reuse/…/frozen_source_audit.json</div></li></ul><div><div class="status"><strong>双摄细参考</strong>90.8 / 81.9 / 95.3 万四面体<br>能量误差约 0.16%–0.18%<br>连续两次 Fz 变化 ≤10 μN</div><div class="status"><strong>单摄场库的实际状态</strong>第四轮完成解，85.4 万四面体<br>能量误差 0.14103%<br>最后一步 Fz 变化 6.898 μN<br><span class="red">后续正常中止；原生状态 Aborted<br>未满足原定完整停止条件</span></div></div></div>
+ <div class="foot">参考仍有有限网格误差；固定基线相消不能消除局部场离散偏差。1.5 / 2.5 mm 仅预测，未以本轮同标准细参考验收。所有结果是数值比较，未做实物验证或跨 camera 精度保证。</div>
+</section>
+</div></main><div class="progress" id="progress"></div><div class="live" id="live" aria-live="polite"></div>
+<div class="overlay" id="tocOverlay" role="dialog" aria-modal="true" aria-labelledby="tocTitle"><div class="dialog"><header><h2 id="tocTitle">逐页目录</h2><button class="close" data-close="tocOverlay" aria-label="关闭目录">×</button></header><div class="toc-grid" id="tocGrid"></div><p class="print-tip">方向键 / Page Up / Page Down 翻页，Home / End 首末页；F 全屏，N 数据依据，P 打印全部 13 页。</p></div></div>
+<div class="overlay" id="notesOverlay" role="dialog" aria-modal="true" aria-labelledby="notesTitle"><div class="dialog"><header><h2 id="notesTitle">当前页数据依据</h2><button class="close" data-close="notesOverlay" aria-label="关闭数据依据">×</button></header><div class="notes" id="notesText"></div></div></div>
+<script id="evidence" type="application/json">__SLIDE_DATA__</script>
+<script>
+'use strict';
+const DATA=JSON.parse(document.getElementById('evidence').textContent);
+const C={ink:'#17283c',muted:'#647386',grid:'#dfe5e9',ref:'#3466c8',one:'#cf751f',response:'#11877d',bad:'#b84855',gray:'#7c8e9f'};
+const svgNS='http://www.w3.org/2000/svg';
+const esc=v=>String(v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const fmt=(v,n=2)=>Number(v).toFixed(n);
+const mean=a=>a.reduce((x,y)=>x+y,0)/a.length;
+const max=a=>Math.max(...a);
+const tx=(x,y,text,size=18,fill=C.ink,extra='')=>`<text x="${x}" y="${y}" font-size="${size}" fill="${fill}" ${extra}>${esc(text)}</text>`;
+const ln=(x1,y1,x2,y2,color=C.grid,width=1,dash='')=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${width}" ${dash?`stroke-dasharray="${dash}"`:''}/>`;
+const wrapSvg=(w,h,s,label)=>`<svg xmlns="${svgNS}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}" class="svg-text"><title>${esc(label)}</title>${s}</svg>`;
+const mount=(id,svg)=>document.getElementById(id).innerHTML=svg;
+function legend(items,w,startY=24){let s='',x=8,y=startY;for(const a of items){const span=a.name.length*16+43;if(x+span>w-15){x=8;y+=29}s+=ln(x,y-6,x+20,y-6,a.color,3,a.dash||'')+tx(x+28,y,a.name,16);x+=span}return {s,bottom:y+15}}
+function lineChart({w=540,h=400,title='',unit='',xvalues=[1,2,3],ymin,ymax,yticks,series,threshold,pointLabels=false,legendOn=true,xlabel='EM 包围盒间隙 g（mm）',subtitle=''}){
+ let s=tx(8,25,title,21,C.ink,'font-weight="600"');let top=48;
+ if(legendOn){let l=legend(series,w,54);s+=l.s;top=l.bottom+16}
+ const m={l:68,r:27,t:top,b:63},pw=w-m.l-m.r,ph=h-m.t-m.b;
+ const xmin=Math.min(...xvalues),xmax=Math.max(...xvalues),X=x=>m.l+(x-xmin)/(xmax-xmin)*pw,Y=y=>m.t+(ymax-y)/(ymax-ymin)*ph;
+ for(const v of yticks){s+=ln(m.l,Y(v),w-m.r,Y(v))+tx(m.l-11,Y(v)+6,Number(v.toFixed(3)).toString(),16,C.muted,'text-anchor="end"')}
+ for(const x of xvalues){s+=ln(X(x),m.t,X(x),h-m.b,C.grid,1,'3 7')+tx(X(x),h-m.b+29,fmt(x,0),17,C.muted,'text-anchor="middle"')}
+ s+=ln(m.l,h-m.b,w-m.r,h-m.b,'#9caebd',1.3)+tx(m.l,m.t-9,unit,16,C.muted)+tx(m.l+pw/2,h-12,xlabel,17,C.muted,'text-anchor="middle"');
+ if(threshold){const y=Y(threshold.value);s+=ln(m.l,y,w-m.r,y,C.bad,2,'6 5')+tx(w-m.r-3,y-9,threshold.label,16,C.bad,'text-anchor="end"')}
+ for(const a of series){const path=a.data.map((p,i)=>`${i?'L':'M'}${X(p.x)},${Y(p.y)}`).join(' ');s+=`<path d="${path}" fill="none" stroke="${a.color}" stroke-width="3" ${a.dash?`stroke-dasharray="${a.dash}"`:''}/>`;for(const p of a.data){const text=p.tooltip||`${a.name} · g=${p.x} mm · ${fmt(p.y,3)} ${unit}`;s+=`<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="5.2" fill="${a.color}" stroke="${a.color}" tabindex="0"><title>${esc(text)}</title></circle>`;if(pointLabels)s+=tx(X(p.x),Y(p.y)-14,fmt(p.y,a.decimals??2),17,a.color,'text-anchor="middle" font-weight="600"')}}
+ if(subtitle)s+=tx(m.l,h-42,subtitle,14,C.muted);
+ return wrapSvg(w,h,s,title+'；'+unit);
+}
+function horizontalBars({w=540,h=400,title,rows,maxValue,ticks,unit='min',left=125,decimals=2,extraRows=false}){
+ let s=tx(8,27,title,21,C.ink,'font-weight="600"');const right=80,top=59,bottom=50,pw=w-left-right,ph=h-top-bottom,n=rows.length,rh=ph/n;
+ const X=v=>left+v/maxValue*pw;
+ for(const t of ticks){s+=ln(X(t),top-7,X(t),h-bottom,C.grid,1,'3 5')+tx(X(t),h-bottom+29,t,16,C.muted,'text-anchor="middle"')}
+ rows.forEach((r,i)=>{const yc=top+rh*(i+.5),bh=extraRows?36:42;s+=tx(left-12,yc+6,r.name,18,C.ink,'text-anchor="end"');s+=`<rect x="${left}" y="${yc-bh/2}" width="${Math.max(0,r.value/maxValue*pw)}" height="${bh}" rx="2" fill="${r.color}" tabindex="0"><title>${esc(r.tooltip||`${r.name}：${fmt(r.value,decimals)} ${unit}`)}</title></rect>`+tx(X(r.value)+10,yc+6,fmt(r.value,decimals),20,r.color,'font-weight="600"');if(r.note)s+=tx(left,yc+bh/2+22,r.note,16,C.muted)});
+ s+=ln(left,h-bottom,w-right,h-bottom,'#9caebd',1.2)+tx(w-right+10,h-bottom+29,unit,16,C.muted);
+ return wrapSvg(w,h,s,title);
+}
+function groupedErrors({w=540,h=400,title,groups,series,maxValue=40,threshold=10}){
+ let s=tx(8,25,title,21,C.ink,'font-weight="600"'),l=legend(series,w,55);s+=l.s;const m={l:58,r:24,t:l.bottom+17,b:65},pw=w-m.l-m.r,ph=h-m.t-m.b,Y=v=>m.t+(maxValue-v)/maxValue*ph;
+ const step=maxValue<=15?5:10;for(let v=0;v<=maxValue+.01;v+=step)s+=ln(m.l,Y(v),w-m.r,Y(v))+tx(m.l-10,Y(v)+5,v,16,C.muted,'text-anchor="end"');s+=tx(m.l,m.t-9,'绝对参考差（μN）',16,C.muted);
+ s+=ln(m.l,Y(threshold),w-m.r,Y(threshold),C.bad,2,'6 5')+tx(w-m.r-2,Y(threshold)-9,`${threshold} μN 目标`,16,C.bad,'text-anchor="end"');
+ const cw=pw/groups.length,bw=Math.min(52,cw/(series.length+1.1));
+ groups.forEach((g,i)=>{const center=m.l+cw*(i+.5);series.forEach((a,j)=>{const v=a.values[i],x=center+(j-(series.length-1)/2)*(bw+10)-bw/2;s+=`<rect x="${x}" y="${Y(v)}" width="${bw}" height="${Y(0)-Y(v)}" fill="${a.color}" rx="1.5" tabindex="0"><title>${esc(`${a.name} · g=${g} mm · ${fmt(v,3)} μN`)}</title></rect>`+tx(x+bw/2,Y(v)-10,fmt(v,2),18,a.color,'text-anchor="middle" font-weight="600"')});s+=tx(center,h-m.b+31,`${g} mm`,18,C.muted,'text-anchor="middle"')});
+ s+=ln(m.l,Y(0),w-m.r,Y(0),'#9caebd',1.3)+tx(m.l+pw/2,h-10,'相对 2 mm 的距离变化',17,C.muted,'text-anchor="middle"');return wrapSvg(w,h,s,title);
+}
+function colorMix(a,b,t){const aa=a.match(/[a-f\d]{2}/gi).map(x=>parseInt(x,16)),bb=b.match(/[a-f\d]{2}/gi).map(x=>parseInt(x,16));return '#'+aa.map((x,i)=>Math.round(x+(bb[i]-x)*Math.max(0,Math.min(1,t))).toString(16).padStart(2,'0')).join('')}
+function fieldColor(t){return t<.5?colorMix('#dcecf3','#4d93a2',t*2):colorMix('#4d93a2','#d48b34',(t-.5)*2)}
+function colourBar(x,y,w,h,min,max,unit,log=false){let s='';for(let i=0;i<90;i++)s+=`<rect x="${x+w*i/90}" y="${y}" width="${w/90+1}" height="${h}" fill="${fieldColor(i/89)}"/>`;return s+tx(x,y+h+23,fmt(min,log?2:1),15,C.muted)+tx(x+w,y+h+23,`${fmt(max,log?2:1)} ${unit}`,15,C.muted,'text-anchor="end"')}
+function CAD({w=700,h=410,view='iso',seed=false,pair=true}){
+ const yaw=(view==='top'?0:-24)*Math.PI/180,tilt=(view==='top'?90:31)*Math.PI/180;
+ const offsets=pair?[-5.4,5.4]:[0];
+ function P(point,offset=0){const x=point[0]+offset,y=point[1],z=point[2];const u=x*Math.cos(yaw)-y*Math.sin(yaw),v=x*Math.sin(yaw)+y*Math.cos(yaw);return [u,v*Math.sin(tilt)-z*Math.cos(tilt),v*Math.cos(tilt)+z*Math.sin(tilt)]}
+ const faces=DATA.cad.faces;let verts=[];for(const o of offsets)for(const f of faces)verts.push(...f.vertices_mm.map(p=>P(p,o)));
+ const xx=verts.map(p=>p[0]),yy=verts.map(p=>p[1]);const xmin=Math.min(...xx),xmax=Math.max(...xx),ymin=Math.min(...yy),ymax=Math.max(...yy),scale=Math.min((w-75)/(xmax-xmin),(h-140)/(ymax-ymin)),cx=(xmin+xmax)/2,cy=(ymin+ymax)/2;
+ const XY=(p,o=0)=>{const q=P(p,o);return [(q[0]-cx)*scale+w/2,(q[1]-cy)*scale+h/2-19,q[2]]};
+ const colors={yoke:'#637e96',magnet:'#428ea2',copper:'#d49037'},seedColors={fine:'#cf751f',medium:'#20998f',coarse:'#7690a7',coil:'#e2b868',unassigned:'#b84855'};
+ let triangles=[];for(const o of offsets)for(const f of faces){for(const t of f.triangles){const pts=t.map(k=>XY(f.vertices_mm[k],o));triangles.push({p:pts,depth:mean(pts.map(p=>p[2])),f,o})}}
+ triangles.sort((a,b)=>a.depth-b.depth);
+ let s='';for(const {p,f,o} of triangles){const fill=seed?seedColors[f.seed_level]:colors[f.material],alpha=f.material==='yoke'?(seed?.63:.24):.90;const description=`${pair?(o<0?'Camera A':'Camera B')+' · ':''}${f.object}${seed?` · ${f.seed_level} · 物理评分 ${fmt(f.seed_score||0,3)}`:''}`;s+=`<polygon points="${p.map(q=>`${q[0]},${q[1]}`).join(' ')}" fill="${fill}" fill-opacity="${alpha}" stroke="${fill}" stroke-opacity="${seed?.53:.48}" stroke-width=".7"><title>${esc(description)}</title></polygon>`}
+ if(pair){const a=XY([-4.4,-4.4,1.3],-5.4),b=XY([4.4,-4.4,1.3],-5.4),c=XY([-4.4,-4.4,1.3],5.4),labelY=Math.max(a[1],b[1],c[1])+27;s+=ln(b[0],labelY,c[0],labelY,C.ink,1.5)+ln(b[0],labelY-6,b[0],labelY+6,C.ink)+ln(c[0],labelY-6,c[0],labelY+6,C.ink)+tx((b[0]+c[0])/2,labelY+25,'g = 2 mm',18,C.ink,'text-anchor="middle"');for(const [o,label] of [[-5.4,'Camera A'],[5.4,'Camera B']]){const p=XY([0,4.4,4.7],o);s+=tx(p[0],Math.max(23,p[1]-22),label,22,C.ink,'text-anchor="middle" font-weight="600"')}}
+ if(seed){let leg=legend([{name:'0.2 mm 面',color:seedColors.fine},{name:'0.28 mm 面',color:seedColors.medium},{name:'0.4 mm 基础',color:seedColors.coarse}],w,25);s+=leg.s;}
+ else {s+=tx(25,h-9,'几何来自同一 STEP，实体体积保持一致',16,C.muted)}
+ return wrapSvg(w,h,s,seed?'原生面级加密记录在真实 CAD 表面的着色':'两个相同 B0500 模组 STEP 表面图');
+}
+function LFfield(){const w=530,h=385,points=DATA.lf_field.points,xmin=-5,xmax=15.8,ymin=-5,ymax=5,m={l:48,r:25,t:40,b:86};const X=x=>m.l+(x-xmin)/(xmax-xmin)*(w-m.l-m.r),Y=y=>m.t+(ymax-y)/(ymax-ymin)*(h-m.t-m.b),vmax=Math.max(...points.map(p=>p[3]));let s=tx(8,24,'低保真 |B| · g = 2 mm',20,C.ink,'font-weight="600"');for(const x of [0,5,10,15])s+=ln(X(x),m.t,X(x),h-m.b,C.grid,1,'3 5')+tx(X(x),h-m.b+22,x,15,C.muted,'text-anchor="middle"');for(const y of [-4,0,4])s+=ln(m.l,Y(y),w-m.r,Y(y))+tx(m.l-9,Y(y)+5,y,15,C.muted,'text-anchor="end"');for(const p of points)s+=`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="4.4" fill="${fieldColor(p[3]/vmax)}"><title>${esc(`x=${fmt(p[0])} mm，y=${fmt(p[1])} mm，z=${fmt(p[2])} mm，|B|=${fmt(p[3],4)} T`)}</title></circle>`;s+=colourBar(82,h-47,350,9,0,vmax,'T')+tx(w-m.r,24,'X, Y / mm',14,C.muted,'text-anchor="end"');return wrapSvg(w,h,s,'低保真离散磁通密度采样点 XY 投影，单位 T')}
+function Airfield(){const w=540,h=385,g=DATA.native_air,x=g.x_mm,y=g.y_mm,values=g.B_mT.flat(),lo=Math.min(...values),hi=Math.max(...values),m={l:58,r:28,t:49,b:77},X=v=>m.l+(v-5)/(16.6-5)*(w-m.l-m.r),Y=v=>m.t+(4.6-v)/9.2*(h-m.t-m.b);let s=tx(8,25,`原生空气域 |B| · z = ${fmt(g.z_mm,1)} mm`,20,C.ink,'font-weight="600"');for(let i=0;i<x.length;i++)for(let j=0;j<y.length;j++){const v=g.B_mT[i][j],u=(Math.log(v)-Math.log(lo))/(Math.log(hi)-Math.log(lo)),xx=X(x[i]-.1),yy=Y(y[j]+.1);s+=`<rect x="${xx}" y="${yy}" width="${X(x[i]+.1)-xx+.2}" height="${Y(y[j]-.1)-yy+.2}" fill="${fieldColor(u)}"><title>${esc(`x=${fmt(x[i],1)} mm，y=${fmt(y[j],1)} mm，|B|=${fmt(v,3)} mT`)}</title></rect>`}
+ s+=`<rect x="${X(6.4)}" y="${Y(4.4)}" width="${X(15.2)-X(6.4)}" height="${Y(-4.4)-Y(4.4)}" fill="none" stroke="#1e354b" stroke-width="2" stroke-dasharray="7 5"/>`;
+ for(const v of [6,10,14,16])s+=tx(X(v),h-m.b+23,v,16,C.muted,'text-anchor="middle"');for(const v of [-4,0,4])s+=tx(m.l-10,Y(v)+6,v,16,C.muted,'text-anchor="end"');s+=tx(w-m.r,m.t-10,'X / mm',14,C.muted,'text-anchor="end"')+colourBar(98,h-37,330,8,lo,hi,'mT',true)+tx(m.l,m.t-10,'Y / mm',14,C.muted);return wrapSvg(w,h,s,'单摄 Maxwell 外部空气域磁通密度，色标为对数映射，单位 mT')}
+function ReuseDiagram(){const w=535,h=280;let s='';const boxes=[{x:20,y:20,w:215,h:85,color:C.ref,head:'Camera A 单摄缓存',lines:['原生 J、B、H₀ 与 F₀']},{x:300,y:20,w:215,h:85,color:C.ref,head:'Camera B 单摄缓存',lines:['相同模组复用一份场库']},{x:20,y:176,w:215,h:79,color:C.response,head:'A 磁化增量 δM_A',lines:['单摄响应 R_A 复用']},{x:300,y:176,w:215,h:79,color:C.response,head:'B 磁化增量 δM_B',lines:['单摄响应 R_B 复用']}];for(const b of boxes){s+=`<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" fill="none" stroke="${b.color}" stroke-width="1.7"/>`+tx(b.x+12,b.y+28,b.head,19,b.color,'font-weight="600"');s+=tx(b.x+12,b.y+57,b.lines[0],17,C.muted)}s+=ln(127,105,127,175,C.ref,2)+tx(127,145,'↓',23,C.ref,'text-anchor="middle"')+ln(408,105,408,175,C.ref,2)+tx(408,145,'↓',23,C.ref,'text-anchor="middle"');s+=ln(237,215,298,215,C.response,2)+tx(267,210,'⇄',29,C.response,'text-anchor="middle"')+tx(267,246,'K(g)',17,C.muted,'text-anchor="middle"');return wrapSvg(w,h,s,'单摄缓存响应与随距离变化的模组间耦合流程')}
+
+const one=DATA.onepass.results,diag=DATA.onepass.distance_change_diagnostics;
+const refRows=one.map(r=>({gap:r.distance_mm,A:r.reference_A_Fz_mN,B:r.reference_B_Fz_mN}));
+const anchor=refRows.find(r=>r.gap===2),refMean=refRows.map(r=>({x:r.gap,y:mean([r.A,r.B])}));
+const refDelta=refRows.map(r=>({x:r.gap,y:mean([r.A-anchor.A,r.B-anchor.B])*1000}));
+const incRows=DATA.increment.rows.filter(r=>r.mode==='linear');
+const maxForGap=(rows,g,key)=>Math.max(...rows.filter(r=>r.gap_mm===g).map(r=>r[key]));
+const avgCurve=(rows,key)=>[1,2,3].map(g=>({x:g,y:mean(rows.filter(r=>r.gap_mm===g).map(r=>r[key]))}));
+function buildFigures(){
+ mount('cadModel',CAD({w:700,h:420}));mount('seedModel',CAD({w:530,h:385,seed:true,pair:false}));mount('lfField',LFfield());mount('airField',Airfield());mount('reuseDiagram',ReuseDiagram());
+ mount('metricTotal',lineChart({title:'双摄细参考 · 总 Fz',unit:'mN（纵轴局部放大）',ymin:33.18,ymax:33.30,yticks:[33.18,33.22,33.26,33.30],series:[{name:'Maxwell A/B 均值',color:C.ref,data:refMean}],pointLabels:true}));
+ mount('metricDelta',lineChart({title:'相对 2 mm 的距离变化',unit:'μN',ymin:-65,ymax:50,yticks:[-60,-30,0,30],series:[{name:'Maxwell A/B 均值',color:C.ref,data:refDelta}],pointLabels:true}));
+ const matched=DATA.matched.rows;const names={Adaptive:'默认自适应',Geometry:'统一加密',LowFidelity:'低保真引导'},cols={Adaptive:C.gray,Geometry:C.one,LowFidelity:C.response};
+ mount('matchedTime',horizontalBars({w:685,title:'完整流程耗时',rows:matched.map(r=>({name:names[r.case],value:r.end_to_end_seconds/60,color:cols[r.case],note:`总 Fz 最大偏差 ${fmt(r.max_coil_Fz_error_percent,4)}%`,tooltip:`${names[r.case]}，${r.passes} 轮，初始 ${r.initial_tetrahedra}，最终 ${r.final_tetrahedra} 四面体`})),maxValue:33,ticks:[0,10,20,30],extraRows:true,left:145}));
+ mount('matchedPass',horizontalBars({w:405,title:'自适应轮数',rows:matched.map(r=>({name:names[r.case],value:r.passes,color:cols[r.case]})),maxValue:25,ticks:[0,10,20],unit:'轮',decimals:0,left:117}));
+ mount('onepassTime',horizontalBars({title:'固定一轮完整时间',rows:one.map(r=>({name:`${r.distance_mm} mm`,value:r.end_to_end_seconds/60,color:C.one,note:`${fmt(r.tetrahedra/10000,1)} 万四面体`})),maxValue:18,ticks:[0,5,10,15],extraRows:true,left:86}));
+ mount('onepassError',lineChart({title:'总 Fz 最大参考误差',unit:'%',ymin:0,ymax:.23,yticks:[0,.05,.10,.15,.20],series:[{name:'固定一轮 Maxwell',color:C.one,data:one.map(r=>({x:r.distance_mm,y:r.max_per_coil_Fz_error_percent})),decimals:3}],threshold:{value:.2,label:'0.2% 总力目标'},pointLabels:true}));
+ const candidateAnchor=one.find(r=>r.distance_mm===2),oneDelta=one.map(r=>({x:r.distance_mm,y:mean([r.A_Fz_mN-candidateAnchor.A_Fz_mN,r.B_Fz_mN-candidateAnchor.B_Fz_mN])*1000}));
+ mount('meshDelta',lineChart({title:'一轮结果与细参考',unit:'μN',ymin:-65,ymax:50,yticks:[-60,-30,0,30],series:[{name:'双摄细参考',color:C.ref,data:refDelta},{name:'固定一轮',color:C.one,data:oneDelta}],pointLabels:false}));
+ mount('meshDeltaError',groupedErrors({title:'各线圈的距离差分偏差',groups:[1,3],maxValue:15,series:[{name:'Camera A',color:C.one,values:diag.map(r=>r.A_absolute_change_error_uN)},{name:'Camera B',color:'#ddad65',values:diag.map(r=>r.B_absolute_change_error_uN)}]}));
+ mount('reuseDelta',lineChart({title:'单摄复用预测与双摄细参考',unit:'μN',ymin:-100,ymax:60,yticks:[-100,-50,0,50],series:[{name:'双摄细参考',color:C.ref,data:refDelta},{name:'直接叠加',color:C.one,dash:'6 4',data:avgCurve(DATA.direct.rows,'predicted_change_from_2mm_uN')},{name:'响应修正',color:C.response,data:avgCurve(incRows,'predicted_change_from_2mm_uN')}]}));
+ mount('reuseError',groupedErrors({title:'两线圈最大距离差分偏差',groups:[1,3],maxValue:42,series:[{name:'直接叠加',color:C.one,values:[1,3].map(g=>maxForGap(DATA.direct.rows,g,'absolute_distance_change_error_uN'))},{name:'响应修正',color:C.response,values:[1,3].map(g=>maxForGap(incRows,g,'absolute_distance_change_error_uN'))}]}));
+ mount('responseResolution',horizontalBars({title:'最大距离差分参考差',rows:[{name:'直接叠加',value:DATA.direct.max_distance_change_error_uN,color:C.one},{name:'响应 0.7 mm',value:DATA.coarse_increment.max_distance_change_error_uN_by_mode.linear,color:'#479e92',note:'392 个磁性单元'},{name:'响应 0.5 mm',value:DATA.increment.max_distance_change_error_uN_by_mode.linear,color:C.response,note:'936 个磁性单元'}],maxValue:40,ticks:[0,10,20,30,40],unit:'μN',left:151,extraRows:true}));
+ const sens=[['响应离散细化 · 距离差分',DATA.reuse.max_response_cell_refinement_distance_change_uN],['直接漏磁力 · 粗细积分',DATA.direct.max_direct_quadrature_change_uN],['增量自响应力 · 粗细积分',DATA.increment.max_own_response_quadrature_change_uN],['完整力 · 插值与原生逐点',DATA.interpolation.max_full_prototype_vs_native_queries_difference_uN]];
+ document.getElementById('sensitivityRows').innerHTML=sens.map(([n,v])=>`<tr><td>${esc(n)}</td><td class="num">${fmt(v,3)}</td></tr>`).join('');
+ const stages=DATA.reuse.refined_isolated_stages_seconds;mount('offlineCost',horizontalBars({w:540,h:285,title:'各阶段耗时（s，线性横轴）',rows:[{name:'建模与初始网格',value:DATA.build.seconds,color:C.gray},{name:'原生求解',value:stages.native_solve,color:C.ref},{name:'提取与导出',value:stages.native_extract+stages.library_export,color:C.response}],maxValue:3600,ticks:[0,1000,2000,3000],unit:'s',left:168,decimals:0}));
+ queryFigure();
+}
+function queryFigure(){const w=540,h=285,first=DATA.queries.rows.map(r=>r.new_gap_query_seconds),cached=DATA.cached.rows.map(r=>r.new_gap_query_seconds),rows=[{name:'首次新间隙',values:first,color:C.one},{name:'已有系数缓存',values:cached,color:C.response}],l=148,r=42,top=61,bottom=48,pw=w-l-r,X=v=>l+(Math.log10(v)+1)/Math.log10(300)*pw;let s=tx(8,25,'进程内每点查询时间（对数横轴）',20,C.ink,'font-weight="600"');for(const v of [.1,1,10,30])s+=ln(X(v),top-10,X(v),h-bottom,C.grid,1,'3 5')+tx(X(v),h-bottom+26,v===30?'30 s':v,16,C.muted,'text-anchor="middle"');rows.forEach((a,i)=>{const y=top+54+i*83,lo=Math.min(...a.values),hi=Math.max(...a.values),m=mean(a.values);s+=tx(l-13,y+6,a.name,18,C.ink,'text-anchor="end"')+ln(l,y,X(m),y,a.color,6)+ln(X(lo),y,X(hi),y,a.color,12)+`<circle cx="${X(m)}" cy="${y}" r="7" fill="${a.color}"><title>${esc(`${a.name}，范围 ${fmt(lo,2)}–${fmt(hi,2)} s，均值 ${fmt(m,3)} s`)}</title></circle>`+tx(X(m)+14,y+7,fmt(m,m<1?2:1)+' s',20,a.color,'font-weight="600"')});s+=ln(l,h-bottom,w-r,h-bottom,'#9caebd',1.3);mount('queryCost',wrapSvg(w,h,s,'首次与缓存命中查询的进程内时间，对数横轴'))}
+buildFigures();
+
+const slideNotes=[
+ '概览数字分别来自固定一轮 2 mm 时间对照与最终 0.5 mm 响应版本。两者的精度与停止规则不同，不作同条件加速排名。',
+ '几何由原始 STEP 的 49 个 CAD 面三角化生成；39 个非铜面与原生网格评分记录的面中心完全匹配。这里展示表面几何，未声称显示求解四面体。材料为本次测试设定，未经实物标定。',
+ '总 Fz 与 ΔFz 分别比较。基准为双摄细参考；2 mm 是差分锚点。曲线采用 Camera A/B 算术平均，原始两线圈数据完整保留。纵轴局部放大用于看趋势，不代表总力只有该尺度。',
+ '场点来自 outputs/single/state.npz 的低保真解，按每个 XY 位置取最接近 z=3 mm 的离散样本。加密着色来自 Aggressive/mesh_plan.json 的实际 face_scores，不是虚构的最终网格。规则未训练，不使用 Maxwell 已求解场决定候选网格。',
+ '2 mm 下三组共用 0.5% 能量目标与 20 μN 单线圈逐轮 Fz 变化目标。同四核配置顺序执行；每组一次，未作重复计时统计。时间包含建模、求解及提取，排除细参考计算成本。1.18 倍是同条件的单次观测。',
+ '固定一轮候选在 1/2/3 mm 的总力参考误差均通过 0.2%。实际能量误差为 0.63474%、0.61659%、0.60366%，原生自适应均未收敛。2 mm 的 2.135 倍同时改变停止规则。1/3 mm 使用冻结规则，未据其 Maxwell 输出调参；它们没有匹配完整时间基线。',
+ '相对 2 mm 的差分单独验收。最大绝对差为 1 mm 的 4.999 μN 与 3 mm 的 10.088 μN；最大相对差约 29%。双摄细参考自身的逐轮变化不是误差上界，接近 10 μN 的比较仍需更严的差分参考。',
+ '原生单摄 J、B、H0 与力缓存复用；磁化响应仍使用近似高斯体积空间算子。空气域图来自真实 exterior_grid.npz 的正 X 查询域 z=3.0 mm 切片。色标使用对数映射。虚框是中心 x=10.8 mm、宽 8.8 mm 的邻居包围盒。不是 Maxwell 扰动响应库，也不是原生 FEM 矩阵降阶。',
+ '响应曲线使用最终 0.5 mm 版本的原生逐点场查询评估；两线圈均值用于读趋势，右图采用两线圈最大绝对差。最大总 Fz 相对偏差 0.0869397%，最大差分参考差 15.8445 μN，最大差分相对偏差 30.994%。仅 1/2/3 mm 作本轮同标准细参考比较。',
+ '响应离散改变的量是 ΔFz，而粗细积分与插值检查比较相应的力计算。它们同用 μN，但不是可相加的独立误差预算。线性与锚定非线性共享近似空间算子，因此差异小不证明原生精度。旧场修正曾为 13.46 μN，新场最终为 15.84 μN，不宣称加密源场提升了误差。',
+ '基础单摄场库的建模、原生求解、提取与基础导出合计 3229.294 s ≈53.82 min；0.5 mm 导出、响应评估、首次算子构建另计。未采用的试算 1235.72 s 另计。每点查询为进程内时间；完整 CLI 五点缓存查询 7.3065 s 包含解释器启动与数据读取。这里不以不同精度方法间的时间比声称同精度加速。',
+ '外场扰动响应库和组合流程是建议，尚未实测精度、成本或最少扰动求解次数。不同 camera 需要各自单摄工作点与响应描述。后续验证应包括更严格的差分参考及未参与开发的条件。',
+ '双摄细参考符合本轮原生收敛条件，但仍是有限网格数值参考。单摄库采用正常中止后保留并审计的第四轮场解，原生状态 Aborted，未满足原定完整停止条件。基线相消不消除局部场网格偏差。1/3 mm 双摄细参考额外验证成本 93.66 min，已单独记录。内嵌图表证据可下载；大型 Maxwell 工程不嵌入本 HTML。'
+];
+const pageSources=[['onepass','increment','matched'],['step'],['onepass'],['lf_field','mesh_plan','step'],['matched'],['onepass'],['onepass'],['native_air','queries','increment'],['direct','increment','onepass'],['direct','increment','coarse_increment','interpolation','reuse'],['native_record','build','queries','cached','cli'],['reuse','onepass'],['frozen','onepass','reuse']];
+const slides=[...document.querySelectorAll('.slide')];let current=0;const overlayFocus=new Map();
+function resize(){const v=document.querySelector('.viewport');const width=v.clientWidth-(window.innerWidth<680?12:44),height=v.clientHeight-(window.innerWidth<680?12:41);const k=Math.min(width/1280,height/720);document.getElementById('deck').style.transform=`scale(${Math.max(.1,k)})`;window.__slideScale=k}
+function show(index,updateHash=true){current=Math.max(0,Math.min(slides.length-1,index));slides.forEach((s,i)=>{s.classList.toggle('active',i===current);s.setAttribute('aria-hidden',String(i!==current));s.inert=i!==current});document.getElementById('pager').textContent=`${String(current+1).padStart(2,'0')} / ${slides.length}`;document.getElementById('prevBtn').disabled=current===0;document.getElementById('nextBtn').disabled=current===slides.length-1;document.getElementById('progress').style.width=((current+1)/slides.length*100)+'%';document.getElementById('live').textContent=`第 ${current+1} 页，${slides[current].dataset.title}`;document.title=`${current+1}/${slides.length} · ${slides[current].dataset.title}`;if(updateHash)history.replaceState(null,'',`#slide-${current+1}`);window.__currentSlide=current+1;resize()}
+function closeOverlays(){document.querySelectorAll('.overlay.open').forEach(o=>{o.classList.remove('open');const f=overlayFocus.get(o.id);if(f)f.focus()})}
+function openOverlay(id){closeOverlays();overlayFocus.set(id,document.activeElement);const overlay=document.getElementById(id);overlay.classList.add('open');overlay.querySelector('button').focus()}
+function notes(){const title=document.getElementById('notesTitle');title.textContent=`${current+1} · ${slides[current].dataset.title}`;let text=slideNotes[current]+'\n\n原始数据（项目内路径与 SHA-256）：\n';for(const key of pageSources[current]){const s=DATA.sources.find(x=>x.key===key);if(s)text+=`\n${s.path}\nSHA-256: ${s.sha256}\n`}document.getElementById('notesText').textContent=text;openOverlay('notesOverlay')}
+document.getElementById('tocGrid').innerHTML=slides.map((s,i)=>`<button class="toc-item" data-slide="${i}"><span class="toc-num">${String(i+1).padStart(2,'0')}</span><span>${esc(s.dataset.title)}</span></button>`).join('');
+document.querySelectorAll('.toc-item').forEach(b=>b.addEventListener('click',()=>{closeOverlays();show(Number(b.dataset.slide))}));document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',closeOverlays));document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeOverlays()}));
+document.getElementById('tocBtn').onclick=()=>openOverlay('tocOverlay');document.getElementById('prevBtn').onclick=()=>show(current-1);document.getElementById('nextBtn').onclick=()=>show(current+1);document.getElementById('notesBtn').onclick=notes;document.getElementById('printBtn').onclick=()=>window.print();
+async function toggleFullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch(e){document.getElementById('live').textContent='当前浏览器未允许全屏，可使用浏览器全屏快捷键。'}}document.getElementById('fullscreenBtn').onclick=toggleFullscreen;
+document.getElementById('dataBtn').onclick=()=>{const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='camera_magnetic_slides_evidence.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000)};
+document.querySelectorAll('.view-button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.view-button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));mount('cadModel',CAD({w:700,h:420,view:b.dataset.view}))}));
+window.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey)return;const open=document.querySelector('.overlay.open');if(open){if(e.key==='Escape'){closeOverlays();e.preventDefault()}else if(e.key==='Tab'){const tabs=[...open.querySelectorAll('button,a[href]')],first=tabs[0],last=tabs.at(-1);if(e.shiftKey&&document.activeElement===first){last.focus();e.preventDefault()}else if(!e.shiftKey&&document.activeElement===last){first.focus();e.preventDefault()}}return}const k=e.key.toLowerCase();if(['arrowright','arrowdown','pagedown',' '].includes(k)){show(current+1);e.preventDefault()}else if(['arrowleft','arrowup','pageup'].includes(k)){show(current-1);e.preventDefault()}else if(k==='home'){show(0);e.preventDefault()}else if(k==='end'){show(slides.length-1);e.preventDefault()}else if(k==='g'){openOverlay('tocOverlay');e.preventDefault()}else if(k==='n'){notes();e.preventDefault()}else if(k==='f'){toggleFullscreen();e.preventDefault()}else if(k==='p'){window.print();e.preventDefault()}});
+let touchStart=null;document.querySelector('.viewport').addEventListener('touchstart',e=>{touchStart=[e.changedTouches[0].clientX,e.changedTouches[0].clientY]},{passive:true});document.querySelector('.viewport').addEventListener('touchend',e=>{if(!touchStart)return;const dx=e.changedTouches[0].clientX-touchStart[0],dy=e.changedTouches[0].clientY-touchStart[1];if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.4)show(current+(dx<0?1:-1));touchStart=null},{passive:true});
+window.addEventListener('resize',resize);window.addEventListener('hashchange',()=>{const m=location.hash.match(/^#slide-(\d+)$/);if(m)show(Number(m[1])-1,false)});window.addEventListener('beforeprint',()=>slides.forEach(s=>s.inert=false));window.addEventListener('afterprint',()=>show(current,false));
+const initial=location.hash.match(/^#slide-(\d+)$/);show(initial?Number(initial[1])-1:0,false);
+window.__deckEvidence={slideCount:slides.length,sourceCount:DATA.sources.length,plotsNativeSVG:true,offline:true};
+</script>
+</body>
+</html>

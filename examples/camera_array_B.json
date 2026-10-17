@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "units": "mm",
+  "N": 3,
+  "step": "../models/B0500_scale_AF_VCM_EM_only.step",
+  "cameras": [
+    {"id": "C1", "position_mm": [0, 0, 0], "movable": false},
+    {"id": "C2", "position_mm": [10.8, 0, 0], "move_axes": ["x", "y"], "bounds_mm": [[9.8, -2, 0], [12.8, 2, 0]]},
+    {"id": "C3", "position_mm": [0, 10.8, 0], "move_axes": ["x", "y"], "bounds_mm": [[-2, 9.8, 0], [2, 12.8, 0]]}
+  ],
+  "monitors": [
+    {"id": "B1", "quantity": "B", "position_mm": [7, 7, 5], "component": "magnitude", "scale": 0.001},
+    {"id": "B2", "quantity": "B", "position_mm": [15, 7, 5], "component": "magnitude", "scale": 0.001}
+  ],
+  "search": {"step_mm": 0.5, "top_cameras": 2, "max_candidates": 8, "clearance_mm": 0.2, "min_relative_improvement": 0.001},
+  "low_fidelity": {"cell_mm": 0.7, "tol": 1e-7, "max_iterations": 1500, "max_operator_mb": 512},
+  "maxwell": {"mesh_policy": "low-fidelity", "air_mm": 20, "percent_error": 0.5, "max_passes": 12, "cores": 4}
+}

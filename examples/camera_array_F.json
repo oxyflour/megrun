@@ -1,0 +1,15 @@
+{
+  "N": 3,
+  "step": "../models/B0500_scale_AF_VCM_EM_only.step",
+  "cameras": [
+    {"id": "C1", "position_mm": [0, 0, 0], "movable": false},
+    {"id": "C2", "position_mm": [10.8, 0, 0], "move_axes": ["x", "y"]},
+    {"id": "C3", "position_mm": [0, 10.8, 0], "move_axes": ["x", "y"]}
+  ],
+  "monitors": [
+    {"id": "F1", "quantity": "F", "camera_id": "C1", "component": "z", "target": 0, "scale": 0.001}
+  ],
+  "search": {"step_mm": 0.5, "top_cameras": 2, "max_candidates": 8, "clearance_mm": 0.2},
+  "low_fidelity": {"cell_mm": 0.7},
+  "maxwell": {"mesh_policy": "adaptive", "max_passes": 12}
+}
