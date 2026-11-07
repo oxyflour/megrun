@@ -1,0 +1,12 @@
+{
+  "schema": "cuda-tetra-volume-1",
+  "geometry_sha256": "d31ab029705022384401de494336b2396c0c67a357c5f1fb9bc89e7425e768d3",
+  "n": 3959,
+  "dtype": "float64",
+  "integration_dtype": "float64",
+  "receiver_rule": "gauss4",
+  "near_rule": "red8",
+  "near_levels": 2,
+  "near_factor": 1.5,
+  "kernel_sha256": "962001b4bf7706d724a7031a5a94883394bf598e4f70339d02bd83d97bf5f7fb"
+}

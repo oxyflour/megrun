@@ -10,9 +10,9 @@ R(M) = M - F(H; material_id)
 J(v) = v - dF/dH @ (K @ v)
 ```
 
-The bundled CuPy prototype implements multi-material magnetization laws, damped Picard, Newton–GMRES with local 3x3 preconditioning, and implicit local-material proximal updates with safeguarded Anderson mixing. CPU MagTense builds the tetrahedral K; CuPy stores the dense full `3N x 3N` K on GPU for nonlinear iterations. The full tensor avoids assuming the source/target pair block is symmetric for arbitrary tetrahedral geometry.
+The bundled CuPy prototype implements multi-material magnetization laws, damped Picard, Newton–GMRES with local 3x3 preconditioning, and implicit local-material proximal updates with safeguarded Anderson mixing. The default native builder uses CPU MagTense. The explicit `--operator volume --k-builder cuda` builder evaluates analytical triangle surface-charge integrals on CUDA with FP64 geometry, transcendental functions and receiving-quadrature reductions. CuPy stores the dense full `3N x 3N` K on GPU for nonlinear iterations. The full tensor avoids assuming the source/target pair block is symmetric for arbitrary tetrahedral geometry.
 
-Centroid mode observes H at each tetrahedron center. Volume mode averages the same native source kernel over receiving tetrahedra: four far-field points, with 256 near/self points by default. Native K/H verification uses the identical observation rule. These are different discretizations and need separate accuracy checks. Proximal mode retains the supplied material law and K; convergence is judged by the original constitutive residual, not the update size. No spectral clipping is used.
+Centroid mode observes H at each tetrahedron center. Volume mode averages the analytical tetrahedral source field over receiving tetrahedra: four far-field points, with 256 near/self points by default. Native K/H verification uses the identical observation rule and remains independent of the CUDA formula. These are different discretizations and need separate accuracy checks. Proximal mode retains the supplied material law and K; convergence is judged by the original constitutive residual, not the update size. No spectral clipping is used.
 
 The 2026-11-07 real-Maxwell benchmark and its limits are recorded in [validation-20261107.json](validation-20261107.json).
 
@@ -21,7 +21,7 @@ The 2026-11-07 real-Maxwell benchmark and its limits are recorded in [validation
 - Dense FP32 K: `36*N^2` bytes (9 components per ordered tile pair).
 - Dense FP64 K: `72*N^2` bytes.
 - Example 10,000 tiles: 3.6 GB / 7.2 GB for K alone; allow more memory for workspaces and caches.
-- The current code does not compute K on GPU or use FMM; K construction stays O(N^2) CPU time.
+- The CUDA volume builder computes all integrals on GPU, with one warp per near pair and bounded launches; geometry, quadrature coordinates and near-pair enumeration remain on CPU. Both builders remain O(N^2); neither uses FMM. The final air field and independent native checks remain on CPU.
 - K may be reused for identical magnetic geometry; moving any component changes its cross-interaction tensors and triggers rebuild in this prototype.
 
 ## Supported constitutive behavior

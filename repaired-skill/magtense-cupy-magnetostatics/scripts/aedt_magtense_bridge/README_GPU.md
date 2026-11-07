@@ -16,11 +16,19 @@ python gpu_solver.py --out out --backend cupy --dtype float64 --operator volume 
 
 体积 K 和重心 K 分开缓存；体积缓存还核对积分设置及 MagTense 版本。体积模式保留原生平均场校验，重心模式保留原生重心场校验。两种校验都不证明对 Maxwell 的物理精度。
 
-新模式的 K 仍在 CPU 构建，内存仍为完整 `3N×3N`。实测双模组 3629 个磁性四面体，4 点基算子加 256 点近邻积分构建共约 13 分钟；GPU 材料迭代约 3.75 秒。细 Maxwell 参考约 10 分 15 秒，两者离散精度不同，尚未证明同精度首次求解加速。
+兼容默认 `--k-builder native` 仍在 CPU 构 K。新增 `--k-builder cuda --backend cupy` 将四面体的三角面磁荷解析积分和接收点平均搬到 GPU，保持相同的四点/256 点积分、近邻判定和材料方程。近邻核以一个 warp 合作计算一个源/接收体对，不再按接收体逐次调用 Fortran。坐标、解析函数及归约始终使用 FP64；`--dtype float32` 只改变矩阵存储。没有启用 fast-math、偶极近似或谱裁剪。几何准备和近邻表仍在 CPU，完整 `3N×3N` 存储规模不变。
+
+```powershell
+python gpu_solver.py --out out --backend cupy --dtype float64 --operator volume --k-builder cuda --method proximal --tol 1e-8 --maxiter 24000 --cache-k
+```
+
+CUDA 体积模式通过 CuPy NVRTC 编译随包提供的 `tetra_cuda.cu`，无需修改或重新编译 MagTense。`--k-builder cuda` 要求 `--operator volume` 和 CuPy；不可用时报错，不会悄悄切回 CPU。首次编译、磁盘编译缓存、K 矩阵缓存是不同成本。CUDA 矩阵采用独立 `_cuda.npy` 文件，元数据核对 CUDA 源码哈希、几何和积分设置；原 CPU K 缓存不会冒充 GPU 构建结果。
+
+历史 CPU 路径的 3629 个磁性四面体构 K 约 13 分钟，GPU 材料迭代约 3.75 秒。新 GPU K 路径的阶段计时、全矩阵比较及 Maxwell B 场对比见 skill 的 `references/validation-gpu-k-20261107.json`；不同离散精度之间的速度不能作为同精度加速比。
 
 局部更新满足 `prox(z)+τ*H_material(prox(z))=z`，故固定点仍满足原始本构；饱和段以原曲线的恒定 M 边界处理。方法背景可参阅 [Parikh 与 Boyd 的 Proximal Algorithms](https://stanford.edu/~boyd/papers/prox_algs.html)。
 
-本目录包含一个真实可执行的 **MagTense CPU 解析四面体退磁张量 + CuPy GPU 非线性迭代** 原型。它直接使用之前 `bridge.py export` 生成的 `model.json`、`mesh/*.npz` 和 `points.csv`；无须重新在 Maxwell 划网格或修改数据格式。
+本目录包含 **CPU 原生 / CUDA 解析四面体退磁张量 + CuPy GPU 非线性迭代** 实现。它直接使用之前 `bridge.py export` 生成的 `model.json`、`mesh/*.npz` 和 `points.csv`；无须重新在 Maxwell 划网格或修改数据格式。
 
 **已验证**：原离线数学测试、真实 MagTense 原生库、CuPy FP64/FP32，以及 Maxwell 2022 R2 的实际网格/场导出。修复版的 3 mm、零电流、VACOFLUX 50 厂家表双模组基准使用 3629 个磁性四面体，对 485 个空气点的 B 向量相对 L2 差约 3.66%；这不是通用精度保证或实物验证。见 skill 的 `references/validation-20261107.json`。运行时保留与所选接收方式一致的原生 K/H 自检。
 
@@ -59,7 +67,7 @@ python bridge.py export --project 'D:\sim\camera.aedt' --design Maxwell3DDesign1
 python bridge.py inspect --out out
 ```
 
-然后执行 GPU 非线性求解（无需修改 MagTense 的多 B–H Fortran 补丁，**因为 MagTense 在这里仅负责解析 K 和最终观测场，多材料迭代完全在 CuPy 中实现**）：
+然后执行 GPU 非线性求解，无需修改 MagTense 的多 B–H Fortran 补丁。多材料迭代在 CuPy 中实现；MagTense 提供独立检查和最终观测场，默认 native 模式还用其构造 K：
 
 ```powershell
 python gpu_solver.py --out out --backend cupy --dtype float32 --operator volume --method proximal --cache-k
@@ -121,7 +129,7 @@ GPU 通过 cuBLAS 计算 `K @ M`，由 CuPy 计算多种 `B(H)` 插值。可选 
 * **不支持**：磁滞、磁导率各向异性、非线性永磁体退磁曲线、随时间变化、线圈电流源的几何及激励自动转换、复杂空气中磁力计算、自动适应局部细化。
 * 超出 `B–H` 最后一个节点时，以常数饱和 `M` 外推，即 `B=mu0(H+M_sat)`，不是线性外推，也不是 Maxwell 的材料模型默认保证。**用户应检查曲线是否足够长并覆盖实际工作区。**
 * 对每个四面体的完整 3×3 影响矩阵全部存 9 分量，即没有冒险把张量压成 6 分量。FP32 显存：`36*N^2` 字节；N=5000 为约 **0.90 GB**，N=10000 为 **3.60 GB**，N=20000 为 **14.40 GB**。加上 CuPy、GMRES、CUDA 库等工作区。CPU 侧按目标点批量 `--batch 32` 生成，不会一次性分配完整 FP64 K。
-* 在原始 MagTense Fortran 代码上构造 K，CPU 构建复杂度仍为 O(N²)；**GPU 只加速非线性迭代，不能声称整个仿真有 GPU 倍数提速**。下一步若要扫大量隔磁片形状，应 GPU 化解析四面体-目标点张量或研究近远场混合算子。
+* 默认由 MagTense Fortran 在 CPU 构造 K；显式 `--k-builder cuda` 在 GPU 计算所有源积分及接收平均。两者都是 O(N²) 稠密算子，未实现 FMM。最终空气测点场和原生随机场校验仍调用 CPU MagTense。不要把 K 阶段的加速倍数当作整个求解流程或同精度 Maxwell 对比的加速倍数。
 * 由于 MagTense 模型与 Maxwell FEM 的离散不同，残差收敛并不保证外部磁场精度。对复杂薄隔磁片必须做 Maxwell 网格/Tile 收敛测试。
 
 ## 6. 排错

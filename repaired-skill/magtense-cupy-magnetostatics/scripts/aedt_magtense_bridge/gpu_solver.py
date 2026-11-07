@@ -438,6 +438,7 @@ def self_test() -> dict:
 
 
 def run_from_export(args):
+    pipeline_start = time.perf_counter()
     from bridge import read_model, load_points, check_points_in_air
     from magtense_adapter import assemble_tiles
     from magtense.magstatics import get_H_field
@@ -450,17 +451,32 @@ def run_from_export(args):
     xp = get_backend(args.backend)
     n = tiles.n
     print(f'Backend={args.backend}, nonlinear B-H curves={len(curves or [])}, tiles={n:,}')
+    input_seconds = time.perf_counter()-pipeline_start
     if args.operator == 'volume':
-        from tetra_volume import assemble as assemble_volume
-        cache_name = f'K_volume_r{args.near_levels}_f{args.near_factor:.8g}_{args.dtype}.npy'
-        K,diag,kinfo = assemble_volume(tiles,xp,dtype=args.dtype,batch=args.batch,
-            near_levels=args.near_levels,near_factor=args.near_factor,
-            cache=(root/cache_name) if args.cache_k else None)
+        cache_name = f'K_volume_r{args.near_levels}_f{args.near_factor:.8g}_{args.dtype}'
+        if args.k_builder == 'cuda':
+            from tetra_cuda import assemble as assemble_volume
+            cache_name += '_cuda.npy'
+            K,diag,kinfo = assemble_volume(tiles,xp,dtype=args.dtype,
+                near_levels=args.near_levels,near_factor=args.near_factor,
+                cache=(root/cache_name) if args.cache_k else None)
+        else:
+            from tetra_volume import assemble as assemble_volume
+            K,diag,kinfo = assemble_volume(tiles,xp,dtype=args.dtype,batch=args.batch,
+                near_levels=args.near_levels,near_factor=args.near_factor,
+                cache=(root/(cache_name+'.npy')) if args.cache_k else None)
     else:
+        if args.k_builder != 'native':
+            raise ValueError('--k-builder cuda requires --operator volume')
         K,diag,kinfo = tensor_assembly(tiles,xp,dtype=args.dtype,batch=args.batch,
             cache=(root/f'K_{args.dtype}.npy') if args.cache_k else None)
         kinfo['operator'] = 'centroid'
+    phase_start = time.perf_counter()
     material = MaterialLaws(tiles,curves or [],xp,args.dtype)
+    if xp is not np:
+        xp.cuda.Stream.null.synchronize()
+    material_seconds = time.perf_counter()-phase_start
+    phase_start = time.perf_counter()
     tensor_check = None
     if not args.skip_k_verify:
         if args.operator == 'volume':
@@ -470,6 +486,7 @@ def run_from_export(args):
             tensor_check = verify_tensor_against_magtense(tiles,K,xp,get_H_field)
         observation = 'volume-averaged' if args.operator == 'volume' else 'centroid'
         print(f'K vs native MagTense {observation} H verified: relative={tensor_check:.3e}')
+    verify_seconds = time.perf_counter()-phase_start
     m0 = None
     if args.warm_start:
         with np.load(args.warm_start) as warm:
@@ -491,6 +508,7 @@ def run_from_export(args):
                               maxiter=args.maxiter,damping=args.damping,
                               gmres_rtol=args.gmres_rtol,gmres_maxiter=args.gmres_maxiter,
                               verbose=True)
+    phase_start = time.perf_counter()
     final_M = xp.asnumpy(M) if xp is not np else M
     tiles.M = np.asarray(final_M, dtype=np.float64)
     # Fortran evaluation is done only at user air probes, not on every iteration.
@@ -501,6 +519,8 @@ def run_from_export(args):
     B_air = MU0 * H_air
     if not np.all(np.isfinite(B_air)):
         raise FloatingPointError('Non-finite field at air probes')
+    field_seconds = time.perf_counter()-phase_start
+    phase_start = time.perf_counter()
     np.savetxt(root/'gpu_B.csv',np.column_stack([pts,B_air]),delimiter=',',comments='',
                header='x_m,y_m,z_m,Bx_T,By_T,Bz_T')
     np.savez_compressed(root/'gpu_magnetization.npz',M_Apm=final_M,
@@ -514,12 +534,18 @@ def run_from_export(args):
                   'K_field_check_observation':'volume-average' if args.operator == 'volume' else 'tetra-centroid',
                   'magnetization_dtype':str(final_M.dtype),
                   'air_field_regularization':air_info,
-                  'K_magtense_field_check_relative_error':tensor_check})
+                  'K_magtense_field_check_relative_error':tensor_check,
+                  'input_prepare_seconds':input_seconds,
+                  'material_prepare_seconds':material_seconds,
+                  'native_K_verify_seconds':verify_seconds,
+                  'air_field_seconds':field_seconds,
+                  'output_write_seconds':time.perf_counter()-phase_start})
     if xp is not np:
         device_id = int(xp.cuda.Device().id)
         device_name = xp.cuda.runtime.getDeviceProperties(device_id)['name']
         sinfo.update(gpu_device_id=device_id,
                      gpu_model=device_name.decode() if isinstance(device_name,bytes) else str(device_name))
+    sinfo['pipeline_seconds_before_info_write'] = time.perf_counter()-pipeline_start
     (root/'gpu_solve_info.json').write_text(json.dumps(sinfo,indent=2),encoding='utf-8')
     print(f'Written: {root/"gpu_B.csv"}, residual={sinfo["residual"]:.4e}')
     print(f'Times: K={kinfo["K_build_or_load_seconds"]:.2f}s, '
@@ -534,6 +560,8 @@ def main(argv=None):
     parser.add_argument('--dtype',choices=['float32','float64'],default='float32')
     parser.add_argument('--method',choices=['newton','picard','proximal'],default='newton')
     parser.add_argument('--operator',choices=['centroid','volume'],default='centroid')
+    parser.add_argument('--k-builder',choices=['native','cuda'],default='native',
+                        help='Volume K integrals: native CPU (compatible default) or CUDA FP64 geometry/integration')
     parser.add_argument('--near-levels',type=int,choices=range(4),default=2,
                         help='Volume-mode receiving-tet refinements: 4,32,256,2048 near points')
     parser.add_argument('--near-factor',type=float,default=1.5)

@@ -65,6 +65,7 @@ def diagonal_blocks(K, xp, n):
 
 def assemble(tiles, xp, *, dtype='float64', batch=16, cache=None,
              near_levels=2, near_factor=1.5, deadline=None):
+    total_start = time.perf_counter()
     from magtense.magstatics import get_demag_tensor
     from gpu_solver import hash_geometry, pack_tensor_block
     n = int(tiles.n)
@@ -83,6 +84,8 @@ def assemble(tiles, xp, *, dtype='float64', batch=16, cache=None,
     cache = Path(cache) if cache else None
     meta_path = Path(str(cache)+'.json') if cache else None
     start = time.perf_counter()
+    prepare_seconds = start-total_start
+    far_seconds = near_seconds = cache_finalize_seconds = 0.
     loaded = False
     if cache and cache.exists() and meta_path.exists():
         try:
@@ -104,6 +107,9 @@ def assemble(tiles, xp, *, dtype='float64', batch=16, cache=None,
             if meta_path.exists():
                 meta_path.unlink()
             disk = np.lib.format.open_memmap(cache, mode='w+', dtype=dt, shape=(3*n,3*n))
+        if xp is not np:
+            xp.cuda.Stream.null.synchronize()
+        phase_start = time.perf_counter()
         for lo in range(0, n, batch):
             if deadline and time.time() > deadline:
                 raise TimeoutError('Volume K assembly exceeded its deadline')
@@ -117,6 +123,10 @@ def assemble(tiles, xp, *, dtype='float64', batch=16, cache=None,
             if disk is not None:
                 disk[3*lo:3*hi] = block
             print(f'  Volume K: {hi:,}/{n:,} receivers', flush=True)
+        if xp is not np:
+            xp.cuda.Stream.null.synchronize()
+        far_seconds = time.perf_counter()-phase_start
+        phase_start = time.perf_counter()
         for i, sources in enumerate(near):
             if deadline and time.time() > deadline:
                 raise TimeoutError('Near-pair K assembly exceeded its deadline')
@@ -130,17 +140,25 @@ def assemble(tiles, xp, *, dtype='float64', batch=16, cache=None,
                 disk[3*i:3*i+3, columns] = block
             if i % 128 == 0:
                 print(f'  Near K q={high.shape[1]}: {i+1:,}/{n:,}', flush=True)
+        if xp is not np:
+            xp.cuda.Stream.null.synchronize()
+        near_seconds = time.perf_counter()-phase_start
+        phase_start = time.perf_counter()
         if disk is not None:
             disk.flush()
             del disk
             meta_path.write_text(json.dumps(meta, indent=2), encoding='utf-8')
+        cache_finalize_seconds = time.perf_counter()-phase_start
     if xp is not np:
         xp.cuda.Stream.null.synchronize()
     info = {'operator': 'tetra_volume', 'loaded_from_cache': loaded, 'tiles': n,
             'K_build_or_load_seconds': time.perf_counter()-start, 'K_GB': size/1e9,
             'dtype': dt.name, 'quadrature_points_far': 4, 'quadrature_points_near': high.shape[1],
             'near_factor': near_factor, 'source_kernel': 'CPU native MagTense tetrahedron',
-            'spectrum_clipping': False}
+            'spectrum_clipping': False, 'K_builder': 'native',
+            'K_prepare_seconds': prepare_seconds, 'K_far_seconds': far_seconds,
+            'K_near_seconds': near_seconds, 'K_cache_finalize_seconds': cache_finalize_seconds,
+            'K_total_seconds': time.perf_counter()-total_start}
     return K, diagonal_blocks(K,xp,n), info
 
 

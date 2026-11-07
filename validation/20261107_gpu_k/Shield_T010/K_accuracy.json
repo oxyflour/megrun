@@ -1,0 +1,8 @@
+{
+  "relative_Frobenius": 2.1457356883423597e-11,
+  "near_relative_Frobenius": 3.414426434708048e-13,
+  "far_relative_Frobenius": 1.5183981585770882e-09,
+  "max_absolute_entry": 3.192316273123975e-10,
+  "native_H_check": 4.803375376133157e-13,
+  "native_verify_seconds": 1.2381249996833503
+}

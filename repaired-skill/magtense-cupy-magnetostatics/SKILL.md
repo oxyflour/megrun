@@ -15,7 +15,7 @@ This skill ships an actual Python solver and Maxwell import/export/validation to
 - A user wants **multiple distinct isotropic, single-valued, non-hysteretic B–H curves**, linear soft magnets, and permanent magnets solved in a shared magnetostatic model.
 - A user wants to benchmark CPU MagTense analytical demagnetizing tensor generation versus GPU-resident CuPy nonlinear iteration, or investigate reuse of a dense K matrix across parameter sweeps.
 
-Do **not** claim the package supports non-isotropic or hysteretic materials, coil-current geometry conversion, transient solutions, GPU tensor generation, FMM, or magnetic force calculation. These are not implemented. A CUDA backend being selected does not imply that constructing the tetrahedral K matrix ran on GPU.
+Do **not** claim the package supports non-isotropic or hysteretic materials, coil-current geometry conversion, transient solutions, FMM, or magnetic force calculation. These are not implemented. GPU tensor generation requires the explicit `--operator volume --k-builder cuda` mode; selecting a CuPy iteration backend alone does not enable it.
 
 ## Preflight / environment
 
@@ -54,11 +54,15 @@ Inspect mesh count before allocating a dense operator. The implementation stores
 python gpu_solver.py --out out --backend cupy --dtype float64 --operator volume --method proximal --tol 1e-8 --cache-k
 ```
 
-Prefer FP64 for an initial accuracy validation; after a converged reference result, test FP32 performance. For high-permeability soft materials, `--operator volume --method proximal` uses receiving-volume quadrature and implicit material updates; `centroid` with Newton remains available as a baseline. Volume mode uses four far-field receiving points and, by default, 256 near/self receiving points (`--near-levels 2`), all evaluated with the native CPU source kernel. It changes the collocation discretization and needs its own quadrature/mesh accuracy check. K construction can take minutes even when GPU iteration takes seconds.
+Prefer FP64 for an initial accuracy validation; after a converged reference result, test FP32 performance. For high-permeability soft materials, `--operator volume --method proximal` uses receiving-volume quadrature and implicit material updates; `centroid` with Newton remains available as a baseline. Volume mode uses four far-field receiving points and, by default, 256 near/self receiving points (`--near-levels 2`). The compatible default `--k-builder native` evaluates integrals with the CPU MagTense kernel. `--k-builder cuda --backend cupy` instead evaluates analytical triangle surface-charge integrals and near-point reductions on GPU, retaining the identical quadrature and near-pair criterion. Geometry preparation and near-pair enumeration remain on CPU. CUDA integrals use FP64 even for FP32 matrix storage. Keep native verification enabled, and inspect `K_builder`, cache-hit status and the separate preparation/compile/far/near/cache timings in the solve info. See `references/validation-gpu-k-20261107.json` for the GPU K benchmark scope.
+
+```powershell
+python gpu_solver.py --out out --backend cupy --dtype float64 --operator volume --k-builder cuda --method proximal --tol 1e-8 --maxiter 24000 --cache-k
+```
 
 Keep the default **native K vs field consistency check** enabled; do not add `--skip-k-verify` to hide failure. The check matches the chosen observation: centroid H for centroid K, the identical volume quadrature of native H for volume K. Neither establishes Maxwell accuracy. Both methods raise on non-convergence. Use `--backend numpy` to debug if GPU is unavailable; the real mesh still requires MagTense's native library for K generation. See `README_GPU.md` for mode selection and cache semantics.
 
-`--cache-k` keys K on geometry and precision; volume caches additionally key the native version, quadrature rule and near-pair settings. Centroid and volume caches are distinct. Geometry changes require recomputation; the package does **not** selectively update inter-component blocks. Warm start across changed geometry is permitted only if element ordering/material correspondence is independently verified and the user agrees.
+`--cache-k` keys K on geometry and precision; native volume caches additionally key the native version, quadrature rule and near-pair settings. CUDA caches use a separate filename/schema and include the CUDA source hash, integration precision and quadrature settings. Native and CUDA matrix caches are never interchangeable; CuPy's compiled-kernel cache is separate from a K-matrix cache. Geometry changes require recomputation; the package does **not** selectively update inter-component blocks. Warm start across changed geometry is permitted only if element ordering/material correspondence is independently verified and the user agrees.
 
 ## Workflow 3: Compare against Maxwell
 
@@ -88,7 +92,7 @@ python gpu_solver.py --self-test --backend numpy
 - Separate **tested** functions from assumptions. Never claim physical accuracy from synthetic tests alone, nor a GPU benchmark from NumPy CPU runs.
 - Do not silently approximate unsupported excitations, use one B–H curve for all objects, or truncate geometry to bounding boxes. When the exporter refuses, explain the exact unsupported capability.
 - Before editing native MagTense sources, read `README_MULTI_BH.md`; its optional patch updates the Fortran ABI and requires rebuilding. MagTense upstream is GPL-3.0-or-later; assess compliance when distributing modified upstream code.
-- When implementing new CUDA features, first preserve the MagTense CPU tensor agreement tests and add a real Maxwell B-field comparison. The existing script's GPU implementation currently accelerates *iteration*, not K construction.
+- When implementing new CUDA features, preserve the MagTense CPU tensor agreement tests and add a real Maxwell B-field comparison. Report CPU/GPU K construction separately from nonlinear iteration, include cold compilation and cache state, and compare identical discretizations. The explicit CUDA volume builder accelerates K integrals; the final air-probe evaluator and independent native checks still run on CPU.
 
 ## Further references
 

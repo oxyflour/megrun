@@ -11,6 +11,8 @@
 
 修复版提供四面体接收体积平均算子、非线性隐式本构迭代，以及空气测点的稳定场计算。支持 NumPy/CuPy；依赖平台原生 MagTense 库。完整 K 矩阵仍需二次方存储，FP64 约为 `72 N²` 字节。
 
+新增 `--operator volume --k-builder cuda --backend cupy`，在 GPU 上计算完整 K 的解析源积分与近邻归约，保持原四点/256 点积分和材料方程。CPU 原生构建仍为兼容默认。见 [GPU K 耗时与精度报告](validation/20261107_gpu_k/FINAL_REPORT.txt) 及 [阶段数据](validation/20261107_gpu_k/summary.json)。
+
 ## 已有验证结果
 
 验证条件为 3 mm 间隔的双 camera 电磁模型、零线圈电流、公开材料 B–H 曲线。结果是与 Maxwell 的数值对比，不是实物精度认证。
@@ -43,7 +45,7 @@ python gpu_solver.py --self-test --backend numpy
 python -m pytest -q tests
 ```
 
-已有修复版检查记录为 44 项通过、1 项因缺少 gfortran 跳过；另有 NumPy/CuPy FP64/FP32 的 CLI 检查。Maxwell 导出需已安装并授权的 AEDT；CUDA/CuPy 依赖需匹配本机环境。
+最新检查记录为 55 项通过、1 项因缺少 gfortran 跳过，包含 11 项 CUDA 专项检查；另有四组真实模型 FP64 K 与已有 Maxwell B 场对比。Maxwell 导出需已安装并授权的 AEDT；CUDA/CuPy 依赖需匹配本机环境。
 
 ## 仓库与本地产物
 

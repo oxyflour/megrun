@@ -1,0 +1,180 @@
+{
+  "package": "C:\\Projects\\magtense-gpu\\MagTense_CuPy_Skill_v4_GPU_K.zip",
+  "sha256": "2c7cf72d57a883b25701bba0e3f041bd1fb142d68932529de1aba8b17a27537e",
+  "bytes": 97215,
+  "files": [
+    {
+      "path": "magtense-cupy-magnetostatics/README.md",
+      "bytes": 3355,
+      "sha256": "9bd83b646ceb6b81b7298a6fe8592641e63d401c5119e7b87173d6bab2d0b1eb"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/references/architecture.md",
+      "bytes": 3332,
+      "sha256": "fb97703a34af2c4fb77e6ba51aa0a536c237804d99409ab90d9cf29c62bf20e3"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/references/cuda-tetra-k.md",
+      "bytes": 2018,
+      "sha256": "ed3f4040633b4b2534b50b971d42c8e54385de6f6153a09436b40f8e660fd42c"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/references/validation-20261107.json",
+      "bytes": 7288,
+      "sha256": "a36a62f3d4102b001c5b902b366f5a051075fa31f844e5ea8b213ea2a3e70a46"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/references/validation-checklist.md",
+      "bytes": 1659,
+      "sha256": "2b216d8cce841372137ac2e1c047075e858b5ac2c4d219f2bdb8b293f3d9e2ce"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/references/validation-gpu-k-20261107.json",
+      "bytes": 14517,
+      "sha256": "a3205cb8227f78694df106ffe30c3d54ebcc9912a0f230e093c665c33fc7a135"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/aedt_export.py",
+      "bytes": 18160,
+      "sha256": "469965b642d4e5c81df8bb9ec576ee231cc3ab6dbab267be23c53a6aed4056ad"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/aedtplt.py",
+      "bytes": 5994,
+      "sha256": "ae57627477b7b7c9f5d7e7130d459a11a2420e7af8bf231eb8d264cecb2633e1"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/air_field.py",
+      "bytes": 2682,
+      "sha256": "16b77997e57be01ed89286c13908dcec1f52b3fcbbad17a0052c6c46aca741f4"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/bridge.py",
+      "bytes": 14731,
+      "sha256": "eebbca3e01bbd9302a7b84cdfd6ae66d07f8e77c0378ce15161871c43c80249c"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/constitutive_prox.py",
+      "bytes": 4768,
+      "sha256": "1accd2eed6efdd75f1264a6909b4d86528e425130998ca3d2c8f58bb9299d373"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/gpu_solver.py",
+      "bytes": 28900,
+      "sha256": "a2632496bff27c360eb07469b9886bc41e8f5dee7d46926e7385bfbc53f172af"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/magtense_adapter.py",
+      "bytes": 11638,
+      "sha256": "34efcf58d108daf2aaf54e87f524272f55a820695896f99e5ab618e00bd653af"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/native_smoke.py",
+      "bytes": 2645,
+      "sha256": "c68d9f80c6633917050457d384b0c46be0102a39e6cc8b4d61fd0fa6a7431099"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/overrides.example.json",
+      "bytes": 372,
+      "sha256": "455543bbe892612224d9f265a2623431db93acbe0019fe55bae175b3adb2fedf"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/patch_magtense.py",
+      "bytes": 6719,
+      "sha256": "beb7fd2e2b013cedc70f8e992b561e9425196b4f96dbb1737294f5c57968cc19"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/README.md",
+      "bytes": 11214,
+      "sha256": "6e3f26ab3278d423cb3c1f1dc439b841684344620b942c57bb664f44271a9e39"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/README_GPU.md",
+      "bytes": 11048,
+      "sha256": "b140a27044a5d2adc3f6f09d9125f3651aa0158f22636a971a5cd807cf6de5bb"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/README_MULTI_BH.md",
+      "bytes": 5897,
+      "sha256": "c43931df43f319dd3b670acb73a35442806f71db89a26e792b92239e69ce9a05"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/requirements.txt",
+      "bytes": 146,
+      "sha256": "e530dbfd98c7c9ff08fe396c019c5ea9af0d18fefef5d48b0107f5d766b5e1ed"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/scripts/install_multibh.ps1",
+      "bytes": 1397,
+      "sha256": "8a3ed6c2c0268f98e79b706f20a4577e25fc7b4a4f2584fd1e93e9f9ae88432d"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/scripts/install_multibh.sh",
+      "bytes": 497,
+      "sha256": "f0bd177fe1cb9185f0918a3d3edf212ad32e90e313b071661ee6c4f78b7de031"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tests/test_air_field.py",
+      "bytes": 1560,
+      "sha256": "8ada837bb0d368714fde5f2af60d2f34bfca5a9660d0116e395894a29a36e273"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tests/test_bridge.py",
+      "bytes": 8630,
+      "sha256": "bfb6e9769ff89cc970ebff8ebc783d59ba0b6f2f07d85173b4bbb1c68e9de814"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tests/test_gpu_solver.py",
+      "bytes": 9202,
+      "sha256": "42dc8235c6b08c57df6d39b3cd108ab2c21e7d79e362e6af34b85c2a550bec47"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tests/test_multibh.py",
+      "bytes": 12913,
+      "sha256": "9729a102d57307b152d0b74235fda5c19a01b099816a8ccb94016dc835a2b2ff"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tests/test_tetra_cuda.py",
+      "bytes": 4836,
+      "sha256": "947b5bf2c3565b921ad0d82190f2faecefa6637d1c36f5e21974bc94cb8464b6"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tests/test_volume_proximal.py",
+      "bytes": 5196,
+      "sha256": "83d4a3b8d1442711fadb0b89e99720d7f3e8a2452cbc58d4733052ccfaa0d3b0"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tetra_cuda.cu",
+      "bytes": 5592,
+      "sha256": "962001b4bf7706d724a7031a5a94883394bf598e4f70339d02bd83d97bf5f7fb"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tetra_cuda.py",
+      "bytes": 7678,
+      "sha256": "9d671fb963976ae2958f0eb44403a14e65a474f20bd3e317604b04bda60d2dfc"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tetra_volume.py",
+      "bytes": 9226,
+      "sha256": "8a930aeb39a361f5ab629038a13087fa352ea19a7ed2e1418af9ccad002bc233"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/VALIDATION.txt",
+      "bytes": 1510,
+      "sha256": "7a2543b01fbebf84fb397899b716374baded3b0a285f61fff4c89501c268655a"
+    },
+    {
+      "path": "magtense-cupy-magnetostatics/SKILL.md",
+      "bytes": 11544,
+      "sha256": "abe73a44e5bb243c51830b693c9ad1443b241077de09236fcf7bf03c73091488"
+    }
+  ],
+  "checks": [
+    "ZIP CRC",
+    "Python syntax",
+    "CUDA source included",
+    "55 pytest passed, 1 optional Fortran test skipped",
+    "Four complete real-model K and existing-Maxwell B comparisons",
+    "Real-model CUDA CLI cold K construction"
+  ]
+}

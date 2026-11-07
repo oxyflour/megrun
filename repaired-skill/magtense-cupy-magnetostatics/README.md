@@ -40,10 +40,10 @@ python bridge.py compare --out out --prediction gpu_B.csv --prefix gpu_
 
 ## 状态与限制
 
-- **本次修复版检查**：44 项通过、1 项因缺少 gfortran 跳过；另通过 NumPy/CuPy、FP64/FP32 的 CLI 解析线性解检查。
+- **当前检查**：55 项通过、1 项因缺少 gfortran 跳过，含 11 项 CUDA 专项检查；另通过四组真实模型的 FP64 K 与已有 Maxwell 场对比。真实材料 FP32 精度尚未做这组完整验证。
 - **实测基准**：Maxwell 2022 R2、RTX 3090 Ti，3 mm 双模组、VACOFLUX 50 厂家数据表、零线圈电流。3629 个磁性四面体，485 个空气测点；相对细 Maxwell 的 B 向量 L2 差约 3.66%，RMS 1.48 mT，最大 7.49 mT。材料表插值和网格均有近似，不能当作实物精度或普遍误差保证。
-- **耗时范围**：本例 CPU K 构建约 13 分钟，GPU 隐式迭代约 4 秒；首次端到端速度优势尚未证明。
-- **精度边界**：非线性材料为无磁滞、各向同性、单值 B–H；TET10 简化为 TET4；没有 GPU 张量生成、FMM、线圈源几何转换或受力积分。
+- **GPU K 构建**：新增 `--operator volume --k-builder cuda`，在 GPU 上计算解析四面体源积分及相同的四点/256 点接收平均；兼容默认仍为 CPU 原生核。精度与阶段耗时见 `references/validation-gpu-k-20261107.json`。历史 CPU 路径构 K 约 13 分钟、GPU 迭代约 4 秒，不代表新路径的端到端时间。
+- **精度边界**：非线性材料为无磁滞、各向同性、单值 B–H；TET10 简化为 TET4；没有 FMM、线圈源几何转换或受力积分。CUDA 构 K 后仍保留原生检查和 CPU 空气测点计算。
 - **内存边界**：完整 `3N×3N` K 张量；FP32 约 `36N²` 字节，FP64 约 `72N²` 字节。
 
 MagTense 本体来自 https://github.com/cmt-dtu-energy/MagTense ，依赖其平台原生库且适用其许可证；该 ZIP 没有捆绑 MagTense 原始仓库或编译后的二进制。此包包含的可选原生多 B–H 补丁会修改外部源码，应仅在授权下执行。

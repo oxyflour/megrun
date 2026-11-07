@@ -1,0 +1,14 @@
+[
+  {
+    "label": "original_user_project",
+    "path": "C:\\Projects\\magrun\\outputs\\maxwell_verified\\gap_3mm_reference.aedt",
+    "sha256": "5ff82b5011a2447f5611b1448412bb730a0a6a806b69a115e4caf199c60a2116",
+    "matches_previous": true
+  },
+  {
+    "label": "previous_fine_reference",
+    "path": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_reference.aedt",
+    "sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785",
+    "matches_previous": true
+  }
+]

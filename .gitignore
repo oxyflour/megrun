@@ -3,6 +3,7 @@
 .offline-venv/
 __pycache__/
 .pytest_cache/
+.cupy_cache/
 *.py[cod]
 .coverage
 htmlcov/
