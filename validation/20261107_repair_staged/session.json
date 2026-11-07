@@ -1,0 +1,78 @@
+{
+  "started_UTC": "2026-11-07T05:27:55.169511+00:00",
+  "budget_seconds": 1200,
+  "scope": "Staged diagnosis and repair; cached geometry; original source project untouched",
+  "cases": [
+    {
+      "name": "single_pm",
+      "tiles": 429,
+      "K_native_check_relative": 4.0684716609250655e-16,
+      "material": null,
+      "geometry_sha256": "a19a017654a4bce2a4f09395380667176edc9430432de95fbaf954856d7cd976",
+      "solver": "Exact dense solution of the linear constitutive system",
+      "converged": true,
+      "residual": 1.0141944208822364e-15,
+      "max_M_Apm": 931658.4642199165,
+      "seconds": 0.9458217001520097
+    },
+    {
+      "name": "pair_pm",
+      "tiles": 943,
+      "K_native_check_relative": 5.688912293755338e-16,
+      "material": null,
+      "geometry_sha256": "bbbf1d2fc7b330722f1f7aefc6723d8636d289832accd04d9cd4b6e1495d43b2",
+      "solver": "Exact dense solution of the linear constitutive system",
+      "converged": true,
+      "residual": 1.1751376099502332e-15,
+      "max_M_Apm": 932525.9781791877,
+      "seconds": 1.5003713998012245
+    },
+    {
+      "name": "single_linear_10",
+      "tiles": 1727,
+      "K_native_check_relative": 1.2996870624364406e-15,
+      "material": 10,
+      "geometry_sha256": "d8501aef563b92cbe9b7adbf7a1262e5d3c68a725d11dc24137174dddd50a34a",
+      "solver": "Exact dense solution of the linear constitutive system",
+      "converged": true,
+      "residual": 1.8017368786753772e-15,
+      "max_M_Apm": 934873.2145061844,
+      "seconds": 3.019667699933052
+    },
+    {
+      "name": "single_linear_100",
+      "tiles": 1727,
+      "K_native_check_relative": 1.2996870624364406e-15,
+      "material": 100,
+      "geometry_sha256": "d8501aef563b92cbe9b7adbf7a1262e5d3c68a725d11dc24137174dddd50a34a",
+      "solver": "Exact dense solution of the linear constitutive system",
+      "converged": true,
+      "residual": 2.0616166725199676e-14,
+      "max_M_Apm": 4142930.7932764655,
+      "seconds": 3.0769744999706745
+    },
+    {
+      "name": "single_linear_1000",
+      "tiles": 1727,
+      "K_native_check_relative": 1.2996870624364406e-15,
+      "material": 1000,
+      "geometry_sha256": "d8501aef563b92cbe9b7adbf7a1262e5d3c68a725d11dc24137174dddd50a34a",
+      "solver": "Exact dense solution of the linear constitutive system",
+      "converged": true,
+      "residual": 2.5907753276819215e-13,
+      "max_M_Apm": 33494342.711123936,
+      "seconds": 3.044250200036913
+    },
+    {
+      "name": "single_real_bh",
+      "tiles": 1727,
+      "K_native_check_relative": 1.2996870624364406e-15,
+      "material": "BH",
+      "geometry_sha256": "d8501aef563b92cbe9b7adbf7a1262e5d3c68a725d11dc24137174dddd50a34a",
+      "converged": false,
+      "failure": "NonConvergence('Nonlinear solver did not converge after 60 steps; final relative residual=0.1486')",
+      "seconds": 13.886817099992186
+    }
+  ],
+  "elapsed_seconds": 27.723699699621648
+}

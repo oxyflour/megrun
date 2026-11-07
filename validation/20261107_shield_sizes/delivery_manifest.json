@@ -1,0 +1,26 @@
+{
+  "FINAL_REPORT.txt": {
+    "bytes": 12209,
+    "sha256": "de087f28891afb1d75ddbd4266c7edd5124a86ab6f636a482c8b0d474e66429c"
+  },
+  "final_summary.json": {
+    "bytes": 8488,
+    "sha256": "3d0a36d764309ed874285269c0d93d7a2a98e4ed7fc17f1514d0c9ef7f04d794"
+  },
+  "accuracy_summary.csv": {
+    "bytes": 506,
+    "sha256": "4406649246007ce4b7d76d5c1dddc90397f0de665a41f779ec41798511f381fd"
+  },
+  "shield_accuracy_comparison.png": {
+    "bytes": 369408,
+    "sha256": "f0f91ce7ee84dad2439b160763da1b13928490bb62f8432ac616b2f3d9e16a21"
+  },
+  "paired_mesh_delta_check.png": {
+    "bytes": 264002,
+    "sha256": "2d5771891368b9b539e38207ed69c89a2a853deef6ab90e0b76c4bd8d30b7a19"
+  },
+  "gap3mm_shield_sizes_v3.aedt": {
+    "bytes": 1547496,
+    "sha256": "d8e147b7da3cf859bb86748cd350be2ba1fcb6274c2c609cf9d511f18777c402"
+  }
+}

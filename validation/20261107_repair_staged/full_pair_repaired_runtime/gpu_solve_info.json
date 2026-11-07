@@ -1,0 +1,246 @@
+{
+  "converged": true,
+  "iterations": 734,
+  "residual": 9.911949518686566e-09,
+  "solve_seconds": 3.8103872002102435,
+  "method": "proximal",
+  "residual_history": [
+    3.2053933505215455,
+    0.2928693765695011,
+    0.11564500361309714,
+    0.07054416950320308,
+    0.04436012340247233,
+    0.012252497174254721,
+    0.0025612857128296815,
+    0.0013479288675968758,
+    0.0007933417088666849,
+    0.0004232144656573017,
+    0.0002062610066001367,
+    0.00010890018037975588,
+    6.896633597185518e-05,
+    3.411419342070783e-05,
+    2.8239069086223164e-05,
+    1.9534308626738735e-05,
+    1.2915347800142496e-05,
+    8.059821012852921e-06,
+    4.510532535128631e-06,
+    2.4375110750702936e-06,
+    1.6116754384131962e-06,
+    1.2057038182666458e-06,
+    7.944515569461327e-07,
+    5.655330210426417e-07,
+    3.305770430144078e-07,
+    1.526951394070629e-07,
+    6.713174480759147e-08,
+    2.4910177913918387e-08,
+    1.7649719921452235e-08,
+    1.1745959412808118e-08,
+    9.911949518686566e-09
+  ],
+  "iteration_history": [
+    {
+      "iteration": 0,
+      "residual": 3.2053933505215455
+    },
+    {
+      "iteration": 25,
+      "residual": 0.2928693765695011
+    },
+    {
+      "iteration": 50,
+      "residual": 0.11564500361309714
+    },
+    {
+      "iteration": 75,
+      "residual": 0.07054416950320308
+    },
+    {
+      "iteration": 100,
+      "residual": 0.04436012340247233
+    },
+    {
+      "iteration": 125,
+      "residual": 0.012252497174254721
+    },
+    {
+      "iteration": 150,
+      "residual": 0.0025612857128296815
+    },
+    {
+      "iteration": 175,
+      "residual": 0.0013479288675968758
+    },
+    {
+      "iteration": 200,
+      "residual": 0.0007933417088666849
+    },
+    {
+      "iteration": 225,
+      "residual": 0.0004232144656573017
+    },
+    {
+      "iteration": 250,
+      "residual": 0.0002062610066001367
+    },
+    {
+      "iteration": 275,
+      "residual": 0.00010890018037975588
+    },
+    {
+      "iteration": 300,
+      "residual": 6.896633597185518e-05
+    },
+    {
+      "iteration": 325,
+      "residual": 3.411419342070783e-05
+    },
+    {
+      "iteration": 350,
+      "residual": 2.8239069086223164e-05
+    },
+    {
+      "iteration": 375,
+      "residual": 1.9534308626738735e-05
+    },
+    {
+      "iteration": 400,
+      "residual": 1.2915347800142496e-05
+    },
+    {
+      "iteration": 425,
+      "residual": 8.059821012852921e-06
+    },
+    {
+      "iteration": 450,
+      "residual": 4.510532535128631e-06
+    },
+    {
+      "iteration": 475,
+      "residual": 2.4375110750702936e-06
+    },
+    {
+      "iteration": 500,
+      "residual": 1.6116754384131962e-06
+    },
+    {
+      "iteration": 525,
+      "residual": 1.2057038182666458e-06
+    },
+    {
+      "iteration": 550,
+      "residual": 7.944515569461327e-07
+    },
+    {
+      "iteration": 575,
+      "residual": 5.655330210426417e-07
+    },
+    {
+      "iteration": 600,
+      "residual": 3.305770430144078e-07
+    },
+    {
+      "iteration": 625,
+      "residual": 1.526951394070629e-07
+    },
+    {
+      "iteration": 650,
+      "residual": 6.713174480759147e-08
+    },
+    {
+      "iteration": 675,
+      "residual": 2.4910177913918387e-08
+    },
+    {
+      "iteration": 700,
+      "residual": 1.7649719921452235e-08
+    },
+    {
+      "iteration": 725,
+      "residual": 1.1745959412808118e-08
+    },
+    {
+      "iteration": 734,
+      "residual": 9.911949518686566e-09
+    }
+  ],
+  "equations": "Original M=F(KM), no change in physical material or K",
+  "operator": "tetra_volume",
+  "loaded_from_cache": true,
+  "tiles": 3629,
+  "K_build_or_load_seconds": 0.8222177000716329,
+  "K_GB": 0.948214152,
+  "dtype": "float64",
+  "quadrature_points_far": 4,
+  "quadrature_points_near": 256,
+  "near_factor": 1.5,
+  "source_kernel": "CPU native MagTense tetrahedron",
+  "spectrum_clipping": false,
+  "backend": "cupy",
+  "max_tiles": 10000,
+  "H_uniform_Apm": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "nonlinear_curves": 1,
+  "source": {
+    "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\gap3mm_vacoflux50.aedt",
+    "design": "MT_Coarse",
+    "solution": "Reference : LastAdaptive",
+    "model_unit": "mm",
+    "current_A_turn": 0,
+    "native_status": "Normal Completion"
+  },
+  "tile_stats": {
+    "tiles": 3629,
+    "per_object": {
+      "A_YOKE_SOFT_MAGNETIC": 1298,
+      "A_MAGNET_X_POS": 98,
+      "A_MAGNET_X_NEG": 103,
+      "A_MAGNET_Y_POS": 114,
+      "A_MAGNET_Y_NEG": 114,
+      "B_YOKE_SOFT_MAGNETIC": 1388,
+      "B_MAGNET_X_POS": 126,
+      "B_MAGNET_X_NEG": 128,
+      "B_MAGNET_Y_POS": 128,
+      "B_MAGNET_Y_NEG": 132
+    },
+    "nonlinear_state_functions": 1,
+    "nonlinear_material_assignments": [
+      {
+        "object": "A_YOKE_SOFT_MAGNETIC",
+        "material": "magrun_steel_bh",
+        "state_function_index": 1,
+        "original_bh_knots": 8
+      },
+      {
+        "object": "B_YOKE_SOFT_MAGNETIC",
+        "material": "magrun_steel_bh",
+        "state_function_index": 1,
+        "original_bh_knots": 8
+      }
+    ],
+    "full_dense_K_GB_float32": 0.474107076,
+    "full_dense_K_GB_float64": 0.948214152
+  },
+  "output": "gpu_B.csv",
+  "K_field_check_observation": "volume-average",
+  "magnetization_dtype": "float64",
+  "air_field_regularization": {
+    "regularized_indices": [
+      464
+    ],
+    "coordinates_unchanged": true,
+    "method": "two-direction symmetric Richardson limit in verified air",
+    "limits": [
+      {
+        "index": 464,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 4.104135324085095e-05
+      }
+    ]
+  },
+  "K_magtense_field_check_relative_error": 1.2527953870048438e-15,
+  "gpu_device_id": 0,
+  "gpu_model": "NVIDIA GeForce RTX 3090 Ti"
+}

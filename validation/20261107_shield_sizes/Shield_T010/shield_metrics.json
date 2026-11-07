@@ -1,0 +1,15 @@
+{
+  "points": 566,
+  "maxwell_coordinate_scale_to_m": 1.0,
+  "rms_vector_abs_error_mT": 1.4220400834099278,
+  "rms_vector_reference_mT": 37.92948985087551,
+  "rms_vector_relative_error_percent": 3.749167439374625,
+  "mean_abs_vector_error_mT": 1.0178136731559368,
+  "max_abs_vector_error_mT": 7.386244501024573,
+  "rms_component_error_mT": [
+    0.7467113237982823,
+    0.6959077957098676,
+    0.990117436270145
+  ],
+  "maxwell_max_B_mT": 77.69212503400475
+}

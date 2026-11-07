@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "source": {
+    "project": "SYNTHETIC TEST - NOT MAXWELL",
+    "design": "two_distinct_bh",
+    "solution": "none",
+    "model_unit": "m"
+  },
+  "mesh_unit": "m",
+  "points": "points.csv",
+  "maxwell_field": "maxwell_B.fld",
+  "skipped": [],
+  "total_magnetic_tetra": 2,
+  "objects": [
+    {
+      "name": "soft_0",
+      "material": "SYNTHETIC_BH_0",
+      "properties": {
+        "kind": "nonlinear",
+        "bh_H_Apm_B_T": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            5000.0,
+            0.08168140899333462
+          ],
+          [
+            20000.0,
+            0.12566370614359174
+          ],
+          [
+            100000.0,
+            0.25132741228718347
+          ]
+        ]
+      },
+      "mesh_npz": "mesh/soft_0.npz",
+      "mesh_stats": {
+        "tetra_count": 1,
+        "volume_m3": 1.6666666666666669e-10,
+        "tet4": 1,
+        "tet10": 0,
+        "curved": false,
+        "orientation_flipped": 0
+      }
+    },
+    {
+      "name": "soft_1",
+      "material": "SYNTHETIC_BH_1",
+      "properties": {
+        "kind": "nonlinear",
+        "bh_H_Apm_B_T": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            6000.0,
+            0.045238934211693026
+          ],
+          [
+            15000.0,
+            0.07539822368615504
+          ],
+          [
+            120000.0,
+            0.2261946710584651
+          ]
+        ]
+      },
+      "mesh_npz": "mesh/soft_1.npz",
+      "mesh_stats": {
+        "tetra_count": 1,
+        "volume_m3": 1.6666666666666669e-10,
+        "tet4": 1,
+        "tet10": 0,
+        "curved": false,
+        "orientation_flipped": 0
+      }
+    }
+  ]
+}

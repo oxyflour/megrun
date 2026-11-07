@@ -1,0 +1,293 @@
+{
+  "Shield_T010": {
+    "point_indices": [
+      241,
+      245,
+      243,
+      228,
+      189,
+      286,
+      419,
+      162,
+      91,
+      191
+    ],
+    "nominal_coordinates_unchanged": true,
+    "native_vs_certified_limit_difference_mT": [
+      2.090059369586992e-08,
+      6.119486344394893e-08,
+      1.0902825575282408e-07,
+      1.559654741752672e-08,
+      1.914281190582369e-07,
+      1.4097444456621841e-08,
+      2.821920545327406e-08,
+      5.178952811122126e-08,
+      1.717615321442937e-08,
+      4.7140116647599286e-08
+    ],
+    "maximum_difference_mT": 1.914281190582369e-07,
+    "maximum_Maxwell_error_mT": 7.386244501024573,
+    "limit_checks": {
+      "regularized_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "coordinates_unchanged": true,
+      "method": "two-direction symmetric Richardson limit in verified air",
+      "limits": [
+        {
+          "index": 0,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.0003118784614460139
+        },
+        {
+          "index": 1,
+          "step_m": 2.265744910619905e-05,
+          "limit_difference_Apm": 0.001119552813259437
+        },
+        {
+          "index": 2,
+          "step_m": 2.265744910619905e-05,
+          "limit_difference_Apm": 0.0015306931955526685
+        },
+        {
+          "index": 3,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.0004299636021024504
+        },
+        {
+          "index": 4,
+          "step_m": 2.265744910619905e-05,
+          "limit_difference_Apm": 0.0031447001762409765
+        },
+        {
+          "index": 5,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.00040672866025937514
+        },
+        {
+          "index": 6,
+          "step_m": 2.265744910619905e-05,
+          "limit_difference_Apm": 0.00044481233712609684
+        },
+        {
+          "index": 7,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.0008727067057631198
+        },
+        {
+          "index": 8,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.0004393082953053842
+        },
+        {
+          "index": 9,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.0007632662022357564
+        }
+      ]
+    }
+  },
+  "Shield_T020": {
+    "point_indices": [
+      230,
+      89,
+      70,
+      199,
+      285,
+      111,
+      237,
+      147,
+      283,
+      112
+    ],
+    "nominal_coordinates_unchanged": true,
+    "native_vs_certified_limit_difference_mT": [
+      1.5410122679975997e-08,
+      1.1790216261253543e-08,
+      1.5246315854642173e-08,
+      2.4480372139187012e-08,
+      1.4151570582875878e-08,
+      4.6673634005091205e-08,
+      9.168991050272929e-09,
+      1.7418448441401175e-08,
+      1.550533208540049e-08,
+      2.4536984815568514e-08
+    ],
+    "maximum_difference_mT": 4.6673634005091205e-08,
+    "maximum_Maxwell_error_mT": 7.60890555701961,
+    "limit_checks": {
+      "regularized_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "coordinates_unchanged": true,
+      "method": "two-direction symmetric Richardson limit in verified air",
+      "limits": [
+        {
+          "index": 0,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.00041703398967417744
+        },
+        {
+          "index": 1,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.0002638378060919813
+        },
+        {
+          "index": 2,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.0004026183715915785
+        },
+        {
+          "index": 3,
+          "step_m": 2.265744910619905e-05,
+          "limit_difference_Apm": 0.0004230952030070508
+        },
+        {
+          "index": 4,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.00043435846592975515
+        },
+        {
+          "index": 5,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.0007796684843369186
+        },
+        {
+          "index": 6,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.0003070847893921525
+        },
+        {
+          "index": 7,
+          "step_m": 2.265744910619905e-05,
+          "limit_difference_Apm": 0.0002902991461816817
+        },
+        {
+          "index": 8,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.0004285483722955794
+        },
+        {
+          "index": 9,
+          "step_m": 1.1328724553099526e-05,
+          "limit_difference_Apm": 0.00040285788593789884
+        }
+      ]
+    }
+  },
+  "Shield_Large_T020": {
+    "point_indices": [
+      35,
+      21,
+      189,
+      405,
+      17,
+      493,
+      256,
+      103,
+      404,
+      266
+    ],
+    "nominal_coordinates_unchanged": true,
+    "native_vs_certified_limit_difference_mT": [
+      1.1109307261283799e-08,
+      1.7411483388992037e-08,
+      2.191566480931124e-07,
+      6.585774037448084e-08,
+      1.9113234262320488e-08,
+      3.141501782889962e-08,
+      1.9268569679827982e-08,
+      2.7752475942955496e-08,
+      5.4903088824935936e-08,
+      1.2777754836932624e-07
+    ],
+    "maximum_difference_mT": 2.191566480931124e-07,
+    "maximum_Maxwell_error_mT": 6.194318825290922,
+    "limit_checks": {
+      "regularized_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "coordinates_unchanged": true,
+      "method": "two-direction symmetric Richardson limit in verified air",
+      "limits": [
+        {
+          "index": 0,
+          "step_m": 1.1719214990774767e-05,
+          "limit_difference_Apm": 0.00037070040948004174
+        },
+        {
+          "index": 1,
+          "step_m": 1.1719214990774767e-05,
+          "limit_difference_Apm": 0.0004709610514987703
+        },
+        {
+          "index": 2,
+          "step_m": 2.3438429981549533e-05,
+          "limit_difference_Apm": 0.0036000591790476665
+        },
+        {
+          "index": 3,
+          "step_m": 2.3438429981549533e-05,
+          "limit_difference_Apm": 0.0011165410957977905
+        },
+        {
+          "index": 4,
+          "step_m": 1.1719214990774767e-05,
+          "limit_difference_Apm": 0.0004298763107396034
+        },
+        {
+          "index": 5,
+          "step_m": 2.3438429981549533e-05,
+          "limit_difference_Apm": 0.0006238896071640879
+        },
+        {
+          "index": 6,
+          "step_m": 2.3438429981549533e-05,
+          "limit_difference_Apm": 0.00031166229813049543
+        },
+        {
+          "index": 7,
+          "step_m": 2.3438429981549533e-05,
+          "limit_difference_Apm": 0.0004469232150794074
+        },
+        {
+          "index": 8,
+          "step_m": 2.3438429981549533e-05,
+          "limit_difference_Apm": 0.0009229446787006486
+        },
+        {
+          "index": 9,
+          "step_m": 2.3438429981549533e-05,
+          "limit_difference_Apm": 0.0026315099458149114
+        }
+      ]
+    }
+  }
+}

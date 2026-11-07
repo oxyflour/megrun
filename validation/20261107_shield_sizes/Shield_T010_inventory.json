@@ -1,0 +1,330 @@
+{
+  "before": {
+    "A_YOKE_SOFT_MAGNETIC": {
+      "volume_mm3": 66.75000000000003,
+      "bbox_mm": [
+        -4.4,
+        -4.4,
+        1.4,
+        4.4,
+        4.4,
+        4.8
+      ],
+      "material": "magrun_steel_bh"
+    },
+    "A_MAGNET_X_POS": {
+      "volume_mm3": 6.9119999999999955,
+      "bbox_mm": [
+        3.2,
+        -2.4,
+        1.8,
+        3.8,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_pos"
+    },
+    "A_MAGNET_X_NEG": {
+      "volume_mm3": 6.9119999999999955,
+      "bbox_mm": [
+        -3.8,
+        -2.4,
+        1.8,
+        -3.2,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_neg"
+    },
+    "A_MAGNET_Y_POS": {
+      "volume_mm3": 6.9119999999999955,
+      "bbox_mm": [
+        -2.4,
+        3.2,
+        1.8,
+        2.4,
+        3.8,
+        4.2
+      ],
+      "material": "magrun_magnet_y_pos"
+    },
+    "A_MAGNET_Y_NEG": {
+      "volume_mm3": 6.9119999999999955,
+      "bbox_mm": [
+        -2.4,
+        -3.8,
+        1.8,
+        2.4,
+        -3.2,
+        4.2
+      ],
+      "material": "magrun_magnet_y_neg"
+    },
+    "A_AF_COIL_COPPER": {
+      "volume_mm3": 16.42199999999999,
+      "bbox_mm": [
+        -3.125,
+        -3.125,
+        1.7,
+        3.125,
+        3.125,
+        4.0
+      ],
+      "material": "copper"
+    },
+    "B_YOKE_SOFT_MAGNETIC": {
+      "volume_mm3": 66.75000000000013,
+      "bbox_mm": [
+        7.4,
+        -4.4,
+        1.4,
+        16.200000000000003,
+        4.4,
+        4.8
+      ],
+      "material": "magrun_steel_bh"
+    },
+    "B_MAGNET_X_POS": {
+      "volume_mm3": 6.912000000000017,
+      "bbox_mm": [
+        15.0,
+        -2.4,
+        1.8,
+        15.600000000000001,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_pos"
+    },
+    "B_MAGNET_X_NEG": {
+      "volume_mm3": 6.912000000000017,
+      "bbox_mm": [
+        8.0,
+        -2.4,
+        1.8,
+        8.600000000000001,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_neg"
+    },
+    "B_MAGNET_Y_POS": {
+      "volume_mm3": 6.911999999999997,
+      "bbox_mm": [
+        9.4,
+        3.2,
+        1.8,
+        14.200000000000001,
+        3.8,
+        4.2
+      ],
+      "material": "magrun_magnet_y_pos"
+    },
+    "B_MAGNET_Y_NEG": {
+      "volume_mm3": 6.911999999999997,
+      "bbox_mm": [
+        9.4,
+        -3.8,
+        1.8,
+        14.200000000000001,
+        -3.2,
+        4.2
+      ],
+      "material": "magrun_magnet_y_neg"
+    },
+    "B_AF_COIL_COPPER": {
+      "volume_mm3": 16.42200000000002,
+      "bbox_mm": [
+        8.675,
+        -3.125,
+        1.7,
+        14.925,
+        3.125,
+        4.0
+      ],
+      "material": "copper"
+    },
+    "Region": {
+      "volume_mm3": 128345.95200000002,
+      "bbox_mm": [
+        -24.4,
+        -24.4,
+        -18.6,
+        36.2,
+        24.4,
+        24.800000000000004
+      ],
+      "material": "vacuum"
+    }
+  },
+  "after": {
+    "A_YOKE_SOFT_MAGNETIC": {
+      "volume_mm3": 66.75000000000003,
+      "bbox_mm": [
+        -4.4,
+        -4.4,
+        1.4,
+        4.4,
+        4.4,
+        4.8
+      ],
+      "material": "magrun_steel_bh"
+    },
+    "A_MAGNET_X_POS": {
+      "volume_mm3": 6.9119999999999955,
+      "bbox_mm": [
+        3.2,
+        -2.4,
+        1.8,
+        3.8,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_pos"
+    },
+    "A_MAGNET_X_NEG": {
+      "volume_mm3": 6.9119999999999955,
+      "bbox_mm": [
+        -3.8,
+        -2.4,
+        1.8,
+        -3.2,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_neg"
+    },
+    "A_MAGNET_Y_POS": {
+      "volume_mm3": 6.9119999999999955,
+      "bbox_mm": [
+        -2.4,
+        3.2,
+        1.8,
+        2.4,
+        3.8,
+        4.2
+      ],
+      "material": "magrun_magnet_y_pos"
+    },
+    "A_MAGNET_Y_NEG": {
+      "volume_mm3": 6.9119999999999955,
+      "bbox_mm": [
+        -2.4,
+        -3.8,
+        1.8,
+        2.4,
+        -3.2,
+        4.2
+      ],
+      "material": "magrun_magnet_y_neg"
+    },
+    "A_AF_COIL_COPPER": {
+      "volume_mm3": 16.42199999999999,
+      "bbox_mm": [
+        -3.125,
+        -3.125,
+        1.7,
+        3.125,
+        3.125,
+        4.0
+      ],
+      "material": "copper"
+    },
+    "B_YOKE_SOFT_MAGNETIC": {
+      "volume_mm3": 66.75000000000013,
+      "bbox_mm": [
+        7.4,
+        -4.4,
+        1.4,
+        16.200000000000003,
+        4.4,
+        4.8
+      ],
+      "material": "magrun_steel_bh"
+    },
+    "B_MAGNET_X_POS": {
+      "volume_mm3": 6.912000000000017,
+      "bbox_mm": [
+        15.0,
+        -2.4,
+        1.8,
+        15.600000000000001,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_pos"
+    },
+    "B_MAGNET_X_NEG": {
+      "volume_mm3": 6.912000000000017,
+      "bbox_mm": [
+        8.0,
+        -2.4,
+        1.8,
+        8.600000000000001,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_neg"
+    },
+    "B_MAGNET_Y_POS": {
+      "volume_mm3": 6.911999999999997,
+      "bbox_mm": [
+        9.4,
+        3.2,
+        1.8,
+        14.200000000000001,
+        3.8,
+        4.2
+      ],
+      "material": "magrun_magnet_y_pos"
+    },
+    "B_MAGNET_Y_NEG": {
+      "volume_mm3": 6.911999999999997,
+      "bbox_mm": [
+        9.4,
+        -3.8,
+        1.8,
+        14.200000000000001,
+        -3.2,
+        4.2
+      ],
+      "material": "magrun_magnet_y_neg"
+    },
+    "B_AF_COIL_COPPER": {
+      "volume_mm3": 16.42200000000002,
+      "bbox_mm": [
+        8.675,
+        -3.125,
+        1.7,
+        14.925,
+        3.125,
+        4.0
+      ],
+      "material": "copper"
+    },
+    "Region": {
+      "volume_mm3": 128345.95200000002,
+      "bbox_mm": [
+        -24.4,
+        -24.4,
+        -18.6,
+        36.2,
+        24.4,
+        24.800000000000004
+      ],
+      "material": "vacuum"
+    },
+    "MID_SHIELD": {
+      "volume_mm3": 2.991999999999985,
+      "bbox_mm": [
+        5.8500000000000005,
+        -4.4,
+        1.4000000000000001,
+        5.95,
+        4.4,
+        4.8
+      ],
+      "material": "shield_mumetall_vac_curve"
+    }
+  }
+}

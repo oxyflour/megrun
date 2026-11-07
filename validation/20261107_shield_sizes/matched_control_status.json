@@ -1,0 +1,16 @@
+{
+  "state": "Completed full-pass diagnostic and mesh-audited",
+  "independent_adaptive_convergence": false,
+  "same_corner_tetrahedron_set_verified": true,
+  "abort_requested": true,
+  "native_comengine_completion": "Normal Completion",
+  "used_only_for_paired_mesh_diagnostic": true,
+  "metrics": {
+    "points": 566,
+    "relative_L2_percent": 9.07809246920469,
+    "RMS_vector_error_mT": 0.13616678609290606,
+    "max_vector_error_mT": 1.4310398474096429,
+    "reference_change_RMS_mT": 1.499949318150483,
+    "predicted_change_RMS_mT": 1.470728843083059
+  }
+}

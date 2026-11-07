@@ -1,0 +1,135 @@
+{
+  "converged": true,
+  "iterations": 737,
+  "residual": 9.656759273225993e-09,
+  "seconds": 4.20727499993518,
+  "history": [
+    {
+      "iteration": 0,
+      "residual": 3.3036318191236367
+    },
+    {
+      "iteration": 25,
+      "residual": 0.30071620387697906
+    },
+    {
+      "iteration": 50,
+      "residual": 0.11547195331522143
+    },
+    {
+      "iteration": 75,
+      "residual": 0.06437955266212704
+    },
+    {
+      "iteration": 100,
+      "residual": 0.03875102925700616
+    },
+    {
+      "iteration": 125,
+      "residual": 0.0031822983079585836
+    },
+    {
+      "iteration": 150,
+      "residual": 0.0018445890745172478
+    },
+    {
+      "iteration": 175,
+      "residual": 0.001821457246599388
+    },
+    {
+      "iteration": 200,
+      "residual": 0.0018026742350205395
+    },
+    {
+      "iteration": 225,
+      "residual": 0.0014958431397829124
+    },
+    {
+      "iteration": 250,
+      "residual": 0.001021827403682864
+    },
+    {
+      "iteration": 275,
+      "residual": 0.0010172094515745207
+    },
+    {
+      "iteration": 300,
+      "residual": 0.00036383092164077904
+    },
+    {
+      "iteration": 325,
+      "residual": 0.0001218182414607991
+    },
+    {
+      "iteration": 350,
+      "residual": 4.2228632311105246e-05
+    },
+    {
+      "iteration": 375,
+      "residual": 3.399994131587116e-05
+    },
+    {
+      "iteration": 400,
+      "residual": 8.164841291601965e-06
+    },
+    {
+      "iteration": 425,
+      "residual": 4.921794115447818e-06
+    },
+    {
+      "iteration": 450,
+      "residual": 3.0806752634190972e-06
+    },
+    {
+      "iteration": 475,
+      "residual": 2.1126873802740385e-06
+    },
+    {
+      "iteration": 500,
+      "residual": 1.2295042437234708e-06
+    },
+    {
+      "iteration": 525,
+      "residual": 7.55312720651102e-07
+    },
+    {
+      "iteration": 550,
+      "residual": 5.262324754054019e-07
+    },
+    {
+      "iteration": 575,
+      "residual": 4.475159621363526e-07
+    },
+    {
+      "iteration": 600,
+      "residual": 2.1207188416761898e-07
+    },
+    {
+      "iteration": 625,
+      "residual": 9.16176656020172e-08
+    },
+    {
+      "iteration": 650,
+      "residual": 6.214273092740789e-08
+    },
+    {
+      "iteration": 675,
+      "residual": 3.714998228273083e-08
+    },
+    {
+      "iteration": 700,
+      "residual": 2.550746111931309e-08
+    },
+    {
+      "iteration": 725,
+      "residual": 1.4122865476099897e-08
+    },
+    {
+      "iteration": 737,
+      "residual": 9.656759273225993e-09
+    }
+  ],
+  "equations": "Original M=F(KM), no change in physical material or K",
+  "independent_CPU_material_residual": 9.656759273369925e-09,
+  "max_M_Apm": 1600085.7503763584
+}

@@ -1,0 +1,494 @@
+{
+  "schema_version": 1,
+  "source": {
+    "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\gap3mm_vacoflux50.aedt",
+    "design": "MT_Coarse",
+    "solution": "Reference : LastAdaptive",
+    "model_unit": "mm",
+    "source_check": [
+      {
+        "name": "A_AmpereTurns",
+        "type": "current"
+      },
+      {
+        "name": "B_AmpereTurns",
+        "type": "current"
+      }
+    ]
+  },
+  "objects": [
+    {
+      "name": "A_YOKE_SOFT_MAGNETIC",
+      "material": "magrun_steel_bh",
+      "properties": {
+        "kind": "nonlinear",
+        "bh_H_Apm_B_T": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            300.0,
+            1.9
+          ],
+          [
+            800.0,
+            2.1
+          ],
+          [
+            1600.0,
+            2.2
+          ],
+          [
+            4000.0,
+            2.255
+          ],
+          [
+            8000.0,
+            2.28
+          ],
+          [
+            16000.0,
+            2.3
+          ],
+          [
+            200000.0,
+            2.53122121930421
+          ]
+        ]
+      },
+      "properties_source": "aedt",
+      "mesh_npz": "mesh/0000_A_YOKE_SOFT_MAGNETIC.npz",
+      "mesh_raw": "mesh/0000_A_YOKE_SOFT_MAGNETIC.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 1298,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 1298,
+        "orientation_flipped": 0,
+        "volume_m3": 6.675000000000001e-08,
+        "bounds_min_m": [
+          -0.0044,
+          -0.0044,
+          0.0014
+        ],
+        "bounds_max_m": [
+          0.0044,
+          0.0044,
+          0.0048
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 0.0
+      }
+    },
+    {
+      "name": "A_MAGNET_X_POS",
+      "material": "magrun_magnet_x_pos",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "aedt",
+      "mesh_npz": "mesh/0001_A_MAGNET_X_POS.npz",
+      "mesh_raw": "mesh/0001_A_MAGNET_X_POS.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 98,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 98,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          0.0032,
+          -0.0024,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0038,
+          0.0024,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16
+      }
+    },
+    {
+      "name": "A_MAGNET_X_NEG",
+      "material": "magrun_magnet_x_neg",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "aedt",
+      "mesh_npz": "mesh/0002_A_MAGNET_X_NEG.npz",
+      "mesh_raw": "mesh/0002_A_MAGNET_X_NEG.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 103,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 103,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999997e-09,
+        "bounds_min_m": [
+          -0.0038,
+          -0.0024,
+          0.0018
+        ],
+        "bounds_max_m": [
+          -0.0032,
+          0.0024,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16
+      }
+    },
+    {
+      "name": "A_MAGNET_Y_POS",
+      "material": "magrun_magnet_y_pos",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "aedt",
+      "mesh_npz": "mesh/0003_A_MAGNET_Y_POS.npz",
+      "mesh_raw": "mesh/0003_A_MAGNET_Y_POS.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 114,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 114,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999997e-09,
+        "bounds_min_m": [
+          -0.0024,
+          0.0032,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0024,
+          0.0038,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16
+      }
+    },
+    {
+      "name": "A_MAGNET_Y_NEG",
+      "material": "magrun_magnet_y_neg",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "aedt",
+      "mesh_npz": "mesh/0004_A_MAGNET_Y_NEG.npz",
+      "mesh_raw": "mesh/0004_A_MAGNET_Y_NEG.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 114,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 114,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          -0.0024,
+          -0.0038,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0024,
+          -0.0032,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16
+      }
+    },
+    {
+      "name": "B_YOKE_SOFT_MAGNETIC",
+      "material": "magrun_steel_bh",
+      "properties": {
+        "kind": "nonlinear",
+        "bh_H_Apm_B_T": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            300.0,
+            1.9
+          ],
+          [
+            800.0,
+            2.1
+          ],
+          [
+            1600.0,
+            2.2
+          ],
+          [
+            4000.0,
+            2.255
+          ],
+          [
+            8000.0,
+            2.28
+          ],
+          [
+            16000.0,
+            2.3
+          ],
+          [
+            200000.0,
+            2.53122121930421
+          ]
+        ]
+      },
+      "properties_source": "aedt",
+      "mesh_npz": "mesh/0006_B_YOKE_SOFT_MAGNETIC.npz",
+      "mesh_raw": "mesh/0006_B_YOKE_SOFT_MAGNETIC.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 1388,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 1388,
+        "orientation_flipped": 0,
+        "volume_m3": 6.674999999999995e-08,
+        "bounds_min_m": [
+          0.0074,
+          -0.0044,
+          0.0014
+        ],
+        "bounds_max_m": [
+          0.0162,
+          0.0044,
+          0.0048
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.689251366200371e-16
+      }
+    },
+    {
+      "name": "B_MAGNET_X_POS",
+      "material": "magrun_magnet_x_pos",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "aedt",
+      "mesh_npz": "mesh/0007_B_MAGNET_X_POS.npz",
+      "mesh_raw": "mesh/0007_B_MAGNET_X_POS.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 126,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 126,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999997e-09,
+        "bounds_min_m": [
+          0.015,
+          -0.0024,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0156,
+          0.0024,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 3.9931856328176536e-16
+      }
+    },
+    {
+      "name": "B_MAGNET_X_NEG",
+      "material": "magrun_magnet_x_neg",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "aedt",
+      "mesh_npz": "mesh/0008_B_MAGNET_X_NEG.npz",
+      "mesh_raw": "mesh/0008_B_MAGNET_X_NEG.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 128,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 128,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          0.008,
+          -0.0024,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0086,
+          0.0024,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 3.9931856328176536e-16
+      }
+    },
+    {
+      "name": "B_MAGNET_Y_POS",
+      "material": "magrun_magnet_y_pos",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "aedt",
+      "mesh_npz": "mesh/0009_B_MAGNET_Y_POS.npz",
+      "mesh_raw": "mesh/0009_B_MAGNET_Y_POS.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 128,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 128,
+        "orientation_flipped": 0,
+        "volume_m3": 6.9119999999999985e-09,
+        "bounds_min_m": [
+          0.0094,
+          0.0032,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0142,
+          0.0038,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16
+      }
+    },
+    {
+      "name": "B_MAGNET_Y_NEG",
+      "material": "magrun_magnet_y_neg",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "aedt",
+      "mesh_npz": "mesh/0010_B_MAGNET_Y_NEG.npz",
+      "mesh_raw": "mesh/0010_B_MAGNET_Y_NEG.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 132,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 132,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          0.0094,
+          -0.0038,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0142,
+          -0.0032,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "name": "A_AF_COIL_COPPER",
+      "material": "copper",
+      "reason": "nonmagnetic mu_r≈1, Hc=0"
+    },
+    {
+      "name": "B_AF_COIL_COPPER",
+      "material": "copper",
+      "reason": "nonmagnetic mu_r≈1, Hc=0"
+    },
+    {
+      "name": "Region",
+      "material": "vacuum",
+      "reason": "air/vacuum"
+    },
+    {
+      "name": "A_Terminal",
+      "reason": "not 3D solid"
+    },
+    {
+      "name": "B_Terminal",
+      "reason": "not 3D solid"
+    }
+  ],
+  "points": "points.csv",
+  "maxwell_field": "maxwell_B.fld",
+  "mesh_unit": "m",
+  "total_magnetic_tetra": 3629
+}

@@ -1,0 +1,26 @@
+{
+  "receiver_quadrature_points": 4,
+  "geometry_sha256": "d8501aef563b92cbe9b7adbf7a1262e5d3c68a725d11dc24137174dddd50a34a",
+  "tiles": 1727,
+  "K_build_seconds": 282.5994806997478,
+  "new_K_built": true,
+  "native_averaged_H_check": 8.12769659204234e-16,
+  "symmetric_K_largest_eigenvalue": 6.910669590535286e-05,
+  "eigen_residual": 3.1397461299844324e-06,
+  "uses_eigenvalue_clipping": false,
+  "same_source_tensor": "MagTense native exact tetrahedron kernel",
+  "near_quadrature_points": 256,
+  "near_source_count_mean": 162.56340474811813,
+  "near_quadrature_rule": "red",
+  "linear1000": {
+    "converged": true,
+    "residual": 2.1143104874945255e-13,
+    "max_M_Apm": 1602447.3379217584,
+    "solver": "dense exact linear solve"
+  },
+  "real_bh": {
+    "converged": false,
+    "error": "NonConvergence('Nonlinear solver did not converge after 80 steps; final relative residual=0.07871')"
+  },
+  "elapsed_seconds": 310.66459159972146
+}

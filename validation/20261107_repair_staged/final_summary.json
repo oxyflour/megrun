@@ -1,0 +1,216 @@
+{
+  "date": "2026-11-07",
+  "status": "Completed real Maxwell/CuPy comparison; no user field-error threshold specified",
+  "case": "3 mm two-module magnetostatics, both coil excitations zero",
+  "material": {
+    "material": "VACOFLUX 50",
+    "condition": "Final magnetic annealing; strip thickness 0.35 mm; typical DC values",
+    "url": "https://vacuumschmelze.com/03_Documents/Brochures/Product%20Information%20Cobalt-Iron%20Alloys.pdf",
+    "pdf_page": 8,
+    "manufacturer_H_Apm": [
+      300.0,
+      800.0,
+      1600.0,
+      4000.0,
+      8000.0,
+      16000.0
+    ],
+    "manufacturer_B_T": [
+      1.9,
+      2.1,
+      2.2,
+      2.255,
+      2.28,
+      2.3
+    ],
+    "model_assumptions": [
+      "Origin (0,0) added for a single-valued non-hysteretic law",
+      "Piecewise-linear interpolation; not a dense measured dataset",
+      "Above 16000 A/m use constant M, dB/dH=mu0; final endpoint is a model assumption",
+      "Isotropic DC approximation; typical values do not identify the actual camera alloy",
+      "Original permanent-magnet Br=1.2 T, recoil mu_r=1.05 and directions retained"
+    ]
+  },
+  "other_materials": {
+    "permanent_magnets": "Original Br=1.2 T, isotropic recoil mu_r=1.05 and directions retained",
+    "copper": "Weak diamagnetism mu_r=0.999991 replaced by 1 in both solvers"
+  },
+  "maxwell": {
+    "version": "2022 R2",
+    "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_reference.aedt",
+    "design": "Gap_3mm_CCW",
+    "setup": "Reference",
+    "completion": "Normal Completion",
+    "passes": 5,
+    "total_tetrahedra": 333613,
+    "energy_error_percent": 0.35169,
+    "delta_energy_percent": 0.010764,
+    "target_percent": 0.5,
+    "minimum_converged_passes": 2,
+    "wall_seconds": 615.2353113000281,
+    "BH_smoothing": false,
+    "nonlinear_residual_setting": 1e-05,
+    "constitutive_field_audit": {
+      "material_readback_matches_csv": true,
+      "sample_count": 200,
+      "H_min_Apm": 7.97355674666683,
+      "H_max_Apm": 244.91741682174836,
+      "B_H_curve_median_relative_difference": 1.4935668984770104e-16,
+      "B_H_curve_p95_relative_difference": 3.945161494483677e-16,
+      "B_H_curve_max_relative_difference": 0.06468904621598429,
+      "material_properties": {
+        "kind": "nonlinear",
+        "bh_H_Apm_B_T": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            300.0,
+            1.9
+          ],
+          [
+            800.0,
+            2.1
+          ],
+          [
+            1600.0,
+            2.2
+          ],
+          [
+            4000.0,
+            2.255
+          ],
+          [
+            8000.0,
+            2.28
+          ],
+          [
+            16000.0,
+            2.3
+          ],
+          [
+            200000.0,
+            2.53122121930421
+          ]
+        ]
+      }
+    }
+  },
+  "magtense_cupy": {
+    "magtense_version": "3.0.1",
+    "gpu": "NVIDIA GeForce RTX 3090 Ti",
+    "magnetic_tetrahedra": 3629,
+    "per_object": {
+      "A_YOKE_SOFT_MAGNETIC": 1298,
+      "A_MAGNET_X_POS": 98,
+      "A_MAGNET_X_NEG": 103,
+      "A_MAGNET_Y_POS": 114,
+      "A_MAGNET_Y_NEG": 114,
+      "B_YOKE_SOFT_MAGNETIC": 1388,
+      "B_MAGNET_X_POS": 126,
+      "B_MAGNET_X_NEG": 128,
+      "B_MAGNET_Y_POS": 128,
+      "B_MAGNET_Y_NEG": 132
+    },
+    "precision": "float64",
+    "operator": "Receiving-volume average of native source kernel",
+    "far_quadrature": 4,
+    "near_quadrature": 256,
+    "near_factor": 1.5,
+    "method": "Implicit material proximal with safeguarded Anderson mixing",
+    "iterations": 734,
+    "relative_material_residual": 9.911949518686566e-09,
+    "independent_CPU_residual": 9.91196796064835e-09,
+    "native_average_K_H_check": 1.2527953870048438e-15,
+    "K_GB": 0.948214152,
+    "first_K_base_seconds": 185.57751460000873,
+    "first_K_near_seconds": 596.3987298002467,
+    "first_K_total_seconds": 781.9762444002554,
+    "GPU_iteration_seconds": 3.8103872002102435,
+    "packaged_runtime_cache_load_seconds": 0.8222177000716329,
+    "packaged_runtime_used_attested_identical_cached_K": true,
+    "spectrum_clipping": false,
+    "working_range": {
+      "nonlinear_tiles": 2686,
+      "min_H_Apm": 1.0119714544253198,
+      "max_H_Apm": 1230.504236112741,
+      "below_first_manufacturer_knot_H300": 2677,
+      "above_last_manufacturer_knot_H16000": 0,
+      "beyond_model_endpoint_H200000": 0,
+      "independent_CPU_material_residual": 9.91196796064835e-09,
+      "max_magnetization_Apm": 1712719.447282277
+    }
+  },
+  "field_comparison": {
+    "all": {
+      "points": 485,
+      "relative_L2_percent": 3.6550938781029574,
+      "RMS_vector_error_mT": 1.4815077789737512,
+      "max_vector_error_mT": 7.493162121334893
+    },
+    "far_top_3mm": {
+      "points": 101,
+      "relative_L2_percent": 2.7780418949787795,
+      "RMS_vector_error_mT": 0.29816131390803957,
+      "max_vector_error_mT": 1.1101186507404792
+    },
+    "gap_vertical": {
+      "points": 81,
+      "relative_L2_percent": 4.575394038024769,
+      "RMS_vector_error_mT": 0.4640360951570315,
+      "max_vector_error_mT": 1.6399849007546865
+    },
+    "near_top_0.5mm": {
+      "points": 303,
+      "relative_L2_percent": 3.655540348024681,
+      "RMS_vector_error_mT": 1.8509555677759941,
+      "max_vector_error_mT": 7.493162121334893
+    }
+  },
+  "air_field_limit_evaluation": {
+    "regularized_indices": [
+      464
+    ],
+    "coordinates_unchanged": true,
+    "method": "two-direction symmetric Richardson limit in verified air",
+    "limits": [
+      {
+        "index": 464,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 4.104135324085095e-05
+      }
+    ]
+  },
+  "finite_worst_point_native_limit_max_difference_mT": 1.9006253274032596e-07,
+  "verification": {
+    "pytest_passed": 44,
+    "pytest_skipped": 1,
+    "skip_reason": "Optional standalone Fortran patch test requires gfortran",
+    "native_export_verified_with_legacy_pyaedt": "0.8.11",
+    "CLI_backends_and_precisions": [
+      "NumPy float64",
+      "CuPy float64",
+      "CuPy float32"
+    ],
+    "original_files_unchanged": {
+      "original_project": "C:\\Projects\\magrun\\outputs\\maxwell_verified\\gap_3mm_reference.aedt",
+      "original_project_sha256_before": "5ff82b5011a2447f5611b1448412bb730a0a6a806b69a115e4caf199c60a2116",
+      "original_project_sha256_after": "5ff82b5011a2447f5611b1448412bb730a0a6a806b69a115e4caf199c60a2116",
+      "original_v2_zip_sha256_after": "7af35276baebdce853612e570fc8fdd8b7c3c244687e000ca3342bcdc8e51c36",
+      "original_v2_zip_sha256_before": "7af35276baebdce853612e570fc8fdd8b7c3c244687e000ca3342bcdc8e51c36",
+      "original_project_unchanged": true,
+      "original_v2_zip_unchanged": true
+    }
+  },
+  "limitations": [
+    "Manufacturer typical DC table is sparse (first nonzero H=300 A/m), not a dense measured curve for the original camera alloy.",
+    "Most yoke observations operate below the first manufacturer knot; behavior there depends on the added origin and interpolation.",
+    "Isotropic, single-valued, no hysteresis; TET10 meshes linearized to four corners; uniform magnetization per magnetic tetrahedron.",
+    "Maxwell energy convergence is not a strict bound for the sampled B field. No additional air-boundary or magnetic-tile refinement study was performed.",
+    "Material tolerance, remanence tolerance, assembly tolerance, live coils and force accuracy are outside this benchmark.",
+    "The final material residual is not a field-error bound. No same-accuracy total speedup has been established.",
+    "Raw failure records and raw nonfinite native-field output are retained; final field data use a checked limit at one nominal air point."
+  ],
+  "recommended_command": "python gpu_solver.py --out out --backend cupy --dtype float64 --operator volume --method proximal --tol 1e-8 --cache-k"
+}

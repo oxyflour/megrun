@@ -1,0 +1,97 @@
+{
+  "point_indices": [
+    241,
+    245,
+    243,
+    228,
+    189,
+    286,
+    419,
+    162,
+    91,
+    191
+  ],
+  "nominal_coordinates_unchanged": true,
+  "native_vs_certified_limit_difference_mT": [
+    2.090059369586992e-08,
+    6.119486344394893e-08,
+    1.0902825575282408e-07,
+    1.559654741752672e-08,
+    1.914281190582369e-07,
+    1.4097444456621841e-08,
+    2.821920545327406e-08,
+    5.178952811122126e-08,
+    1.717615321442937e-08,
+    4.7140116647599286e-08
+  ],
+  "maximum_difference_mT": 1.914281190582369e-07,
+  "maximum_Maxwell_error_mT": 7.386244501024573,
+  "limit_checks": {
+    "regularized_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "coordinates_unchanged": true,
+    "method": "two-direction symmetric Richardson limit in verified air",
+    "limits": [
+      {
+        "index": 0,
+        "step_m": 1.1328724553099526e-05,
+        "limit_difference_Apm": 0.0003118784614460139
+      },
+      {
+        "index": 1,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 0.001119552813259437
+      },
+      {
+        "index": 2,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 0.0015306931955526685
+      },
+      {
+        "index": 3,
+        "step_m": 1.1328724553099526e-05,
+        "limit_difference_Apm": 0.0004299636021024504
+      },
+      {
+        "index": 4,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 0.0031447001762409765
+      },
+      {
+        "index": 5,
+        "step_m": 1.1328724553099526e-05,
+        "limit_difference_Apm": 0.00040672866025937514
+      },
+      {
+        "index": 6,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 0.00044481233712609684
+      },
+      {
+        "index": 7,
+        "step_m": 1.1328724553099526e-05,
+        "limit_difference_Apm": 0.0008727067057631198
+      },
+      {
+        "index": 8,
+        "step_m": 1.1328724553099526e-05,
+        "limit_difference_Apm": 0.0004393082953053842
+      },
+      {
+        "index": 9,
+        "step_m": 1.1328724553099526e-05,
+        "limit_difference_Apm": 0.0007632662022357564
+      }
+    ]
+  }
+}

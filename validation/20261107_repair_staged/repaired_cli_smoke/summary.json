@@ -1,0 +1,23 @@
+[
+  {
+    "backend": "numpy",
+    "dtype": "float64",
+    "exact_linear_relative_M_error": 7.92927433108816e-12,
+    "reported_residual": 7.863476146230101e-12,
+    "native_check": 1.9787759515960164e-16
+  },
+  {
+    "backend": "cupy",
+    "dtype": "float64",
+    "exact_linear_relative_M_error": 7.929274208910084e-12,
+    "reported_residual": 7.863475861829435e-12,
+    "native_check": 2.443512062237256e-16
+  },
+  {
+    "backend": "cupy",
+    "dtype": "float32",
+    "exact_linear_relative_M_error": 3.507733753732734e-08,
+    "reported_residual": 2.672050052362391e-08,
+    "native_check": 5.8690701621373146e-08
+  }
+]

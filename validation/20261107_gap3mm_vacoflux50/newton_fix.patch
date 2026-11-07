@@ -1,0 +1,17 @@
+--- original/gpu_solver.py
++++ corrected/gpu_solver.py
+@@ -378,8 +378,12 @@
+         success = False
+         for _ in range(13):
+             trial = M + step*delta
+-            _, _, new_rel = state(trial)
+-            if np.isfinite(new_rel) and new_rel < rel:
++            trial_R, _, new_rel = state(trial)
++            # Use a fixed merit function for globalization. A changing ||M||
++            # denominator can accept steps that increase ||R|| or reject descent.
++            trial_abs = as_float(xp.linalg.norm(trial_R))
++            current_abs = as_float(xp.linalg.norm(R))
++            if np.isfinite(new_rel) and trial_abs < (1.0 - 1e-4*step)*current_abs:
+                 M = trial
+                 success = True
+                 break

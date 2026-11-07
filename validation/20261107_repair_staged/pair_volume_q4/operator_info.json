@@ -1,0 +1,13 @@
+{
+  "receiver_quadrature_points": 4,
+  "geometry_sha256": "c1bf3570f7470a9ec7beb761a47723a42b0e6a5e698d78b8d22537c8959e4f19",
+  "tiles": 3629,
+  "K_build_seconds": 185.57751460000873,
+  "new_K_built": true,
+  "native_averaged_H_check": 1.0065327955042167e-15,
+  "symmetric_K_largest_eigenvalue": 0.0038689019252201506,
+  "eigen_residual": 4.127205911519857e-08,
+  "uses_eigenvalue_clipping": false,
+  "eigen_estimate_converged": true,
+  "same_source_tensor": "MagTense native exact tetrahedron kernel"
+}

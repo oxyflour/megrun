@@ -1,0 +1,5 @@
+{
+  "state": "Control unavailable",
+  "reason": "Fixed-mesh control failed or was aborted",
+  "used_for_accuracy": false
+}

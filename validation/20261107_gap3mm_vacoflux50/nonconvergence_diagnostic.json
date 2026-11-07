@@ -1,0 +1,212 @@
+{
+  "purpose": "Read-only replay/diagnosis of the failed first two Newton steps",
+  "seconds": 2.074550200253725,
+  "records": [
+    {
+      "iteration": 0,
+      "relative_residual": 3.20534524537673,
+      "absolute_residual": 93994413.49249105,
+      "gmres_info": 0,
+      "actual_linear_relative_residual": 6.7302028485462716e-06,
+      "M_norm": 29324271.270954378,
+      "delta_norm": 123542849.93195046,
+      "selected_original_step": 1.0,
+      "trials": [
+        {
+          "step": 1.0,
+          "absolute_residual": 193513814.71551168,
+          "relative_residual": 1.525067786853405,
+          "absolute_ratio": 2.0587799585660584,
+          "relative_ratio": 0.4757889307097592
+        },
+        {
+          "step": 0.5,
+          "absolute_residual": 134134307.88187635,
+          "relative_residual": 1.9639571721443596,
+          "absolute_ratio": 1.4270455327921372,
+          "relative_ratio": 0.6127131468839738
+        },
+        {
+          "step": 0.25,
+          "absolute_residual": 100206769.58373539,
+          "relative_residual": 2.356445867467303,
+          "absolute_ratio": 1.0660928225456785,
+          "relative_ratio": 0.7351613280554262
+        },
+        {
+          "step": 0.125,
+          "absolute_residual": 89419062.32998277,
+          "relative_residual": 2.701441858670774,
+          "absolute_ratio": 0.9513231585526751,
+          "relative_ratio": 0.8427927888788993
+        },
+        {
+          "step": 0.0625,
+          "absolute_residual": 90400099.94188488,
+          "relative_residual": 2.9833921883458463,
+          "absolute_ratio": 0.9617603491840149,
+          "relative_ratio": 0.9307553352166914
+        },
+        {
+          "step": 0.03125,
+          "absolute_residual": 90682708.15812165,
+          "relative_residual": 3.06716023520551,
+          "absolute_ratio": 0.9647669982574659,
+          "relative_ratio": 0.9568891961418095
+        },
+        {
+          "step": 0.015625,
+          "absolute_residual": 92287440.32037239,
+          "relative_residual": 3.1409638970074267,
+          "absolute_ratio": 0.9818396316473103,
+          "relative_ratio": 0.9799143794378579
+        },
+        {
+          "step": 0.0078125,
+          "absolute_residual": 93241946.48098041,
+          "relative_residual": 3.178281632120139,
+          "absolute_ratio": 0.9919945560214517,
+          "relative_ratio": 0.9915567244135007
+        },
+        {
+          "step": 0.00390625,
+          "absolute_residual": 93623210.9164696,
+          "relative_residual": 3.1924140414021407,
+          "absolute_ratio": 0.9960508017207735,
+          "relative_ratio": 0.9959657375462937
+        },
+        {
+          "step": 0.001953125,
+          "absolute_residual": 93809839.37657797,
+          "relative_residual": 3.1990226834450097,
+          "absolute_ratio": 0.9980363288725896,
+          "relative_ratio": 0.9980274942486025
+        },
+        {
+          "step": 0.0009765625,
+          "absolute_residual": 93902390.29976428,
+          "relative_residual": 3.202207121606271,
+          "absolute_ratio": 0.9990209716800443,
+          "relative_ratio": 0.9990209716800443
+        },
+        {
+          "step": 0.00048828125,
+          "absolute_residual": 93948454.1669602,
+          "relative_residual": 3.203777966002378,
+          "absolute_ratio": 0.9995110419457586,
+          "relative_ratio": 0.9995110419457585
+        },
+        {
+          "step": 0.000244140625,
+          "absolute_residual": 93971454.15835036,
+          "relative_residual": 3.204562298925016,
+          "absolute_ratio": 0.999755737247698,
+          "relative_ratio": 0.999755737247698
+        }
+      ]
+    },
+    {
+      "iteration": 1,
+      "relative_residual": 1.525067786853405,
+      "absolute_residual": 193513814.71551168,
+      "gmres_info": 0,
+      "actual_linear_relative_residual": 4.2957239606490344e-09,
+      "M_norm": 126888664.4801402,
+      "delta_norm": 206950958.33682445,
+      "selected_original_step": null,
+      "trials": [
+        {
+          "step": 1.0,
+          "absolute_residual": 188688449.56889084,
+          "relative_residual": 1.7725294580775535,
+          "absolute_ratio": 0.9750644926631481,
+          "relative_ratio": 1.1622627357008986
+        },
+        {
+          "step": 0.5,
+          "absolute_residual": 116276819.03330563,
+          "relative_residual": 2.1196829057354476,
+          "absolute_ratio": 0.6008708949500395,
+          "relative_ratio": 1.389894222412816
+        },
+        {
+          "step": 0.25,
+          "absolute_residual": 147188578.44410738,
+          "relative_residual": 1.774754494670132,
+          "absolute_ratio": 0.7606101851720101,
+          "relative_ratio": 1.1637217112374347
+        },
+        {
+          "step": 0.125,
+          "absolute_residual": 171522028.34472263,
+          "relative_residual": 1.6489268580201155,
+          "absolute_ratio": 0.8863554707806283,
+          "relative_ratio": 1.081215453001117
+        },
+        {
+          "step": 0.0625,
+          "absolute_residual": 181908431.88299286,
+          "relative_residual": 1.5777502108396992,
+          "absolute_ratio": 0.9400281429541343,
+          "relative_ratio": 1.034544316285764
+        },
+        {
+          "step": 0.03125,
+          "absolute_residual": 187526840.6186764,
+          "relative_residual": 1.5490609661215744,
+          "absolute_ratio": 0.9690617741909701,
+          "relative_ratio": 1.01573253298968
+        },
+        {
+          "step": 0.015625,
+          "absolute_residual": 190500978.85578492,
+          "relative_residual": 1.5367241151844286,
+          "absolute_ratio": 0.98443090037703,
+          "relative_ratio": 1.007643154246326
+        },
+        {
+          "step": 0.0078125,
+          "absolute_residual": 192004386.83858022,
+          "relative_residual": 1.5308272998195007,
+          "absolute_ratio": 0.9921998960169821,
+          "relative_ratio": 1.0037765619441605
+        },
+        {
+          "step": 0.00390625,
+          "absolute_residual": 192758477.9498805,
+          "relative_residual": 1.5279315734316763,
+          "absolute_ratio": 0.9960967294932322,
+          "relative_ratio": 1.0018778093688412
+        },
+        {
+          "step": 0.001953125,
+          "absolute_residual": 193136000.23415554,
+          "relative_residual": 1.5264957820064253,
+          "absolute_ratio": 0.9980476097692995,
+          "relative_ratio": 1.000936348643208
+        },
+        {
+          "step": 0.0009765625,
+          "absolute_residual": 193324871.63599816,
+          "relative_residual": 1.5257808175272123,
+          "absolute_ratio": 0.999023619684252,
+          "relative_ratio": 1.0004675403152266
+        },
+        {
+          "step": 0.00048828125,
+          "absolute_residual": 193419334.32671735,
+          "relative_residual": 1.5254240616119743,
+          "absolute_ratio": 0.9995117641139304,
+          "relative_ratio": 1.0002336124083404
+        },
+        {
+          "step": 0.000244140625,
+          "absolute_residual": 193466572.32214463,
+          "relative_residual": 1.5252458642269628,
+          "absolute_ratio": 0.9997558706935911,
+          "relative_ratio": 1.0001167668579016
+        }
+      ]
+    }
+  ]
+}

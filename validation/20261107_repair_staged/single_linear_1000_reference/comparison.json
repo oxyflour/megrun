@@ -1,0 +1,8 @@
+{
+  "reference": "Maxwell independently solved staged material, same air points",
+  "B_relative_L2": 0.04592217626717085,
+  "B_RMS_vector_error_T": 0.001314035327445195,
+  "B_max_vector_error_T": 0.013385345161076447,
+  "native_normal_completion": true,
+  "native_convergence_text": "Setup : Reference\n\n==================\nNumber of Passes\nCompleted : 6\nMaximum   : 6\nMinimum   : 2\n==================\nCriterion : Energy Error/Delta Energy (%)\nTarget    : (0.5, 0.5)\nCurrent   : (0.31936, 0.011825)\n==================\nPass|# Tetrahedra|Total Energy (J)|Energy Error (%)|Delta Energy (%)|\n   1|       48414|       0.0062513|          1.4003|             N/A|\n   2|       62943|       0.0062505|         0.96121|        0.013226|\n   3|       81832|        0.006252|         0.69713|        0.024019|\n   4|      106387|       0.0062541|         0.54514|        0.033304|\n   5|      138313|       0.0062556|         0.41574|        0.024482|\n   6|      179814|       0.0062563|         0.31936|        0.011825|\n\n"
+}

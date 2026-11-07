@@ -1,0 +1,15 @@
+{
+  "state": "Three main-size comparisons completed; mesh-refinement check failed to reach the required residual",
+  "budget": {
+    "started_UTC": "2026-11-07T07:09:59.643703+00:00",
+    "ended_UTC": "2026-11-07T08:22:43.244426+00:00",
+    "elapsed_seconds": 4363.600723,
+    "approved_seconds": 4500,
+    "within_approved_budget": true
+  },
+  "main_sizes_completed": 3,
+  "refinement_converged": false,
+  "all_native_solves_stopped": true,
+  "source_projects_unchanged": true,
+  "report": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\FINAL_REPORT.txt"
+}

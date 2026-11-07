@@ -1,0 +1,62 @@
+{
+  "magrun_steel_bh": {
+    "matches_input_knots": true,
+    "properties": {
+      "kind": "nonlinear",
+      "bh_H_Apm_B_T": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          300.0,
+          1.9
+        ],
+        [
+          800.0,
+          2.1
+        ],
+        [
+          1600.0,
+          2.2
+        ],
+        [
+          4000.0,
+          2.255
+        ],
+        [
+          8000.0,
+          2.28
+        ],
+        [
+          16000.0,
+          2.3
+        ],
+        [
+          200000.0,
+          2.53122121930421
+        ]
+      ]
+    }
+  },
+  "A_YOKE_SOFT_MAGNETIC": {
+    "samples": 200,
+    "H_min_Apm": 5.651835082459371,
+    "H_max_Apm": 209.9441929015219,
+    "B_min_T": 0.03579495552224268,
+    "B_max_T": 1.3286574482679843,
+    "BH_relative_difference_median": 1.3175360058317138e-16,
+    "BH_relative_difference_p95": 3.7416107292299856e-16,
+    "BH_relative_difference_max": 0.009238419430834857
+  },
+  "B_YOKE_SOFT_MAGNETIC": {
+    "samples": 200,
+    "H_min_Apm": 4.6203251379543895,
+    "H_max_Apm": 189.59704145904672,
+    "B_min_T": 0.02926205920704447,
+    "B_max_T": 1.2007812625739627,
+    "BH_relative_difference_median": 1.463367453869951e-16,
+    "BH_relative_difference_p95": 3.8092085433511207e-16,
+    "BH_relative_difference_max": 0.014638054349245882
+  }
+}

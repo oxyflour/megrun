@@ -1,0 +1,80 @@
+{
+  "Stage_PM_A": {
+    "case": "single_pm",
+    "setup": {
+      "ID": 0,
+      "SetupType": "Magnetostatic",
+      "Enabled": true,
+      "MeshLink": {
+        "ImportMesh": true,
+        "Product": "Maxwell",
+        "Design": "MT_Coarse",
+        "Project": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\gap3mm_vacoflux50.aedt",
+        "PathRelativeTo": "SourceProduct",
+        "Soln": "Reference : LastAdaptive",
+        "Params": {},
+        "ForceSourceToSolve": false,
+        "PreservePartnerSoln": true,
+        "ApplyMeshOp": false,
+        "AdaptPort": true
+      },
+      "MaximumPasses": 6,
+      "MinimumPasses": 2,
+      "MinimumConvergedPasses": 2,
+      "PercentRefinement": 30,
+      "SolveFieldOnly": false,
+      "PercentError": 0.5,
+      "SolveMatrixAtLast": true,
+      "UseNonLinearIterNum": false,
+      "UseIterativeSolver": false,
+      "RelativeResidual": 1e-06,
+      "NonLinearResidual": 1e-06,
+      "SmoothBHCurve": false,
+      "MuOption": {
+        "MuNonLinearBH": true
+      }
+    },
+    "mesh_source": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\gap3mm_vacoflux50.aedt",
+    "current_A_turn": 0,
+    "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\staged_controls_v2.aedt"
+  },
+  "Stage_Linear1000_A": {
+    "case": "single_linear_1000",
+    "setup": {
+      "ID": 0,
+      "SetupType": "Magnetostatic",
+      "Enabled": true,
+      "MeshLink": {
+        "ImportMesh": true,
+        "Product": "Maxwell",
+        "Design": "MT_Coarse",
+        "Project": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\gap3mm_vacoflux50.aedt",
+        "PathRelativeTo": "SourceProduct",
+        "Soln": "Reference : LastAdaptive",
+        "Params": {},
+        "ForceSourceToSolve": false,
+        "PreservePartnerSoln": true,
+        "ApplyMeshOp": false,
+        "AdaptPort": true
+      },
+      "MaximumPasses": 6,
+      "MinimumPasses": 2,
+      "MinimumConvergedPasses": 2,
+      "PercentRefinement": 30,
+      "SolveFieldOnly": false,
+      "PercentError": 0.5,
+      "SolveMatrixAtLast": true,
+      "UseNonLinearIterNum": false,
+      "UseIterativeSolver": false,
+      "RelativeResidual": 1e-06,
+      "NonLinearResidual": 1e-06,
+      "SmoothBHCurve": false,
+      "MuOption": {
+        "MuNonLinearBH": true
+      }
+    },
+    "mesh_source": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\gap3mm_vacoflux50.aedt",
+    "current_A_turn": 0,
+    "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\staged_controls_v2.aedt"
+  }
+}

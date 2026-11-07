@@ -1,0 +1,14 @@
+{
+  "raw_prediction": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\pair_volume_q4_near_red_q256\\proximal_real_bh_B.csv",
+  "indices": [
+    464
+  ],
+  "coordinates_m": [
+    [
+      0.005900000000000001,
+      0.0,
+      0.004450000000000001
+    ]
+  ],
+  "note": "Raw native air field has removable singularities; no points have been dropped"
+}

@@ -1,0 +1,58 @@
+{
+  "converged": true,
+  "iterations": 4,
+  "residual": 2.801900256041683e-16,
+  "residual_history": [
+    74315.00538592595,
+    0.05661334847110627,
+    0.0004614097996543498,
+    4.169602113236726e-08,
+    2.801900256041683e-16
+  ],
+  "solve_seconds": 0.2650131001137197,
+  "method": "newton",
+  "loaded_from_cache": true,
+  "K_build_or_load_seconds": 0.0027461997233331203,
+  "K_GB": 2.88e-07,
+  "dtype": "float64",
+  "tiles": 2,
+  "backend": "cupy",
+  "max_tiles": 10000,
+  "H_uniform_Apm": [
+    65000.0,
+    0.0,
+    0.0
+  ],
+  "nonlinear_curves": 2,
+  "source": {
+    "project": "SYNTHETIC TEST - NOT MAXWELL",
+    "design": "two_distinct_bh",
+    "solution": "none",
+    "model_unit": "m"
+  },
+  "tile_stats": {
+    "tiles": 2,
+    "per_object": {
+      "soft_0": 1,
+      "soft_1": 1
+    },
+    "nonlinear_state_functions": 2,
+    "nonlinear_material_assignments": [
+      {
+        "object": "soft_0",
+        "material": "SYNTHETIC_BH_0",
+        "state_function_index": 1,
+        "original_bh_knots": 4
+      },
+      {
+        "object": "soft_1",
+        "material": "SYNTHETIC_BH_1",
+        "state_function_index": 2,
+        "original_bh_knots": 4
+      }
+    ],
+    "dense_tensor_GB_reference": 0.0
+  },
+  "output": "gpu_B.csv",
+  "K_magtense_field_check_relative_error": 1.1274616786700056e-16
+}

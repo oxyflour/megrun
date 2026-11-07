@@ -1,0 +1,19 @@
+Setup : Reference
+
+==================
+Number of Passes
+Completed : 5
+Maximum   : 8
+Minimum   : 3
+==================
+Criterion : Energy Error/Delta Energy (%)
+Target    : (0.5, 0.5)
+Current   : (0.31461, 0.011892)
+==================
+Pass|# Tetrahedra|Total Energy (J)|Energy Error (%)|Delta Energy (%)|
+   1|      133592|        0.012486|          2.2557|             N/A|
+   2|      173675|        0.012503|         0.93889|         0.13965|
+   3|      225785|        0.012509|          0.6111|        0.050487|
+   4|      293528|        0.012511|         0.43811|        0.010808|
+   5|      381591|        0.012512|         0.31461|        0.011892|
+

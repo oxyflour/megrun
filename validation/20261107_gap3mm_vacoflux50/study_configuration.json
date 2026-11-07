@@ -1,0 +1,135 @@
+{
+  "state": "Ready; no solve submitted",
+  "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\gap3mm_vacoflux50.aedt",
+  "project_sha256": "49552187f3f7126c15fdf4e47667e004e448d3920ca700f13721de120aedef4d",
+  "source_unchanged": true,
+  "current_A_turn": 0,
+  "copper_mu_r_original": "0.999991",
+  "copper_mu_r_for_both_solvers": 1.0,
+  "copper_note": "Weak diamagnetism omitted in both models; zero-current copper is nonmagnetic",
+  "studies": {
+    "Gap_3mm_CCW": {
+      "boundaries": [
+        {
+          "name": "A_AmpereTurns",
+          "type": "Current",
+          "properties": {
+            "ID": 0,
+            "BoundType": "Current",
+            "IsComponent": false,
+            "Objects": [
+              494
+            ],
+            "ParentBndID": -1,
+            "Current": "0A",
+            "IsSolid": false,
+            "Point out of terminal": false
+          }
+        },
+        {
+          "name": "B_AmpereTurns",
+          "type": "Current",
+          "properties": {
+            "ID": 1,
+            "BoundType": "Current",
+            "IsComponent": false,
+            "Objects": [
+              506
+            ],
+            "ParentBndID": -1,
+            "Current": "0A",
+            "IsSolid": false,
+            "Point out of terminal": false
+          }
+        }
+      ],
+      "setup": {
+        "ID": 0,
+        "SetupType": "Magnetostatic",
+        "Enabled": true,
+        "MeshLink": {
+          "ImportMesh": false
+        },
+        "MaximumPasses": 8,
+        "MinimumPasses": 3,
+        "MinimumConvergedPasses": 2,
+        "PercentRefinement": 30,
+        "SolveFieldOnly": false,
+        "PercentError": 0.5,
+        "SolveMatrixAtLast": true,
+        "UseNonLinearIterNum": false,
+        "UseIterativeSolver": false,
+        "RelativeResidual": 1e-06,
+        "NonLinearResidual": 1e-05,
+        "SmoothBHCurve": false,
+        "MuOption": {
+          "MuNonLinearBH": true
+        }
+      },
+      "native_validation": 1
+    },
+    "MT_Coarse": {
+      "boundaries": [
+        {
+          "name": "A_AmpereTurns",
+          "type": "Current",
+          "properties": {
+            "ID": 0,
+            "BoundType": "Current",
+            "IsComponent": false,
+            "Objects": [
+              494
+            ],
+            "ParentBndID": -1,
+            "Current": "0A",
+            "IsSolid": false,
+            "Point out of terminal": false
+          }
+        },
+        {
+          "name": "B_AmpereTurns",
+          "type": "Current",
+          "properties": {
+            "ID": 1,
+            "BoundType": "Current",
+            "IsComponent": false,
+            "Objects": [
+              506
+            ],
+            "ParentBndID": -1,
+            "Current": "0A",
+            "IsSolid": false,
+            "Point out of terminal": false
+          }
+        }
+      ],
+      "setup": {
+        "ID": 0,
+        "SetupType": "Magnetostatic",
+        "Enabled": true,
+        "MeshLink": {
+          "ImportMesh": false
+        },
+        "MaximumPasses": 1,
+        "MinimumPasses": 1,
+        "MinimumConvergedPasses": 1,
+        "PercentRefinement": 30,
+        "SolveFieldOnly": false,
+        "PercentError": 0.5,
+        "SolveMatrixAtLast": true,
+        "UseNonLinearIterNum": false,
+        "UseIterativeSolver": false,
+        "RelativeResidual": 1e-06,
+        "NonLinearResidual": 1e-05,
+        "SmoothBHCurve": false,
+        "MuOption": {
+          "MuNonLinearBH": true
+        }
+      },
+      "native_validation": 1
+    }
+  },
+  "point_count": 485,
+  "seconds": 10.2296321997419,
+  "fine_reference_is_not_the_old_solved_material": true
+}

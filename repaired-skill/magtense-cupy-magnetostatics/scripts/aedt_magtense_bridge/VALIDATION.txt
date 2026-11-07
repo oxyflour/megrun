@@ -1,0 +1,33 @@
+AEDT → MagTense multi-nonlinear-BH patch
+==========================================
+2026-11-06
+
+Offline command:
+    python -m pytest -q
+Result:
+    21 passed
+
+Coverage:
+ - Original TET4/TET10 AEDTPLT mesh conversion and unit checks
+ - Maxwell material extraction, source checks and air sample restrictions
+ - Multiple independent nonlinear B(H) curves and M(H) conversion
+ - Different original knot counts preserved without resampling
+ - Exact matching curves share the same 1-based stateFunctionIndex
+ - Different curves receive independent Fortran 3D table slices
+ - Native F2PY call arguments and previous single-curve compatibility
+ - Detection of unpatched Python / old compiled native module
+ - Source patch layout, idempotence and refusal to apply on unknown upstream
+ - gfortran compiled/ran the exact replacement loader loop with two
+   independent ragged material tables and legacy header compatibility
+ - Full synthetic bridge.py solve CLI with 2 nonlinear materials (native mocked)
+
+Also checked on public MagTense master source: the required source anchors
+are present, the Fortran wrapper has 2 rank-2 declarations, loader 1 rank-2
+declaration and Python has 2 rank-2 call sites.
+
+NOT VERIFIED IN THIS ENVIRONMENT:
+ - Building the complete upstream MagTense Fortran extension from source
+ - Running the modified native MagTense physics solver
+ - Ansys Maxwell AEDT licensing/project and real-world accuracy comparison
+
+Run: python native_smoke.py once MagTense has been rebuilt and installed.

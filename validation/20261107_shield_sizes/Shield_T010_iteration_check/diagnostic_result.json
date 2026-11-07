@@ -1,0 +1,13 @@
+{
+  "purpose": "Determine whether default 6000-step cap caused the failure; no Maxwell retry",
+  "maxiter": 12000,
+  "tolerance": 1e-08,
+  "original_K_and_materials_reused": true,
+  "seconds": 77.73259969986975,
+  "returncode": 0,
+  "converged": true,
+  "iterations": 6508,
+  "residual": 9.91529904119636e-09,
+  "independent_CPU_material_residual": 9.915186693468421e-09,
+  "native_K_H_relative_error": 1.4547800874035499e-15
+}

@@ -1,0 +1,137 @@
+{
+  "case": "Shield_T010",
+  "same_corner_tetrahedron_set_verified": true,
+  "source_mesh": {
+    "tetrahedra": 351031,
+    "corner_coordinate_set_sha256": "e964cd6b604faabb18cf39759fb144e1158f15acf348e0be82cb0be928debd83",
+    "coordinate_rounding_m": 1e-12,
+    "quadratic_midside_nodes_not_compared": true,
+    "raw_mesh_stats": {
+      "drawings": 1,
+      "tet4": 0,
+      "tet10": 351031,
+      "surface_elements_skipped": 0,
+      "curved": false,
+      "tetra_count": 351031,
+      "orientation_flipped": 0,
+      "volume_m3": 0.00012834595200000002,
+      "bounds_min_m": [
+        -0.0244,
+        -0.0244,
+        -0.0186
+      ],
+      "bounds_max_m": [
+        0.0362,
+        0.0244,
+        0.0248
+      ]
+    },
+    "native_final_tetrahedra": 351031,
+    "passes": 5,
+    "energy_error_percent": 0.34185,
+    "MID_SHIELD_material": "shield_mumetall_vac_curve",
+    "Region_bbox_mm": [
+      -24.4,
+      -24.4,
+      -18.6,
+      36.2,
+      24.4,
+      24.800000000000004
+    ]
+  },
+  "control_mesh": {
+    "tetrahedra": 351031,
+    "corner_coordinate_set_sha256": "e964cd6b604faabb18cf39759fb144e1158f15acf348e0be82cb0be928debd83",
+    "coordinate_rounding_m": 1e-12,
+    "quadratic_midside_nodes_not_compared": true,
+    "raw_mesh_stats": {
+      "drawings": 1,
+      "tet4": 0,
+      "tet10": 351031,
+      "surface_elements_skipped": 0,
+      "curved": false,
+      "tetra_count": 351031,
+      "orientation_flipped": 0,
+      "volume_m3": 0.00012834595200000002,
+      "bounds_min_m": [
+        -0.0244,
+        -0.0244,
+        -0.0186
+      ],
+      "bounds_max_m": [
+        0.0362,
+        0.0244,
+        0.0248
+      ]
+    },
+    "native_final_tetrahedra": 351031,
+    "passes": 1,
+    "energy_error_percent": 0.3417,
+    "MID_SHIELD_material": "vacuum",
+    "Region_bbox_mm": [
+      -24.4,
+      -24.4,
+      -18.6,
+      36.2,
+      24.4,
+      24.800000000000004
+    ]
+  },
+  "all": {
+    "points": 566,
+    "relative_L2_percent": 9.07809246920469,
+    "RMS_vector_error_mT": 0.13616678609290606,
+    "max_vector_error_mT": 1.4310398474096429,
+    "reference_change_RMS_mT": 1.499949318150483,
+    "predicted_change_RMS_mT": 1.470728843083059
+  },
+  "groups": {
+    "far_top_3mm": {
+      "points": 101,
+      "relative_L2_percent": 11.31220437621536,
+      "RMS_vector_error_mT": 0.002147118291233064,
+      "max_vector_error_mT": 0.005675221279796772,
+      "reference_change_RMS_mT": 0.018980547202166173,
+      "predicted_change_RMS_mT": 0.021018156998109588
+    },
+    "gap_A_side": {
+      "points": 81,
+      "relative_L2_percent": 8.294244110300541,
+      "RMS_vector_error_mT": 0.23232601407658338,
+      "max_vector_error_mT": 0.9039955183719381,
+      "reference_change_RMS_mT": 2.8010510781574416,
+      "predicted_change_RMS_mT": 2.7445989436720466
+    },
+    "gap_B_side": {
+      "points": 81,
+      "relative_L2_percent": 8.640239768897183,
+      "RMS_vector_error_mT": 0.2412647226490764,
+      "max_vector_error_mT": 1.4310398474096429,
+      "reference_change_RMS_mT": 2.7923382811385897,
+      "predicted_change_RMS_mT": 2.7432734201585633
+    },
+    "near_top_0.5mm": {
+      "points": 303,
+      "relative_L2_percent": 47.29175797080363,
+      "RMS_vector_error_mT": 0.068145051937522,
+      "max_vector_error_mT": 0.725270018638564,
+      "reference_change_RMS_mT": 0.144094985810408,
+      "predicted_change_RMS_mT": 0.12199849437865441
+    }
+  },
+  "two_no_shield_Maxwell_references_difference": {
+    "points": 566,
+    "relative_L2_percent": 4.632743008320567,
+    "RMS_vector_error_mT": 1.7574741285158104,
+    "max_vector_error_mT": 8.780825775702434,
+    "reference_change_RMS_mT": 37.93592965030277,
+    "predicted_change_RMS_mT": 37.94188537143498
+  },
+  "native_abort_requested_at_eight_minutes": true,
+  "native_actual_comengine_completion": "Normal Completion, one fixed-mesh pass",
+  "native_comengine_profile_seconds": 645,
+  "native_batch_wall_seconds_approx_from_logs": 667,
+  "independent_adaptive_convergence": false,
+  "additional_native_solve_submitted": false,
+  "note": "Control completed its full pass despite the abort request. Adopted only after actual profile/field and 351031 corner-tetrahedron checks. Quadratic midside nodes not compared; this is a diagnostic for one size, not an independent mesh-convergence bound."
+}

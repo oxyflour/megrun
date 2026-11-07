@@ -1,0 +1,87 @@
+{
+  "total_B": {
+    "all": {
+      "points": 566,
+      "relative_L2_percent": 3.749167439374626,
+      "RMS_vector_error_mT": 1.422040083409928,
+      "max_vector_error_mT": 7.386244501024573,
+      "reference_RMS_mT": 37.92948985087551,
+      "predicted_RMS_mT": 38.29420094800317
+    },
+    "far_top_3mm": {
+      "points": 101,
+      "relative_L2_percent": 2.822990506639923,
+      "RMS_vector_error_mT": 0.30270594784222854,
+      "max_vector_error_mT": 0.5763222385985999,
+      "reference_RMS_mT": 10.722882245981253,
+      "predicted_RMS_mT": 10.77805212544778
+    },
+    "gap_A_side": {
+      "points": 81,
+      "relative_L2_percent": 8.264139071866138,
+      "RMS_vector_error_mT": 1.033822747638499,
+      "max_vector_error_mT": 4.9328008567956205,
+      "reference_RMS_mT": 12.509745281973453,
+      "predicted_RMS_mT": 12.96727159136081
+    },
+    "gap_B_side": {
+      "points": 81,
+      "relative_L2_percent": 5.293632617872766,
+      "RMS_vector_error_mT": 0.6656547877712928,
+      "max_vector_error_mT": 1.7957881159943372,
+      "reference_RMS_mT": 12.574631369843429,
+      "predicted_RMS_mT": 12.944838786950083
+    },
+    "near_top_0.5mm": {
+      "points": 303,
+      "relative_L2_percent": 3.6100389514359392,
+      "RMS_vector_error_mT": 1.828312897936417,
+      "max_vector_error_mT": 7.386244501024573,
+      "reference_RMS_mT": 50.64524019080686,
+      "predicted_RMS_mT": 51.096307591773325
+    }
+  },
+  "delta_B": {
+    "all": {
+      "points": 566,
+      "relative_L2_percent": 76.03270710171365,
+      "RMS_vector_error_mT": 1.7690121961906602,
+      "max_vector_error_mT": 8.78039288055332,
+      "reference_RMS_mT": 2.3266463389553436,
+      "predicted_RMS_mT": 1.470728843083059
+    },
+    "far_top_3mm": {
+      "points": 101,
+      "relative_L2_percent": 99.70974762572993,
+      "RMS_vector_error_mT": 0.40083695890668847,
+      "max_vector_error_mT": 1.2385079466130515,
+      "reference_RMS_mT": 0.4020037844356684,
+      "predicted_RMS_mT": 0.021018156998109588
+    },
+    "gap_A_side": {
+      "points": 81,
+      "relative_L2_percent": 33.64024395466822,
+      "RMS_vector_error_mT": 1.0032660717079895,
+      "max_vector_error_mT": 3.8291784898921644,
+      "reference_RMS_mT": 2.9823388708474803,
+      "predicted_RMS_mT": 2.7445989436720466
+    },
+    "gap_B_side": {
+      "points": 81,
+      "relative_L2_percent": 44.17904226968374,
+      "RMS_vector_error_mT": 1.398527793626695,
+      "max_vector_error_mT": 6.4352151715123656,
+      "reference_RMS_mT": 3.1655910173190502,
+      "predicted_RMS_mT": 2.7432734201585633
+    },
+    "near_top_0.5mm": {
+      "points": 303,
+      "relative_L2_percent": 99.98690324380456,
+      "RMS_vector_error_mT": 2.2361113739245826,
+      "max_vector_error_mT": 8.78039288055332,
+      "reference_RMS_mT": 2.2364042703394134,
+      "predicted_RMS_mT": 0.12199849437865441
+    }
+  },
+  "reference_change_relative_to_baseline_L2_percent": 6.133094299790738
+}

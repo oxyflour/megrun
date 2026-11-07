@@ -1,0 +1,87 @@
+{
+  "total_B": {
+    "all": {
+      "points": 566,
+      "relative_L2_percent": 4.155854239961367,
+      "RMS_vector_error_mT": 1.5756964010731875,
+      "max_vector_error_mT": 7.60890555701961,
+      "reference_RMS_mT": 37.915102650179456,
+      "predicted_RMS_mT": 38.295210753847535
+    },
+    "far_top_3mm": {
+      "points": 101,
+      "relative_L2_percent": 3.3893095703458416,
+      "RMS_vector_error_mT": 0.36560446377339334,
+      "max_vector_error_mT": 1.1033374054511653,
+      "reference_RMS_mT": 10.786989390765138,
+      "predicted_RMS_mT": 10.778764078194236
+    },
+    "gap_A_side": {
+      "points": 81,
+      "relative_L2_percent": 8.83840986606,
+      "RMS_vector_error_mT": 1.108532360676463,
+      "max_vector_error_mT": 4.163736629058787,
+      "reference_RMS_mT": 12.54221491733814,
+      "predicted_RMS_mT": 12.985924088261063
+    },
+    "gap_B_side": {
+      "points": 81,
+      "relative_L2_percent": 4.967472138667433,
+      "RMS_vector_error_mT": 0.6249518393106694,
+      "max_vector_error_mT": 2.064092168007409,
+      "reference_RMS_mT": 12.580882627321953,
+      "predicted_RMS_mT": 12.9625224896565
+    },
+    "near_top_0.5mm": {
+      "points": 303,
+      "relative_L2_percent": 4.029608227327848,
+      "RMS_vector_error_mT": 2.0397074763298804,
+      "max_vector_error_mT": 7.60890555701961,
+      "reference_RMS_mT": 50.61800952502201,
+      "predicted_RMS_mT": 51.0952064420248
+    }
+  },
+  "delta_B": {
+    "all": {
+      "points": 566,
+      "relative_L2_percent": 76.0004384474309,
+      "RMS_vector_error_mT": 1.9011783449560025,
+      "max_vector_error_mT": 7.940844569817796,
+      "reference_RMS_mT": 2.501536022415236,
+      "predicted_RMS_mT": 1.6188419959806852
+    },
+    "far_top_3mm": {
+      "points": 101,
+      "relative_L2_percent": 99.7177056582765,
+      "RMS_vector_error_mT": 0.4737363318183248,
+      "max_vector_error_mT": 1.2080354717555037,
+      "reference_RMS_mT": 0.4750774485744549,
+      "predicted_RMS_mT": 0.021003866080594548
+    },
+    "gap_A_side": {
+      "points": 81,
+      "relative_L2_percent": 35.769055338862074,
+      "RMS_vector_error_mT": 1.119775917723525,
+      "max_vector_error_mT": 3.8811021346715546,
+      "reference_RMS_mT": 3.130571683023789,
+      "predicted_RMS_mT": 3.021935055870587
+    },
+    "gap_B_side": {
+      "points": 81,
+      "relative_L2_percent": 39.68761927615906,
+      "RMS_vector_error_mT": 1.3564274976924986,
+      "max_vector_error_mT": 6.438324617048573,
+      "reference_RMS_mT": 3.4177598012469463,
+      "predicted_RMS_mT": 3.0195203045378944
+    },
+    "near_top_0.5mm": {
+      "points": 303,
+      "relative_L2_percent": 99.81671636698593,
+      "RMS_vector_error_mT": 2.418664256627313,
+      "max_vector_error_mT": 7.940844569817796,
+      "reference_RMS_mT": 2.423105412258661,
+      "predicted_RMS_mT": 0.1287905792884676
+    }
+  },
+  "reference_change_relative_to_baseline_L2_percent": 6.59410760583607
+}

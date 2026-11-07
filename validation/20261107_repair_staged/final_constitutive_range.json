@@ -1,0 +1,10 @@
+{
+  "nonlinear_tiles": 2686,
+  "min_H_Apm": 1.0119714544253198,
+  "max_H_Apm": 1230.504236112741,
+  "below_first_manufacturer_knot_H300": 2677,
+  "above_last_manufacturer_knot_H16000": 0,
+  "beyond_model_endpoint_H200000": 0,
+  "independent_CPU_material_residual": 9.91196796064835e-09,
+  "max_magnetization_Apm": 1712719.447282277
+}

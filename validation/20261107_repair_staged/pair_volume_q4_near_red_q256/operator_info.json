@@ -1,0 +1,16 @@
+{
+  "receiver_quadrature_points": 4,
+  "geometry_sha256": "c1bf3570f7470a9ec7beb761a47723a42b0e6a5e698d78b8d22537c8959e4f19",
+  "tiles": 3629,
+  "K_build_seconds": 596.3987298002467,
+  "new_K_built": true,
+  "native_averaged_H_check": 1.2527953870048438e-15,
+  "symmetric_K_largest_eigenvalue": 6.911337803213923e-05,
+  "eigen_residual": 5.359842523694172e-08,
+  "uses_eigenvalue_clipping": false,
+  "eigen_estimate_converged": true,
+  "same_source_tensor": "MagTense native exact tetrahedron kernel",
+  "near_quadrature_points": 256,
+  "near_source_count_mean": 172.3199228437586,
+  "near_quadrature_rule": "red"
+}

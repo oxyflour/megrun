@@ -1,0 +1,192 @@
+{
+  "source_project": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_reference.aedt",
+  "source_sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785",
+  "original_project": "C:\\Projects\\magrun\\outputs\\maxwell_verified\\gap_3mm_reference.aedt",
+  "original_sha256": "5ff82b5011a2447f5611b1448412bb730a0a6a806b69a115e4caf199c60a2116",
+  "original_geometry_unchanged": true,
+  "source_files_unchanged": true,
+  "baseline_design": "Gap_3mm_CCW",
+  "baseline_reference_results": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_reference.aedtresults",
+  "common_air_points": 566,
+  "cases": [
+    {
+      "name": "Shield_T010",
+      "thickness_mm": 0.1,
+      "width_mm": 8.8,
+      "height_mm": 3.4,
+      "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\gap3mm_shield_sizes_v3.aedt",
+      "design": "Shield_T010",
+      "setup": "Reference",
+      "origin_mm": [
+        5.8500000000000005,
+        -4.4,
+        1.4000000000000001
+      ],
+      "center_mm": [
+        5.9,
+        0,
+        3.1
+      ],
+      "volume_mm3": 2.991999999999985,
+      "current_A_turn": 0,
+      "material": "Shield_MUMETALL_VAC_curve",
+      "fine_setup": {
+        "ID": 0,
+        "SetupType": "Magnetostatic",
+        "Enabled": true,
+        "MeshLink": {
+          "ImportMesh": false
+        },
+        "MaximumPasses": 8,
+        "MinimumPasses": 3,
+        "MinimumConvergedPasses": 2,
+        "PercentRefinement": 30,
+        "SolveFieldOnly": false,
+        "PercentError": 0.5,
+        "SolveMatrixAtLast": true,
+        "UseNonLinearIterNum": false,
+        "UseIterativeSolver": false,
+        "RelativeResidual": 1e-06,
+        "NonLinearResidual": 1e-05,
+        "SmoothBHCurve": false,
+        "MuOption": {
+          "MuNonLinearBH": true
+        }
+      },
+      "shield_mesh_operation": {
+        "Type": "LengthBased",
+        "RefineInside": true,
+        "Enabled": true,
+        "Objects": [
+          "MID_SHIELD"
+        ],
+        "RestrictElem": false,
+        "NumMaxElem": "1000",
+        "RestrictLength": true,
+        "MaxLength": "0.35mm"
+      },
+      "native_model_validation": "Passed",
+      "solve_submitted": false
+    },
+    {
+      "name": "Shield_T020",
+      "thickness_mm": 0.2,
+      "width_mm": 8.8,
+      "height_mm": 3.4,
+      "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\gap3mm_shield_sizes_v3.aedt",
+      "design": "Shield_T020",
+      "setup": "Reference",
+      "origin_mm": [
+        5.800000000000001,
+        -4.4,
+        1.4000000000000001
+      ],
+      "center_mm": [
+        5.9,
+        0,
+        3.1
+      ],
+      "volume_mm3": 5.983999999999975,
+      "current_A_turn": 0,
+      "material": "Shield_MUMETALL_VAC_curve",
+      "fine_setup": {
+        "ID": 0,
+        "SetupType": "Magnetostatic",
+        "Enabled": true,
+        "MeshLink": {
+          "ImportMesh": false
+        },
+        "MaximumPasses": 8,
+        "MinimumPasses": 3,
+        "MinimumConvergedPasses": 2,
+        "PercentRefinement": 30,
+        "SolveFieldOnly": false,
+        "PercentError": 0.5,
+        "SolveMatrixAtLast": true,
+        "UseNonLinearIterNum": false,
+        "UseIterativeSolver": false,
+        "RelativeResidual": 1e-06,
+        "NonLinearResidual": 1e-05,
+        "SmoothBHCurve": false,
+        "MuOption": {
+          "MuNonLinearBH": true
+        }
+      },
+      "shield_mesh_operation": {
+        "Type": "LengthBased",
+        "RefineInside": true,
+        "Enabled": true,
+        "Objects": [
+          "MID_SHIELD"
+        ],
+        "RestrictElem": false,
+        "NumMaxElem": "1000",
+        "RestrictLength": true,
+        "MaxLength": "0.35mm"
+      },
+      "native_model_validation": "Passed",
+      "solve_submitted": false
+    },
+    {
+      "name": "Shield_Large_T020",
+      "thickness_mm": 0.2,
+      "width_mm": 10.0,
+      "height_mm": 5.0,
+      "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\gap3mm_shield_sizes_v3.aedt",
+      "design": "Shield_Large_T020",
+      "setup": "Reference",
+      "origin_mm": [
+        5.800000000000001,
+        -5.0,
+        0.6000000000000001
+      ],
+      "center_mm": [
+        5.9,
+        0,
+        3.1
+      ],
+      "volume_mm3": 9.999999999999964,
+      "current_A_turn": 0,
+      "material": "Shield_MUMETALL_VAC_curve",
+      "fine_setup": {
+        "ID": 0,
+        "SetupType": "Magnetostatic",
+        "Enabled": true,
+        "MeshLink": {
+          "ImportMesh": false
+        },
+        "MaximumPasses": 8,
+        "MinimumPasses": 3,
+        "MinimumConvergedPasses": 2,
+        "PercentRefinement": 30,
+        "SolveFieldOnly": false,
+        "PercentError": 0.5,
+        "SolveMatrixAtLast": true,
+        "UseNonLinearIterNum": false,
+        "UseIterativeSolver": false,
+        "RelativeResidual": 1e-06,
+        "NonLinearResidual": 1e-05,
+        "SmoothBHCurve": false,
+        "MuOption": {
+          "MuNonLinearBH": true
+        }
+      },
+      "shield_mesh_operation": {
+        "Type": "LengthBased",
+        "RefineInside": true,
+        "Enabled": true,
+        "Objects": [
+          "MID_SHIELD"
+        ],
+        "RestrictElem": false,
+        "NumMaxElem": "1000",
+        "RestrictLength": true,
+        "MaxLength": "0.35mm"
+      },
+      "native_model_validation": "Passed",
+      "solve_submitted": false
+    }
+  ],
+  "seconds": 14.276828200090677,
+  "solve_submitted": false
+}

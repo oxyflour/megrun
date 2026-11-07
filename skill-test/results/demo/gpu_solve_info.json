@@ -1,0 +1,41 @@
+{
+  "converged": true,
+  "iterations": 1,
+  "residual": 3.8058167723830556e-10,
+  "residual_history": [
+    0.017002035954252304,
+    3.8058167723830556e-10
+  ],
+  "solve_seconds": 0.4507964998483658,
+  "method": "newton",
+  "loaded_from_cache": true,
+  "K_build_or_load_seconds": 0.002952700015157461,
+  "K_GB": 1.296e-06,
+  "dtype": "float32",
+  "tiles": 6,
+  "backend": "cupy",
+  "max_tiles": 10000,
+  "H_uniform_Apm": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "nonlinear_curves": 0,
+  "source": {
+    "project": "OFFLINE DEMO - NOT MAXWELL",
+    "design": "cube",
+    "solution": "none",
+    "model_unit": "m"
+  },
+  "tile_stats": {
+    "tiles": 6,
+    "per_object": {
+      "cube_magnet": 6
+    },
+    "nonlinear_state_functions": 0,
+    "nonlinear_material_assignments": [],
+    "dense_tensor_GB_reference": 0.0
+  },
+  "output": "gpu_B.csv",
+  "K_magtense_field_check_relative_error": 8.777753658305629e-08
+}

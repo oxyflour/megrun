@@ -1,0 +1,46 @@
+{
+  "material_readback_matches_csv": true,
+  "sample_count": 200,
+  "H_min_Apm": 7.97355674666683,
+  "H_max_Apm": 244.91741682174836,
+  "B_H_curve_median_relative_difference": 1.4935668984770104e-16,
+  "B_H_curve_p95_relative_difference": 3.945161494483677e-16,
+  "B_H_curve_max_relative_difference": 0.06468904621598429,
+  "material_properties": {
+    "kind": "nonlinear",
+    "bh_H_Apm_B_T": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        300.0,
+        1.9
+      ],
+      [
+        800.0,
+        2.1
+      ],
+      [
+        1600.0,
+        2.2
+      ],
+      [
+        4000.0,
+        2.255
+      ],
+      [
+        8000.0,
+        2.28
+      ],
+      [
+        16000.0,
+        2.3
+      ],
+      [
+        200000.0,
+        2.53122121930421
+      ]
+    ]
+  }
+}

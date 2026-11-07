@@ -1,0 +1,37 @@
+# Local Python environments and generated interpreter/test caches.
+.venv/
+.offline-venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.coverage
+htmlcov/
+
+# Dense interaction matrices are rebuilt from the tracked model/mesh inputs.
+*.npy
+
+# Native Maxwell projects, result databases, mesh dumps, and temporary exports.
+*.aedt
+*.aedt.lock
+*.aedtresults/
+*.batchinfo/
+*.pyaedt/
+*.aedtplt
+*.solinfo
+*.completed
+
+# Console logs and generated distribution archives remain local.
+*.log
+*.zip
+
+# Downloaded manufacturer documents; source URLs are recorded in provenance JSON.
+/validation/**/VAC*.pdf
+/validation/**/MUMETALL_Strip.pdf
+/validation/**/VAC_text.txt
+
+# Editor and operating-system metadata.
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store

@@ -1,0 +1,54 @@
+{
+  "setup": {
+    "ID": 0,
+    "SetupType": "Magnetostatic",
+    "Enabled": true,
+    "MeshLink": {
+      "ImportMesh": false
+    },
+    "MaximumPasses": 1,
+    "MinimumPasses": 1,
+    "MinimumConvergedPasses": 1,
+    "PercentRefinement": 30,
+    "SolveFieldOnly": false,
+    "PercentError": 0.5,
+    "SolveMatrixAtLast": true,
+    "UseNonLinearIterNum": false,
+    "UseIterativeSolver": false,
+    "RelativeResidual": 1e-06,
+    "NonLinearResidual": 1e-05,
+    "SmoothBHCurve": false,
+    "MuOption": {
+      "MuNonLinearBH": true
+    }
+  },
+  "mesh_operations": [
+    {
+      "name": "Reference_Length",
+      "properties": {
+        "Name": "Reference_Length",
+        "Type": "Length Based",
+        "Region": "Inside Selection",
+        "Enabled": true,
+        "Restrict Length": true,
+        "Max Length": "0.5mm",
+        "Restrict Max Elems": false,
+        "Max Elems": "1000",
+        "Objects": [
+          195,
+          111,
+          83,
+          167,
+          139,
+          6,
+          436,
+          352,
+          324,
+          408,
+          380,
+          247
+        ]
+      }
+    }
+  ]
+}

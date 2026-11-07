@@ -1,0 +1,127 @@
+Maxwell 3D Profile
+  Project:           gap3mm_shield_sizes_v3
+  Design:            Shield_T020
+  Solution setup:    Reference
+
+  Task                        Real Time  CPU Time  Memory  Information
+  ----                        ---------  --------  ------  -----------
+
+  Solution Process                                         Start Time: 11/07/2026 15:34:02, Host: OXYFLOUR-PC11, Processor: 12, OS: NT 10.0, Product: Maxwell 3D 2022.2.0
+                                                           Executing from C:\Program Files\AnsysEM\v222\Win64\MAXWELLCOMENGINE.exe
+                                                           HPC: Enabled
+                                                           Desired RAM limit not set.
+  Design Validation                                        Elapsed time : 00:00:00 , Maxwell 3D ComEngine Memory : 67.5 M
+                                                           Perform full validations
+                                                           
+  Initial Meshing                                          Time: 11/07/2026 15:34:02
+  Mesh Phi                    00:00:00   00:00:00  44.4 M  Tetrahedra: 2364
+  Mesh Post                   00:00:00   00:00:00  45.3 M  Tetrahedra: 2627
+  Mesh (volume, seed)         00:00:20   00:00:23  163 M   Tetrahedra: 125804
+                                                           Reference_Length, Shield_Length
+                                                           
+  Adaptive Meshing                                         Time: 11/07/2026 15:34:23
+                                                           
+  Pass 1                                                   
+  Solver DRS4                 00:00:00   00:00:00  52.1 M  Matrix: 8121, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:00  45.8 M  Matrix: 8121, Disk: 0KB
+  Solver DRS4                 00:00:01   00:00:04  614 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:01   00:00:04  624 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:01   00:00:04  624 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:01   00:00:04  624 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:02   00:00:04  607 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:01   00:00:04  624 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:02   00:00:04  618 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:02   00:00:04  624 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:01   00:00:04  614 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:02   00:00:04  621 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:01   00:00:04  619 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:01   00:00:04  619 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:01   00:00:05  619 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:02   00:00:04  614 M   Matrix: 169170, Disk: 0KB
+  Solver DRS4                 00:00:01   00:00:04  624 M   Matrix: 169170, Disk: 0KB
+  adapt                       00:00:35   00:01:28  647 M   Tetrahedra: 125804
+                                                           
+  Pass 2                                                   
+  Mesh (mixedmode, adaptive)  00:00:15   00:00:16  163 M   Tetrahedra: 163551
+  Solver DRS4                 00:00:00   00:00:00  67.6 M  Matrix: 8335, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:00  62.7 M  Matrix: 8335, Disk: 0KB
+  Solver DRS4                 00:00:03   00:00:09  1.08 G  Matrix: 219936, Disk: 0KB
+  Solver DRS4                 00:00:02   00:00:09  1.06 G  Matrix: 219936, Disk: 0KB
+  Solver DRS4                 00:00:02   00:00:09  1.08 G  Matrix: 219936, Disk: 0KB
+  Solver DRS4                 00:00:03   00:00:11  1.08 G  Matrix: 219936, Disk: 0KB
+  Solver DRS4                 00:00:02   00:00:09  1.07 G  Matrix: 219936, Disk: 0KB
+  Solver DRS4                 00:00:02   00:00:09  1.07 G  Matrix: 219936, Disk: 0KB
+  Solver DRS4                 00:00:03   00:00:11  1.07 G  Matrix: 219936, Disk: 0KB
+  Solver DRS4                 00:00:02   00:00:09  1.07 G  Matrix: 219936, Disk: 0KB
+  adapt                       00:00:34   00:01:04  830 M   Tetrahedra: 163551
+                                                           
+  Pass 3                                                   
+  Mesh (mixedmode, adaptive)  00:00:17   00:00:18  204 M   Tetrahedra: 212620
+  Solver DRS4                 00:00:00   00:00:00  88.4 M  Matrix: 9317, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:00  82.5 M  Matrix: 9317, Disk: 0KB
+  Solver DRS4                 00:00:04   00:00:14  1.57 G  Matrix: 285737, Disk: 0KB
+  Solver DRS4                 00:00:04   00:00:15  1.56 G  Matrix: 285737, Disk: 0KB
+  Solver DRS4                 00:00:04   00:00:15  1.61 G  Matrix: 285737, Disk: 0KB
+  Solver DRS4                 00:00:05   00:00:18  1.57 G  Matrix: 285737, Disk: 0KB
+  Solver DRS4                 00:00:05   00:00:16  1.58 G  Matrix: 285737, Disk: 0KB
+  Solver DRS4                 00:00:04   00:00:16  1.55 G  Matrix: 285737, Disk: 0KB
+  Solver DRS4                 00:00:05   00:00:16  1.6 G   Matrix: 285737, Disk: 0KB
+  Solver DRS4                 00:00:04   00:00:17  1.57 G  Matrix: 285737, Disk: 0KB
+  adapt                       00:00:48   00:01:20  1.04 G  Tetrahedra: 212620
+                                                           
+  Pass 4                                                   
+  Mesh (mixedmode, adaptive)  00:00:24   00:00:25  250 M   Tetrahedra: 276414
+  Solver DRS4                 00:00:00   00:00:00  112 M   Matrix: 11364, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:01  104 M   Matrix: 11364, Disk: 0KB
+  Solver DRS4                 00:00:10   00:00:32  2.18 G  Matrix: 371356, Disk: 0KB
+  Solver DRS4                 00:00:08   00:00:30  2.25 G  Matrix: 371356, Disk: 0KB
+  Solver DRS4                 00:00:06   00:00:24  2.19 G  Matrix: 371356, Disk: 0KB
+                                                           
+  Adaptive Meshing            00:04:31   00:10:42          Elapsed Time: 00:06:29
+                                                           
+  Solution Process            00:04:51   00:11:05          Elapsed Time: 00:06:50, ComEngine Memory: 70.1 M
+                                                           Stop Time: 11/07/2026 15:40:52, Status: Aborted
+                                                           
+  Solution Process                                         Start Time: 11/07/2026 15:42:25, Host: OXYFLOUR-PC11, Processor: 12, OS: NT 10.0, Product: Maxwell 3D 2022.2.0
+                                                           Executing from C:\Program Files\AnsysEM\v222\Win64\MAXWELLCOMENGINE.exe
+                                                           HPC: Enabled
+                                                           Desired RAM limit not set.
+  Design Validation                                        Elapsed time : 00:00:00 , Maxwell 3D ComEngine Memory : 65.1 M
+                                                           Perform full validations
+                                                           
+  Adaptive Meshing                                         Time: 11/07/2026 15:42:25
+                                                           
+  Pass 4                                                   
+  Mesh (mixedmode, adaptive)  00:00:22   00:00:23  250 M   Tetrahedra: 276414
+  Solver DRS4                 00:00:00   00:00:00  109 M   Matrix: 11364, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:01  101 M   Matrix: 11364, Disk: 0KB
+  Solver DRS4                 00:00:07   00:00:27  2.19 G  Matrix: 371356, Disk: 0KB
+  Solver DRS4                 00:00:08   00:00:31  2.14 G  Matrix: 371356, Disk: 0KB
+  Solver DRS4                 00:00:07   00:00:29  2.17 G  Matrix: 371356, Disk: 0KB
+  Solver DRS4                 00:00:08   00:00:29  2.15 G  Matrix: 371356, Disk: 0KB
+  Solver DRS4                 00:00:08   00:00:30  2.16 G  Matrix: 371356, Disk: 0KB
+  Solver DRS4                 00:00:09   00:00:33  2.17 G  Matrix: 371356, Disk: 0KB
+  Solver DRS4                 00:00:16   00:00:47  2.17 G  Matrix: 371356, Disk: 0KB
+  Solver DRS4                 00:00:09   00:00:28  2.19 G  Matrix: 371356, Disk: 0KB
+  adapt                       00:01:03   00:01:39  1.35 G  Tetrahedra: 276414
+                                                           
+  Pass 5                                                   
+  Mesh (mixedmode, adaptive)  00:00:31   00:00:31  311 M   Tetrahedra: 359345
+  Solver DRS4                 00:00:00   00:00:00  145 M   Matrix: 13993, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:00  136 M   Matrix: 13993, Disk: 0KB
+  Solver DRS4                 00:00:27   00:01:07  2.89 G  Matrix: 482677, Disk: 0KB
+  Solver DRS4                 00:00:25   00:01:11  2.87 G  Matrix: 482677, Disk: 0KB
+  Solver DRS4                 00:00:26   00:01:11  2.81 G  Matrix: 482677, Disk: 0KB
+  Solver DRS4                 00:00:26   00:01:11  2.8 G   Matrix: 482677, Disk: 0KB
+  Solver DRS4                 00:00:26   00:01:09  2.83 G  Matrix: 482677, Disk: 0KB
+  Solver DRS4                 00:00:25   00:01:11  2.84 G  Matrix: 482677, Disk: 0KB
+  Solver DRS4                 00:00:27   00:01:11  2.85 G  Matrix: 482677, Disk: 0KB
+  Solver DRS4                 00:00:26   00:01:10  2.83 G  Matrix: 482677, Disk: 0KB
+  adapt                       00:03:12   00:03:23  1.69 G  Tetrahedra: 359345
+                                                           
+  Adaptive Meshing            00:09:48   00:19:32          Elapsed Time: 00:11:28
+                                                           Adaptive Passes converged
+                                                           
+  Solution Process            00:09:48   00:19:32          Elapsed Time: 00:11:28, ComEngine Memory: 65.1 M
+                                                           Stop Time: 11/07/2026 15:53:54, Status: Normal Completion
+                                                           

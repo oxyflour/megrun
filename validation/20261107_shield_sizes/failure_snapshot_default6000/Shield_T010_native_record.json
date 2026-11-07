@@ -1,0 +1,23 @@
+{
+  "command": [
+    "C:\\Program Files\\AnsysEM\\v222\\Win64\\ansysedt.exe",
+    "-ng",
+    "-BatchSolve",
+    "Shield_T010:Nominal:Reference",
+    "-machinelist",
+    "list=localhost:1:4:60%:0",
+    "-Monitor",
+    "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\gap3mm_shield_sizes_v3.aedt"
+  ],
+  "started_UTC": "2026-11-07T07:12:08.249550+00:00",
+  "state": "Native process finished; audit pending",
+  "case": "Shield_T010",
+  "pid": 110012,
+  "seconds": 291.26035769982263,
+  "abort": {
+    "reason": "Another validation worker failed",
+    "request_returncode": 0
+  },
+  "returncode": 103,
+  "ended_UTC": "2026-11-07T07:16:59.509696+00:00"
+}

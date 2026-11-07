@@ -1,0 +1,15 @@
+{
+  "full_vs_reused_relative_error": 0.0,
+  "native_K_H_relative_error": 3.747400429879898e-16,
+  "old_camera_tiles": 6,
+  "new_shield_tiles": 6,
+  "total_tiles": 12,
+  "new_near_pairs": 108,
+  "new_block_seconds": 0.09426649985834956,
+  "old_block_copied_bitwise": true,
+  "old_geometry_and_settings_verified": true,
+  "old_cache": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\operator_reuse_test\\camera.npy",
+  "cache": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\operator_reuse_test\\reused.npy",
+  "full_K_GB": 1.0368e-05,
+  "full_native_average_field_check_required_after_load": true
+}

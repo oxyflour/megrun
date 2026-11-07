@@ -1,0 +1,77 @@
+{
+  "outcome": "Accuracy validation did not pass; no converged target solution",
+  "source_unchanged": true,
+  "point_count": 485,
+  "tiles": 3629,
+  "native_coarse_total_tetra": 13019,
+  "native_coarse_adaptive_converged": false,
+  "native_coarse_energy_error_percent": 11.897,
+  "native_coarse_seconds": 27.034833900164813,
+  "K_FP64_bytes": 948214152,
+  "K_native_H_relative_error": 1.135e-15,
+  "final_Maxwell_comparison": null,
+  "fine_Maxwell_solve_submitted": false,
+  "tet10_corner_linearized": 3629,
+  "curved_geometry_present": false,
+  "maximum_mesh_CAD_volume_relative_difference": 2.991828025727089e-15,
+  "operator_spectrum": {
+    "operator": "Symmetric part of sqrt(V) K inv(sqrt(V)); tetra-centroid collocation",
+    "largest_eigenvalues": [
+      0.018529662987940402,
+      0.019630283359441166,
+      0.020094854427643603,
+      0.024893359026064953
+    ],
+    "eigen_residuals": [
+      1.038480736026996e-05,
+      1.0796133687925529e-10,
+      1.199146024830804e-12,
+      2.0671859258542976e-15
+    ],
+    "seconds": 2.3505128999240696,
+    "interpretation": "Diagnostic of collocation operator; not a Maxwell accuracy measurement"
+  },
+  "attempts": [
+    {
+      "name": "original_skill",
+      "log": "gpu_solve.log",
+      "result": "Newton line search failed at iteration 1"
+    },
+    {
+      "name": "absolute_merit_fix",
+      "log": "gpu_corrected_solve.log",
+      "result": "GMRES info=120 at iteration 2"
+    },
+    {
+      "name": "absolute_merit_inner_1000",
+      "log": "gpu_corrected_inner1000.log",
+      "result": "GMRES info=1020 at iteration 4"
+    },
+    {
+      "name": "dense_Newton_diagnostic",
+      "log": "gpu_dense_solve.log",
+      "result": "80 iterations; final residual 0.090299"
+    },
+    {
+      "name": "excitation_continuation_diagnostic",
+      "log": "gpu_continuation.log",
+      "result": "Br scales .01 and .05 converged; .1 failed at iteration 15"
+    }
+  ],
+  "versions": {
+    "python_environment": "C:\\Projects\\magtense-gpu\\skill-test\\.venv",
+    "numpy": "2.3.2",
+    "scipy": "1.18.1",
+    "magtense": "3.0.1",
+    "cupy-cuda13x": "14.2.0",
+    "pytest": "9.2.0"
+  },
+  "approved_budget_seconds": 3000,
+  "actual_study_elapsed_seconds": 919.548398,
+  "original_solver_source_edited": false,
+  "diagnostic_solver_files": [
+    "gpu_solver_corrected.py",
+    "gpu_solver_dense_newton.py",
+    "gpu_continuation.py"
+  ]
+}

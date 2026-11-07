@@ -1,0 +1,58 @@
+{
+  "study_started_UTC": "2026-11-07T04:35:05.445102+00:00",
+  "budget_seconds": 3000,
+  "authorization": "User explicitly approved 50-minute group budget on 2026-11-07",
+  "stages": {
+    "MT_Coarse": {
+      "command": [
+        "C:\\Program Files\\AnsysEM\\v222\\Win64\\ansysedt.exe",
+        "-ng",
+        "-BatchSolve",
+        "MT_Coarse:Nominal:Reference",
+        "-machinelist",
+        "list=localhost:1:4:60%:0",
+        "-Monitor",
+        "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\gap3mm_vacoflux50.aedt"
+      ],
+      "started_UTC": "2026-11-07T04:35:05.445102+00:00",
+      "log": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\MT_Coarse_native.log",
+      "pid": 114392,
+      "returncode": 0,
+      "seconds": 27.034833900164813,
+      "ended_UTC": "2026-11-07T04:35:32.490739+00:00"
+    }
+  },
+  "state": "Stopped: target nonlinear solve did not converge; accuracy unverified",
+  "elapsed_study_seconds": 919.548398,
+  "stopped_UTC": "2026-11-07T04:50:24.993500+00:00",
+  "fine_reference_submitted": false,
+  "accuracy_metrics": null,
+  "source_unchanged": true,
+  "nonlinear_attempts": [
+    {
+      "name": "original_skill",
+      "log": "gpu_solve.log",
+      "result": "Newton line search failed at iteration 1"
+    },
+    {
+      "name": "absolute_merit_fix",
+      "log": "gpu_corrected_solve.log",
+      "result": "GMRES info=120 at iteration 2"
+    },
+    {
+      "name": "absolute_merit_inner_1000",
+      "log": "gpu_corrected_inner1000.log",
+      "result": "GMRES info=1020 at iteration 4"
+    },
+    {
+      "name": "dense_Newton_diagnostic",
+      "log": "gpu_dense_solve.log",
+      "result": "80 iterations; final residual 0.090299"
+    },
+    {
+      "name": "excitation_continuation_diagnostic",
+      "log": "gpu_continuation.log",
+      "result": "Br scales .01 and .05 converged; .1 failed at iteration 15"
+    }
+  ]
+}

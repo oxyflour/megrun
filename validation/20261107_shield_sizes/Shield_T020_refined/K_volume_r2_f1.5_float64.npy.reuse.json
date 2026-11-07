@@ -1,0 +1,13 @@
+{
+  "old_camera_tiles": 3629,
+  "new_shield_tiles": 1188,
+  "total_tiles": 4817,
+  "new_near_pairs": 137294,
+  "new_block_seconds": 257.6853312002495,
+  "old_block_copied_bitwise": true,
+  "old_geometry_and_settings_verified": true,
+  "old_cache": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_repaired_runtime\\K_volume_r2_f1.5_float64.npy",
+  "cache": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\Shield_T020_refined\\K_volume_r2_f1.5_float64.npy",
+  "full_K_GB": 1.670651208,
+  "full_native_average_field_check_required_after_load": true
+}

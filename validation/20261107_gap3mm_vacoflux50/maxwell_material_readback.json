@@ -1,0 +1,81 @@
+{
+  "CoordinateSystemType": "Cartesian",
+  "BulkOrSurfaceType": 1,
+  "PhysicsTypes": {
+    "set": [
+      "Electromagnetic",
+      "Thermal",
+      "Structural"
+    ]
+  },
+  "AttachedData": {
+    "MatAppearanceData": {
+      "property_data": "appearance_data",
+      "Red": 210,
+      "Green": 105,
+      "Blue": 30,
+      "Transparency": 0.0
+    }
+  },
+  "permittivity": "1",
+  "permeability": {
+    "property_type": "nonlinear",
+    "BTypeForSingleCurve": "normal",
+    "HUnit": "A_per_meter",
+    "BUnit": "tesla",
+    "IsTemperatureDependent": false,
+    "BHCoordinates": {
+      "DimUnits": [
+        "",
+        ""
+      ],
+      "Point": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          300.0,
+          1.9
+        ],
+        [
+          800.0,
+          2.1
+        ],
+        [
+          1600.0,
+          2.2
+        ],
+        [
+          4000.0,
+          2.255
+        ],
+        [
+          8000.0,
+          2.28
+        ],
+        [
+          16000.0,
+          2.3
+        ],
+        [
+          200000.0,
+          2.5312212193042085
+        ]
+      ],
+      "Temperatures": {}
+    }
+  },
+  "conductivity": "0",
+  "dielectric_loss_tangent": "0",
+  "magnetic_loss_tangent": "0",
+  "thermal_conductivity": "0.01",
+  "mass_density": "0",
+  "specific_heat": "0",
+  "youngs_modulus": "0",
+  "poissons_ratio": "0",
+  "thermal_expansion_coefficient": "0",
+  "diffusivity": "0.8",
+  "molecular_mass": "0",
+  "viscosity": "0"
+}

@@ -1,0 +1,48 @@
+{
+  "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\matched_mesh_control_v6.aedt",
+  "design": "Shield_T010_NoShield",
+  "source_project": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\failure_snapshot_refinement24000\\gap3mm_shield_sizes_v3.aedt",
+  "source_design": "Shield_T010",
+  "source_is_frozen_completed_snapshot": true,
+  "purpose": "Check FEM mesh-subtraction contamination of shield Delta B",
+  "setup": {
+    "ID": 0,
+    "SetupType": "Magnetostatic",
+    "Enabled": true,
+    "MeshLink": {
+      "ImportMesh": true,
+      "LinkID": 149,
+      "Project": "C:\\\\Projects\\\\magtense-gpu\\\\validation\\\\20261107_shield_sizes\\\\failure_snapshot_refinement24000\\\\gap3mm_shield_sizes_v3.aedt",
+      "Product": "Maxwell",
+      "Design": "Shield_T010",
+      "Soln": "Reference : LastAdaptive",
+      "Params": {},
+      "ForceSourceToSolve": false,
+      "PreservePartnerSoln": true,
+      "PathRelativeTo": "SourceProduct",
+      "ApplyMeshOp": false
+    },
+    "MaximumPasses": 1,
+    "MinimumPasses": 1,
+    "MinimumConvergedPasses": 1,
+    "PercentRefinement": 30,
+    "SolveFieldOnly": false,
+    "PercentError": 0.5,
+    "SolveMatrixAtLast": true,
+    "UseNonLinearIterNum": false,
+    "UseIterativeSolver": false,
+    "RelativeResidual": 1e-06,
+    "NonLinearResidual": 1e-05,
+    "SmoothBHCurve": false,
+    "MuOption": {
+      "MuNonLinearBH": true
+    }
+  },
+  "geometry_unchanged": true,
+  "MID_SHIELD_material": "vacuum",
+  "maximum_additional_seconds": 480,
+  "same_original_group_deadline": true,
+  "cores": 2,
+  "solve_submitted": false,
+  "note": "Only a one-pass fixed-mesh diagnostic; actual full-corner mesh identity must be checked after solve"
+}

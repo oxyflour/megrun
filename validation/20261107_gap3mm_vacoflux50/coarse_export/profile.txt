@@ -1,0 +1,49 @@
+Maxwell 3D Profile
+  Project:           gap3mm_vacoflux50
+  Design:            MT_Coarse
+  Solution setup:    Reference
+
+  Task                 Real Time  CPU Time  Memory  Information
+  ----                 ---------  --------  ------  -----------
+
+  Solution Process                                  Start Time: 11/07/2026 12:35:13, Host: OXYFLOUR-PC11, Processor: 12, OS: NT 10.0, Product: Maxwell 3D 2022.2.0
+                                                    Executing from C:\Program Files\AnsysEM\v222\Win64\MAXWELLCOMENGINE.exe
+                                                    HPC: Enabled
+                                                    Desired RAM limit not set.
+  Design Validation                                 Elapsed time : 00:00:00 , Maxwell 3D ComEngine Memory : 66.1 M
+                                                    Perform full validations
+                                                    
+  Initial Meshing                                   Time: 11/07/2026 12:35:13
+  Mesh Phi             00:00:00   00:00:00  43.5 M  Tetrahedra: 2205
+  Mesh Post            00:00:00   00:00:00  44.5 M  Tetrahedra: 2543
+  Mesh (volume, seed)  00:00:02   00:00:02  47.7 M  Tetrahedra: 13019
+                                                    Reference_Length
+                                                    
+  Adaptive Meshing                                  Time: 11/07/2026 12:35:17
+                                                    
+  Pass 1                                            
+  Solver DRS4          00:00:00   00:00:00  3.78 M  Matrix: 602, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:00  1.58 M  Matrix: 602, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:00  44.1 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:00  44.1 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:00  44.9 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:01  43.8 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:01   00:00:01  44.4 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:01  43.1 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:01  43.8 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:00  43.8 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:00  44.1 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:01  43.9 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:01  44.1 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:00  43.8 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:00  44.2 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:00  44.1 M  Matrix: 17606, Disk: 0KB
+  Solver DRS4          00:00:00   00:00:01  44.1 M  Matrix: 17606, Disk: 0KB
+  adapt                00:00:04   00:00:10  96.4 M  Tetrahedra: 13019
+                                                    
+  Adaptive Meshing     00:00:05   00:00:17          Elapsed Time: 00:00:06
+                                                    Adaptive Passes did not converge
+                                                    
+  Solution Process     00:00:07   00:00:19          Elapsed Time: 00:00:10, ComEngine Memory: 66.7 M
+                                                    Stop Time: 11/07/2026 12:35:23, Status: Normal Completion
+                                                    

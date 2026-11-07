@@ -1,0 +1,67 @@
+Maxwell 3D Profile
+  Project:           staged_controls_v2
+  Design:            Stage_PM_A
+  Solution setup:    Reference
+
+  Task                        Real Time  CPU Time  Memory  Information
+  ----                        ---------  --------  ------  -----------
+
+  Solution Process                                         Start Time: 11/07/2026 13:33:23, Host: OXYFLOUR-PC11, Processor: 12, OS: NT 10.0, Product: Maxwell 3D 2022.2.0
+                                                           Executing from C:\Program Files\AnsysEM\v222\Win64\MAXWELLCOMENGINE.exe
+                                                           HPC: Enabled
+                                                           Desired RAM limit not set.
+  Design Validation                                        Elapsed time : 00:00:00 , Maxwell 3D ComEngine Memory : 66.9 M
+                                                           Perform full validations
+                                                           
+  Initial Meshing                                          Time: 11/07/2026 13:33:23
+  Get starting mesh           00:00:00   00:00:00  0 K     Source: C:\Projects\magtense-gpu\validation\20261107_gap3mm_vacoflux50\gap3mm_vacoflux50.aedt, MT_Coarse - Reference : LastAdaptive
+                                                           
+  Adaptive Meshing                                         Time: 11/07/2026 13:33:23
+                                                           
+  Pass 1                                                   
+  Solver DRS4                 00:00:00   00:00:00  4.12 M  Matrix: 602, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:00  1.93 M  Matrix: 602, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:00  44.9 M  Matrix: 17606, Disk: 0KB
+  adapt                       00:00:02   00:00:03  91.5 M  Tetrahedra: 13019
+                                                           
+  Pass 2                                                   
+  Mesh (mixedmode, adaptive)  00:00:01   00:00:02  48.1 M  Tetrahedra: 16928
+  Solver DRS4                 00:00:00   00:00:00  5.78 M  Matrix: 625, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:00  3.73 M  Matrix: 625, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:01  64.5 M  Matrix: 22980, Disk: 0KB
+  adapt                       00:00:02   00:00:03  110 M   Tetrahedra: 16928
+                                                           
+  Pass 3                                                   
+  Mesh (mixedmode, adaptive)  00:00:01   00:00:02  52.6 M  Tetrahedra: 22012
+  Solver DRS4                 00:00:00   00:00:00  8.59 M  Matrix: 646, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:00  6.53 M  Matrix: 646, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:01  106 M   Matrix: 29877, Disk: 0KB
+  adapt                       00:00:01   00:00:03  134 M   Tetrahedra: 22012
+                                                           
+  Pass 4                                                   
+  Mesh (mixedmode, adaptive)  00:00:02   00:00:03  56.5 M  Tetrahedra: 28623
+  Solver DRS4                 00:00:00   00:00:00  9.46 M  Matrix: 706, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:00  7.3 M   Matrix: 706, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:01  159 M   Matrix: 38752, Disk: 0KB
+  adapt                       00:00:03   00:00:04  164 M   Tetrahedra: 28623
+                                                           
+  Pass 5                                                   
+  Mesh (mixedmode, adaptive)  00:00:02   00:00:03  65 M    Tetrahedra: 37218
+  Solver DRS4                 00:00:00   00:00:00  13.6 M  Matrix: 830, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:00  11.4 M  Matrix: 830, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:02  235 M   Matrix: 50305, Disk: 0KB
+  adapt                       00:00:05   00:00:05  204 M   Tetrahedra: 37218
+                                                           
+  Pass 6                                                   
+  Mesh (mixedmode, adaptive)  00:00:03   00:00:04  72.8 M  Tetrahedra: 48392
+  Solver DRS4                 00:00:00   00:00:00  18.9 M  Matrix: 1080, Disk: 0KB
+  Solver DRS4                 00:00:00   00:00:00  16.7 M  Matrix: 1080, Disk: 0KB
+  Solver DRS4                 00:00:01   00:00:02  344 M   Matrix: 65324, Disk: 0KB
+  adapt                       00:00:05   00:00:06  255 M   Tetrahedra: 48392
+                                                           
+  Adaptive Meshing            00:00:28   00:00:45          Elapsed Time: 00:00:39
+                                                           Adaptive Passes did not converge
+                                                           
+  Solution Process            00:00:28   00:00:45          Elapsed Time: 00:00:39, ComEngine Memory: 72.8 M
+                                                           Stop Time: 11/07/2026 13:34:02, Status: Normal Completion
+                                                           

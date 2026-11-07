@@ -1,0 +1,31 @@
+{
+  "source": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_repaired_runtime",
+  "reused_previous_M": true,
+  "air_field_regularization": {
+    "regularized_indices": [
+      464,
+      531,
+      545
+    ],
+    "coordinates_unchanged": true,
+    "method": "two-direction symmetric Richardson limit in verified air",
+    "limits": [
+      {
+        "index": 464,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 0.00018244884029019966
+      },
+      {
+        "index": 531,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 2.3336733197522635e-05
+      },
+      {
+        "index": 545,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 0.00018913604061106194
+      }
+    ]
+  },
+  "points": 566
+}

@@ -1,0 +1,76 @@
+MagTense CuPy Skill v2 测试记录
+日期：2026-11-07（Asia/Shanghai）
+
+结论
+包内离线测试和本机原生/GPU 小规模集成检查通过。
+所有结果来自合成模型，没有真实 Maxwell 参考，不能据此声明 Maxwell 精度或工程规模加速比。
+
+环境
+Windows 11；Python 3.12.1；NVIDIA GeForce RTX 3090 Ti（24 GB）；驱动 596.49。
+测试虚拟环境：C:\Projects\magtense-gpu\skill-test\.venv
+MagTense 3.0.1；CuPy CUDA13x 14.2.0；NumPy 2.3.2；SciPy 1.18.1；pytest 9.2.0；PyAEDT 1.9.0。
+依赖安装到工作区虚拟环境。安装下载改用清华镜像后完成。
+小规模原生计算设置 OMP_NUM_THREADS=2、MKL_NUM_THREADS=2。
+完整依赖版本：requirements-tested.txt；CUDA 配置：cuda_environment.log。
+
+离线验证
+- 全部 Python 源文件语法检查通过。
+- gpu_solver.py --self-test --backend numpy 通过。
+  永磁体解析解 M=924125.4760174567 A/m；两条合成曲线的 M 分别为 220000 和 180000 A/m。
+- 原包 pytest 测试：34 passed，1 skipped。
+  跳过项：缺少 gfortran，未运行 Fortran loader 编译测试。
+- bridge.py demo、inspect、solve --dry-run 通过。
+- 在仅含数学依赖的环境和完整原生/GPU 依赖环境中，原包测试均通过。
+
+原生/GPU 集成验证
+1. 永磁立方体：1×1×1 mm，Br=1.2 T，mu_r=1.05，沿 X 磁化。
+   6 个 TET4，50 个空气测点；没有 TET10 线性化。
+   原生 MagTense CPU、NumPy、CuPy FP64、CuPy FP32 均成功求解。
+2. 双非线性材料：2 个分离 TET4，每个分配不同的合成 B-H 曲线。
+   均匀外场 H=[65000,0,0] A/m，2 个空气测点。
+   NumPy、CuPy FP64、CuPy FP32 均成功求解，未对 MagTense 施加多 B-H 原生补丁。
+3. 保留默认 K 与原生 H 的随机磁化一致性检查，所有运行通过。
+4. FP64 将非线性容差收紧到 1e-10，并用 CPU FP64 重新计算最终残差。
+5. 检查了 K 缓存生成与再次读取；完整数值见 verification.json。
+
+关键数值（相对误差均为比值，不是百分数）
+模型          GPU 精度   独立重算残差      M 相对 NumPy FP64 的 L2 差异
+永磁立方体    FP64       1.1130e-16        2.1832e-16
+永磁立方体    FP32       5.0532e-08        5.0322e-08
+双 B-H        FP64       2.4848e-16        2.3711e-15
+双 B-H        FP32       4.1888e-08        2.0342e-08
+
+永磁立方体：GPU FP64 与收紧容差后的原生 CPU 空气 B 场相对 L2 差异为 3.8634e-13。
+双 B-H：FP64 的 |M| 分别约为 84755.58、49889.56 A/m；|H| 约 39022.33、49226.90 A/m。
+两条曲线的 H 上限为 100000、120000 A/m，测试工作点均未超出曲线范围。
+坐标单位 m，H/M 单位 A/m，B 单位 T。
+
+耗时说明
+原包默认容差首次求解：
+永磁立方体 NumPy：K 构建约 0.003 s，非线性求解约 0.33 s。
+永磁立方体 CuPy FP64：K 缓存读取约 0.004 s，首次非线性求解约 3.86 s。
+双 B-H NumPy：K 构建约 0.002 s，非线性求解约 0.33 s。
+双 B-H CuPy FP64：K 缓存读取约 0.004 s，首次非线性求解约 2.64 s。
+这些模型极小，包含 Python/CUDA 初始化与编译开销，不构成 GPU 加速性能基准。
+每次运行的精确时间、缓存命中、残差、迭代次数均保存在对应 gpu_solve_info.json 快照中。
+
+发现的改进项
+bridge.py inspect 和部分旧 README 仍展示“6 个 FP32 分量、24N² 字节”的参考估算。
+GPU 求解器实际存完整 3N×3N K：FP32 为 36N² 字节，FP64 为 72N² 字节，另有临时内存。
+建议统一输出，避免用旧参考值规划 GPU 模型规模。
+本次只测试，未修改包内源文件；source_integrity.json 已逐文件对照原 ZIP 验证。
+
+未验证
+- 真实 .aedt 已求解工程的导出、TET10 曲面网格、实际 Maxwell B 场误差。
+- 原生 Fortran 多 B-H 补丁及其重编译；本次未应用补丁。
+- 工程规模网格、显存峰值和 GPU 加速比。
+
+复现（PowerShell）
+& 'C:\Projects\magtense-gpu\skill-test\.venv\Scripts\python.exe' 'C:\Projects\magtense-gpu\skill-test\run_checks.py'
+& 'C:\Projects\magtense-gpu\skill-test\.venv\Scripts\python.exe' 'C:\Projects\magtense-gpu\skill-test\verify_results.py'
+
+证据
+pytest.log、pytest.xml：原包测试集。
+checks.json、run_checks.log：基础与端到端检查。
+verification.json、verification.log：收紧容差、独立残差和 CPU/GPU 对照。
+各模型目录与每次成功求解的 CSV/NPZ/JSON 快照保留于本目录。

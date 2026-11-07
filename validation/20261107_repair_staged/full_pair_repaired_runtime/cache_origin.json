@@ -1,0 +1,7 @@
+{
+  "source": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\pair_volume_q4_near_red_q256\\K.npy",
+  "quadrature_coordinates_bitwise_identical_for_all_receivers": true,
+  "geometry_hash_verified": true,
+  "near_pair_mean_verified": true,
+  "native_field_check_will_be_repeated_by_packaged_CLI": true
+}

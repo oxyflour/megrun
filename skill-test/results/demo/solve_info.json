@@ -1,0 +1,16 @@
+{
+  "max_final_M_rel": 7.2612987481639065e-12,
+  "solver_max_error": 1e-10,
+  "solver_max_iterations": 500,
+  "n_nonlinear_bh_curves": 0,
+  "original_bh_point_counts": [],
+  "tile_stats": {
+    "tiles": 6,
+    "per_object": {
+      "cube_magnet": 6
+    },
+    "nonlinear_state_functions": 0,
+    "nonlinear_material_assignments": [],
+    "dense_tensor_GB_reference": 0.0
+  }
+}

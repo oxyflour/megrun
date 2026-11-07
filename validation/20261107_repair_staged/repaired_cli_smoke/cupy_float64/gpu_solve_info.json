@@ -1,0 +1,62 @@
+{
+  "converged": true,
+  "iterations": 5,
+  "residual": 7.863475861829435e-12,
+  "solve_seconds": 0.3813113998621702,
+  "method": "proximal",
+  "residual_history": [
+    0.017018299472067396,
+    7.863475861829435e-12
+  ],
+  "iteration_history": [
+    {
+      "iteration": 0,
+      "residual": 0.017018299472067396
+    },
+    {
+      "iteration": 5,
+      "residual": 7.863475861829435e-12
+    }
+  ],
+  "equations": "Original M=F(KM), no change in physical material or K",
+  "operator": "tetra_volume",
+  "loaded_from_cache": false,
+  "tiles": 6,
+  "K_build_or_load_seconds": 0.20183909963816404,
+  "K_GB": 2.592e-06,
+  "dtype": "float64",
+  "quadrature_points_far": 4,
+  "quadrature_points_near": 256,
+  "near_factor": 1.5,
+  "source_kernel": "CPU native MagTense tetrahedron",
+  "spectrum_clipping": false,
+  "backend": "cupy",
+  "max_tiles": 10000,
+  "H_uniform_Apm": [
+    100.0,
+    0.0,
+    0.0
+  ],
+  "nonlinear_curves": 0,
+  "source": {
+    "project": "OFFLINE DEMO - NOT MAXWELL",
+    "design": "cube",
+    "solution": "none",
+    "model_unit": "m"
+  },
+  "tile_stats": {
+    "tiles": 6,
+    "per_object": {
+      "cube_magnet": 6
+    },
+    "nonlinear_state_functions": 0,
+    "nonlinear_material_assignments": [],
+    "dense_tensor_GB_reference": 0.0
+  },
+  "output": "gpu_B.csv",
+  "K_field_check_observation": "volume-average",
+  "magnetization_dtype": "float64",
+  "K_magtense_field_check_relative_error": 2.443512062237256e-16,
+  "gpu_device_id": 0,
+  "gpu_model": "NVIDIA GeForce RTX 3090 Ti"
+}

@@ -1,0 +1,151 @@
+{
+  "case": "Shield_T010",
+  "independent_CPU_material_residual": 9.915186693468421e-09,
+  "native_K_H_relative_error": 1.4547800874035499e-15,
+  "new_operator_blocks": {
+    "old_camera_tiles": 3629,
+    "new_shield_tiles": 330,
+    "total_tiles": 3959,
+    "new_near_pairs": 62388,
+    "new_block_seconds": 117.06124150007963,
+    "old_block_copied_bitwise": true,
+    "old_geometry_and_settings_verified": true,
+    "old_cache": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_repaired_runtime\\K_volume_r2_f1.5_float64.npy",
+    "cache": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\Shield_T010\\K_volume_r2_f1.5_float64.npy",
+    "full_K_GB": 1.128505032,
+    "full_native_average_field_check_required_after_load": true
+  },
+  "gpu_solve_seconds": 63.29325069999322,
+  "iterations": 6508,
+  "per_object": {
+    "A_YOKE_SOFT_MAGNETIC": {
+      "tiles": 1298,
+      "H_min_Apm": 3.367784454783342,
+      "H_max_Apm": 574.8478974710914,
+      "B_min_T": 0.02132930155989744,
+      "B_max_T": 2.0099391589804014,
+      "B_mean_T": 0.5390041850952163,
+      "chart_H_min_Apm": 300.0,
+      "chart_H_max_Apm": 16000.0,
+      "below_first_measured_knot": 1292,
+      "above_last_measured_knot": 0,
+      "above_model_endpoint": 0
+    },
+    "A_MAGNET_X_POS": {
+      "tiles": 98,
+      "H_min_Apm": 369322.52827113646,
+      "H_max_Apm": 687802.1065301572,
+      "B_min_T": 0.297864630498575,
+      "B_max_T": 0.7201775806229402,
+      "B_mean_T": 0.4578176543686148
+    },
+    "A_MAGNET_X_NEG": {
+      "tiles": 103,
+      "H_min_Apm": 383899.82378621143,
+      "H_max_Apm": 687745.8948418023,
+      "B_min_T": 0.2946636545688329,
+      "B_max_T": 0.7012842880096319,
+      "B_mean_T": 0.44288606622356974
+    },
+    "A_MAGNET_Y_POS": {
+      "tiles": 114,
+      "H_min_Apm": 428265.11085676285,
+      "H_max_Apm": 683231.8187104459,
+      "B_min_T": 0.30133565548147206,
+      "B_max_T": 0.704319267979,
+      "B_mean_T": 0.4554593692565903
+    },
+    "A_MAGNET_Y_NEG": {
+      "tiles": 114,
+      "H_min_Apm": 377578.68971008185,
+      "H_max_Apm": 688091.8000896147,
+      "B_min_T": 0.29572555890546676,
+      "B_max_T": 0.709673115538061,
+      "B_mean_T": 0.4522100832930683
+    },
+    "B_YOKE_SOFT_MAGNETIC": {
+      "tiles": 1388,
+      "H_min_Apm": 1.2740880307039446,
+      "H_max_Apm": 1230.4844948948396,
+      "B_min_T": 0.008069224197286545,
+      "B_max_T": 2.153810561860267,
+      "B_mean_T": 0.5205057718336243,
+      "chart_H_min_Apm": 300.0,
+      "chart_H_max_Apm": 16000.0,
+      "below_first_measured_knot": 1385,
+      "above_last_measured_knot": 0,
+      "above_model_endpoint": 0
+    },
+    "B_MAGNET_X_POS": {
+      "tiles": 126,
+      "H_min_Apm": 389507.7867281243,
+      "H_max_Apm": 690891.0002083469,
+      "B_min_T": 0.2892998772490066,
+      "B_max_T": 0.7268339854921029,
+      "B_mean_T": 0.44111548614829116
+    },
+    "B_MAGNET_X_NEG": {
+      "tiles": 128,
+      "H_min_Apm": 355953.5483609314,
+      "H_max_Apm": 686411.0063717081,
+      "B_min_T": 0.29964688652382326,
+      "B_max_T": 0.7539532700412155,
+      "B_mean_T": 0.4635674837155547
+    },
+    "B_MAGNET_Y_POS": {
+      "tiles": 128,
+      "H_min_Apm": 350513.6046819648,
+      "H_max_Apm": 689033.4255676622,
+      "B_min_T": 0.2917066468742479,
+      "B_max_T": 0.7613795938060457,
+      "B_mean_T": 0.4489196191916177
+    },
+    "B_MAGNET_Y_NEG": {
+      "tiles": 132,
+      "H_min_Apm": 420238.8944717863,
+      "H_max_Apm": 691888.305303172,
+      "B_min_T": 0.2896926856635502,
+      "B_max_T": 0.6930337661781525,
+      "B_mean_T": 0.4479670072639095
+    },
+    "MID_SHIELD": {
+      "tiles": 330,
+      "H_min_Apm": 0.11354766670791691,
+      "H_max_Apm": 6.977334040249612,
+      "B_min_T": 0.005693628009386425,
+      "B_max_T": 0.6124588658896148,
+      "B_mean_T": 0.3019809591542217,
+      "chart_H_min_Apm": 0.10591620365955075,
+      "chart_H_max_Apm": 714.3687574663174,
+      "below_first_measured_knot": 0,
+      "above_last_measured_knot": 0,
+      "above_model_endpoint": 0
+    }
+  },
+  "air_field_regularization": {
+    "regularized_indices": [
+      464,
+      531,
+      545
+    ],
+    "coordinates_unchanged": true,
+    "method": "two-direction symmetric Richardson limit in verified air",
+    "limits": [
+      {
+        "index": 464,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 0.00029955442779854566
+      },
+      {
+        "index": 531,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 2.8966844805291776e-05
+      },
+      {
+        "index": 545,
+        "step_m": 2.265744910619905e-05,
+        "limit_difference_Apm": 0.000298156911233074
+      }
+    ]
+  }
+}

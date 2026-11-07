@@ -1,0 +1,12 @@
+{
+  "started_UTC": "2026-11-07T05:47:22.227835+00:00",
+  "budget_seconds": 2700,
+  "authorization": "User explicitly approved an additional 45 minutes for the full two-camera real-BH comparison",
+  "state": "Completed",
+  "ended_UTC": "2026-11-07T06:21:01.075514+00:00",
+  "elapsed_seconds": 2018.847679,
+  "within_authorized_budget": true,
+  "simulations_finished": true,
+  "report": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\FINAL_REPORT.txt",
+  "package": "C:\\Projects\\magtense-gpu\\MagTense_CuPy_Skill_v3.zip"
+}

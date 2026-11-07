@@ -1,0 +1,14 @@
+{
+  "CPU": "Intel Core i7-8700 @ 3.20GHz",
+  "physical_cores": 6,
+  "logical_processors": 12,
+  "Maxwell_cores": 4,
+  "GPU": "NVIDIA GeForce RTX 3090 Ti",
+  "GPU_total_MiB": 24314,
+  "other_GPU_memory_used_at_start_MiB": 13618,
+  "GPU_free_at_start_MiB": 10696,
+  "CuPy_precision": "float64",
+  "native_K_CPU_threads_first_three": 4,
+  "native_K_CPU_threads_refined": 2,
+  "note": "Thread counts are environment settings; timing is single-run, with concurrent Maxwell work"
+}

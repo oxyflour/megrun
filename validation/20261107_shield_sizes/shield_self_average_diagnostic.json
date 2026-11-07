@@ -1,0 +1,178 @@
+{
+  "Shield_T010": {
+    "shield_tetrahedra": 330,
+    "analytic_volume_average_K": [
+      [
+        -0.9397649470465073,
+        -1.7600251780427306e-16,
+        -3.4320490971833248e-15
+      ],
+      [
+        -1.7600251780427306e-16,
+        -0.016416101431914985,
+        -7.744110783388016e-15
+      ],
+      [
+        -3.4320490971833248e-15,
+        -7.744110783388016e-15,
+        -0.04381895151749474
+      ]
+    ],
+    "uniform_M_average_of_discrete_K": [
+      [
+        -0.940235800308144,
+        -2.9135020177251185e-05,
+        -6.3178607994005e-05
+      ],
+      [
+        -2.913502017909899e-05,
+        -0.01624924097047692,
+        -4.806881188618487e-06
+      ],
+      [
+        -6.317860799535566e-05,
+        -4.806881188938083e-06,
+        -0.04351495872132196
+      ]
+    ],
+    "relative_Frobenius_difference_percent": 0.06302592761097003,
+    "relative_diagonal_difference_percent_xyz": [
+      0.0501033011623341,
+      1.0164438988764302,
+      0.6937473071472604
+    ],
+    "note": "Uniform-M aggregate only; does not bound nonuniform nonlinear solution accuracy or local tetrahedron quadrature errors"
+  },
+  "Shield_T020": {
+    "shield_tetrahedra": 330,
+    "analytic_volume_average_K": [
+      [
+        -0.8973793220113162,
+        6.160088123149558e-16,
+        -3.2560465793790516e-15
+      ],
+      [
+        6.160088123149558e-16,
+        -0.02788794352064624,
+        5.58807994028567e-15
+      ],
+      [
+        -3.2560465793790516e-15,
+        5.58807994028567e-15,
+        -0.07473273446579332
+      ]
+    ],
+    "uniform_M_average_of_discrete_K": [
+      [
+        -0.8975855012137898,
+        -2.512479048453716e-05,
+        -5.47192621691282e-05
+      ],
+      [
+        -2.5124790484015063e-05,
+        -0.027814264311021138,
+        -5.194470480645658e-06
+      ],
+      [
+        -5.471926217297211e-05,
+        -5.19447047992629e-06,
+        -0.07460023447511611
+      ]
+    ],
+    "relative_Frobenius_difference_percent": 0.029948804398675467,
+    "relative_diagonal_difference_percent_xyz": [
+      0.022975702405472462,
+      0.2641973567199578,
+      0.17729846448727113
+    ],
+    "note": "Uniform-M aggregate only; does not bound nonuniform nonlinear solution accuracy or local tetrahedron quadrature errors"
+  },
+  "Shield_T020_refined": {
+    "shield_tetrahedra": 1188,
+    "analytic_volume_average_K": [
+      [
+        -0.8973793220113162,
+        6.160088123149558e-16,
+        -3.2560465793790516e-15
+      ],
+      [
+        6.160088123149558e-16,
+        -0.02788794352064624,
+        5.58807994028567e-15
+      ],
+      [
+        -3.2560465793790516e-15,
+        5.58807994028567e-15,
+        -0.07473273446579332
+      ]
+    ],
+    "uniform_M_average_of_discrete_K": [
+      [
+        -0.8974221439607352,
+        -9.309043266774442e-06,
+        -2.644662753939685e-05
+      ],
+      [
+        -9.309043265831065e-06,
+        -0.02787459268538582,
+        1.0728883441980537e-07
+      ],
+      [
+        -2.6446627529247462e-05,
+        1.072888294492263e-07,
+        -0.0747032633541469
+      ]
+    ],
+    "relative_Frobenius_difference_percent": 0.007406731637233253,
+    "relative_diagonal_difference_percent_xyz": [
+      0.0047718894751197045,
+      0.04787314364192767,
+      0.039435344975777636
+    ],
+    "note": "Uniform-M aggregate only; does not bound nonuniform nonlinear solution accuracy or local tetrahedron quadrature errors"
+  },
+  "Shield_Large_T020": {
+    "shield_tetrahedra": 546,
+    "analytic_volume_average_K": [
+      [
+        -0.9188134347828348,
+        5.2659953327038486e-17,
+        -3.4755569195845403e-15
+      ],
+      [
+        5.2659953327038486e-17,
+        -0.026611684955986148,
+        1.1058590198678082e-15
+      ],
+      [
+        -3.4755569195845403e-15,
+        1.1058590198678082e-15,
+        -0.05457488025852266
+      ]
+    ],
+    "uniform_M_average_of_discrete_K": [
+      [
+        -0.9189724020029141,
+        -2.085348430529163e-05,
+        -3.9065382803238374e-05
+      ],
+      [
+        -2.0853484300284512e-05,
+        -0.026552714456599565,
+        -2.450895813241056e-06
+      ],
+      [
+        -3.9065382810676434e-05,
+        -2.4508958136292274e-06,
+        -0.05447488354039374
+      ]
+    ],
+    "relative_Frobenius_difference_percent": 0.022436018555575185,
+    "relative_diagonal_difference_percent_xyz": [
+      0.017301359999901938,
+      0.2215962630104621,
+      0.1832284700492888
+    ],
+    "note": "Uniform-M aggregate only; does not bound nonuniform nonlinear solution accuracy or local tetrahedron quadrature errors"
+  }
+}

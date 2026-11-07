@@ -1,0 +1,97 @@
+{
+  "material": "VAC MUMETALL, published static magnetization trace",
+  "manufacturer": "VACUUMSCHMELZE",
+  "source_url": "https://vacuumschmelze.com/03_Documents/Brochures/Product%20Information%20Soft%20Magnetic%20Materials%20and%20Semi-Finished%20Products.pdf",
+  "edition": "2002 PHT-001",
+  "pdf_page": 20,
+  "printed_page": 18,
+  "figure": 7,
+  "measurement_condition": "Static DC, stamped rings, strip thickness 1 mm, magnetic final annealing",
+  "source_pdf_sha256": "48daae3913400715ddd60d6ea8498157993c2ad65af37e04ca6dcd5b862fbd49",
+  "image_pixel_size": [
+    7216,
+    6352
+  ],
+  "x_grid_pixels": [
+    493.5,
+    2156.0,
+    3836.5,
+    5514.5,
+    7178.0
+  ],
+  "y_grid_pixels": [
+    5853.5,
+    4179.5,
+    2506.0,
+    834.0
+  ],
+  "x_axis_unit_on_source": "A/cm",
+  "H_conversion_to_Apm": 100,
+  "trace_selection_anchors_pixels": [
+    [
+      550,
+      4640
+    ],
+    [
+      1000,
+      4127
+    ],
+    [
+      1500,
+      3334
+    ],
+    [
+      2000,
+      2226
+    ],
+    [
+      2500,
+      1445
+    ],
+    [
+      3000,
+      1228
+    ],
+    [
+      3500,
+      1192
+    ],
+    [
+      4000,
+      1173
+    ],
+    [
+      4500,
+      1152
+    ],
+    [
+      5000,
+      1134
+    ],
+    [
+      6000,
+      1114
+    ],
+    [
+      7000,
+      1104
+    ]
+  ],
+  "retained_chart_knots": 45,
+  "chart_H_range_Apm": [
+    0.10591620365955075,
+    714.3687574663174
+  ],
+  "chart_B_range_T": [
+    0.0053041000623762205,
+    0.6889975908400566
+  ],
+  "reading_uncertainty_estimate": "Approximately 2-3% in B/H around clear trace; larger near overlapping traces. Not a calibrated measurement uncertainty.",
+  "assumptions": [
+    "Added origin; linear interpolation in H-B in both solvers",
+    "Constant magnetization above last digitized H, extended to H=200000 A/m",
+    "Isotropic, single-valued, no hysteresis",
+    "Same 1 mm-reference material curve held fixed for 0.10 and 0.20 mm geometric comparison; no claim of actual foil properties",
+    "2002 material trace is not the same data/condition as the 2024 MUMETALL datasheet or Magnetic Shield Corporation MuMETAL foil"
+  ]
+}

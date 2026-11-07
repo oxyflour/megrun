@@ -1,0 +1,49 @@
+{
+  "state": "Exported; native convergence audited",
+  "design": "Shield_Large_T020",
+  "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\gap3mm_shield_sizes_v3.aedt",
+  "point_count": 566,
+  "coordinate_scale_to_m": 1.0,
+  "adaptive_converged": true,
+  "passes": 5,
+  "energy_error_percent": 0.31461,
+  "total_tetrahedra": 381591,
+  "adaptive_history": [
+    {
+      "pass": 1,
+      "tetrahedra": 133592,
+      "energy_J": 0.012486,
+      "energy_error_percent": 2.2557,
+      "delta_energy_percent": null
+    },
+    {
+      "pass": 2,
+      "tetrahedra": 173675,
+      "energy_J": 0.012503,
+      "energy_error_percent": 0.93889,
+      "delta_energy_percent": 0.13965
+    },
+    {
+      "pass": 3,
+      "tetrahedra": 225785,
+      "energy_J": 0.012509,
+      "energy_error_percent": 0.6111,
+      "delta_energy_percent": 0.050487
+    },
+    {
+      "pass": 4,
+      "tetrahedra": 293528,
+      "energy_J": 0.012511,
+      "energy_error_percent": 0.43811,
+      "delta_energy_percent": 0.010808
+    },
+    {
+      "pass": 5,
+      "tetrahedra": 381591,
+      "energy_J": 0.012512,
+      "energy_error_percent": 0.31461,
+      "delta_energy_percent": 0.011892
+    }
+  ],
+  "seconds": 16.696531100198627
+}

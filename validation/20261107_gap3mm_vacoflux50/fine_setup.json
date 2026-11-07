@@ -1,0 +1,23 @@
+{
+  "ID": 0,
+  "SetupType": "Magnetostatic",
+  "Enabled": true,
+  "MeshLink": {
+    "ImportMesh": false
+  },
+  "MaximumPasses": 8,
+  "MinimumPasses": 3,
+  "MinimumConvergedPasses": 2,
+  "PercentRefinement": 30,
+  "SolveFieldOnly": false,
+  "PercentError": 0.5,
+  "SolveMatrixAtLast": true,
+  "UseNonLinearIterNum": false,
+  "UseIterativeSolver": false,
+  "RelativeResidual": 1e-06,
+  "NonLinearResidual": 1e-05,
+  "SmoothBHCurve": false,
+  "MuOption": {
+    "MuNonLinearBH": true
+  }
+}

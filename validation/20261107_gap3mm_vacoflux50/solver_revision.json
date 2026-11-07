@@ -1,0 +1,8 @@
+{
+  "original": "C:\\Projects\\magtense-gpu\\skill-test\\magtense-cupy-magnetostatics\\scripts\\aedt_magtense_bridge\\gpu_solver.py",
+  "original_sha256": "4395a55b2a86c680f6a907fcfb4b6be20ab6a11c212cbad9f762b65e5f00aa32",
+  "corrected_sha256": "7fdee363db899de97c12865bbd7b7bb20aeac22693c3876e14654034e9c54fe0",
+  "change": "Armijo backtracking on absolute residual; convergence tolerance unchanged",
+  "original_failed_log": "gpu_solve.log",
+  "diagnosis": "nonconvergence_diagnostic.json"
+}

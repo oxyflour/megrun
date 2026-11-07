@@ -1,0 +1,11 @@
+{
+  "schema": "magtense-tetra-volume-1",
+  "dtype": "float64",
+  "receiver_rule": "gauss4",
+  "near_rule": "red8",
+  "near_levels": 2,
+  "near_factor": 1.5,
+  "magtense_version": "3.0.1",
+  "n": 4175,
+  "geometry_sha256": "ffd1254a63cf218b42b905fcf70fb3177197662fb1cb9052ebb5b1a0895fdb9a"
+}

@@ -1,0 +1,175 @@
+[
+  {
+    "name": "numpy_self_test",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "gpu_solver.py",
+      "--self-test",
+      "--backend",
+      "numpy"
+    ],
+    "exit_code": 0,
+    "seconds": 1.6266195997595787
+  },
+  {
+    "name": "pytest",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "-ra",
+      "tests",
+      "--junitxml=C:\\Projects\\magtense-gpu\\skill-test\\results\\pytest.xml"
+    ],
+    "exit_code": 0,
+    "seconds": 2.2405369002372026
+  },
+  {
+    "name": "cuda_environment",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "-c",
+      "import cupy as cp; print(cp.cuda.runtime.getDeviceCount()); print(cp.cuda.runtime.getDeviceProperties(0)); cp.show_config(); print(\"CUDA reduction:\", float(cp.sum(cp.arange(1000, dtype=cp.float64)).get()))"
+    ],
+    "exit_code": 0,
+    "seconds": 4.441107999999076
+  },
+  {
+    "name": "demo_create",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "bridge.py",
+      "demo",
+      "--out",
+      "C:\\Projects\\magtense-gpu\\skill-test\\results\\demo"
+    ],
+    "exit_code": 0,
+    "seconds": 0.2549836002290249
+  },
+  {
+    "name": "demo_inspect",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "bridge.py",
+      "inspect",
+      "--out",
+      "C:\\Projects\\magtense-gpu\\skill-test\\results\\demo"
+    ],
+    "exit_code": 0,
+    "seconds": 0.23184890020638704
+  },
+  {
+    "name": "demo_dry_run",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "bridge.py",
+      "solve",
+      "--out",
+      "C:\\Projects\\magtense-gpu\\skill-test\\results\\demo",
+      "--dry-run"
+    ],
+    "exit_code": 0,
+    "seconds": 0.27617500023916364
+  },
+  {
+    "name": "demo_native_cpu",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "bridge.py",
+      "solve",
+      "--out",
+      "C:\\Projects\\magtense-gpu\\skill-test\\results\\demo"
+    ],
+    "exit_code": 0,
+    "seconds": 0.4588382998481393
+  },
+  {
+    "name": "demo_numpy_fp64",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "gpu_solver.py",
+      "--out",
+      "C:\\Projects\\magtense-gpu\\skill-test\\results\\demo",
+      "--backend",
+      "numpy",
+      "--dtype",
+      "float64",
+      "--cache-k"
+    ],
+    "exit_code": 0,
+    "seconds": 0.8164808000437915
+  },
+  {
+    "name": "demo_cupy_fp64",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "gpu_solver.py",
+      "--out",
+      "C:\\Projects\\magtense-gpu\\skill-test\\results\\demo",
+      "--backend",
+      "cupy",
+      "--dtype",
+      "float64",
+      "--cache-k"
+    ],
+    "exit_code": 0,
+    "seconds": 5.787006199825555
+  },
+  {
+    "name": "demo_cupy_fp32",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "gpu_solver.py",
+      "--out",
+      "C:\\Projects\\magtense-gpu\\skill-test\\results\\demo",
+      "--backend",
+      "cupy",
+      "--dtype",
+      "float32",
+      "--cache-k"
+    ],
+    "exit_code": 0,
+    "seconds": 5.253357000183314
+  },
+  {
+    "name": "two_bh_numpy_fp64",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "gpu_solver.py",
+      "--out",
+      "C:\\Projects\\magtense-gpu\\skill-test\\results\\two_bh",
+      "--backend",
+      "numpy",
+      "--dtype",
+      "float64",
+      "--uniform-H",
+      "65000",
+      "0",
+      "0",
+      "--cache-k"
+    ],
+    "exit_code": 0,
+    "seconds": 0.842232400085777
+  },
+  {
+    "name": "two_bh_cupy_fp64",
+    "command": [
+      "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+      "gpu_solver.py",
+      "--out",
+      "C:\\Projects\\magtense-gpu\\skill-test\\results\\two_bh",
+      "--backend",
+      "cupy",
+      "--dtype",
+      "float64",
+      "--uniform-H",
+      "65000",
+      "0",
+      "0",
+      "--cache-k"
+    ],
+    "exit_code": 0,
+    "seconds": 4.109348900150508
+  }
+]

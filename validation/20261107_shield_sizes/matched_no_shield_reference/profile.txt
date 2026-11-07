@@ -1,0 +1,39 @@
+Maxwell 3D Profile
+  Project:           matched_mesh_control_v6
+  Design:            Shield_T010_NoShield
+  Solution setup:    Reference
+
+  Task               Real Time  CPU Time  Memory  Information
+  ----               ---------  --------  ------  -----------
+
+  Solution Process                                Start Time: 11/07/2026 15:56:26, Host: OXYFLOUR-PC11, Processor: 12, OS: NT 10.0, Product: Maxwell 3D 2022.2.0
+                                                  Executing from C:\Program Files\AnsysEM\v222\Win64\MAXWELLCOMENGINE.exe
+                                                  HPC: Enabled
+                                                  Desired RAM limit not set.
+  Design Validation                               Elapsed time : 00:00:00 , Maxwell 3D ComEngine Memory : 67 M
+                                                  Perform full validations
+                                                  
+  Initial Meshing                                 Time: 11/07/2026 15:56:26
+  Get starting mesh  00:00:01   00:00:00  0 K     Source: C:\Projects\magtense-gpu\validation\20261107_shield_sizes\failure_snapshot_refinement24000\gap3mm_shield_sizes_v3.aedt, Shield_T010 - Reference : LastAdaptive
+                                                  
+  Adaptive Meshing                                Time: 11/07/2026 15:56:28
+                                                  
+  Pass 1                                          
+  Solver DRS2        00:00:00   00:00:01  142 M   Matrix: 13732, Disk: 0KB
+  Solver DRS2        00:00:00   00:00:00  134 M   Matrix: 13732, Disk: 0KB
+  Solver DRS2        00:00:38   00:01:00  2.59 G  Matrix: 471617, Disk: 0KB
+  Solver DRS2        00:00:41   00:00:59  2.59 G  Matrix: 471617, Disk: 0KB
+  Solver DRS2        00:00:45   00:01:00  2.59 G  Matrix: 471617, Disk: 0KB
+  Solver DRS2        00:00:40   00:00:57  2.59 G  Matrix: 471617, Disk: 0KB
+  Solver DRS2        00:00:36   00:00:57  2.59 G  Matrix: 471617, Disk: 0KB
+  Solver DRS2        00:00:37   00:00:58  2.59 G  Matrix: 471617, Disk: 0KB
+  Solver DRS2        00:00:36   00:00:58  2.59 G  Matrix: 471617, Disk: 0KB
+  Solver DRS2        00:00:40   00:01:00  2.59 G  Matrix: 471617, Disk: 0KB
+  adapt              00:04:18   00:03:58  1.52 G  Tetrahedra: 351031
+                                                  
+  Adaptive Meshing   00:09:31   00:11:48          Elapsed Time: 00:10:44
+                                                  Adaptive Passes did not converge
+                                                  
+  Solution Process   00:09:32   00:11:48          Elapsed Time: 00:10:45, ComEngine Memory: 72.5 M
+                                                  Stop Time: 11/07/2026 16:07:12, Status: Normal Completion
+                                                  

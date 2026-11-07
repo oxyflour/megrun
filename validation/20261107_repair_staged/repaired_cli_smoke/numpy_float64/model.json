@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "source": {
+    "project": "OFFLINE DEMO - NOT MAXWELL",
+    "design": "cube",
+    "solution": "none",
+    "model_unit": "m"
+  },
+  "mesh_unit": "m",
+  "points": "points.csv",
+  "maxwell_field": "maxwell_B.fld",
+  "skipped": [
+    {
+      "name": "Air",
+      "reason": "air/vacuum"
+    }
+  ],
+  "total_magnetic_tetra": 6,
+  "objects": [
+    {
+      "name": "cube_magnet",
+      "material": "NdFeB_demo",
+      "properties": {
+        "kind": "permanent",
+        "mu_r": 1.05,
+        "br_T": 1.2,
+        "direction": [
+          1,
+          0,
+          0
+        ]
+      },
+      "mesh_npz": "mesh/demo_magnet.npz",
+      "mesh_stats": {
+        "tetra_count": 6,
+        "volume_m3": 1e-09,
+        "tet10": 0,
+        "tet4": 6,
+        "curved": false,
+        "orientation_flipped": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "source": {
+    "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\gap3mm_vacoflux50.aedt",
+    "design": "MT_Coarse",
+    "solution": "Reference : LastAdaptive",
+    "model_unit": "mm",
+    "current_A_turn": 0,
+    "native_status": "Normal Completion"
+  },
+  "objects": [
+    {
+      "name": "A_YOKE_SOFT_MAGNETIC",
+      "material": "magrun_steel_bh",
+      "properties": {
+        "kind": "linear",
+        "mu_r": 100
+      },
+      "properties_source": "AEDT project material",
+      "mesh_npz": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\coarse_export\\mesh\\A_YOKE_SOFT_MAGNETIC.npz",
+      "mesh_raw": "mesh/A_YOKE_SOFT_MAGNETIC.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 1298,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 1298,
+        "orientation_flipped": 0,
+        "volume_m3": 6.675000000000001e-08,
+        "bounds_min_m": [
+          -0.0044,
+          -0.0044,
+          0.0014
+        ],
+        "bounds_max_m": [
+          0.0044,
+          0.0044,
+          0.0048
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 0.0,
+        "CAD_volume_m3": 6.675000000000004e-08,
+        "volume_relative_difference": 3.96551005268867e-16
+      }
+    },
+    {
+      "name": "A_MAGNET_X_POS",
+      "material": "magrun_magnet_x_pos",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "AEDT project material",
+      "mesh_npz": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\coarse_export\\mesh\\A_MAGNET_X_POS.npz",
+      "mesh_raw": "mesh/A_MAGNET_X_POS.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 98,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 98,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          0.0032,
+          -0.0024,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0038,
+          0.0024,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16,
+        "CAD_volume_m3": 6.911999999999996e-09,
+        "volume_relative_difference": 2.3934624205816785e-16
+      }
+    },
+    {
+      "name": "A_MAGNET_X_NEG",
+      "material": "magrun_magnet_x_neg",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "AEDT project material",
+      "mesh_npz": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\coarse_export\\mesh\\A_MAGNET_X_NEG.npz",
+      "mesh_raw": "mesh/A_MAGNET_X_NEG.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 103,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 103,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999997e-09,
+        "bounds_min_m": [
+          -0.0038,
+          -0.0024,
+          0.0018
+        ],
+        "bounds_max_m": [
+          -0.0032,
+          0.0024,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16,
+        "CAD_volume_m3": 6.911999999999996e-09,
+        "volume_relative_difference": 1.1967312102908393e-16
+      }
+    },
+    {
+      "name": "A_MAGNET_Y_POS",
+      "material": "magrun_magnet_y_pos",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "AEDT project material",
+      "mesh_npz": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\coarse_export\\mesh\\A_MAGNET_Y_POS.npz",
+      "mesh_raw": "mesh/A_MAGNET_Y_POS.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 114,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 114,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999997e-09,
+        "bounds_min_m": [
+          -0.0024,
+          0.0032,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0024,
+          0.0038,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16,
+        "CAD_volume_m3": 6.911999999999996e-09,
+        "volume_relative_difference": 1.1967312102908393e-16
+      }
+    },
+    {
+      "name": "A_MAGNET_Y_NEG",
+      "material": "magrun_magnet_y_neg",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "AEDT project material",
+      "mesh_npz": "C:\\Projects\\magtense-gpu\\validation\\20261107_gap3mm_vacoflux50\\coarse_export\\mesh\\A_MAGNET_Y_NEG.npz",
+      "mesh_raw": "mesh/A_MAGNET_Y_NEG.aedtplt",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 114,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 114,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          -0.0024,
+          -0.0038,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0024,
+          -0.0032,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16,
+        "CAD_volume_m3": 6.911999999999996e-09,
+        "volume_relative_difference": 2.3934624205816785e-16
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "name": "A_AF_COIL_COPPER",
+      "reason": "air or zero-current nonmagnetic copper"
+    },
+    {
+      "name": "B_AF_COIL_COPPER",
+      "reason": "air or zero-current nonmagnetic copper"
+    },
+    {
+      "name": "Region",
+      "reason": "air or zero-current nonmagnetic copper"
+    }
+  ],
+  "points": "points.csv",
+  "maxwell_field": "maxwell_B.fld",
+  "mesh_unit": "m",
+  "total_magnetic_tetra": 1727
+}

@@ -1,0 +1,26 @@
+{
+  "all": {
+    "points": 485,
+    "relative_L2_percent": 3.6550938781029574,
+    "RMS_vector_error_mT": 1.4815077789737512,
+    "max_vector_error_mT": 7.493162121334893
+  },
+  "far_top_3mm": {
+    "points": 101,
+    "relative_L2_percent": 2.7780418949787795,
+    "RMS_vector_error_mT": 0.29816131390803957,
+    "max_vector_error_mT": 1.1101186507404792
+  },
+  "gap_vertical": {
+    "points": 81,
+    "relative_L2_percent": 4.575394038024769,
+    "RMS_vector_error_mT": 0.4640360951570315,
+    "max_vector_error_mT": 1.6399849007546865
+  },
+  "near_top_0.5mm": {
+    "points": 303,
+    "relative_L2_percent": 3.655540348024681,
+    "RMS_vector_error_mT": 1.8509555677759941,
+    "max_vector_error_mT": 7.493162121334893
+  }
+}

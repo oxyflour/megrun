@@ -1,0 +1,14 @@
+{
+  "regularized_indices": [
+    464
+  ],
+  "coordinates_unchanged": true,
+  "method": "two-direction symmetric Richardson limit in verified air",
+  "limits": [
+    {
+      "index": 464,
+      "step_m": 2.265744910619905e-05,
+      "limit_difference_Apm": 4.104135324085095e-05
+    }
+  ]
+}

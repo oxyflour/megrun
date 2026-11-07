@@ -1,0 +1,206 @@
+{
+  "status": "Three main-size comparisons completed; mesh-refinement check failed to reach the required residual",
+  "scope": "3 mm two-camera electromagnetic model; zero coil currents; same MUMETALL chart-based low-field model in both solvers",
+  "points": 566,
+  "cases": {
+    "Shield_T010": {
+      "dimensions_t_w_h_mm": [
+        0.1,
+        8.8,
+        3.4
+      ],
+      "total_B": {
+        "points": 566,
+        "relative_L2_percent": 3.749167439374626,
+        "RMS_vector_error_mT": 1.422040083409928,
+        "max_vector_error_mT": 7.386244501024573,
+        "reference_RMS_mT": 37.92948985087551,
+        "predicted_RMS_mT": 38.29420094800317
+      },
+      "delta_B_independent_mesh_reference": {
+        "points": 566,
+        "relative_L2_percent": 76.03270710171365,
+        "RMS_vector_error_mT": 1.7690121961906602,
+        "max_vector_error_mT": 8.78039288055332,
+        "reference_RMS_mT": 2.3266463389553436,
+        "predicted_RMS_mT": 1.470728843083059
+      },
+      "Maxwell": {
+        "passes": 5,
+        "energy_error_percent": 0.34185,
+        "tetrahedra": 351031,
+        "latest_process_seconds": 756.9255659999326
+      },
+      "CuPy": {
+        "iterations": 6508,
+        "residual": 9.91529904119636e-09,
+        "independent_CPU_residual": 9.915186693468421e-09,
+        "native_K_H_check": 1.4547800874035499e-15,
+        "iteration_seconds": 63.29325069999322,
+        "new_K_block_seconds": 117.06124150007963,
+        "magnetic_tiles": 3959
+      }
+    },
+    "Shield_T020": {
+      "dimensions_t_w_h_mm": [
+        0.2,
+        8.8,
+        3.4
+      ],
+      "total_B": {
+        "points": 566,
+        "relative_L2_percent": 4.155854239961367,
+        "RMS_vector_error_mT": 1.5756964010731875,
+        "max_vector_error_mT": 7.60890555701961,
+        "reference_RMS_mT": 37.915102650179456,
+        "predicted_RMS_mT": 38.295210753847535
+      },
+      "delta_B_independent_mesh_reference": {
+        "points": 566,
+        "relative_L2_percent": 76.0004384474309,
+        "RMS_vector_error_mT": 1.9011783449560025,
+        "max_vector_error_mT": 7.940844569817796,
+        "reference_RMS_mT": 2.501536022415236,
+        "predicted_RMS_mT": 1.6188419959806852
+      },
+      "Maxwell": {
+        "passes": 5,
+        "energy_error_percent": 0.33849,
+        "tetrahedra": 359345,
+        "latest_process_seconds": 709.9171070996672
+      },
+      "CuPy": {
+        "iterations": 7075,
+        "residual": 9.996962846364186e-09,
+        "independent_CPU_residual": 9.997166455964425e-09,
+        "native_K_H_check": 1.3642133956365065e-15,
+        "iteration_seconds": 70.69063540035859,
+        "new_K_block_seconds": 111.42719160020351,
+        "magnetic_tiles": 3959
+      }
+    },
+    "Shield_Large_T020": {
+      "dimensions_t_w_h_mm": [
+        0.2,
+        10,
+        5
+      ],
+      "total_B": {
+        "points": 566,
+        "relative_L2_percent": 3.878152458782179,
+        "RMS_vector_error_mT": 1.4684927553335132,
+        "max_vector_error_mT": 6.194318825290922,
+        "reference_RMS_mT": 37.86578199132096,
+        "predicted_RMS_mT": 38.21534836150926
+      },
+      "delta_B_independent_mesh_reference": {
+        "points": 566,
+        "relative_L2_percent": 46.98805749794472,
+        "RMS_vector_error_mT": 1.761048884963781,
+        "max_vector_error_mT": 6.84815401680061,
+        "reference_RMS_mT": 3.747864837870367,
+        "predicted_RMS_mT": 3.461358599606834
+      },
+      "Maxwell": {
+        "passes": 5,
+        "energy_error_percent": 0.31461,
+        "tetrahedra": 381591,
+        "latest_process_seconds": 1391.811888099648
+      },
+      "CuPy": {
+        "iterations": 9059,
+        "residual": 9.995516501466074e-09,
+        "independent_CPU_residual": 9.995312410054291e-09,
+        "native_K_H_check": 7.990181469110571e-16,
+        "iteration_seconds": 131.83396149985492,
+        "new_K_block_seconds": 284.77096079988405,
+        "magnetic_tiles": 4175
+      }
+    }
+  },
+  "paired_mesh_diagnostic": {
+    "case": "Shield_T010",
+    "result": {
+      "points": 566,
+      "relative_L2_percent": 9.07809246920469,
+      "RMS_vector_error_mT": 0.13616678609290606,
+      "max_vector_error_mT": 1.4310398474096429,
+      "reference_change_RMS_mT": 1.499949318150483,
+      "predicted_change_RMS_mT": 1.470728843083059
+    },
+    "same_corner_tetrahedron_set_verified": true,
+    "independent_adaptive_convergence": false,
+    "native_actual_completion": "Normal Completion despite an abort request; complete single pass; no new solve was submitted for readback"
+  },
+  "refinement": {
+    "status": "Not converged; no certified field result",
+    "iterations": 24000,
+    "last_true_residual": 2.152811566403673e-08,
+    "required_residual": 1e-08,
+    "retry_submitted": false,
+    "scope": "Only the additional 0.4mm shield mesh; the three main size solutions have independently passed",
+    "native_monitor_abort_caused_by_broad_cross-worker_stop": true,
+    "native_abort_records_preserved": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\failure_snapshot_refinement24000"
+  },
+  "material_quality": {
+    "used_input_unchanged": true,
+    "used_input_sha256": "5304bebfcf8d0ea88ea24cc35eeae29146f094ef728117ac7b931ab56cd6ef39",
+    "post_review": "The source plot has high-field intersections. The input trace above 30 A/m should be treated as an approximate high-field model, not uniquely certified MUMETALL measurements. No post-solve input changes were made.",
+    "clearly_identified_low_field_range_Apm": [
+      0.10591620365955075,
+      30.0
+    ],
+    "first_case_Maxwell_full_volume_maxima": {
+      "Mag_H": 21.219414118953434,
+      "Mag_B": 0.6393399618307942
+    },
+    "CuPy_max_H_Apm": {
+      "Shield_T010": 6.977334040249612,
+      "Shield_T020": 4.289044979159078,
+      "Shield_Large_T020": 6.783272699666788
+    },
+    "scope": "Numerical comparison uses exactly the same stored table in both solvers. No physical-grade certification, no validation of ambiguous high-field branches.",
+    "Maxwell_full_volume_maxima": {
+      "Shield_T010": {
+        "Mag_H": 21.219414118953434,
+        "Mag_B": 0.6393399618307942
+      },
+      "Shield_T020": {
+        "Mag_H": 2.1659136037983515,
+        "Mag_B": 0.49867604701707097
+      },
+      "Shield_Large_T020": {
+        "Mag_H": 6.262539112812882,
+        "Mag_B": 0.5934412147291849
+      }
+    },
+    "all_three_Maxwell_and_CuPy_working_H_below_clear_low_field_limit": true
+  },
+  "source_integrity": {
+    "original_project_sha256_before": "5ff82b5011a2447f5611b1448412bb730a0a6a806b69a115e4caf199c60a2116",
+    "original_project_sha256_after": "5ff82b5011a2447f5611b1448412bb730a0a6a806b69a115e4caf199c60a2116",
+    "previous_fine_reference_sha256_before": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785",
+    "previous_fine_reference_sha256_after": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785"
+  },
+  "budget": {
+    "started_UTC": "2026-11-07T07:09:59.643703+00:00",
+    "ended_UTC": "2026-11-07T08:22:43.244426+00:00",
+    "elapsed_seconds": 4363.600723,
+    "approved_seconds": 4500,
+    "within_approved_budget": true
+  },
+  "limitations": [
+    "Total B error and shield-induced Delta B error are separate quantities.",
+    "Only the 0.10 mm size has the fixed-corner-mesh Delta B diagnostic.",
+    "The 0.4 mm in-plane refined shield model did not converge at 24000 steps; no certified field comparison was produced.",
+    "The input is a chart-based 1 mm ring-material model used for thin-sheet geometry; it is not a real foil material calibration.",
+    "High-field trace intersections are not certified; all measured simulation working points were checked below the clear low-field limit.",
+    "Maxwell energy convergence does not give a rigorous local B-field error bound."
+  ],
+  "outputs": {
+    "report": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\FINAL_REPORT.txt",
+    "main_figure": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\shield_accuracy_comparison.png",
+    "paired_figure": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\paired_mesh_delta_check.png",
+    "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\gap3mm_shield_sizes_v3.aedt"
+  }
+}

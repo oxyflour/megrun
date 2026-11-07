@@ -1,0 +1,34 @@
+{
+  "used_input_unchanged": true,
+  "used_input_sha256": "5304bebfcf8d0ea88ea24cc35eeae29146f094ef728117ac7b931ab56cd6ef39",
+  "post_review": "The source plot has high-field intersections. The input trace above 30 A/m should be treated as an approximate high-field model, not uniquely certified MUMETALL measurements. No post-solve input changes were made.",
+  "clearly_identified_low_field_range_Apm": [
+    0.10591620365955075,
+    30.0
+  ],
+  "first_case_Maxwell_full_volume_maxima": {
+    "Mag_H": 21.219414118953434,
+    "Mag_B": 0.6393399618307942
+  },
+  "CuPy_max_H_Apm": {
+    "Shield_T010": 6.977334040249612,
+    "Shield_T020": 4.289044979159078,
+    "Shield_Large_T020": 6.783272699666788
+  },
+  "scope": "Numerical comparison uses exactly the same stored table in both solvers. No physical-grade certification, no validation of ambiguous high-field branches.",
+  "Maxwell_full_volume_maxima": {
+    "Shield_T010": {
+      "Mag_H": 21.219414118953434,
+      "Mag_B": 0.6393399618307942
+    },
+    "Shield_T020": {
+      "Mag_H": 2.1659136037983515,
+      "Mag_B": 0.49867604701707097
+    },
+    "Shield_Large_T020": {
+      "Mag_H": 6.262539112812882,
+      "Mag_B": 0.5934412147291849
+    }
+  },
+  "all_three_Maxwell_and_CuPy_working_H_below_clear_low_field_limit": true
+}

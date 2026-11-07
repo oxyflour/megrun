@@ -1,0 +1,38 @@
+{
+  "tetrahedra": 351031,
+  "corner_coordinate_set_sha256": "e964cd6b604faabb18cf39759fb144e1158f15acf348e0be82cb0be928debd83",
+  "coordinate_rounding_m": 1e-12,
+  "quadratic_midside_nodes_not_compared": true,
+  "raw_mesh_stats": {
+    "drawings": 1,
+    "tet4": 0,
+    "tet10": 351031,
+    "surface_elements_skipped": 0,
+    "curved": false,
+    "tetra_count": 351031,
+    "orientation_flipped": 0,
+    "volume_m3": 0.00012834595200000002,
+    "bounds_min_m": [
+      -0.0244,
+      -0.0244,
+      -0.0186
+    ],
+    "bounds_max_m": [
+      0.0362,
+      0.0244,
+      0.0248
+    ]
+  },
+  "native_final_tetrahedra": 351031,
+  "passes": 1,
+  "energy_error_percent": 0.3417,
+  "MID_SHIELD_material": "vacuum",
+  "Region_bbox_mm": [
+    -24.4,
+    -24.4,
+    -18.6,
+    36.2,
+    24.4,
+    24.800000000000004
+  ]
+}

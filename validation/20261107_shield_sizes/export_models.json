@@ -1,0 +1,86 @@
+[
+  {
+    "directory": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\Shield_T010",
+    "case": "Shield_T010",
+    "step_mm": 0.8,
+    "magnetic_tiles": 3959,
+    "shield_tiles": 330,
+    "distinct_BH_curves": 2,
+    "all_566_points_verified_in_air": true,
+    "full_K_float64_GB": 1.128505032,
+    "shield_mesh": {
+      "cells_through_thickness": 1,
+      "cell_counts": [
+        1,
+        11,
+        5
+      ],
+      "maximum_in_plane_target_mm": 0.8,
+      "tetrahedra": 330,
+      "volume_m3": 2.991999999999983e-09
+    }
+  },
+  {
+    "directory": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\Shield_T020",
+    "case": "Shield_T020",
+    "step_mm": 0.8,
+    "magnetic_tiles": 3959,
+    "shield_tiles": 330,
+    "distinct_BH_curves": 2,
+    "all_566_points_verified_in_air": true,
+    "full_K_float64_GB": 1.128505032,
+    "shield_mesh": {
+      "cells_through_thickness": 1,
+      "cell_counts": [
+        1,
+        11,
+        5
+      ],
+      "maximum_in_plane_target_mm": 0.8,
+      "tetrahedra": 330,
+      "volume_m3": 5.984000000000018e-09
+    }
+  },
+  {
+    "directory": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\Shield_T020_refined",
+    "case": "Shield_T020",
+    "step_mm": 0.4,
+    "magnetic_tiles": 4817,
+    "shield_tiles": 1188,
+    "distinct_BH_curves": 2,
+    "all_566_points_verified_in_air": true,
+    "full_K_float64_GB": 1.670651208,
+    "shield_mesh": {
+      "cells_through_thickness": 1,
+      "cell_counts": [
+        1,
+        22,
+        9
+      ],
+      "maximum_in_plane_target_mm": 0.4,
+      "tetrahedra": 1188,
+      "volume_m3": 5.984000000000017e-09
+    }
+  },
+  {
+    "directory": "C:\\Projects\\magtense-gpu\\validation\\20261107_shield_sizes\\Shield_Large_T020",
+    "case": "Shield_Large_T020",
+    "step_mm": 0.8,
+    "magnetic_tiles": 4175,
+    "shield_tiles": 546,
+    "distinct_BH_curves": 2,
+    "all_566_points_verified_in_air": true,
+    "full_K_float64_GB": 1.255005,
+    "shield_mesh": {
+      "cells_through_thickness": 1,
+      "cell_counts": [
+        1,
+        13,
+        7
+      ],
+      "maximum_in_plane_target_mm": 0.8,
+      "tetrahedra": 546,
+      "volume_m3": 1.000000000000004e-08
+    }
+  }
+]

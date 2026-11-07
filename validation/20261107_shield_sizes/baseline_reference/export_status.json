@@ -1,0 +1,49 @@
+{
+  "state": "Exported; native convergence audited",
+  "design": "Gap_3mm_CCW",
+  "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_reference.aedt",
+  "point_count": 566,
+  "coordinate_scale_to_m": 1.0,
+  "adaptive_converged": true,
+  "passes": 5,
+  "energy_error_percent": 0.35169,
+  "total_tetrahedra": 333613,
+  "adaptive_history": [
+    {
+      "pass": 1,
+      "tetrahedra": 116793,
+      "energy_J": 0.012481,
+      "energy_error_percent": 2.3484,
+      "delta_energy_percent": null
+    },
+    {
+      "pass": 2,
+      "tetrahedra": 151837,
+      "energy_J": 0.0125,
+      "energy_error_percent": 0.91882,
+      "delta_energy_percent": 0.14835
+    },
+    {
+      "pass": 3,
+      "tetrahedra": 197397,
+      "energy_J": 0.012505,
+      "energy_error_percent": 0.64067,
+      "delta_energy_percent": 0.042642
+    },
+    {
+      "pass": 4,
+      "tetrahedra": 256621,
+      "energy_J": 0.012508,
+      "energy_error_percent": 0.46883,
+      "delta_energy_percent": 0.024652
+    },
+    {
+      "pass": 5,
+      "tetrahedra": 333613,
+      "energy_J": 0.01251,
+      "energy_error_percent": 0.35169,
+      "delta_energy_percent": 0.010764
+    }
+  ],
+  "seconds": 14.737434200011194
+}
