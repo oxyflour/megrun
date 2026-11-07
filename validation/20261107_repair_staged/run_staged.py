@@ -11,7 +11,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parent
 BASE = ROOT.parent / '20261107_gap3mm_vacoflux50'
-TOOL = Path(r'C:\Projects\magtense-gpu\skill-test\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
+TOOL = ROOT.parents[1] / 'skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
 sys.path[:0] = [str(BASE), str(TOOL)]
 from gpu_solver import MaterialLaws, verify_tensor_against_magtense, hash_geometry
 from magtense_adapter import assemble_tiles

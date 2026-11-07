@@ -4,7 +4,7 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
-TOOL = Path(r'C:\Projects\magtense-gpu\skill-test\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
+TOOL = Path(__file__).resolve().parents[2] / 'skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
 sys.path.insert(0, str(TOOL))
 from gpu_solver import MaterialLaws, MU0
 from proximal_solver import solve

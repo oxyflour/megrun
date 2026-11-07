@@ -6,7 +6,7 @@
 
 - Skill 源码：[skills/magtense-cupy-magnetostatics](skills/magtense-cupy-magnetostatics/README.md)。安装和调用方式见该目录的 [SKILL.md](skills/magtense-cupy-magnetostatics/SKILL.md)。
 - Python 工具及测试：`skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/`。
-- `skill-test/` 保存早期提取版本、检查脚本和测试记录；继续开发请使用 `skills/magtense-cupy-magnetostatics/`。
+- 早期 v2 合成模型的输入、场数据、磁化结果、测试记录和环境信息统一归档于 [validation/20261107_repair_staged/v2_synthetic](validation/20261107_repair_staged/v2_synthetic/TEST_REPORT.txt)。旧源码副本及两个旧检查入口已移除，原始版本可从 Git 提交 `bdc71d9` 追溯；当前开发与测试统一使用 `skills/magtense-cupy-magnetostatics/`。
 - `validation/` 保存各阶段的模型准备脚本、材料曲线及来源、精简网格、场数据、收敛记录和报告。
 - 与 Maxwell 数值精度对齐的计划提纲及分项方案见 [accuracy-study.md](docs/plan/accuracy-study.md)。
 
@@ -52,4 +52,4 @@ python -m pytest -q tests
 
 Git 保留代码、小型 NPZ 网格及磁化结果、材料表、场数据和报告。虚拟环境、约 10 GB 的 K 矩阵缓存、原生 AEDT 工程及结果数据库、原始网格转储、下载的厂家 PDF 和 ZIP 分发包保留在本地，由 `.gitignore` 排除。
 
-历史验证脚本含本机绝对路径，迁移运行时需要调整。历史记录中的命令保留运行当时的路径，复现时使用当前 `skills/magtense-cupy-magnetostatics/` 目录。部分报告和清单引用上述本地产物；仅克隆仓库不能重新进行原生 Maxwell 求解。外部材料来源和产物哈希保存在相应 provenance / manifest JSON 中。
+历史验证脚本仍有 AEDT 工程等本机绝对路径，迁移运行时需要调整；原来引用旧源码副本的脚本已改为按仓库位置定位当前工具。复现 v2 Newton 失败的诊断和回归测试使用该案例已有的 `gpu_solver_v2_original.py`，其 SHA256 与被清理的原求解器一致。历史记录中的命令和环境路径保留运行当时的值，不代表当前执行入口；当前检查使用上面的命令，并将新求解结果写入独立输出目录，避免覆盖历史证据。`skill-test/` 下已忽略的本机虚拟环境仍供当前测试使用。部分报告和清单引用上述本地产物；仅克隆仓库不能重新进行原生 Maxwell 求解。外部材料来源和产物哈希保存在相应 provenance / manifest JSON 中。

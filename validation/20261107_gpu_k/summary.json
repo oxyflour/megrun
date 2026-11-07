@@ -456,5 +456,441 @@
       "air_field_seconds": 7.180871400050819,
       "output_write_seconds": 0.00966539978981018
     }
+  },
+  "revalidation_without_maxwell": {
+    "date": "2026-11-07T22:59:15.805546+08:00",
+    "finished_at": "2026-11-07T23:08:17.414384+08:00",
+    "status": "Revalidated against saved Maxwell fields; all main-model and metric checks passed",
+    "maxwell_simulation_run": false,
+    "reference": "Previously exported Maxwell fields; no AEDT process started",
+    "settings": {
+      "dtype": "float64",
+      "operator": "volume",
+      "near_levels": 2,
+      "near_factor": 1.5,
+      "tol": 1e-08,
+      "maxiter": 24000,
+      "warm_start": false,
+      "K_repeats": 1
+    },
+    "acceptance": {
+      "material_residual_max": 1e-08,
+      "K_relative_Frobenius_max": 1e-09,
+      "K_max_absolute_entry_max": 1e-08,
+      "reported_L2_reproduction_tolerance_percentage_points": 1e-06
+    },
+    "hardware": "NVIDIA GeForce RTX 3090 Ti",
+    "solver_sha256": "a2632496bff27c360eb07469b9886bc41e8f5dee7d46926e7385bfbc53f172af",
+    "constitutive_solver_sha256": "1accd2eed6efdd75f1264a6909b4d86528e425130998ca3d2c8f58bb9299d373",
+    "benchmark_script_sha256": "346d81f09e35d289f208ac4bd4e82e188d82c974cc655851ebf702753a1efdb1",
+    "execution_entry": "Existing validation/20261107_gpu_k/benchmark_cuda.py run(case, repeats=1); OUT redirected to an empty temporary directory. Refined case uses current solve_nonlinear with the original native K cache.",
+    "environment": {
+      "python": "3.12.1",
+      "numpy": "2.3.2",
+      "scipy": "1.18.1",
+      "magtense": "3.0.1",
+      "cupy-cuda13x": "14.2.0"
+    },
+    "source_sha256": {
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/aedtplt.py": "ae57627477b7b7c9f5d7e7130d459a11a2420e7af8bf231eb8d264cecb2633e1",
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/aedt_export.py": "469965b642d4e5c81df8bb9ec576ee231cc3ab6dbab267be23c53a6aed4056ad",
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/air_field.py": "16b77997e57be01ed89286c13908dcec1f52b3fcbbad17a0052c6c46aca741f4",
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/bridge.py": "eebbca3e01bbd9302a7b84cdfd6ae66d07f8e77c0378ce15161871c43c80249c",
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/constitutive_prox.py": "1accd2eed6efdd75f1264a6909b4d86528e425130998ca3d2c8f58bb9299d373",
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/gpu_solver.py": "a2632496bff27c360eb07469b9886bc41e8f5dee7d46926e7385bfbc53f172af",
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/magtense_adapter.py": "34efcf58d108daf2aaf54e87f524272f55a820695896f99e5ab618e00bd653af",
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/native_smoke.py": "c68d9f80c6633917050457d384b0c46be0102a39e6cc8b4d61fd0fa6a7431099",
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/patch_magtense.py": "beb7fd2e2b013cedc70f8e992b561e9425196b4f96dbb1737294f5c57968cc19",
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tetra_cuda.cu": "962001b4bf7706d724a7031a5a94883394bf598e4f70339d02bd83d97bf5f7fb",
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tetra_cuda.py": "9d671fb963976ae2958f0eb44403a14e65a474f20bd3e317604b04bda60d2dfc",
+      "skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/tetra_volume.py": "8a930aeb39a361f5ab629038a13087fa352ea19a7ed2e1418af9ccad002bc233"
+    },
+    "cases": {
+      "NoShield": {
+        "magnetic_tiles": 3629,
+        "points": 485,
+        "archived_native_K_CPU_residual": 9.91196796064835e-09,
+        "fresh_CUDA_K": {
+          "relative_Frobenius": 2.255401052346645e-11,
+          "near_relative_Frobenius": 3.582086074040194e-13,
+          "far_relative_Frobenius": 1.63099856166365e-09,
+          "max_absolute_entry": 3.192316273123975e-10
+        },
+        "native_H_check": 3.741379247712566e-13,
+        "iterations": 789,
+        "independent_CPU_residual": 9.978059704256689e-09,
+        "Maxwell_error_after": {
+          "relative_L2_percent": 3.655093878184073,
+          "RMS_vector_error_mT": 1.481507779006629,
+          "max_vector_error_mT": 7.493162121316647
+        },
+        "B_difference_from_previous_CPU_K_solution": {
+          "relative_L2_percent": 1.1842490366913729e-09,
+          "RMS_vector_error_mT": 4.845128561837727e-10,
+          "max_vector_error_mT": 1.4808446606524587e-09
+        },
+        "grouped_total_B_checked": [
+          "all",
+          "far_top_3mm",
+          "gap_vertical",
+          "near_top_0.5mm"
+        ],
+        "max_absolute_grouped_total_metric_change": {
+          "relative_L2_percent": 2.928262077261934e-10,
+          "RMS_vector_error_mT": 3.9406700125255156e-11,
+          "max_vector_error_mT": 3.0092395242320436e-10
+        }
+      },
+      "Shield_T010": {
+        "magnetic_tiles": 3959,
+        "points": 566,
+        "archived_native_K_CPU_residual": 9.915186693468421e-09,
+        "fresh_CUDA_K": {
+          "relative_Frobenius": 2.1457356883423597e-11,
+          "near_relative_Frobenius": 3.414426434708048e-13,
+          "far_relative_Frobenius": 1.5183981585770882e-09,
+          "max_absolute_entry": 3.192316273123975e-10
+        },
+        "native_H_check": 4.803375376133157e-13,
+        "iterations": 6494,
+        "independent_CPU_residual": 9.991063135898264e-09,
+        "Maxwell_error_after": {
+          "relative_L2_percent": 3.7491674393708894,
+          "RMS_vector_error_mT": 1.4220400834085107,
+          "max_vector_error_mT": 7.386244501033398
+        },
+        "B_difference_from_previous_CPU_K_solution": {
+          "relative_L2_percent": 1.5086362615612387e-10,
+          "RMS_vector_error_mT": 5.777202015767034e-11,
+          "max_vector_error_mT": 3.119759271297512e-10
+        },
+        "grouped_total_B_checked": [
+          "all",
+          "far_top_3mm",
+          "gap_A_side",
+          "gap_B_side",
+          "near_top_0.5mm"
+        ],
+        "max_absolute_grouped_total_metric_change": {
+          "relative_L2_percent": 1.8951951119561272e-11,
+          "RMS_vector_error_mT": 2.3709922913894843e-12,
+          "max_vector_error_mT": 1.7256418516353733e-11
+        },
+        "delta_B_independent_reference_meshes": {
+          "relative_L2_percent": 76.03270710244398,
+          "RMS_vector_error_mT": 1.7690121962076524,
+          "max_vector_error_mT": 8.780392881395413
+        },
+        "max_absolute_grouped_delta_metric_change": {
+          "relative_L2_percent": 2.3687789507675916e-09,
+          "RMS_vector_error_mT": 7.064526741373811e-11,
+          "max_vector_error_mT": 8.420926178587251e-10
+        }
+      },
+      "Shield_T020": {
+        "magnetic_tiles": 3959,
+        "points": 566,
+        "archived_native_K_CPU_residual": 9.997166455964425e-09,
+        "fresh_CUDA_K": {
+          "relative_Frobenius": 2.1669842591903773e-11,
+          "near_relative_Frobenius": 3.436733584736349e-13,
+          "far_relative_Frobenius": 1.5142335577907435e-09,
+          "max_absolute_entry": 3.192316273123975e-10
+        },
+        "native_H_check": 7.071214713921351e-13,
+        "iterations": 7853,
+        "independent_CPU_residual": 9.980843078012656e-09,
+        "Maxwell_error_after": {
+          "relative_L2_percent": 4.1558542399628235,
+          "RMS_vector_error_mT": 1.5756964010737398,
+          "max_vector_error_mT": 7.608905557022541
+        },
+        "B_difference_from_previous_CPU_K_solution": {
+          "relative_L2_percent": 1.7949933341898944e-10,
+          "RMS_vector_error_mT": 6.873964803455348e-11,
+          "max_vector_error_mT": 3.086634114421195e-10
+        },
+        "grouped_total_B_checked": [
+          "all",
+          "far_top_3mm",
+          "gap_A_side",
+          "gap_B_side",
+          "near_top_0.5mm"
+        ],
+        "max_absolute_grouped_total_metric_change": {
+          "relative_L2_percent": 1.1625012064087059e-10,
+          "RMS_vector_error_mT": 1.4580336937797256e-11,
+          "max_vector_error_mT": 4.644284956611955e-11
+        },
+        "delta_B_independent_reference_meshes": {
+          "relative_L2_percent": 76.00043844808987,
+          "RMS_vector_error_mT": 1.9011783449724868,
+          "max_vector_error_mT": 7.94084456990749
+        },
+        "max_absolute_grouped_delta_metric_change": {
+          "relative_L2_percent": 4.0534331446906435e-09,
+          "RMS_vector_error_mT": 7.321543371574535e-11,
+          "max_vector_error_mT": 3.9483261105033307e-10
+        }
+      },
+      "Shield_Large_T020": {
+        "magnetic_tiles": 4175,
+        "points": 566,
+        "archived_native_K_CPU_residual": 9.995312410054291e-09,
+        "fresh_CUDA_K": {
+          "relative_Frobenius": 1.1078953389586542e-10,
+          "near_relative_Frobenius": 3.3557604835067477e-13,
+          "far_relative_Frobenius": 7.727732546429855e-09,
+          "max_absolute_entry": 2.7195063155818397e-09
+        },
+        "native_H_check": 2.6221524255342836e-13,
+        "iterations": 8665,
+        "independent_CPU_residual": 9.993993415661093e-09,
+        "Maxwell_error_after": {
+          "relative_L2_percent": 3.878152458844195,
+          "RMS_vector_error_mT": 1.468492755356996,
+          "max_vector_error_mT": 6.19431882530775
+        },
+        "B_difference_from_previous_CPU_K_solution": {
+          "relative_L2_percent": 3.6663160603764896e-09,
+          "RMS_vector_error_mT": 1.4010954545068374e-09,
+          "max_vector_error_mT": 5.298335281441271e-09
+        },
+        "grouped_total_B_checked": [
+          "all",
+          "far_top_3mm",
+          "gap_A_side",
+          "gap_B_side",
+          "near_top_0.5mm"
+        ],
+        "max_absolute_grouped_total_metric_change": {
+          "relative_L2_percent": 1.4510153079072552e-09,
+          "RMS_vector_error_mT": 1.7552115316732397e-10,
+          "max_vector_error_mT": 6.810205732676877e-10
+        },
+        "delta_B_independent_reference_meshes": {
+          "relative_L2_percent": 46.98805749914215,
+          "RMS_vector_error_mT": 1.761048885008659,
+          "max_vector_error_mT": 6.848154017224403
+        },
+        "max_absolute_grouped_delta_metric_change": {
+          "relative_L2_percent": 5.120440960126871e-09,
+          "RMS_vector_error_mT": 2.0691803825911848e-10,
+          "max_vector_error_mT": 4.2379344478149505e-10
+        }
+      }
+    },
+    "baseline_566": {
+      "relative_L2_percent": 3.872975001105604,
+      "RMS_vector_error_mT": 1.469249071793235,
+      "max_vector_error_mT": 7.493162121316647
+    },
+    "baseline_grouped_metric_max_change": {
+      "relative_L2_percent": 1.1538219268913963e-09,
+      "RMS_vector_error_mT": 1.461957221948751e-10,
+      "max_vector_error_mT": 3.6570391159784776e-10
+    },
+    "paired_mesh_delta": {
+      "same_corner_mesh_verified": true,
+      "metrics": {
+        "all": {
+          "relative_L2_percent": 9.078092470999291,
+          "RMS_vector_error_mT": 0.1361667861198242,
+          "max_vector_error_mT": 1.4310398478709956
+        },
+        "far_top_3mm": {
+          "relative_L2_percent": 11.312204788473924,
+          "RMS_vector_error_mT": 0.002147118369481995,
+          "max_vector_error_mT": 0.0056752213778070715
+        },
+        "gap_A_side": {
+          "relative_L2_percent": 8.29424411401813,
+          "RMS_vector_error_mT": 0.23232601418071502,
+          "max_vector_error_mT": 0.9039955186228257
+        },
+        "gap_B_side": {
+          "relative_L2_percent": 8.640239769332258,
+          "RMS_vector_error_mT": 0.24126472266122526,
+          "max_vector_error_mT": 1.4310398478709956
+        },
+        "near_top_0.5mm": {
+          "relative_L2_percent": 47.29175796611873,
+          "RMS_vector_error_mT": 0.0681450519307713,
+          "max_vector_error_mT": 0.7252700184663153
+        }
+      },
+      "independent_adaptive_convergence": false
+    },
+    "refinement_replay": {
+      "converged": false,
+      "expected_historical_failure_reproduced": true,
+      "iterations": 24000,
+      "last_true_residual": 2.152811566403673e-08,
+      "required_residual": 1e-08,
+      "native_K_H_check": 1.5644501539057604e-15,
+      "K_cache_used": true,
+      "seconds": 199.8519486002624,
+      "certified_field_produced": false
+    },
+    "synthetic_archive": {
+      "data_directory": "validation/20261107_repair_staged/v2_synthetic",
+      "all_passed": true,
+      "archived_rows_checked": 6,
+      "scope": "Archived v2 synthetic data only; independent arithmetic replay, not a new v2 solve",
+      "max_recomputed_FP64_residual": 3.207834637388097e-15,
+      "max_recomputed_FP32_residual": 5.0531629167679565e-08,
+      "native_CPU_B_relative_L2": 3.8634242905809713e-13
+    },
+    "staged_archive": {
+      "all_passed": true,
+      "comparisons": {
+        "single_linear_1000": {
+          "B_relative_L2": 0.12061620655728068,
+          "B_RMS_vector_error_T": 0.0034110584235393427,
+          "B_max_vector_error_T": 0.027054359928314033
+        },
+        "single_linear_1000_reference": {
+          "B_relative_L2": 0.04592217626717085,
+          "B_RMS_vector_error_T": 0.001314035327445195,
+          "B_max_vector_error_T": 0.013385345161076447
+        },
+        "single_pm": {
+          "B_relative_L2": 0.05243508716498037,
+          "B_RMS_vector_error_T": 0.0014781626672660346,
+          "B_max_vector_error_T": 0.008173176453207384
+        },
+        "single_pm_reference": {
+          "B_relative_L2": 0.02931106609560162,
+          "B_RMS_vector_error_T": 0.0008244529670101364,
+          "B_max_vector_error_T": 0.0076134257461850435
+        }
+      },
+      "saved_convergence_checks": {
+        "validation\\20261107_repair_staged\\full_pair_maxwell\\convergence.txt": {
+          "passes_in_export": 5,
+          "last_energy_error_percent": 0.35169,
+          "paired_fixed_mesh_diagnostic": false,
+          "new_Maxwell_run": false
+        },
+        "validation\\20261107_shield_sizes\\baseline_reference\\convergence.txt": {
+          "passes_in_export": 5,
+          "last_energy_error_percent": 0.35169,
+          "paired_fixed_mesh_diagnostic": false,
+          "new_Maxwell_run": false
+        },
+        "validation\\20261107_shield_sizes\\matched_no_shield_reference\\convergence.txt": {
+          "passes_in_export": 1,
+          "last_energy_error_percent": 0.3417,
+          "paired_fixed_mesh_diagnostic": true,
+          "new_Maxwell_run": false
+        },
+        "validation\\20261107_shield_sizes\\Shield_Large_T020_reference\\convergence.txt": {
+          "passes_in_export": 5,
+          "last_energy_error_percent": 0.31461,
+          "paired_fixed_mesh_diagnostic": false,
+          "new_Maxwell_run": false
+        },
+        "validation\\20261107_shield_sizes\\Shield_T010_reference\\convergence.txt": {
+          "passes_in_export": 5,
+          "last_energy_error_percent": 0.34185,
+          "paired_fixed_mesh_diagnostic": false,
+          "new_Maxwell_run": false
+        },
+        "validation\\20261107_shield_sizes\\Shield_T020_reference\\convergence.txt": {
+          "passes_in_export": 5,
+          "last_energy_error_percent": 0.33849,
+          "paired_fixed_mesh_diagnostic": false,
+          "new_Maxwell_run": false
+        }
+      }
+    },
+    "regression_tests": {
+      "returncode": 0,
+      "output": "....................................s...................                 [100%]\n=========================== short test summary info ===========================\nSKIPPED [1] tests\\test_multibh.py:230: gfortran not installed\n55 passed, 1 skipped in 10.69s"
+    },
+    "historical_evidence_unchanged_files": 559,
+    "reference_field_sha256": {
+      "validation/20261107_repair_staged/full_pair_repaired_runtime/gpu_B.csv": "1a8e21d808ccb8822fde2c94ca0cf0bfbf5dc8f18df5d16da996b1839bbc7fb3",
+      "validation/20261107_repair_staged/full_pair_maxwell/maxwell_B.csv": "eb5c9fe877eabe3e63c1bfef6f2e0aac57277508baa94f8701736c57e10a0177",
+      "validation/20261107_shield_sizes/baseline_gpu_B.csv": "582061604dab216337127b8a880be2f5ea5128b2aabd701fa0df176c620996a9",
+      "validation/20261107_shield_sizes/baseline_reference/maxwell_B.csv": "181cf35200d24ff7a465dbeabf4c380fc72b52aad2b7c9338e75997c1c5ef07a",
+      "validation/20261107_shield_sizes/Shield_T010/gpu_B.csv": "5c3f35c9ade65135ea593602ecc4d0f81c2ce23a56f3038ce53b331490df6804",
+      "validation/20261107_shield_sizes/Shield_T010_reference/maxwell_B.csv": "1e908c6bc9c27bf87cdc83ad77ff429a0ee9db25ac552bbdd0a7f6e4d1db4bd4",
+      "validation/20261107_shield_sizes/Shield_T020/gpu_B.csv": "0a40c4550e03d9b5c5a685b32c584a56c3dcb776d46daa6078839ae545370801",
+      "validation/20261107_shield_sizes/Shield_T020_reference/maxwell_B.csv": "fbb71de58e7007dc82d1eea8d20311589514d34f4ef88f3e00f399f22c6338b3",
+      "validation/20261107_shield_sizes/Shield_Large_T020/gpu_B.csv": "54160960f704dfe49968af80745fdf613a0fa54c3ae041efa168cc33194d7d6e",
+      "validation/20261107_shield_sizes/Shield_Large_T020_reference/maxwell_B.csv": "1352964b47867a0726d11996e2a48a27e76bb976a2a67ad10af5a82de3b8ffd9",
+      "validation/20261107_shield_sizes/matched_source_grid/maxwell_B.csv": "1e908c6bc9c27bf87cdc83ad77ff429a0ee9db25ac552bbdd0a7f6e4d1db4bd4",
+      "validation/20261107_shield_sizes/matched_no_shield_reference/maxwell_B.csv": "7ddb1a9288073583442e39b2583160c30b9ebc3c03b2b2086cbb456da38a430d"
+    },
+    "temporary_run_artifacts": "C:\\Users\\oxyfl\\AppData\\Local\\Temp\\magtense-accuracy-gdl2hg_2",
+    "limitations": [
+      "Maxwell was not run; reference convergence is checked only from existing exported tables.",
+      "One fresh CUDA K build per case is an accuracy replay, not a rerun of the original timing medians or CPU/GPU speed ratios.",
+      "The 1e-6 metric-reproduction tolerance checks repeatability and is not an engineering field-accuracy acceptance threshold.",
+      "The refined native-K case still fails 1e-8 at 24000 iterations and produces no certified field result."
+    ],
+    "reference_CSV_FLD_consistency": [
+      {
+        "path": "validation/20261107_gap3mm_vacoflux50/coarse_export/maxwell_B.csv",
+        "points": 485,
+        "coordinate_scale_to_m": 1.0
+      },
+      {
+        "path": "validation/20261107_repair_staged/full_pair_maxwell/maxwell_B.csv",
+        "points": 485,
+        "coordinate_scale_to_m": 1.0
+      },
+      {
+        "path": "validation/20261107_repair_staged/single_linear_1000/maxwell_B.csv",
+        "points": 485,
+        "coordinate_scale_to_m": 1.0
+      },
+      {
+        "path": "validation/20261107_repair_staged/single_linear_1000_reference/maxwell_B.csv",
+        "points": 485,
+        "coordinate_scale_to_m": 1.0
+      },
+      {
+        "path": "validation/20261107_repair_staged/single_pm/maxwell_B.csv",
+        "points": 485,
+        "coordinate_scale_to_m": 1.0
+      },
+      {
+        "path": "validation/20261107_repair_staged/single_pm_reference/maxwell_B.csv",
+        "points": 485,
+        "coordinate_scale_to_m": 1.0
+      },
+      {
+        "path": "validation/20261107_shield_sizes/baseline_reference/maxwell_B.csv",
+        "points": 566,
+        "coordinate_scale_to_m": 1.0
+      },
+      {
+        "path": "validation/20261107_shield_sizes/matched_no_shield_reference/maxwell_B.csv",
+        "points": 566,
+        "coordinate_scale_to_m": 1.0
+      },
+      {
+        "path": "validation/20261107_shield_sizes/matched_source_grid/maxwell_B.csv",
+        "points": 566,
+        "coordinate_scale_to_m": 1.0
+      },
+      {
+        "path": "validation/20261107_shield_sizes/Shield_Large_T020_reference/maxwell_B.csv",
+        "points": 566,
+        "coordinate_scale_to_m": 1.0
+      },
+      {
+        "path": "validation/20261107_shield_sizes/Shield_T010_reference/maxwell_B.csv",
+        "points": 566,
+        "coordinate_scale_to_m": 1.0
+      },
+      {
+        "path": "validation/20261107_shield_sizes/Shield_T020_reference/maxwell_B.csv",
+        "points": 566,
+        "coordinate_scale_to_m": 1.0
+      }
+    ]
   }
 }

@@ -8,7 +8,7 @@ import time
 import numpy as np
 
 ROOT = Path(__file__).resolve().parent
-TOOL = Path(r'C:\Projects\magtense-gpu\skill-test\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
+TOOL = ROOT.parents[1] / 'skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
 sys.path.insert(0, str(TOOL))
 import gpu_solver_dense_newton as baseline
 

@@ -9,7 +9,7 @@ import time
 import numpy as np
 
 ROOT = Path(__file__).resolve().parent
-TOOL = Path(r'C:\Projects\magtense-gpu\skill-test\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
+TOOL = ROOT.parents[1] / 'skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
 sys.path.insert(0, str(TOOL))
 from aedt_export import classify_material, _validate_mesh_units_against_cad
 from aedtplt import read_aedtplt

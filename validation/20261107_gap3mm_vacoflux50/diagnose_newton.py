@@ -8,9 +8,10 @@ import numpy as np
 import cupy as cp
 
 ROOT = Path(__file__).resolve().parent
-TOOL = Path(r'C:\Projects\magtense-gpu\skill-test\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
+TOOL = ROOT.parents[1] / 'skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
 sys.path.insert(0, str(TOOL))
-from gpu_solver import MaterialLaws, make_preconditioner, gmres_solve, apply_tangent
+# Replay the failed v2 steps with the case's existing frozen original solver.
+from gpu_solver_v2_original import MaterialLaws, make_preconditioner, gmres_solve, apply_tangent
 from magtense_adapter import assemble_tiles
 
 

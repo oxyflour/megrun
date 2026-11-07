@@ -8,9 +8,10 @@ import numpy as np
 import pytest
 
 ROOT = Path(__file__).resolve().parent
-TOOL = Path(r'C:\Projects\magtense-gpu\skill-test\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
+TOOL = ROOT.parents[1] / 'skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
 sys.path.insert(0, str(TOOL))
-original_spec = importlib.util.spec_from_file_location('original_unmodified_solver', TOOL / 'gpu_solver.py')
+# The failure oracle is the case's existing, byte-identical v2 snapshot.
+original_spec = importlib.util.spec_from_file_location('original_unmodified_solver', ROOT / 'gpu_solver_v2_original.py')
 original = importlib.util.module_from_spec(original_spec)
 original_spec.loader.exec_module(original)
 spec = importlib.util.spec_from_file_location('corrected', ROOT / 'gpu_solver_corrected.py')

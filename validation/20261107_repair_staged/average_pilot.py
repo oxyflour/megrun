@@ -12,7 +12,7 @@ from cupyx.scipy.sparse.linalg import LinearOperator, eigsh
 
 ROOT = Path(__file__).resolve().parent
 BASE = ROOT.parent / '20261107_gap3mm_vacoflux50'
-TOOL = Path(r'C:\Projects\magtense-gpu\skill-test\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
+TOOL = ROOT.parents[1] / 'skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
 sys.path[:0] = [str(BASE), str(TOOL)]
 from magtense.magstatics import Tiles, get_demag_tensor, get_H_field
 from magtense_adapter import assemble_tiles

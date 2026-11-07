@@ -1,6 +1,17 @@
 MagTense CuPy Skill v2 测试记录
 日期：2026-11-07（Asia/Shanghai）
 
+归档范围与当前入口
+本报告记录原始 v2 包的合成模型验证，保留当时的测量值和环境信息。
+原 skill-test/results/ 已整体迁入本目录；后续验证产物统一保存在 validation/ 对应案例，禁止恢复旧结果目录。
+旧源码副本及 run_checks.py、verify_results.py 已移除；原始源码和脚本可从 Git 提交 bdc71d9 的 skill-test/ 目录追溯。
+本目录保留模型、网格、测点、CSV 场、NPZ 磁化快照、求解元数据、verification.json、测试 XML、依赖版本和原包哈希。
+JSON/XML 中的命令和路径是历史记录。当前检查入口见本文末尾；重跑当前实现不能替代原始 v2 的历史验证。
+
+归档数值复核：2026-11-07 23:08（Asia/Shanghai）
+使用保存的两组模型、M/K/B数据和本构公式，独立重算verification.json中6组NumPy/CuPy、FP64/FP32残差及对照指标，全部一致。FP64最大重算残差3.207834637e-15，FP32最大残差5.053162917e-08；GPU FP64相对原生CPU的B场L2差复现为3.863424291e-13。
+本次为归档数据的数值复核，原包执行记录保持归档；所有模型仍为合成数据，无Maxwell参考。完整记录见 ../../20261107_gpu_k/summary.json 的 revalidation_without_maxwell.synthetic_archive。
+
 结论
 包内离线测试和本机原生/GPU 小规模集成检查通过。
 所有结果来自合成模型，没有真实 Maxwell 参考，不能据此声明 Maxwell 精度或工程规模加速比。
@@ -65,12 +76,15 @@ GPU 求解器实际存完整 3N×3N K：FP32 为 36N² 字节，FP64 为 72N² �
 - 原生 Fortran 多 B-H 补丁及其重编译；本次未应用补丁。
 - 工程规模网格、显存峰值和 GPU 加速比。
 
-复现（PowerShell）
-& 'C:\Projects\magtense-gpu\skill-test\.venv\Scripts\python.exe' 'C:\Projects\magtense-gpu\skill-test\run_checks.py'
-& 'C:\Projects\magtense-gpu\skill-test\.venv\Scripts\python.exe' 'C:\Projects\magtense-gpu\skill-test\verify_results.py'
+当前实现检查（PowerShell，从仓库根目录开始）
+Set-Location 'skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
+python gpu_solver.py --self-test --backend numpy
+python -m pytest -q tests
+使用已安装所需依赖的 Python 环境。需要用归档模型进行新求解时，将结果写到独立输出目录，禁止覆盖本目录中的历史证据。
 
 证据
-pytest.log、pytest.xml：原包测试集。
-checks.json、run_checks.log：基础与端到端检查。
-verification.json、verification.log：收紧容差、独立残差和 CPU/GPU 对照。
+pytest.xml、offline_pytest.xml：原包测试集。
+checks.json：基础与端到端检查的原始命令、退出码和耗时。
+verification.json：收紧容差、独立残差和 CPU/GPU 对照。
 各模型目录与每次成功求解的 CSV/NPZ/JSON 快照保留于本目录。
+上述 .log 文件（含 cuda_environment.log）是本机忽略产物，未纳入版本控制；克隆仓库时以已跟踪的 JSON/XML 和 requirements-tested.txt 为证据入口。
