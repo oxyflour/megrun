@@ -8,6 +8,7 @@
 - Python 工具及测试：`skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/`。
 - `skill-test/` 保存早期提取版本、检查脚本和测试记录；继续开发请使用 `skills/magtense-cupy-magnetostatics/`。
 - `validation/` 保存各阶段的模型准备脚本、材料曲线及来源、精简网格、场数据、收敛记录和报告。
+- 与 Maxwell 数值精度对齐的计划提纲及分项方案见 [accuracy-study.md](docs/plan/accuracy-study.md)。
 
 求解器提供四面体接收体积平均算子、非线性隐式本构迭代，以及空气测点的稳定场计算。支持 NumPy/CuPy；依赖平台原生 MagTense 库。完整 K 矩阵仍需二次方存储，FP64 约为 `72 N²` 字节。
 
