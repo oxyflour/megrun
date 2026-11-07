@@ -13,7 +13,7 @@ import numpy as np
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
-TOOL=ROOT/'repaired-skill/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
+TOOL=ROOT/'skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
 source=ROOT/'validation/20261107_shield_sizes/Shield_T020'
 out=HERE/'cli_Shield_T020'
 out.mkdir(exist_ok=False)

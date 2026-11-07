@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
-SKILL=ROOT/'repaired-skill/magtense-cupy-magnetostatics'
+SKILL=ROOT/'skills/magtense-cupy-magnetostatics'
 names=['NoShield','Shield_T010','Shield_T020','Shield_Large_T020']
 native=json.loads((HERE/'native_Shield_T020/timing.json').read_text())
 cases={}

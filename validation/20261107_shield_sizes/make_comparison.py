@@ -10,7 +10,7 @@ import sys
 import numpy as np
 
 ROOT=Path(__file__).resolve().parent
-TOOL=Path(r'C:\Projects\magtense-gpu\repaired-skill\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
+TOOL=Path(r'C:\Projects\magtense-gpu\skills\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
 parser=argparse.ArgumentParser()
 parser.add_argument('--allow-partial',action='store_true')
 args=parser.parse_args()

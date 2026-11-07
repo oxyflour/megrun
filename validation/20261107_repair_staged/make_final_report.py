@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parent
 BASE = ROOT.parent / '20261107_gap3mm_vacoflux50'
-SKILL = Path(r'C:\Projects\magtense-gpu\repaired-skill\magtense-cupy-magnetostatics')
+SKILL = Path(r'C:\Projects\magtense-gpu\skills\magtense-cupy-magnetostatics')
 TOOL = SKILL / 'scripts/aedt_magtense_bridge'
 sys.path.insert(0, str(TOOL))
 from magtense_adapter import assemble_tiles

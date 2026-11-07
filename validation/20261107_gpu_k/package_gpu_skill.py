@@ -7,7 +7,7 @@ import zipfile
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
-SKILL=ROOT/'repaired-skill/magtense-cupy-magnetostatics'
+SKILL=ROOT/'skills/magtense-cupy-magnetostatics'
 target=ROOT/'MagTense_CuPy_Skill_v4_GPU_K.zip'
 assert (SKILL/'references/validation-gpu-k-20261107.json').exists()
 assert '55 passed, 1 skipped' in (HERE/'tests.txt').read_text(encoding='utf-8-sig')

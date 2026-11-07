@@ -11,7 +11,7 @@ import time
 import numpy as np
 
 ROOT=Path(__file__).resolve().parent
-TOOL=Path(r'C:\Projects\magtense-gpu\repaired-skill\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
+TOOL=Path(r'C:\Projects\magtense-gpu\skills\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
 sys.path.insert(0,str(TOOL))
 from aedt_export import classify_material
 from bridge import read_maxwell_fld

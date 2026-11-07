@@ -8,7 +8,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parent
 WORKSPACE = Path(r'C:\Projects\magtense-gpu')
-SKILL = WORKSPACE / 'repaired-skill/magtense-cupy-magnetostatics'
+SKILL = WORKSPACE / 'skills/magtense-cupy-magnetostatics'
 TARGET = WORKSPACE / 'MagTense_CuPy_Skill_v3.zip'
 if TARGET.exists():
     raise FileExistsError(f'Refusing to overwrite existing package: {TARGET}')

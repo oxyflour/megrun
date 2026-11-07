@@ -19,7 +19,7 @@ import cupy as cp
 
 ROOT=Path(__file__).resolve().parents[2]
 OUT=Path(__file__).resolve().parent
-TOOL=ROOT/'repaired-skill/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
+TOOL=ROOT/'skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
 sys.path.insert(0,str(TOOL))
 from bridge import read_model,load_points,check_points_in_air,read_maxwell_fld
 from magtense_adapter import assemble_tiles

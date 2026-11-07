@@ -12,7 +12,7 @@ from matplotlib.patches import Rectangle
 
 ROOT=Path(__file__).resolve().parent
 BASE=ROOT.parent/'20261107_gap3mm_vacoflux50/coarse_export'
-TOOL=Path(r'C:\Projects\magtense-gpu\repaired-skill\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
+TOOL=Path(r'C:\Projects\magtense-gpu\skills\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
 sys.path.insert(0,str(TOOL))
 from bridge import check_points_in_air
 from magtense_adapter import assemble_tiles

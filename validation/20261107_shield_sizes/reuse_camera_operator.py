@@ -11,7 +11,7 @@ import time
 
 import numpy as np
 
-TOOL = Path(r'C:\Projects\magtense-gpu\repaired-skill\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
+TOOL = Path(r'C:\Projects\magtense-gpu\skills\magtense-cupy-magnetostatics\scripts\aedt_magtense_bridge')
 sys.path.insert(0, str(TOOL))
 from gpu_solver import hash_geometry, pack_tensor_block
 from tetra_volume import geometry, quadrature, subset

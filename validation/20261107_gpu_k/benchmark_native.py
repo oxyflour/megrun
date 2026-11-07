@@ -10,7 +10,7 @@ import numpy as np
 import cupy as cp
 
 ROOT = Path(__file__).resolve().parents[2]
-TOOL = ROOT/'repaired-skill/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
+TOOL = ROOT/'skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge'
 sys.path.insert(0,str(TOOL))
 from bridge import read_model
 from magtense_adapter import assemble_tiles
