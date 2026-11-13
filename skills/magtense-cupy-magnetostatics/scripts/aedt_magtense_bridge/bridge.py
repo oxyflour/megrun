@@ -18,6 +18,8 @@ from itertools import permutations
 from pathlib import Path
 import re
 import sys
+import hashlib
+import time
 
 import numpy as np
 
@@ -32,6 +34,10 @@ def read_model(root: Path):
     model = json.loads(p.read_text(encoding='utf-8'))
     if model['schema_version'] != 1:
         raise RuntimeError(f'Unknown model schema_version {model["schema_version"]}')
+    for relative,digest in [(o['mesh_npz'],o.get('mesh_npz_sha256')) for o in model['objects']]+[
+            (model['points'],model.get('points_sha256'))]:
+        if digest and hashlib.sha256((root/relative).read_bytes()).hexdigest()!=digest:
+            raise ValueError('Imported input SHA-256 mismatch: '+relative)
     return model
 
 
@@ -79,6 +85,79 @@ def summary(root: Path):
     print(f'Skipped: {len(model["skipped"])} solids')
     for x in model['skipped'][:12]:
         print('  -',x['name'], ':',x['reason'])
+
+
+def command_fem_bem(args):
+    """Solve a portable SI model using current FEM-BEM; no AEDT or MagTense DLL."""
+    from aedt_export import _native_physics
+    from fem_bem import FEMBEM,material_laws
+    root=Path(args.out).resolve();model=read_model(root);started=time.perf_counter()
+    if not re.fullmatch(r'[A-Za-z0-9_-]+',args.result_prefix):
+        raise ValueError('--result-prefix must contain only letters, digits, underscores or hyphens')
+    outputs=[root/(args.result_prefix+suffix) for suffix in ('_solution.npz','_B.csv','_solve_info.json')]
+    if any(p.exists() for p in outputs):
+        raise FileExistsError('Existing FEM-BEM evidence retained; use a separate imported job folder')
+    source=model.get('source',{})
+    _native_physics(dict(excitations=source.get('source_check',[]),boundaries=source.get('native_boundaries',[]),
+        variables=source.get('native_variables',{})))
+    info=dict(state='running',backend=args.boundary,source_model_sha256=hashlib.sha256((root/'model.json').read_bytes()).hexdigest(),
+        scope='Offline P1/P0 magnetostatic field, zero free currents, infinite exterior air; native high-order equivalence not certified')
+    def write():outputs[2].write_text(json.dumps(info,indent=2,default=str),encoding='utf-8')
+    last_progress=[0.]
+    def progress(phase,**details):
+        info.update(phase=phase,elapsed_seconds=time.perf_counter()-started)
+        now=time.perf_counter()
+        if phase=='boundary_build' and now-last_progress[0]<10:return
+        last_progress[0]=now;info['progress']=details;write()
+        print('FEM_BEM',phase,json.dumps(details,default=str),flush=True)
+    try:
+        parts=[np.load(root/o['mesh_npz'])['tetra_m'] for o in model['objects']]
+        ids=np.concatenate([np.full(len(t),i,np.int32) for i,t in enumerate(parts)])
+        tetra=np.concatenate(parts);del parts
+        options=dict(leaf_size=args.h_leaf,eta=args.h_eta,rtol=args.h_rtol,max_rank=args.h_rank,
+            budget_gib=args.h_gib,storage_dtype=args.h_storage,far_quadrature_order=args.h_far_order,
+            cache_path=Path(args.boundary_cache).resolve() if args.boundary_cache else root/'boundary_cache',progress=progress)
+        mesh=FEMBEM(tetra,material_laws([o['properties'] for o in model['objects']],ids),quadrature_order=8,
+            boundary_backend=args.boundary,boundary_options=options if args.boundary=='cuda_hmatrix' else None)
+        del tetra,ids
+        if args.boundary=='cuda_hmatrix':
+            mesh.boundary.save_cache()
+            info['boundary_refinement']=mesh.refine_boundary(rtol=args.h_rtol,progress=progress)
+            rng=np.random.default_rng(827319)
+            rows=np.unique(np.r_[rng.choice(len(mesh.faces),min(8,len(mesh.faces)),replace=False),
+                np.argmin(mesh.areas),np.argmax(mesh.areas)])
+            info['boundary_checks']=[]
+            for label,q,u in [('random',rng.normal(size=len(mesh.faces)),rng.normal(size=len(mesh.boundary_nodes))),
+                    ('flux_only',rng.normal(size=len(mesh.faces)),np.zeros(len(mesh.boundary_nodes))),
+                    ('smooth',mesh.normals[:,2],mesh.vertices[mesh.boundary_nodes,2])]:
+                approximate=mesh.boundary.apply(q,u)[rows];original=mesh.boundary.direct_rows(rows,q,u)
+                error=float(np.linalg.norm(approximate-original)/max(np.linalg.norm(original),1e-300))
+                info['boundary_checks'].append(dict(input=label,relative_L2=error,tolerance=20*args.h_rtol))
+                if error>20*args.h_rtol:raise ArithmeticError(f'Original boundary probe failed: {label} {error}')
+        u,q,solver=mesh.solve(tol=args.tol,maxiter=args.maxiter,linear_rtol=args.linear_rtol,
+            linear_maxiter=args.linear_cycles,fem_preconditioner=args.fem_preconditioner,progress=progress)
+        info['solver']=solver
+        np.savez_compressed(outputs[0],potential_scaled_Apm=u,boundary_q_Apm=q)
+        points=load_points(root,model)
+        B,gradient=mesh.air_field(u,q,points,validate_air=mesh.validate_air)
+        np.savetxt(outputs[1],np.column_stack((points,B)),delimiter=',',
+            header='x_m,y_m,z_m,Bx_T,By_T,Bz_T',comments='')
+        info.update(air_gradient=gradient,operator=mesh.info,
+            solution_sha256=hashlib.sha256(outputs[0].read_bytes()).hexdigest())
+        if model.get('maxwell_field'):
+            reference,scale=read_maxwell_fld(root/model['maxwell_field'],points)
+            if scale!=1.:raise ValueError('Native reference points must be in SI metres')
+            error=float(np.linalg.norm(B-reference)/max(np.linalg.norm(reference),1e-300))
+            info['native_air_B_sample_relative_L2']=error
+            if args.max_reference_error is not None and error>args.max_reference_error:
+                raise ArithmeticError(f'Native air-field sample error {error} exceeds {args.max_reference_error}')
+        elif args.max_reference_error is not None:
+            raise ValueError('--max-reference-error requires a native field reference')
+        info.update(state='complete',passed=True,elapsed_seconds=time.perf_counter()-started);write()
+        print('Saved offline FEM-BEM solution:',outputs[0])
+    except Exception as error:
+        info.update(state='failed',passed=False,error=f'{type(error).__name__}: {error}',elapsed_seconds=time.perf_counter()-started)
+        write();raise
 
 
 def command_solve(args):
@@ -276,6 +355,27 @@ def main(argv=None):
     insp=sub.add_parser('inspect',help='Read export and estimate tensor memory')
     insp.add_argument('--out',required=True)
 
+    native=sub.add_parser('import-native',help='Convert native AEDT 18.x disk bundle without Maxwell/PyAEDT')
+    native.add_argument('--bundle',required=True)
+    native.add_argument('--out',required=True)
+    native_points=native.add_mutually_exclusive_group()
+    native_points.add_argument('--points-csv');native_points.add_argument('--line-mm')
+    native.add_argument('--overrides');native.add_argument('--max-tiles',type=int,default=10000)
+
+    fem=sub.add_parser('solve-fem-bem',help='Offline P1/P0 scalar-potential solve; no Maxwell/PyAEDT required')
+    fem.add_argument('--out',required=True)
+    fem.add_argument('--result-prefix',default='fem_bem',help='New prefix for retry evidence, reusing the same imported mesh/cache')
+    fem.add_argument('--boundary-cache',help='Optional shared numeric H cache; source/geometry/settings signatures are verified')
+    fem.add_argument('--boundary',choices=['dense','cuda_hmatrix'],default='dense')
+    fem.add_argument('--tol',type=float,default=1e-8);fem.add_argument('--maxiter',type=int,default=20)
+    fem.add_argument('--linear-rtol',type=float,default=1e-6);fem.add_argument('--linear-cycles',type=int,default=10)
+    fem.add_argument('--fem-preconditioner',choices=['lu','amg'],default='lu')
+    fem.add_argument('--h-leaf',type=int,default=32);fem.add_argument('--h-eta',type=float,default=3.)
+    fem.add_argument('--h-rtol',type=float,default=1e-6);fem.add_argument('--h-rank',type=int,default=64)
+    fem.add_argument('--h-gib',type=float,default=6.);fem.add_argument('--h-storage',choices=['float64','float32'],default='float32')
+    fem.add_argument('--h-far-order',type=int,default=4)
+    fem.add_argument('--max-reference-error',type=float,help='Maximum relative L2 at native air samples; fail if exceeded')
+
     sol=sub.add_parser('solve',help='Run MagTense on exported magnetic tetrahedral mesh')
     sol.add_argument('--out',required=True)
     sol.add_argument('--max-tiles',type=int,default=10000)
@@ -302,6 +402,13 @@ def main(argv=None):
                 new_desktop=args.new_desktop)
         elif args.cmd=='inspect':
             summary(Path(args.out).resolve())
+        elif args.cmd=='import-native':
+            from aedt_export import import_native_bundle
+            model=import_native_bundle(args.bundle,args.out,points_csv=args.points_csv,line_mm=args.line_mm,
+                overrides_path=args.overrides,max_tiles=args.max_tiles)
+            print('Imported native disk bundle:',len(model['objects']),'magnetic objects,',model['total_magnetic_tetra'],'cells')
+        elif args.cmd=='solve-fem-bem':
+            command_fem_bem(args)
         elif args.cmd=='solve':
             command_solve(args)
         elif args.cmd=='compare':

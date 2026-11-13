@@ -12,3 +12,7 @@
 # Preserve native solver report formatting; whitespace is part of the raw export.
 validation/**/profile.txt -whitespace
 validation/**/convergence.txt -whitespace
+# Validation hashes refer to exact exported bytes, including line endings.
+validation/20261109_fmm_refined/** -text whitespace=cr-at-eol
+# IronPython's original JSON/report spacing is retained as export evidence.
+validation/20261109_fmm_refined/native_transfer/** -whitespace

@@ -15,7 +15,7 @@ This skill ships an actual Python solver and Maxwell import/export/validation to
 - A user wants **multiple distinct isotropic, single-valued, non-hysteretic B–H curves**, linear soft magnets, and permanent magnets solved in a shared magnetostatic model.
 - A user wants to benchmark CPU MagTense analytical demagnetizing tensor generation versus GPU-resident CuPy nonlinear iteration, or investigate reuse of a dense K matrix across parameter sweeps.
 
-Do **not** claim the package supports non-isotropic or hysteretic materials, coil-current geometry conversion, transient solutions, FMM, or magnetic force calculation. These are not implemented. GPU tensor generation requires the explicit `--operator volume --k-builder cuda` mode; selecting a CuPy iteration backend alone does not enable it.
+Do **not** claim the package supports non-isotropic or hysteretic materials, coil-current geometry conversion, transient solutions, or magnetic force calculation. These are not implemented. GPU tensor generation requires the explicit `--operator volume --k-builder cuda` mode; selecting a CuPy iteration backend alone does not enable it. The optional `--operator volume --k-builder fmm` backend defaults to CPU FMM3D. Explicit `--fmm-farfield cuda --fmm-neighbours cuda --backend cupy` uses native-Windows GPU interpolation FMM, neighbour queries, analytical correction and material iteration, without WSL/JAX/FMM3D. Independent native accuracy checks remain CPU references. A completed million-cell solve has not yet been certified.
 
 ## Preflight / environment
 
@@ -33,6 +33,18 @@ python -m pytest -q tests
 
 ## Workflow 1: Import solved Maxwell 3D model
 
+The confirmed source-machine target is AEDT 18.2 without PyAEDT. Use the canonical standard-library-only
+`scripts/aedt_magtense_bridge/aedt_export_native.py` inside AEDT's IronPython,
+passing an export-config JSON path as Script Arguments. Transfer the complete
+manifest-verified bundle, then use `bridge.py import-native` and
+`bridge.py solve-fem-bem` on the no-Maxwell server. This path archives all model
+Solve-Inside solid meshes, original inputs/materials/settings and optional B/H
+references. Current offline physics still excludes nonzero free currents and
+unsupported boundary conditions; do not silently omit them. See the native
+transfer section in `scripts/aedt_magtense_bridge/README.md` for commands and
+validation scope: IronPython 2.7/AEDT 2022 R2 was exercised; actual AEDT 18.2
+and a separate server OS have not yet been certified.
+
 Require a **real project path**, design name, existing analysis sweep, and observation points inside air. Unless the user provided them, discover locally with AEDT when possible; never manufacture names/paths. Work in a new output directory to avoid modifying the `.aedt` project.
 
 Run from `TOOL_DIR`:
@@ -48,7 +60,7 @@ Selecting `--objects` only limits exported sources; it does not deactivate omitt
 
 ## Workflow 2: GPU nonlinear solve
 
-Inspect mesh count before allocating a dense operator. The implementation stores a **full 3N × 3N K matrix**, not a six-component compressed tensor. K itself consumes about `36*N*N` bytes in FP32 or `72*N*N` bytes in FP64, excluding solver/GPU and temporary memory. At N=10,000, this means **3.6 GB FP32 or 7.2 GB FP64**, plus overhead. Recommend beginning with 1k–5k magnetic tiles for validation.
+Inspect mesh count before allocating a dense operator. The native/cuda paths store a **full 3N × 3N K matrix**, not a six-component compressed tensor. K itself consumes about `36*N*N` bytes in FP32 or `72*N*N` bytes in FP64, excluding solver/GPU and temporary memory. At N=10,000, this means **3.6 GB FP32 or 7.2 GB FP64**, plus overhead. Recommend beginning with 1k–5k magnetic tiles for validation. For the optional matrix-free FMM path, install `fmm3dpy>=2.1,<3`, omit `--cache-k`, and follow the memory/accuracy controls in `scripts/aedt_magtense_bridge/README_GPU.md`. FMM `eps` does not bound source quadrature error. Preserve pre/post native sampled checks and report the approximate-operator residual separately from `fmm_native_sample_constitutive_residual`; do not claim the full native residual or Maxwell accuracy is certified.
 
 ```powershell
 python gpu_solver.py --out out --backend cupy --dtype float64 --operator volume --method proximal --tol 1e-8 --cache-k

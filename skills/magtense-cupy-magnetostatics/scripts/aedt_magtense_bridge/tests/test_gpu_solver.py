@@ -31,6 +31,17 @@ def bh_from_m(h, m):
     return np.column_stack((h, MU0*(h+m)))
 
 
+def test_fmm_cli_rejects_incompatible_options_before_loading_any_model():
+    from gpu_solver import main
+    invalid = [[],['--operator','volume','--cache-k'],
+               ['--operator','volume','--fmm-index-gib','0'],
+               ['--operator','volume','--fmm-near-cache-mib','nan']]
+    for arguments in invalid:
+        with pytest.raises(SystemExit) as error:
+            main(['--out','missing-model','--k-builder','fmm',*arguments])
+        assert error.value.code == 2
+
+
 def test_linear_hard_pm_recoil_exact():
     t = tiles([1],mu=[1.1], br=[1.2])
     laws=MaterialLaws(t,[],np,'float64')

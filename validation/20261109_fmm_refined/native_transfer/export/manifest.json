@@ -1,0 +1,116 @@
+{
+  "schema": "aedt-native-disk-1", 
+  "files": {
+    "native/B.fld": {
+      "bytes": 68309, 
+      "role": "native SI vector reference", 
+      "sha256": "893f0f2115bc6dd500c91bce955fea844c1921f216477acdcea9e457a5669e56"
+    }, 
+    "mesh/00006.aedtplt": {
+      "bytes": 5891459, 
+      "role": "per-object volume mesh", 
+      "sha256": "c784cf06699b85f668325945cad2b96625409de29f21c860cdb1d3fa5ac3700b"
+    }, 
+    "native/source_project.aedt": {
+      "bytes": 622954, 
+      "role": "saved original project inputs", 
+      "sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785"
+    }, 
+    "mesh/00005.aedtplt": {
+      "bytes": 1887425, 
+      "role": "per-object volume mesh", 
+      "sha256": "4096ed09313092756730de5452202bdc92e7bb165d068a7f2b2bb7b7c024c058"
+    }, 
+    "mesh/00002.aedtplt": {
+      "bytes": 938062, 
+      "role": "per-object volume mesh", 
+      "sha256": "7624f36229b48aa8cda2436a109a3282871641226d65e30b63cec15b777798fe"
+    }, 
+    "mesh/00001.aedtplt": {
+      "bytes": 965042, 
+      "role": "per-object volume mesh", 
+      "sha256": "05d4a558f1615e34acffb00b1fd875aa48738664e93d75b768517a0b2e5f42da"
+    }, 
+    "mesh/00009.aedtplt": {
+      "bytes": 1039711, 
+      "role": "per-object volume mesh", 
+      "sha256": "06f6359bd6d03cc240142f435ddf5e6a6ce0281721e619cba11d48eab53ef87b"
+    }, 
+    "mesh/00012.aedtplt": {
+      "bytes": 43518142, 
+      "role": "per-object volume mesh", 
+      "sha256": "a849372dbd4a0e4f402f0bf026481430f59698c7b767b640c58f306ba9f18b5e"
+    }, 
+    "native/convergence.txt": {
+      "bytes": 672, 
+      "role": "native solved setup evidence", 
+      "sha256": "c041d2e102007962b129ff25dbb5cff78f857f30a9a2ddf2e9c32902d77f91d1"
+    }, 
+    "mesh/00011.aedtplt": {
+      "bytes": 1835291, 
+      "role": "per-object volume mesh", 
+      "sha256": "e5238017fb06e7811d7e93f9fbbd758134b17eeb9664b88f744587d4261f5b02"
+    }, 
+    "native/mesh_stats.txt": {
+      "bytes": 2602, 
+      "role": "native solved setup evidence", 
+      "sha256": "0d0e0c7e5b701d255e1825bb500297e9d2ac59a3bcab0641e5bc2c6b4dd97382"
+    }, 
+    "native/profile.txt": {
+      "bytes": 8334, 
+      "role": "native solved setup evidence", 
+      "sha256": "d6a47dbc265e92586fbd263d5cede1362535902431a35f660e01795da0c98f72"
+    }, 
+    "native_export.json": {
+      "bytes": 47506, 
+      "role": "native metadata and original settings", 
+      "sha256": "0a6e8451da1a7ab24bf72eb3a65a636b14b1b21d62d5704507d336ed950436fa"
+    }, 
+    "mesh/00004.aedtplt": {
+      "bytes": 1034960, 
+      "role": "per-object volume mesh", 
+      "sha256": "9eb11cabaf7455e398a8ee50b107c5010e2b89ee288ccea6bc9edf887e8896d2"
+    }, 
+    "points.pts": {
+      "bytes": 6559, 
+      "role": "native sample points in model units", 
+      "sha256": "bf60b200c0138a6f15d8e356236594195134af066bb0a58c2a3e1888c30b6ed8"
+    }, 
+    "mesh/00000.aedtplt": {
+      "bytes": 5906787, 
+      "role": "per-object volume mesh", 
+      "sha256": "d03c58bd1da58178b87ea2a94eb718f535c6208f06e1f0d4aa979732823d5275"
+    }, 
+    "mesh/00007.aedtplt": {
+      "bytes": 1001409, 
+      "role": "per-object volume mesh", 
+      "sha256": "1f93be253d737300f2b5835dcc2c170b13157b951c86662f69f46855f28ffc6c"
+    }, 
+    "points.csv": {
+      "bytes": 37070, 
+      "role": "SI observation points", 
+      "sha256": "9e4867ab7b0846478e4f4825602352fe030dd12e799c3c679cc1f6f0d26806c6"
+    }, 
+    "mesh/00008.aedtplt": {
+      "bytes": 994612, 
+      "role": "per-object volume mesh", 
+      "sha256": "afc7ff5ffce72048732ddf2c3732387ec103952ac0a01e8c59415a55c988ff4d"
+    }, 
+    "mesh/00003.aedtplt": {
+      "bytes": 1004290, 
+      "role": "per-object volume mesh", 
+      "sha256": "7ffe9d1fe028ccb657e09398e4b4f5aa4c998554f938d5f757c9441cb9195415"
+    }, 
+    "mesh/00010.aedtplt": {
+      "bytes": 977915, 
+      "role": "per-object volume mesh", 
+      "sha256": "4ac726651049052f25823e303b963291ef6967d6ad646a5c89d0f2c16f38366a"
+    }, 
+    "native/H.fld": {
+      "bytes": 68309, 
+      "role": "native SI vector reference", 
+      "sha256": "544f3fc3af36eeaea08d7e83039ddeb3ebd9e4fdcd19485b98fea82a7805161d"
+    }
+  }, 
+  "state": "complete"
+}

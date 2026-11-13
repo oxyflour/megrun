@@ -11,6 +11,15 @@ htmlcov/
 # Dense interaction matrices are rebuilt from the tracked model/mesh inputs.
 *.npy
 
+# Large FMM inputs/results are regenerated from the retained native AEDT mesh.
+/validation/20261109_fmm_refined/large_export/
+/validation/20261109_fmm_refined/large_fmm_worker.json*
+# Rebuildable numeric H cache for native-AEDT disk-transfer verification.
+/validation/20261109_fmm_refined/native_transfer/**/boundary_cache/
+# Superseded failed export attempts are captured in fmm_verification.json.
+/validation/20261109_fmm_refined/native_transfer/bundle/
+/validation/20261109_fmm_refined/native_transfer/native_export.json
+
 # Native Maxwell projects, result databases, mesh dumps, and temporary exports.
 *.aedt
 *.aedt.lock

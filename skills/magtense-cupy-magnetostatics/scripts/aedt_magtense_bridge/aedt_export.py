@@ -9,6 +9,8 @@ import inspect
 from pathlib import Path
 import re
 import warnings
+import hashlib
+from types import SimpleNamespace
 
 import numpy as np
 
@@ -219,6 +221,32 @@ def _validate_mesh_units_against_cad(obj, vertices_m, stats, model_unit_scale):
     return vertices_m,stats
 
 
+def _native_mesh_units(obj,vertices,stats,unit_scale):
+    """CAD volume also supports spheres/cylinders with incomplete CAD vertices."""
+    volume=obj.get('cad_volume_model_units3')
+    if volume is not None and np.isfinite(volume) and volume>0:
+        target=volume*unit_scale**3
+        factors=[1.] if unit_scale==1. else [1.,1/unit_scale]
+        score,factor=min((abs(stats['volume_m3']*f**3/target-1),f) for f in factors)
+        if score>.8:
+            raise ConversionError(obj['name']+': native mesh volume does not match CAD in model or SI units')
+        vertices*=factor;stats['volume_m3']*=factor**3
+        stats['bounds_min_m']=(np.asarray(stats['bounds_min_m'])*factor).tolist()
+        stats['bounds_max_m']=(np.asarray(stats['bounds_max_m'])*factor).tolist()
+        stats.update(cad_volume_relative_mismatch=float(score),cad_units_verification='native CAD volume',
+            node_units_assumption='SI_meters' if factor!=1 else 'model_units')
+        return vertices,stats
+    points=np.asarray(obj['cad_vertex_positions'],dtype=float)
+    if points.ndim!=2 or points.shape[1]!=3 or not np.isfinite(points).all():
+        raise ConversionError(obj['name']+': cannot verify mesh units; no CAD volume or usable vertices')
+    proxy=SimpleNamespace(name=obj['name'],bounding_box=np.r_[points.min(axis=0),points.max(axis=0)])
+    vertices,stats=_validate_mesh_units_against_cad(proxy,vertices,stats,unit_scale)
+    if stats['node_units_assumption']=='unverified_model_units':
+        raise ConversionError(obj['name']+': native mesh units are not verified')
+    stats['cad_units_verification']='native CAD vertices; curved extrema may lie between vertices'
+    return vertices,stats
+
+
 def export_project(project: str, design: str, out: str, points_csv=None, line_mm=None,
                    setup=None, version=None, objects=None, overrides_path=None,
                    max_tiles=10000, no_reference=False, ignore_current_check=False,
@@ -361,3 +389,184 @@ def export_project(project: str, design: str, out: str, points_csv=None, line_mm
         # Only a session explicitly created for this export belongs to this call.
         if new_desktop:
             app.release_desktop(close_projects=True,close_desktop=True)
+
+
+def _native_arguments(values):
+    """Decode named AEDT COM arrays, retaining repeated children (BH points)."""
+    values=list(values)
+    if not values or not str(values[0]).startswith('NAME:'):
+        raise ConversionError('Malformed native material argument array')
+    body=values[1:]
+    if not any(isinstance(x,list) or isinstance(x,str) and x.endswith(':=') for x in body):
+        return body
+    result={};repeated=set();i=0
+    def add(key,value):
+        if key in result:
+            if key not in repeated:
+                result[key]=[result[key]];repeated.add(key)
+            result[key].append(value)
+        else:
+            result[key]=value
+    while i<len(body):
+        item=body[i]
+        if isinstance(item,list) and item and str(item[0]).startswith('NAME:'):
+            add(str(item[0])[5:],_native_arguments(item));i+=1
+        elif isinstance(item,str) and item.endswith(':=') and i+1<len(body):
+            add(item[:-2],body[i+1]);i+=2
+        else:
+            raise ConversionError(f'Malformed native material item {item!r}')
+    return result
+
+
+def _native_material(name,raw):
+    properties=_native_arguments(raw)
+    if not isinstance(properties,dict) or 'permeability' not in properties:
+        raise ConversionError(f'Native material {name} has no explicit permeability')
+    if properties.get('CoordinateSystemType','Cartesian')!='Cartesian':
+        raise ConversionError(f'{name}: non-Cartesian material axes require a global normalized override')
+    if properties.get('ModifierData'):
+        raise ConversionError(f'{name}: material modifiers require a normalized override')
+    permeability=properties['permeability'];kind='simple';value=permeability;hunit='A_per_meter';bunit='tesla';temperature=False
+    if isinstance(permeability,dict):
+        kind=str(permeability.get('property_type','unsupported'))
+        if kind=='nonlinear':
+            coordinates=permeability.get('BHCoordinates',{})
+            if 'Point' in coordinates:
+                value=coordinates['Point']
+                if value and not isinstance(value[0],list):value=[value]
+            elif 'Points' in coordinates:
+                flat=coordinates['Points']
+                if len(flat)%2:raise ConversionError('Odd number of native BH coordinates')
+                value=[flat[i:i+2] for i in range(0,len(flat),2)]
+            else:
+                raise ConversionError(f'{name}: no single-valued native BH points')
+            hunit=permeability.get('HUnit','A_per_meter');bunit=permeability.get('BUnit','tesla')
+            temperature=permeability.get('IsTemperatureDependent',False)
+            if str(temperature).lower() not in ('false','0'):temperature=True
+            else:temperature=False
+            if permeability.get('BTypeForSingleCurve','normal').lower()!='normal':
+                raise ConversionError(f'{name}: non-normal BH curve requires an override')
+    return SimpleNamespace(name=name,_props=properties,permeability=SimpleNamespace(type=kind,value=value,
+        hunit=hunit,bunit=bunit,is_temperature_dependent=temperature))
+
+
+def _native_scalar(value,variables):
+    """Resolve exact variable aliases only; never eval project expressions."""
+    seen=set()
+    while isinstance(value,str) and value in variables:
+        if value in seen:raise ConversionError('Cyclic native variable alias: '+value)
+        seen.add(value);value=variables[value]
+    return value
+
+
+def _native_physics(info):
+    """Retain all native physics, reject features the offline solver omits."""
+    variables=info.get('variables',{})
+    for item in info.get('excitations',[]):
+        properties=item.get('properties',{});kind=item['type'].lower()
+        if kind not in ('current','winding') or 'Current' not in properties:
+            raise ConversionError(f'Unsupported native excitation {item["name"]}: {item["type"]}; archived but not modeled')
+        if kind=='winding' and properties.get('Type','Current').lower()!='current':
+            raise ConversionError('Voltage/external-circuit windings are not modeled')
+        value=str(_native_scalar(properties['Current'],variables)).strip()
+        match=re.fullmatch(r'([+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?)\s*(A|mA|kA|amp|ampere)?',value)
+        if not match or not np.isfinite(float(match[1])) or float(match[1])!=0:
+            raise ConversionError(f'{item["name"]}: current {value!r} is nonzero or unresolved; offline current sources are not implemented')
+    for item in info.get('boundaries',[]):
+        kind=str(item['properties'].get('Type','')).lower()
+        if kind!='balloon':
+            raise ConversionError(f'Native boundary {item["name"]} ({kind or "unknown type"}) cannot be represented by infinite-air FEM-BEM')
+
+
+def import_native_bundle(bundle,out,*,points_csv=None,line_mm=None,overrides_path=None,max_tiles=10000):
+    """Verify a native disk archive and create self-contained existing inputs.
+
+    No AEDT/PyAEDT imports or license are used. Raw all-domain mesh and settings
+    stay in the transfer bundle; model.json embeds native metadata, while only
+    supported magnetic cells become canonical SI mesh NPZs for offline solving.
+    """
+    from aedt_export_native import _bool_value
+    root=Path(bundle).resolve();target=Path(out).resolve()
+    manifest=json.loads((root/'manifest.json').read_text(encoding='utf-8-sig'))
+    if manifest.get('schema')!='aedt-native-disk-1' or manifest.get('state')!='complete':
+        raise ConversionError('Native archive is incomplete or has an unknown schema')
+    files=manifest.get('files',{})
+    def member(relative):
+        if not isinstance(relative,str) or '\\' in relative or ':' in relative:
+            raise ConversionError('Invalid native archive member path')
+        path=(root/relative).resolve()
+        if not path.is_relative_to(root) or path==root or '..' in Path(relative).parts:
+            raise ConversionError('Native archive path escapes its root: '+relative)
+        if relative not in files:raise ConversionError('Unhashed native archive member: '+relative)
+        return path
+    for relative,spec in files.items():
+        path=member(relative)
+        if not path.is_file() or path.stat().st_size!=spec['bytes']:
+            raise ConversionError('Native archive file missing/size mismatch: '+relative)
+        with path.open('rb') as stream:digest=hashlib.file_digest(stream,'sha256').hexdigest()
+        if digest!=spec['sha256']:raise ConversionError('Native archive SHA-256 mismatch: '+relative)
+    info=json.loads(member('native_export.json').read_text(encoding='utf-8-sig'))
+    if info.get('state')!='complete' or not info.get('source_project_unchanged'):
+        raise ConversionError('Native archive has no completed source integrity check')
+    member('native/source_project.aedt')
+    if files['native/source_project.aedt']['sha256']!=info['source']['project_sha256']:
+        raise ConversionError('Saved native project copy does not match the exported source hash')
+    _native_physics(info)
+    if points_csv or line_mm:
+        points=load_points(points_csv,line_mm)
+    elif info.get('points'):
+        points=load_points(str(member(info['points'])),None)
+    else:
+        raise ConversionError('Provide --points-csv or --line-mm; native bundle contains no observation points')
+    overrides=json.loads(Path(overrides_path).read_text(encoding='utf-8')) if overrides_path else {}
+    # Validate all material/current/coordinate-system constraints before output.
+    selection=[];skipped=[];unit_scale=get_unit_scale(info['model_unit'])
+    for obj in info['objects']:
+        name=obj['name'];material_name=obj['material'];attributes=obj['attributes']
+        if obj['group']!='Solids' or not _bool_value(attributes.get('Model',True)):
+            skipped.append(dict(name=name,reason='not a model solid'));continue
+        if material_name.lower() in ('air','vacuum'):
+            skipped.append(dict(name=name,material=material_name,reason='air/vacuum'));continue
+        overridden=name in overrides.get('objects',{}) or material_name in overrides.get('materials',{})
+        material=None if overridden else _native_material(material_name,info['materials'][material_name])
+        props,origin=_resolve_properties(name,material_name,material,overrides)
+        if props['kind']=='skip':
+            skipped.append(dict(name=name,material=material_name,reason=props.get('reason','nonmagnetic')));continue
+        if props['kind'] not in ('permanent','nonlinear','linear'):
+            raise ConversionError('Unsupported normalized native material: '+name)
+        if props['kind']=='permanent' and origin=='aedt' and attributes.get('Orientation','Global')!='Global':
+            raise ConversionError(name+': local magnet orientation requires an explicit global-direction override')
+        if not _bool_value(attributes.get('Solve Inside',False)) or not obj.get('mesh_raw'):
+            raise ConversionError(name+': no solved interior volume mesh')
+        member(obj['mesh_raw']);selection.append((obj,props,origin))
+    if not selection:raise ConversionError('No supported magnetic volume cells in native bundle')
+    if target.exists() and any(target.iterdir()):
+        raise ConversionError('Import output must be absent or empty; existing data is retained')
+    target.mkdir(parents=True,exist_ok=True);(target/'mesh').mkdir()
+    model=dict(schema_version=1,source=dict(info['source'],native_manifest_sha256=hashlib.sha256((root/'manifest.json').read_bytes()).hexdigest(),
+        source_check=info['excitations'],native_saved_context=info['saved_context'],native_variables=info['variables'],
+        native_boundaries=info['boundaries'],native_export_scope=info['capture_scope'],
+        offline_exterior='Infinite air; native finite air region/settings retained as context'),
+        objects=[],skipped=skipped,points='points.csv',mesh_unit='m')
+    total=0
+    for index,(obj,props,origin) in enumerate(selection):
+        tetra,stats=read_aedtplt(member(obj['mesh_raw']),unit_scale)
+        tetra,stats=_native_mesh_units(obj,tetra,stats,unit_scale)
+        total+=len(tetra)
+        if total>max_tiles:raise ConversionError(f'Exceeded --max-tiles {max_tiles}: {total}')
+        relative=f'mesh/{index:05d}.npz';np.savez_compressed(target/relative,tetra_m=tetra)
+        model['objects'].append(dict(name=obj['name'],material=obj['material'],properties=props,
+            properties_source='native_'+origin,mesh_npz=relative,mesh_stats=stats,
+            mesh_npz_sha256=hashlib.sha256((target/relative).read_bytes()).hexdigest(),
+            source_mesh_sha256=files[obj['mesh_raw']]['sha256']))
+    np.savetxt(target/'points.csv',points,delimiter=',',header='x_m,y_m,z_m',comments='')
+    model['points_sha256']=hashlib.sha256((target/'points.csv').read_bytes()).hexdigest()
+    same_points=bool(info.get('points')) and np.array_equal(points,load_points(str(member(info['points'])),None))
+    if 'B' in info.get('reference_fields',{}) and same_points:
+        from bridge import read_maxwell_fld
+        reference=member(info['reference_fields']['B']);B,scale=read_maxwell_fld(reference,points)
+        if scale!=1.:raise ConversionError('Native reference coordinates are not SI aligned')
+        (target/'maxwell_B.fld').write_bytes(reference.read_bytes());model['maxwell_field']='maxwell_B.fld'
+    model['total_magnetic_tetra']=total
+    (target/'model.json').write_text(json.dumps(model,indent=2,ensure_ascii=False),encoding='utf-8')
+    return model

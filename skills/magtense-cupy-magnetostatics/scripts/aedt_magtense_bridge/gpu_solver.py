@@ -218,7 +218,7 @@ class MaterialLaws:
         self.kind_cpu = np.asarray(tiles.magnet_type, dtype=np.int32)
         self.ids_cpu = np.asarray(tiles.stfcn_index, dtype=np.int32) - 1
         self.n = len(self.kind_cpu)
-        if not set(self.kind_cpu.tolist()).issubset({1,2,3}):
+        if not np.isin(self.kind_cpu, [1,2,3]).all():
             raise ValueError('Supported magnet_type: 1 permanent, 2 nonlinear, 3 linear')
         mu = np.asarray(tiles.mu_r_ea, dtype=float)
         mu_other = np.asarray(tiles.mu_r_oa, dtype=float)
@@ -309,8 +309,8 @@ def gmres_solve(xp, matvec, rhs, *, rtol=5e-4, restart=30, maxiter=200):
 
 def solve_nonlinear(K, diagK, laws: MaterialLaws, *, H_external=None, M_initial=None,
                     method='newton', tol=1e-5, maxiter=None, damping=0.15,
-                    gmres_rtol=5e-4, gmres_maxiter=100, verbose=True):
-    """Solve R(M)=M-F(H_ext+K M)=0; all matrices/vectors stay on selected device."""
+                    gmres_rtol=5e-4, gmres_maxiter=100, anderson_history=20, verbose=True):
+    """Solve R(M)=M-F(H_ext+K M)=0 with a dense or matrix-free operator."""
     xp = laws.xp
     n = laws.n
     maxiter = (6000 if method == 'proximal' else 80) if maxiter is None else maxiter
@@ -320,7 +320,7 @@ def solve_nonlinear(K, diagK, laws: MaterialLaws, *, H_external=None, M_initial=
         from constitutive_prox import solve as solve_proximal
         try:
             return solve_proximal(K,laws,H_external=H_external,M_initial=M_initial,
-                                  tolerance=tol,maxiter=maxiter,verbose=verbose)
+                                  tolerance=tol,maxiter=maxiter,history=anderson_history,verbose=verbose)
         except RuntimeError as error:
             raise NonConvergence(str(error)) from error
     if method not in ('newton','picard'):
@@ -454,7 +454,19 @@ def run_from_export(args):
     input_seconds = time.perf_counter()-pipeline_start
     if args.operator == 'volume':
         cache_name = f'K_volume_r{args.near_levels}_f{args.near_factor:.8g}_{args.dtype}'
-        if args.k_builder == 'cuda':
+        if args.k_builder == 'fmm':
+            if args.cache_k:
+                raise ValueError('--cache-k stores dense matrices and is not supported by FMM')
+            from tetra_fmm import assemble as assemble_fmm
+            K,diag,kinfo = assemble_fmm(tiles,xp,dtype=args.dtype,
+                eps=args.fmm_eps, near_levels=args.near_levels, near_factor=args.near_factor,
+                correction_factor=args.fmm_correction_factor, source_levels=args.fmm_source_levels,
+                batch=args.batch, cache_bytes=int(args.fmm_near_cache_mib*1024**2),
+                index_bytes=int(args.fmm_index_gib*1024**3), verify_rtol=args.fmm_verify_rtol,
+                neighbours=args.fmm_neighbours,farfield=args.fmm_farfield,
+                gpu_order=args.fmm_gpu_order,gpu_bytes=int(args.fmm_gpu_gib*1024**3),
+                gpu_leaf_size=args.fmm_gpu_leaf_size)
+        elif args.k_builder == 'cuda':
             from tetra_cuda import assemble as assemble_volume
             cache_name += '_cuda.npy'
             K,diag,kinfo = assemble_volume(tiles,xp,dtype=args.dtype,
@@ -467,7 +479,7 @@ def run_from_export(args):
                 cache=(root/(cache_name+'.npy')) if args.cache_k else None)
     else:
         if args.k_builder != 'native':
-            raise ValueError('--k-builder cuda requires --operator volume')
+            raise ValueError('--k-builder cuda/fmm requires --operator volume')
         K,diag,kinfo = tensor_assembly(tiles,xp,dtype=args.dtype,batch=args.batch,
             cache=(root/f'K_{args.dtype}.npy') if args.cache_k else None)
         kinfo['operator'] = 'centroid'
@@ -479,13 +491,16 @@ def run_from_export(args):
     phase_start = time.perf_counter()
     tensor_check = None
     if not args.skip_k_verify:
-        if args.operator == 'volume':
+        if args.k_builder == 'fmm':
+            tensor_check = K.verify()
+        elif args.operator == 'volume':
             from tetra_volume import verify as verify_volume
             tensor_check = verify_volume(tiles,K,xp,near_levels=args.near_levels,near_factor=args.near_factor)
         else:
             tensor_check = verify_tensor_against_magtense(tiles,K,xp,get_H_field)
         observation = 'volume-averaged' if args.operator == 'volume' else 'centroid'
-        print(f'K vs native MagTense {observation} H verified: relative={tensor_check:.3e}')
+        label = 'FMM sampled field' if args.k_builder == 'fmm' else 'K'
+        print(f'{label} vs native MagTense {observation} H verified: relative={tensor_check:.3e}')
     verify_seconds = time.perf_counter()-phase_start
     m0 = None
     if args.warm_start:
@@ -507,14 +522,41 @@ def run_from_export(args):
                               M_initial=m0, method=args.method,tol=args.tol,
                               maxiter=args.maxiter,damping=args.damping,
                               gmres_rtol=args.gmres_rtol,gmres_maxiter=args.gmres_maxiter,
+                              anderson_history=args.anderson_history,
                               verbose=True)
     phase_start = time.perf_counter()
     final_M = xp.asnumpy(M) if xp is not np else M
+    if args.k_builder == 'fmm':
+        # This checks the converged M as well as the random pre-solve probe.
+        # It certifies sampled field error, not a full native constitutive residual.
+        from types import SimpleNamespace
+        error,selected,native_H = K.verify(final_M,return_reference=True)
+        sinfo['fmm_final_native_sample_relative_error'] = error
+        sample_tiles = SimpleNamespace(**{name:np.asarray(getattr(tiles,name))[selected]
+            for name in ('magnet_type','stfcn_index','mu_r_ea','mu_r_oa','M_rem','u_ea')})
+        sample_law = MaterialLaws(sample_tiles,curves or [],np,args.dtype)
+        native_R = final_M[selected]-sample_law.eval(native_H+H_ext)[0]
+        sample_residual = float(np.linalg.norm(native_R)/max(np.linalg.norm(final_M[selected]),
+            np.linalg.norm(sample_law.rem),np.sqrt(len(selected))))
+        sinfo['fmm_native_sample_constitutive_residual'] = sample_residual
+        sinfo['fmm_native_sample_constitutive_residual_passed'] = sample_residual <= args.tol
+        sinfo['residual_operator'] = 'FMM with analytical near correction'
+        sinfo['full_native_constitutive_residual_verified'] = False
+        sinfo['equations'] = 'M=F(H_external + approximate volume FMM(M)); unchanged local material law'
+        print(f'FMM native sampled constitutive residual={sample_residual:.6e}; '
+              f'full native residual was not evaluated',flush=True)
     tiles.M = np.asarray(final_M, dtype=np.float64)
     # Fortran evaluation is done only at user air probes, not on every iteration.
     from air_field import evaluate as evaluate_air_field
+    air_get_field = ((lambda source,p:K.field_at(np.asarray(source.M),p))
+                     if args.k_builder == 'fmm' else get_H_field)
     H_air, air_info = evaluate_air_field(tiles,pts,
-        validate_air=lambda p:check_points_in_air(root,model,p),get_field=get_H_field)
+        validate_air=lambda p:check_points_in_air(root,model,p),get_field=air_get_field,
+        limit_batch=args.batch if args.k_builder == 'fmm' else 1)
+    if args.k_builder == 'fmm':
+        sinfo['fmm_air_native_sample_relative_error'] = K.verify_air(final_M,pts,H_air,
+            validate_air=lambda p:check_points_in_air(root,model,p),
+            force_limit_points=pts[air_info['regularized_indices']])
     H_air = H_air + H_ext[None,:]
     B_air = MU0 * H_air
     if not np.all(np.isfinite(B_air)):
@@ -560,8 +602,30 @@ def main(argv=None):
     parser.add_argument('--dtype',choices=['float32','float64'],default='float32')
     parser.add_argument('--method',choices=['newton','picard','proximal'],default='newton')
     parser.add_argument('--operator',choices=['centroid','volume'],default='centroid')
-    parser.add_argument('--k-builder',choices=['native','cuda'],default='native',
-                        help='Volume K integrals: native CPU (compatible default) or CUDA FP64 geometry/integration')
+    parser.add_argument('--k-builder',choices=['native','cuda','fmm'],default='native',
+                        help='Volume operator: dense native/CUDA, or matrix-free CPU FMM + native/CUDA near correction')
+    parser.add_argument('--fmm-eps',type=float,default=1e-10,
+                        help='FMM3D point-interaction tolerance; excludes source quadrature error')
+    parser.add_argument('--fmm-neighbours',choices=['auto','cpu','cuda'],default='auto',
+                        help='Radius search: CPU KDTree or GPU KDTree with compact CSR queries; auto uses CUDA with CuPy')
+    parser.add_argument('--fmm-farfield',choices=['cpu','cuda'],default='cpu',
+                        help='CPU FMM3D or native-Windows/CuPy CUDA interpolation FMM with reusable tree')
+    parser.add_argument('--fmm-gpu-order',type=int,choices=range(3,17),
+                        help='CUDA Chebyshev order per axis; default ceil(-log10(eps))+4; sampled point error is checked')
+    parser.add_argument('--fmm-gpu-leaf-size',type=int,default=512,
+                        help='CUDA FMM target mean sources per leaf; trades P2P work against M2L work')
+    parser.add_argument('--fmm-gpu-gib',type=float,default=12.,
+                        help='CUDA far-field memory budget; independent of near cache/index budgets')
+    parser.add_argument('--fmm-source-levels',type=int,choices=range(3),default=0,
+                        help='FMM source tetra quadrature: 4,32,256 dipoles per tile')
+    parser.add_argument('--fmm-correction-factor',type=float,default=3.,
+                        help='Analytical correction radius / sum of bounding radii; >= near-factor')
+    parser.add_argument('--fmm-near-cache-mib',type=float,default=512.,
+                        help='Near-block cache budget; above it stream blocks per matvec; 0 forces streaming')
+    parser.add_argument('--fmm-index-gib',type=float,default=4.,
+                        help='Host near-index budget; above it query neighbours in batches on each matvec')
+    parser.add_argument('--fmm-verify-rtol',type=float,default=1e-4,
+                        help='Native sampled field acceptance before and after an FMM solve')
     parser.add_argument('--near-levels',type=int,choices=range(4),default=2,
                         help='Volume-mode receiving-tet refinements: 4,32,256,2048 near points')
     parser.add_argument('--near-factor',type=float,default=1.5)
@@ -570,6 +634,8 @@ def main(argv=None):
     parser.add_argument('--damping',type=float,default=0.15)
     parser.add_argument('--gmres-rtol',type=float,default=5e-4)
     parser.add_argument('--gmres-maxiter',type=int,default=100)
+    parser.add_argument('--anderson-history',type=int,default=20,
+                        help='Proximal history vectors; reduce for very large magnetic meshes')
     parser.add_argument('--batch',type=int,default=32,help='CPU MagTense tensor target batch')
     parser.add_argument('--max-tiles',type=int,default=10000)
     parser.add_argument('--cache-k',action='store_true',help='Cache full dense K to disk (large!)')
@@ -586,6 +652,17 @@ def main(argv=None):
         return
     if not args.out:
         parser.error('Supply --out or --self-test')
+    if args.k_builder == 'fmm':
+        if args.operator != 'volume':
+            parser.error('--k-builder fmm requires --operator volume')
+        if args.cache_k:
+            parser.error('--cache-k stores dense K and cannot be used with FMM')
+        if (not np.isfinite(args.fmm_near_cache_mib) or args.fmm_near_cache_mib < 0 or
+            not np.isfinite(args.fmm_index_gib) or args.fmm_index_gib <= 0 or
+            not np.isfinite(args.fmm_gpu_gib) or args.fmm_gpu_gib <= 0 or args.fmm_gpu_leaf_size<1):
+            parser.error('FMM memory budgets must be finite and nonnegative (index budget > 0)')
+    if args.anderson_history < 0:
+        parser.error('--anderson-history must be nonnegative')
     run_from_export(args)
 
 

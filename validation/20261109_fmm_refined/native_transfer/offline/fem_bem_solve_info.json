@@ -1,0 +1,338 @@
+{
+  "state": "complete",
+  "backend": "cuda_hmatrix",
+  "source_model_sha256": "5db74eaa777cd76ebdb2ebc4b6a57bcc267ec153a0f4f0870a13c080c193b44a",
+  "scope": "Offline P1/P0 magnetostatic field, zero free currents, infinite exterior air; native high-order equivalence not certified",
+  "phase": "newton",
+  "elapsed_seconds": 192.39947640011087,
+  "boundary_refinement": {
+    "kind": "full-order exact K blocks selected by independent coefficient errors",
+    "target": 2.4999999999999998e-05,
+    "block_absolute_row_L1_threshold": 1e-06,
+    "passes": [
+      {
+        "maximum_constant_error": 9.25613253683899e-05,
+        "component_constant_max_errors": [
+          4.9692436080709123e-08,
+          2.523569366361798e-08,
+          1.9830207432152933e-08,
+          6.63717132365349e-08,
+          5.5773827378767255e-08,
+          1.5410108310102604e-07,
+          2.714554898686756e-08,
+          9.256761591758256e-05,
+          2.7885224150226223e-08,
+          3.675920102813509e-08
+        ],
+        "bad_rows": 1
+      },
+      {
+        "maximum_constant_error": 9.100063201872288e-07,
+        "component_constant_max_errors": [
+          4.9692436080709123e-08,
+          2.523569366361798e-08,
+          1.9830207359874166e-08,
+          6.63717132365349e-08,
+          5.5773827378767255e-08,
+          1.5410108310611694e-07,
+          2.7145548969054974e-08,
+          9.105470054615594e-07,
+          2.7885224150226223e-08,
+          3.675920102813509e-08
+        ],
+        "bad_rows": 0
+      }
+    ],
+    "blocks": [
+      {
+        "block": 95716,
+        "rows": 31,
+        "columns": 23,
+        "P1_columns": 14,
+        "sampled_absolute_row_L1_error": 9.257193666437144e-05,
+        "bytes": 2852
+      }
+    ],
+    "added_bytes": 2852,
+    "seconds": 0.7609137003310025,
+    "exact_entry_queries": 16271,
+    "added_metadata_bytes": 56
+  },
+  "boundary_checks": [
+    {
+      "input": "random",
+      "relative_L2": 1.6044003582039334e-08,
+      "tolerance": 1.9999999999999998e-05
+    },
+    {
+      "input": "flux_only",
+      "relative_L2": 1.0512792883954346e-07,
+      "tolerance": 1.9999999999999998e-05
+    },
+    {
+      "input": "smooth",
+      "relative_L2": 7.230292303858934e-09,
+      "tolerance": 1.9999999999999998e-05
+    }
+  ],
+  "solver": {
+    "tetrahedra": 99093,
+    "P1_nodes": 25470,
+    "P0_boundary_faces": 31642,
+    "components": 10,
+    "quadrature_order": 8,
+    "boundary_backend": "cuda_hmatrix",
+    "geometry_seconds": 0.8906980999745429,
+    "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+    "boundary_faces": 31642,
+    "clusters": 2047,
+    "trial_dofs": 47479,
+    "trial_clusters": 4095,
+    "leaf_clusters": 1024,
+    "terminal_blocks": 94674,
+    "admissible_blocks": 33182,
+    "exact_near_entries": 44066763,
+    "exact_near_storage_bytes": 176267052,
+    "hmatrix_rtol": 1e-06,
+    "hmatrix_leaf_size": 32,
+    "hmatrix_eta": 3.0,
+    "hmatrix_max_rank": 64,
+    "hmatrix_coefficient_storage_dtype": "float32",
+    "hmatrix_compute_dtype": "float64",
+    "hmatrix_far_pivot_quadrature_order": 4,
+    "hmatrix_reference_quadrature_order": 8,
+    "hmatrix_pivot_row_backend": "auto",
+    "hmatrix_skip_inactive": true,
+    "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+    "hmatrix_storage_bytes": 870008372,
+    "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+    "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+    "hmatrix_low_rank_blocks": 11967,
+    "hmatrix_retained_dense_blocks": 100203,
+    "hmatrix_max_retained_rank": 64,
+    "hmatrix_max_heldout_relative_error": 2.6658655528509684e-07,
+    "hmatrix_coefficient_entry_queries": 381247233,
+    "hmatrix_setup_seconds": 168.93058479996398,
+    "hmatrix_setup_phase_seconds": {
+      "partition_and_geometry": 1.9772696997970343,
+      "leaf_preconditioner": 0.3949234997853637,
+      "exact_near_blocks": 34.27212030021474,
+      "far_ACA_and_failed_block_fallback": 132.2160526998341,
+      "finalize": 0.0670928000472486
+    },
+    "hmatrix_cache_hit": false,
+    "hmatrix_row_reuse": {
+      "plans": 1180,
+      "plan_seconds": 1.4669159837067127,
+      "pivot_calls": 34330,
+      "expanded_panel_slots": 415635011,
+      "shared_panel_slots": 156032526
+    },
+    "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+    "setup_seconds": 171.19875159999356,
+    "boundary_refinement": {
+      "kind": "full-order exact K blocks selected by independent coefficient errors",
+      "target": 2.4999999999999998e-05,
+      "block_absolute_row_L1_threshold": 1e-06,
+      "passes": [
+        {
+          "maximum_constant_error": 9.25613253683899e-05,
+          "component_constant_max_errors": [
+            4.9692436080709123e-08,
+            2.523569366361798e-08,
+            1.9830207432152933e-08,
+            6.63717132365349e-08,
+            5.5773827378767255e-08,
+            1.5410108310102604e-07,
+            2.714554898686756e-08,
+            9.256761591758256e-05,
+            2.7885224150226223e-08,
+            3.675920102813509e-08
+          ],
+          "bad_rows": 1
+        },
+        {
+          "maximum_constant_error": 9.100063201872288e-07,
+          "component_constant_max_errors": [
+            4.9692436080709123e-08,
+            2.523569366361798e-08,
+            1.9830207359874166e-08,
+            6.63717132365349e-08,
+            5.5773827378767255e-08,
+            1.5410108310611694e-07,
+            2.7145548969054974e-08,
+            9.105470054615594e-07,
+            2.7885224150226223e-08,
+            3.675920102813509e-08
+          ],
+          "bad_rows": 0
+        }
+      ],
+      "blocks": [
+        {
+          "block": 95716,
+          "rows": 31,
+          "columns": 23,
+          "P1_columns": 14,
+          "sampled_absolute_row_L1_error": 9.257193666437144e-05,
+          "bytes": 2852
+        }
+      ],
+      "added_bytes": 2852,
+      "seconds": 0.7609137003310025,
+      "exact_entry_queries": 16271,
+      "added_metadata_bytes": 56
+    },
+    "hmatrix_cached_base_storage_bytes": 870005464,
+    "AMG_levels": 3,
+    "AMG_operator_complexity": 1.1317181652526598,
+    "converged": true,
+    "residual": 1.5722977663901293e-10,
+    "nonlinear_updates": 3,
+    "history": [
+      {
+        "residual_before": 1.0,
+        "damping": 1.0,
+        "gmres_iterations": 204,
+        "preconditioner_seconds": 0.2628291002474725
+      },
+      {
+        "residual_before": 0.00020332028365631778,
+        "damping": 1.0,
+        "gmres_iterations": 100,
+        "preconditioner_seconds": 0.08473820006474853
+      },
+      {
+        "residual_before": 4.995216954387761e-06,
+        "damping": 1.0,
+        "gmres_iterations": 81,
+        "preconditioner_seconds": 0.08202349999919534
+      }
+    ],
+    "preconditioner": "block",
+    "solve_seconds": 15.147543199826032,
+    "total_gmres_iterations": 385,
+    "volume_weak_relative_residual": 1.572297766389546e-10,
+    "boundary_weak_relative_residual": 1.4592327174855836e-14
+  },
+  "air_gradient": {
+    "step_m": 2.06e-06,
+    "max_step_difference_Apm": 8.880449627462608e-07,
+    "method": "central difference / Richardson with verified air stencils"
+  },
+  "operator": {
+    "tetrahedra": 99093,
+    "P1_nodes": 25470,
+    "P0_boundary_faces": 31642,
+    "components": 10,
+    "quadrature_order": 8,
+    "boundary_backend": "cuda_hmatrix",
+    "geometry_seconds": 0.8906980999745429,
+    "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+    "boundary_faces": 31642,
+    "clusters": 2047,
+    "trial_dofs": 47479,
+    "trial_clusters": 4095,
+    "leaf_clusters": 1024,
+    "terminal_blocks": 94674,
+    "admissible_blocks": 33182,
+    "exact_near_entries": 44066763,
+    "exact_near_storage_bytes": 176267052,
+    "hmatrix_rtol": 1e-06,
+    "hmatrix_leaf_size": 32,
+    "hmatrix_eta": 3.0,
+    "hmatrix_max_rank": 64,
+    "hmatrix_coefficient_storage_dtype": "float32",
+    "hmatrix_compute_dtype": "float64",
+    "hmatrix_far_pivot_quadrature_order": 4,
+    "hmatrix_reference_quadrature_order": 8,
+    "hmatrix_pivot_row_backend": "auto",
+    "hmatrix_skip_inactive": true,
+    "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+    "hmatrix_storage_bytes": 870008372,
+    "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+    "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+    "hmatrix_low_rank_blocks": 11967,
+    "hmatrix_retained_dense_blocks": 100203,
+    "hmatrix_max_retained_rank": 64,
+    "hmatrix_max_heldout_relative_error": 2.6658655528509684e-07,
+    "hmatrix_coefficient_entry_queries": 381247233,
+    "hmatrix_setup_seconds": 168.93058479996398,
+    "hmatrix_setup_phase_seconds": {
+      "partition_and_geometry": 1.9772696997970343,
+      "leaf_preconditioner": 0.3949234997853637,
+      "exact_near_blocks": 34.27212030021474,
+      "far_ACA_and_failed_block_fallback": 132.2160526998341,
+      "finalize": 0.0670928000472486
+    },
+    "hmatrix_cache_hit": false,
+    "hmatrix_row_reuse": {
+      "plans": 1180,
+      "plan_seconds": 1.4669159837067127,
+      "pivot_calls": 34330,
+      "expanded_panel_slots": 415635011,
+      "shared_panel_slots": 156032526
+    },
+    "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+    "setup_seconds": 171.19875159999356,
+    "boundary_refinement": {
+      "kind": "full-order exact K blocks selected by independent coefficient errors",
+      "target": 2.4999999999999998e-05,
+      "block_absolute_row_L1_threshold": 1e-06,
+      "passes": [
+        {
+          "maximum_constant_error": 9.25613253683899e-05,
+          "component_constant_max_errors": [
+            4.9692436080709123e-08,
+            2.523569366361798e-08,
+            1.9830207432152933e-08,
+            6.63717132365349e-08,
+            5.5773827378767255e-08,
+            1.5410108310102604e-07,
+            2.714554898686756e-08,
+            9.256761591758256e-05,
+            2.7885224150226223e-08,
+            3.675920102813509e-08
+          ],
+          "bad_rows": 1
+        },
+        {
+          "maximum_constant_error": 9.100063201872288e-07,
+          "component_constant_max_errors": [
+            4.9692436080709123e-08,
+            2.523569366361798e-08,
+            1.9830207359874166e-08,
+            6.63717132365349e-08,
+            5.5773827378767255e-08,
+            1.5410108310611694e-07,
+            2.7145548969054974e-08,
+            9.105470054615594e-07,
+            2.7885224150226223e-08,
+            3.675920102813509e-08
+          ],
+          "bad_rows": 0
+        }
+      ],
+      "blocks": [
+        {
+          "block": 95716,
+          "rows": 31,
+          "columns": 23,
+          "P1_columns": 14,
+          "sampled_absolute_row_L1_error": 9.257193666437144e-05,
+          "bytes": 2852
+        }
+      ],
+      "added_bytes": 2852,
+      "seconds": 0.7609137003310025,
+      "exact_entry_queries": 16271,
+      "added_metadata_bytes": 56
+    },
+    "hmatrix_cached_base_storage_bytes": 870005464,
+    "AMG_levels": 3,
+    "AMG_operator_complexity": 1.1317181652526598
+  },
+  "solution_sha256": "b329281c94f9cd80b3b4245711ee474c21363bac1a670a26d77c133d0532ae18",
+  "native_air_B_sample_relative_L2": 0.0333161797952917,
+  "passed": true
+}

@@ -1,0 +1,545 @@
+{
+  "schema_version": 1,
+  "source": {
+    "design": "Gap_3mm_CCW",
+    "solution": "Reference : LastAdaptive",
+    "aedt_version": "2022.2.0",
+    "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_reference.aedt",
+    "project_sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785",
+    "native_manifest_sha256": "df429f0fe8787a66d332b587537424c2452b8f5e9ccb40079024e4e4a18ee3b8",
+    "source_check": [
+      {
+        "type": "Current",
+        "name": "A_AmpereTurns",
+        "properties": {
+          "Name": "A_AmpereTurns",
+          "Type": "Current",
+          "Direction": "Point into terminal",
+          "IsSolid": "Stranded",
+          "Current": "0A"
+        }
+      },
+      {
+        "type": "Current",
+        "name": "B_AmpereTurns",
+        "properties": {
+          "Name": "B_AmpereTurns",
+          "Type": "Current",
+          "Direction": "Point into terminal",
+          "IsSolid": "Stranded",
+          "Current": "0A"
+        }
+      }
+    ],
+    "native_saved_context": {
+      "MaxwellParameterSetup": [
+        "\t\t$begin 'MaxwellParameterSetup'\n\t\t\t$begin 'MaxwellParameters'\n\t\t\t\tNextUniqueID=2\n\t\t\t\tMoveBackwards=false\n\t\t\t\t$begin 'Force_A'\n\t\t\t\t\tID=0\n\t\t\t\t\tMaxwellParameterType='Force'\n\t\t\t\t\t'Reference CS'=1\n\t\t\t\t\t'Is Virtual'=false\n\t\t\t\t\tObjects(195)\n\t\t\t\t$end 'Force_A'\n\t\t\t\t$begin 'Force_B'\n\t\t\t\t\tID=1\n\t\t\t\t\tMaxwellParameterType='Force'\n\t\t\t\t\t'Reference CS'=1\n\t\t\t\t\t'Is Virtual'=false\n\t\t\t\t\tObjects(436)\n\t\t\t\t$end 'Force_B'\n\t\t\t$end 'MaxwellParameters'\n\t\t\tMotionParams()\n\t\t$end 'MaxwellParameterSetup'\n"
+      ],
+      "CoordinateSystems": [
+        "\t\t\t\t\t$begin 'CoordinateSystems'\n\t\t\t\t\t$end 'CoordinateSystems'\n"
+      ],
+      "AnalysisSetup": [
+        "\t\t$begin 'AnalysisSetup'\n\t\t\t$begin 'SolveSetups'\n\t\t\t\tNextUniqueID=1\n\t\t\t\tMoveBackwards=false\n\t\t\t\t$begin 'Reference'\n\t\t\t\t\tID=0\n\t\t\t\t\tSetupType='Magnetostatic'\n\t\t\t\t\tEnabled=true\n\t\t\t\t\t$begin 'MeshLink'\n\t\t\t\t\t\tImportMesh=false\n\t\t\t\t\t$end 'MeshLink'\n\t\t\t\t\tMaximumPasses=8\n\t\t\t\t\tMinimumPasses=3\n\t\t\t\t\tMinimumConvergedPasses=2\n\t\t\t\t\tPercentRefinement=30\n\t\t\t\t\tSolveFieldOnly=false\n\t\t\t\t\tPercentError=0.5\n\t\t\t\t\tSolveMatrixAtLast=true\n\t\t\t\t\tUseNonLinearIterNum=false\n\t\t\t\t\tUseIterativeSolver=false\n\t\t\t\t\tRelativeResidual=1e-06\n\t\t\t\t\tNonLinearResidual=1e-05\n\t\t\t\t\tSmoothBHCurve=false\n\t\t\t\t\t$begin 'MuOption'\n\t\t\t\t\t\tMuNonLinearBH=true\n\t\t\t\t\t$end 'MuOption'\n\t\t\t\t$end 'Reference'\n\t\t\t$end 'SolveSetups'\n\t\t$end 'AnalysisSetup'\n"
+      ],
+      "LocalVariables": [],
+      "MeshSetup": [
+        "\t\t$begin 'MeshSetup'\n\t\t\t$begin 'MeshSettings'\n\t\t\t\t$begin 'GlobalSurfApproximation'\n\t\t\t\t\tCurvedSurfaceApproxChoice='UseSlider'\n\t\t\t\t\tSliderMeshSettings=5\n\t\t\t\t$end 'GlobalSurfApproximation'\n\t\t\t\t$begin 'GlobalCurvilinear'\n\t\t\t\t\tApply=true\n\t\t\t\t$end 'GlobalCurvilinear'\n\t\t\t\t$begin 'GlobalModelRes'\n\t\t\t\t\tUseAutoLength=true\n\t\t\t\t$end 'GlobalModelRes'\n\t\t\t\tMeshMethod='Auto'\n\t\t\t\tUseLegacyFaceterForTauVolumeMesh=false\n\t\t\t\tDynamicSurfaceResolution=false\n\t\t\t\tUseFlexMeshingForTAUvolumeMesh=false\n\t\t\t\tUseAlternativeMeshMethodsAsFallBack=true\n\t\t\t\tAllowPhiForLayeredGeometry=false\n\t\t\t$end 'MeshSettings'\n\t\t\t$begin 'MeshOperations'\n\t\t\t\tNextUniqueID=1\n\t\t\t\tMoveBackwards=false\n\t\t\t\t$begin 'Reference_Length'\n\t\t\t\t\tRefineInside=true\n\t\t\t\t\tID=0\n\t\t\t\t\tType='LengthBased'\n\t\t\t\t\tIsComponent=false\n\t\t\t\t\tEnabled=true\n\t\t\t\t\tObjects(195, 111, 83, 167, 139, 6, 436, 352, 324, 408, 380, 247)\n\t\t\t\t\tRestrictElem=false\n\t\t\t\t\tNumMaxElem='1000'\n\t\t\t\t\tRestrictLength=true\n\t\t\t\t\tMaxLength='0.5mm'\n\t\t\t\t$end 'Reference_Length'\n\t\t\t$end 'MeshOperations'\n\t\t$end 'MeshSetup'\n"
+      ],
+      "DesignDatasets": [
+        "\t\t\t$begin 'DesignDatasets'\n\t\t\t\tNextUniqueID=0\n\t\t\t\tMoveBackwards=false\n\t\t\t\tDatasetType='DesignDatasetType'\n\t\t\t\t$begin 'DatasetDefinitions'\n\t\t\t\t$end 'DatasetDefinitions'\n\t\t\t$end 'DesignDatasets'\n"
+      ],
+      "BoundarySetup": [
+        "\t\t$begin 'BoundarySetup'\n\t\t\t$begin 'GlobalBoundData'\n\t\t\t\t$begin 'OP_Option'\n\t\t\t\t\tLinkType='None'\n\t\t\t\t$end 'OP_Option'\n\t\t\t$end 'GlobalBoundData'\n\t\t\t$begin 'Boundaries'\n\t\t\t\tNextUniqueID=2\n\t\t\t\tMoveBackwards=false\n\t\t\t\t$begin 'A_AmpereTurns'\n\t\t\t\t\tID=0\n\t\t\t\t\tBoundType='Current'\n\t\t\t\t\tIsComponent=false\n\t\t\t\t\tObjects(494)\n\t\t\t\t\tParentBndID=-1\n\t\t\t\t\tCurrent='0A'\n\t\t\t\t\tIsSolid=false\n\t\t\t\t\t'Point out of terminal'=false\n\t\t\t\t$end 'A_AmpereTurns'\n\t\t\t\t$begin 'B_AmpereTurns'\n\t\t\t\t\tID=1\n\t\t\t\t\tBoundType='Current'\n\t\t\t\t\tIsComponent=false\n\t\t\t\t\tObjects(506)\n\t\t\t\t\tParentBndID=-1\n\t\t\t\t\tCurrent='0A'\n\t\t\t\t\tIsSolid=false\n\t\t\t\t\t'Point out of terminal'=false\n\t\t\t\t$end 'B_AmpereTurns'\n\t\t\t$end 'Boundaries'\n\t\t\t$begin 'ProductSpecificData'\n\t\t\t$end 'ProductSpecificData'\n\t\t$end 'BoundarySetup'\n"
+      ]
+    },
+    "native_variables": {},
+    "native_boundaries": [],
+    "native_export_scope": "All model Solve-Inside solid volume meshes plus saved native inputs; not internal solver matrices",
+    "offline_exterior": "Infinite air; native finite air region/settings retained as context"
+  },
+  "objects": [
+    {
+      "name": "A_YOKE_SOFT_MAGNETIC",
+      "material": "Magrun_Steel_BH",
+      "properties": {
+        "kind": "nonlinear",
+        "bh_H_Apm_B_T": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            300.0,
+            1.9
+          ],
+          [
+            800.0,
+            2.1
+          ],
+          [
+            1600.0,
+            2.2
+          ],
+          [
+            4000.0,
+            2.255
+          ],
+          [
+            8000.0,
+            2.28
+          ],
+          [
+            16000.0,
+            2.3
+          ],
+          [
+            200000.0,
+            2.53122121930421
+          ]
+        ]
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00000.npz",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 29269,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 29269,
+        "orientation_flipped": 0,
+        "volume_m3": 6.675000000000001e-08,
+        "bounds_min_m": [
+          -0.0044,
+          -0.0044,
+          0.0014
+        ],
+        "bounds_max_m": [
+          0.0044,
+          0.0044,
+          0.0048
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 0.0,
+        "cad_bounds_source": "native CAD vertices; curved extrema may lie between vertices"
+      },
+      "source_mesh_sha256": "d03c58bd1da58178b87ea2a94eb718f535c6208f06e1f0d4aa979732823d5275"
+    },
+    {
+      "name": "A_MAGNET_X_POS",
+      "material": "Magrun_MAGNET_X_POS",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00001.npz",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 4900,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 4900,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          0.0032,
+          -0.0024,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0038,
+          0.0024,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16,
+        "cad_bounds_source": "native CAD vertices; curved extrema may lie between vertices"
+      },
+      "source_mesh_sha256": "05d4a558f1615e34acffb00b1fd875aa48738664e93d75b768517a0b2e5f42da"
+    },
+    {
+      "name": "A_MAGNET_X_NEG",
+      "material": "Magrun_MAGNET_X_NEG",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00002.npz",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 4714,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 4714,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          -0.0038,
+          -0.0024,
+          0.0018
+        ],
+        "bounds_max_m": [
+          -0.0032,
+          0.0024,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16,
+        "cad_bounds_source": "native CAD vertices; curved extrema may lie between vertices"
+      },
+      "source_mesh_sha256": "7624f36229b48aa8cda2436a109a3282871641226d65e30b63cec15b777798fe"
+    },
+    {
+      "name": "A_MAGNET_Y_POS",
+      "material": "Magrun_MAGNET_Y_POS",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00003.npz",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 5115,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 5115,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          -0.0024,
+          0.0032,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0024,
+          0.0038,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16,
+        "cad_bounds_source": "native CAD vertices; curved extrema may lie between vertices"
+      },
+      "source_mesh_sha256": "7ffe9d1fe028ccb657e09398e4b4f5aa4c998554f938d5f757c9441cb9195415"
+    },
+    {
+      "name": "A_MAGNET_Y_NEG",
+      "material": "Magrun_MAGNET_Y_NEG",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00004.npz",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 5256,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 5256,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999996e-09,
+        "bounds_min_m": [
+          -0.0024,
+          -0.0038,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0024,
+          -0.0032,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16,
+        "cad_bounds_source": "native CAD vertices; curved extrema may lie between vertices"
+      },
+      "source_mesh_sha256": "9eb11cabaf7455e398a8ee50b107c5010e2b89ee288ccea6bc9edf887e8896d2"
+    },
+    {
+      "name": "B_YOKE_SOFT_MAGNETIC",
+      "material": "Magrun_Steel_BH",
+      "properties": {
+        "kind": "nonlinear",
+        "bh_H_Apm_B_T": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            300.0,
+            1.9
+          ],
+          [
+            800.0,
+            2.1
+          ],
+          [
+            1600.0,
+            2.2
+          ],
+          [
+            4000.0,
+            2.255
+          ],
+          [
+            8000.0,
+            2.28
+          ],
+          [
+            16000.0,
+            2.3
+          ],
+          [
+            200000.0,
+            2.53122121930421
+          ]
+        ]
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00005.npz",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 29337,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 29337,
+        "orientation_flipped": 0,
+        "volume_m3": 6.674999999999996e-08,
+        "bounds_min_m": [
+          0.0074,
+          -0.0044,
+          0.0014
+        ],
+        "bounds_max_m": [
+          0.0162,
+          0.0044,
+          0.0048
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 0.0,
+        "cad_bounds_source": "native CAD vertices; curved extrema may lie between vertices"
+      },
+      "source_mesh_sha256": "c784cf06699b85f668325945cad2b96625409de29f21c860cdb1d3fa5ac3700b"
+    },
+    {
+      "name": "B_MAGNET_X_POS",
+      "material": "Magrun_MAGNET_X_POS",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00006.npz",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 5111,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 5111,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          0.015,
+          -0.0024,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0156,
+          0.0024,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16,
+        "cad_bounds_source": "native CAD vertices; curved extrema may lie between vertices"
+      },
+      "source_mesh_sha256": "1f93be253d737300f2b5835dcc2c170b13157b951c86662f69f46855f28ffc6c"
+    },
+    {
+      "name": "B_MAGNET_X_NEG",
+      "material": "Magrun_MAGNET_X_NEG",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00007.npz",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 5071,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 5071,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          0.008,
+          -0.0024,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0086,
+          0.0024,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 2.0077818008990822e-16,
+        "cad_bounds_source": "native CAD vertices; curved extrema may lie between vertices"
+      },
+      "source_mesh_sha256": "afc7ff5ffce72048732ddf2c3732387ec103952ac0a01e8c59415a55c988ff4d"
+    },
+    {
+      "name": "B_MAGNET_Y_POS",
+      "material": "Magrun_MAGNET_Y_POS",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00008.npz",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 5355,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 5355,
+        "orientation_flipped": 0,
+        "volume_m3": 6.9119999999999985e-09,
+        "bounds_min_m": [
+          0.0094,
+          0.0032,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0142,
+          0.0038,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 3.9931856328176546e-16,
+        "cad_bounds_source": "native CAD vertices; curved extrema may lie between vertices"
+      },
+      "source_mesh_sha256": "06f6359bd6d03cc240142f435ddf5e6a6ce0281721e619cba11d48eab53ef87b"
+    },
+    {
+      "name": "B_MAGNET_Y_NEG",
+      "material": "Magrun_MAGNET_Y_NEG",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00009.npz",
+      "mesh_stats": {
+        "drawings": 1,
+        "tet4": 0,
+        "tet10": 4965,
+        "surface_elements_skipped": 0,
+        "curved": false,
+        "tetra_count": 4965,
+        "orientation_flipped": 0,
+        "volume_m3": 6.911999999999998e-09,
+        "bounds_min_m": [
+          0.0094,
+          -0.0038,
+          0.0018
+        ],
+        "bounds_max_m": [
+          0.0142,
+          -0.0032,
+          0.0042
+        ],
+        "node_units_assumption": "model_units",
+        "cad_bbox_relative_mismatch": 3.9931856328176546e-16,
+        "cad_bounds_source": "native CAD vertices; curved extrema may lie between vertices"
+      },
+      "source_mesh_sha256": "4ac726651049052f25823e303b963291ef6967d6ad646a5c89d0f2c16f38366a"
+    }
+  ],
+  "skipped": [
+    {
+      "name": "A_AF_COIL_COPPER",
+      "material": "copper",
+      "reason": "nonmagnetic mu_r≈1, Hc=0"
+    },
+    {
+      "name": "B_AF_COIL_COPPER",
+      "material": "copper",
+      "reason": "nonmagnetic mu_r≈1, Hc=0"
+    },
+    {
+      "name": "Region",
+      "material": "vacuum",
+      "reason": "air/vacuum"
+    },
+    {
+      "name": "A_Terminal",
+      "reason": "not a model solid"
+    },
+    {
+      "name": "B_Terminal",
+      "reason": "not a model solid"
+    }
+  ],
+  "points": "points.csv",
+  "mesh_unit": "m",
+  "maxwell_field": "maxwell_B.fld",
+  "total_magnetic_tetra": 99093
+}

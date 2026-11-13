@@ -1,6 +1,11 @@
 # Use Python >=3.12 on Windows / Linux; MagTense needs its platform-native wheel.
 numpy>=1.26,<3
-pyaedt>=0.15
+# Optional, source machine only for modern AEDT export: pyaedt>=0.15.
+# Native AEDT 18.x export uses built-in IronPython; offline import/FEM-BEM needs no PyAEDT.
 magtense>=3.0
 pytest>=8
 scipy>=1.12
+# Optional CPU FMM (--k-builder fmm --fmm-farfield cpu): fmm3dpy>=2.1,<3.
+# Native CUDA FMM uses the existing CuPy runtime; no FMM3D/JAX/WSL dependency.
+# Optional sparse AMG for the large FEM-BEM path: pyamg>=5.3,<6.
+# The CUDA boundary H-matrix uses the same installed CuPy runtime.

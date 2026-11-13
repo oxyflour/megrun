@@ -113,3 +113,141 @@ def test_cli_cuda_build_and_cache_keep_native_verification(cp,tmp_path):
         assert info['K_builder']=='cuda' and info['loaded_from_cache']==expected_hit
         assert info['converged'] and info['K_magtense_field_check_relative_error']<1e-9
         assert info['air_field_seconds']>0 and info['pipeline_seconds_before_info_write']>0
+
+
+@pytest.mark.parametrize('source_levels',[0,1])
+@pytest.mark.parametrize('cache_bytes',[0,1024**2])
+@pytest.mark.parametrize('dtype',['float32','float64'])
+@pytest.mark.parametrize('farfield',['cpu','cuda'])
+def test_fmm_cuda_near_cache_and_stream_match_native(cp,source_levels,cache_bytes,dtype,farfield):
+    pytest.importorskip('fmm3dpy')
+    from tetra_fmm import assemble as fmm_assemble
+    v = mesh()
+    # Include a genuinely far pair, not only analytical near corrections.
+    v[2] += [.03,.01,.02]
+    t = tiles(v)
+    cpu,diag,_ = fmm_assemble(t,np,dtype=dtype,source_levels=source_levels,
+                             near_levels=1,cache_bytes=cache_bytes,batch=2)
+    gpu,gdiag,info = fmm_assemble(t,cp,dtype=dtype,source_levels=source_levels,
+                                 near_levels=1,cache_bytes=cache_bytes,batch=2,farfield=farfield,gpu_order=4)
+    m = np.random.default_rng(12).normal(size=9).astype(dtype)*20000
+    tolerance = 3e-6 if dtype == 'float32' else 1e-9
+    np.testing.assert_allclose(cp.asnumpy(gpu@cp.asarray(m)),cpu@m,rtol=tolerance,
+                               atol=2e-3 if dtype == 'float32' else 1e-7)
+    np.testing.assert_allclose(cp.asnumpy(gdiag),diag,rtol=tolerance,atol=1e-12)
+    assert info['fmm_near_storage'] == ('cached' if cache_bytes else 'streamed')
+    assert info['fmm_tree_reused'] == (farfield=='cuda')
+
+
+@pytest.mark.parametrize('farfield',['cpu','cuda'])
+def test_cli_fmm_keeps_native_checks_and_writes_approximation_scope(cp,tmp_path,monkeypatch,farfield):
+    if farfield=='cpu':
+        pytest.importorskip('fmm3dpy')
+    else:
+        import sys
+        monkeypatch.setitem(sys.modules,'fmm3dpy',None)
+    from bridge import command_demo
+    from gpu_solver import main
+    command_demo(SimpleNamespace(out=tmp_path))
+    main(['--out',str(tmp_path),'--backend','cupy','--dtype','float64',
+          '--operator','volume','--k-builder','fmm','--method','proximal',
+          '--tol','1e-8','--anderson-history','4','--fmm-farfield',farfield,'--fmm-gpu-order','4'])
+    info = json.loads((tmp_path/'gpu_solve_info.json').read_text())
+    assert info['converged'] and info['K_builder'] == 'fmm'
+    assert not info['dense_K_allocated'] and not info['full_native_constitutive_residual_verified']
+    assert info['K_magtense_field_check_relative_error'] < 1e-4
+    assert info['fmm_final_native_sample_relative_error'] < 1e-4
+    assert info['fmm_air_native_sample_relative_error'] < 1e-4
+    assert info['fmm_air_field_calls'] >= 1
+    assert info['fmm_matvec_calls'] > info['iterations']
+    assert len(info['iteration_history'])==info['iterations']+1
+    if farfield=='cuda':
+        assert info['fmm_backend']=='CUDA interpolation FMM' and info['fmm_tree_reused']
+        assert info['fmm_air_point_backend']=='cuda_direct_batched'
+        assert info['fmm_air_correction_backend']=='cuda_analytic'
+    assert not list(tmp_path.glob('K*.npy'))
+
+
+def test_fmm_cuda_streams_neighbour_indices_with_tiny_budget(cp):
+    pytest.importorskip('fmm3dpy')
+    from tetra_fmm import assemble as fmm_assemble
+    t = tiles(mesh())
+    reference,_,_ = native_assemble(t,np,near_levels=1)
+    op,_,info = fmm_assemble(t,cp,near_levels=1,correction_factor=100.,index_bytes=40,batch=1)
+    m = np.random.default_rng(65).normal(size=9)
+    np.testing.assert_allclose(cp.asnumpy(op@cp.asarray(m)),reference@m,rtol=1e-8,atol=1e-10)
+    assert op.indices is None and info['fmm_index_storage'] == 'streamed'
+
+
+def test_gpu_radius_queries_match_cpu_for_graded_and_duplicate_centres(cp):
+    from tetra_fmm import _CUDANeighbours,_neighbours,_source_trees
+    rng = np.random.default_rng(981)
+    centres = rng.normal(size=(257,3))
+    centres[1] = centres[0]
+    radii = np.exp(rng.uniform(-5,0,len(centres)))
+    # Tiles geometry commonly exposes Fortran-strided arrays; kernels require
+    # contiguous FP64 coordinates rather than interpreting those strides away.
+    gpu = _CUDANeighbours(np.asfortranarray(centres),radii,query_batch=41,max_pairs=2000)
+    cpu = _source_trees(centres,radii)
+    expected = [row for _,rows in _neighbours(centres,radii,1.5,17,groups=cpu) for row in rows]
+    actual = [row for _,rows in _neighbours(centres,radii,1.5,17,groups=gpu) for row in rows]
+    np.testing.assert_array_equal(gpu.counts(1.5),[len(row) for row in expected])
+    for a,b in zip(actual,expected):
+        np.testing.assert_array_equal(a,b)
+    targets = rng.normal(size=(23,3))
+    for target_radii in (np.zeros(23),np.exp(rng.uniform(-5,0,23))):
+        expected = list(_neighbours(centres,radii,3.,7,groups=cpu,targets=targets,target_radii=target_radii))
+        actual = list(_neighbours(centres,radii,3.,7,groups=gpu,targets=targets,target_radii=target_radii))
+        for (_,aa),(_,bb) in zip(actual,expected):
+            for a,b in zip(aa,bb):
+                np.testing.assert_array_equal(a,b)
+
+
+def test_gpu_radius_boundary_and_pair_budget_never_drop_neighbours(cp):
+    from tetra_fmm import _CUDANeighbours
+    centres = np.zeros((5,3))
+    centres[:,0] = [0,3,np.nextafter(3.,0),np.nextafter(3.,np.inf),-3]
+    search = _CUDANeighbours(centres,np.ones(5),max_pairs=5)
+    result = list(search.neighbours(1.5,1,targets=centres[:1],target_radii=np.ones(1)))[0][1][0]
+    np.testing.assert_array_equal(result,[0,1,2,4])
+    search.max_pairs = 2
+    with pytest.raises(MemoryError,match='pair budget'):
+        list(search.neighbours(1.5,1,targets=centres[:1],target_radii=np.ones(1)))
+
+
+def test_cuda_point_fmm_multilevel_matches_independent_dipole_sum_and_reuses_tree(cp):
+    from tetra_fmm import _CUDAPointFMM
+    rng = np.random.default_rng(73)
+    sources = rng.uniform(.02,.98,(577,3))
+    targets = rng.uniform(.01,.99,(37,3))
+    fmm = _CUDAPointFMM(sources,targets,eps=2e-5,order=8,leaf_size=4)
+    assert fmm.depth>=3 and fmm.interactions
+    original_tree = fmm.source_tree
+    for moments in (rng.normal(size=sources.shape),rng.normal(size=sources.shape)*3):
+        delta = targets[:,None,:]-sources[None,:,:]
+        radius = np.linalg.norm(delta,axis=2)
+        expected = np.sum((3*delta*np.sum(delta*moments[None,:,:],axis=2)[:,:,None]/radius[:,:,None]**5
+                           -moments[None,:,:]/radius[:,:,None]**3)/(4*np.pi),axis=1)
+        actual = cp.asnumpy(fmm(moments))
+        assert np.linalg.norm(actual-expected)/np.linalg.norm(expected) < 2e-5
+        subset = fmm.subset(targets[[0,17,36]])
+        assert subset.source_tree is fmm.source_tree
+        np.testing.assert_allclose(cp.asnumpy(subset(moments)),actual[[0,17,36]],rtol=1e-12,atol=1e-9)
+    assert fmm.source_tree is original_tree and fmm.info['fmm_gpu_evaluations']==2
+    fmm.eps = 1e-30
+    with pytest.raises(RuntimeError,match='sampled point-field error'):
+        fmm(moments)
+
+
+def test_cuda_point_fmm_coincident_sources_and_budget_are_explicit(cp):
+    from tetra_fmm import _CUDAPointFMM
+    sources = np.array([[.2,.3,.4],[.2,.3,.4],[.8,.7,.6]])
+    moments = np.array([[1.,2.,3.],[-2.,1.,4.],[3.,2.,-1.]])
+    fmm = _CUDAPointFMM(sources,eps=1e-12,order=3)
+    actual = fmm(moments)
+    np.testing.assert_allclose(cp.asnumpy(actual),cp.asnumpy(fmm.direct(cp.asarray(moments),cp.asarray(sources))),
+                               rtol=1e-12,atol=1e-12)
+    with pytest.raises(MemoryError,match='budget'):
+        _CUDAPointFMM(sources,budget_bytes=1)
+    with pytest.raises(ValueError,match='normalized'):
+        _CUDAPointFMM(sources+2)

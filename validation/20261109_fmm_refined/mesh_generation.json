@@ -1,0 +1,328 @@
+{
+  "source": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_reference.aedt",
+  "source_sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785",
+  "project": "C:\\Projects\\magtense-gpu\\validation\\20261109_fmm_refined\\gap3mm_fmm_3m.aedt",
+  "design": "Gap_3mm_CCW",
+  "target_magnetic": 3000000,
+  "target_total": 9000000,
+  "field_solve_submitted": false,
+  "mesh_target_met": true,
+  "state": "Mesh target met",
+  "attempts": [
+    {
+      "total_tetrahedra": 773400,
+      "magnetic_tetrahedra": 170952,
+      "per_object": {
+        "A_YOKE_SOFT_MAGNETIC": 59922,
+        "A_MAGNET_X_POS": 6406,
+        "A_MAGNET_X_NEG": 6210,
+        "A_MAGNET_Y_POS": 6289,
+        "A_MAGNET_Y_NEG": 6425,
+        "A_AF_COIL_COPPER": 492,
+        "B_YOKE_SOFT_MAGNETIC": 60203,
+        "B_MAGNET_X_POS": 6490,
+        "B_MAGNET_X_NEG": 6385,
+        "B_MAGNET_Y_POS": 6312,
+        "B_MAGNET_Y_NEG": 6310,
+        "B_AF_COIL_COPPER": 458,
+        "Region": 601498
+      },
+      "magnetic_length_mm": 0.35,
+      "air_length_mm": 2.0,
+      "mesh_seconds": 155.31498369993642
+    },
+    {
+      "total_tetrahedra": 773400,
+      "magnetic_tetrahedra": 170952,
+      "per_object": {
+        "A_YOKE_SOFT_MAGNETIC": 59922,
+        "A_MAGNET_X_POS": 6406,
+        "A_MAGNET_X_NEG": 6210,
+        "A_MAGNET_Y_POS": 6289,
+        "A_MAGNET_Y_NEG": 6425,
+        "A_AF_COIL_COPPER": 492,
+        "B_YOKE_SOFT_MAGNETIC": 60203,
+        "B_MAGNET_X_POS": 6490,
+        "B_MAGNET_X_NEG": 6385,
+        "B_MAGNET_Y_POS": 6312,
+        "B_MAGNET_Y_NEG": 6310,
+        "B_AF_COIL_COPPER": 458,
+        "Region": 601498
+      },
+      "magnetic_length_mm": 0.13468493513669155,
+      "air_length_mm": 0.9295785657501069,
+      "mesh_seconds": 3.5761489998549223
+    },
+    {
+      "total_tetrahedra": 773400,
+      "magnetic_tetrahedra": 170952,
+      "per_object": {
+        "A_YOKE_SOFT_MAGNETIC": 59922,
+        "A_MAGNET_X_POS": 6406,
+        "A_MAGNET_X_NEG": 6210,
+        "A_MAGNET_Y_POS": 6289,
+        "A_MAGNET_Y_NEG": 6425,
+        "A_AF_COIL_COPPER": 492,
+        "B_YOKE_SOFT_MAGNETIC": 60203,
+        "B_MAGNET_X_POS": 6490,
+        "B_MAGNET_X_NEG": 6385,
+        "B_MAGNET_Y_POS": 6312,
+        "B_MAGNET_Y_NEG": 6310,
+        "B_AF_COIL_COPPER": 458,
+        "Region": 601498
+      },
+      "magnetic_length_mm": 0.051828662150785174,
+      "air_length_mm": 0.4320581549510129,
+      "mesh_seconds": 3.2168296999298036
+    },
+    {
+      "total_tetrahedra": 773400,
+      "magnetic_tetrahedra": 170952,
+      "per_object": {
+        "A_YOKE_SOFT_MAGNETIC": 59922,
+        "A_MAGNET_X_POS": 6406,
+        "A_MAGNET_X_NEG": 6210,
+        "A_MAGNET_Y_POS": 6289,
+        "A_MAGNET_Y_NEG": 6425,
+        "A_AF_COIL_COPPER": 492,
+        "B_YOKE_SOFT_MAGNETIC": 60203,
+        "B_MAGNET_X_POS": 6490,
+        "B_MAGNET_X_NEG": 6385,
+        "B_MAGNET_Y_POS": 6312,
+        "B_MAGNET_Y_NEG": 6310,
+        "B_AF_COIL_COPPER": 458,
+        "Region": 601498
+      },
+      "magnetic_length_mm": 0.019944400000000004,
+      "air_length_mm": 0.20081600000000002,
+      "mesh_seconds": 2.5873963995836675
+    },
+    {
+      "total_tetrahedra": 773400,
+      "magnetic_tetrahedra": 170952,
+      "per_object": {
+        "A_YOKE_SOFT_MAGNETIC": 59922,
+        "A_MAGNET_X_POS": 6406,
+        "A_MAGNET_X_NEG": 6210,
+        "A_MAGNET_Y_POS": 6289,
+        "A_MAGNET_Y_NEG": 6425,
+        "A_AF_COIL_COPPER": 492,
+        "B_YOKE_SOFT_MAGNETIC": 60203,
+        "B_MAGNET_X_POS": 6490,
+        "B_MAGNET_X_NEG": 6385,
+        "B_MAGNET_Y_POS": 6312,
+        "B_MAGNET_Y_NEG": 6310,
+        "B_AF_COIL_COPPER": 458,
+        "Region": 601498
+      },
+      "magnetic_length_mm": 0.007674886343829234,
+      "air_length_mm": 0.09333712462983675,
+      "mesh_seconds": 3.533457600045949
+    },
+    {
+      "total_tetrahedra": 8679245,
+      "magnetic_tetrahedra": 2718864,
+      "per_object": {
+        "A_YOKE_SOFT_MAGNETIC": 962393,
+        "A_MAGNET_X_POS": 99230,
+        "A_MAGNET_X_NEG": 99721,
+        "A_MAGNET_Y_POS": 99266,
+        "A_MAGNET_Y_NEG": 99330,
+        "A_AF_COIL_COPPER": 2437,
+        "B_YOKE_SOFT_MAGNETIC": 960561,
+        "B_MAGNET_X_POS": 99109,
+        "B_MAGNET_X_NEG": 100300,
+        "B_MAGNET_Y_POS": 99283,
+        "B_MAGNET_Y_NEG": 99671,
+        "B_AF_COIL_COPPER": 2534,
+        "Region": 5955410
+      },
+      "magnetic_length_mm": 0.13468493513669155,
+      "air_length_mm": 0.9295785657501069,
+      "mesh_seconds": 1884.3549001002684
+    }
+  ],
+  "aedt_pid": 57860,
+  "geometry": {
+    "A_YOKE_SOFT_MAGNETIC": {
+      "volume_mm3": 66.75000000000003,
+      "bounds_mm": [
+        -4.4,
+        -4.4,
+        1.4,
+        4.4,
+        4.4,
+        4.8
+      ],
+      "material": "magrun_steel_bh"
+    },
+    "A_MAGNET_X_POS": {
+      "volume_mm3": 6.9119999999999955,
+      "bounds_mm": [
+        3.2,
+        -2.4,
+        1.8,
+        3.8,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_pos"
+    },
+    "A_MAGNET_X_NEG": {
+      "volume_mm3": 6.9119999999999955,
+      "bounds_mm": [
+        -3.8,
+        -2.4,
+        1.8,
+        -3.2,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_neg"
+    },
+    "A_MAGNET_Y_POS": {
+      "volume_mm3": 6.9119999999999955,
+      "bounds_mm": [
+        -2.4,
+        3.2,
+        1.8,
+        2.4,
+        3.8,
+        4.2
+      ],
+      "material": "magrun_magnet_y_pos"
+    },
+    "A_MAGNET_Y_NEG": {
+      "volume_mm3": 6.9119999999999955,
+      "bounds_mm": [
+        -2.4,
+        -3.8,
+        1.8,
+        2.4,
+        -3.2,
+        4.2
+      ],
+      "material": "magrun_magnet_y_neg"
+    },
+    "A_AF_COIL_COPPER": {
+      "volume_mm3": 16.42199999999999,
+      "bounds_mm": [
+        -3.125,
+        -3.125,
+        1.7,
+        3.125,
+        3.125,
+        4.0
+      ],
+      "material": "copper"
+    },
+    "B_YOKE_SOFT_MAGNETIC": {
+      "volume_mm3": 66.75000000000013,
+      "bounds_mm": [
+        7.4,
+        -4.4,
+        1.4,
+        16.200000000000003,
+        4.4,
+        4.8
+      ],
+      "material": "magrun_steel_bh"
+    },
+    "B_MAGNET_X_POS": {
+      "volume_mm3": 6.912000000000017,
+      "bounds_mm": [
+        15.0,
+        -2.4,
+        1.8,
+        15.600000000000001,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_pos"
+    },
+    "B_MAGNET_X_NEG": {
+      "volume_mm3": 6.912000000000017,
+      "bounds_mm": [
+        8.0,
+        -2.4,
+        1.8,
+        8.600000000000001,
+        2.4,
+        4.2
+      ],
+      "material": "magrun_magnet_x_neg"
+    },
+    "B_MAGNET_Y_POS": {
+      "volume_mm3": 6.911999999999997,
+      "bounds_mm": [
+        9.4,
+        3.2,
+        1.8,
+        14.200000000000001,
+        3.8,
+        4.2
+      ],
+      "material": "magrun_magnet_y_pos"
+    },
+    "B_MAGNET_Y_NEG": {
+      "volume_mm3": 6.911999999999997,
+      "bounds_mm": [
+        9.4,
+        -3.8,
+        1.8,
+        14.200000000000001,
+        -3.2,
+        4.2
+      ],
+      "material": "magrun_magnet_y_neg"
+    },
+    "B_AF_COIL_COPPER": {
+      "volume_mm3": 16.42200000000002,
+      "bounds_mm": [
+        8.675,
+        -3.125,
+        1.7,
+        14.925,
+        3.125,
+        4.0
+      ],
+      "material": "copper"
+    },
+    "Region": {
+      "volume_mm3": 128345.95200000002,
+      "bounds_mm": [
+        -24.4,
+        -24.4,
+        -18.6,
+        36.2,
+        24.4,
+        24.800000000000004
+      ],
+      "material": "vacuum"
+    }
+  },
+  "magnetic_objects": [
+    "A_YOKE_SOFT_MAGNETIC",
+    "A_MAGNET_X_POS",
+    "A_MAGNET_X_NEG",
+    "A_MAGNET_Y_POS",
+    "A_MAGNET_Y_NEG",
+    "B_YOKE_SOFT_MAGNETIC",
+    "B_MAGNET_X_POS",
+    "B_MAGNET_X_NEG",
+    "B_MAGNET_Y_POS",
+    "B_MAGNET_Y_NEG"
+  ],
+  "ignored_unchanged_mesh_attempts": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "magnetic_length_mm": 0.13468493513669155,
+  "air_length_mm": 0.9295785657501069,
+  "source_unchanged": true,
+  "saved_mesh_readback_verified": true,
+  "project_sha256": "e0f70b9ddf9446e6f2eb1bcb662a7ee463f692c50085211c515b85123e03b8b7",
+  "project_unchanged_during_readback": true
+}

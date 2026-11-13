@@ -10,7 +10,7 @@
 - `validation/` 保存各阶段的模型准备脚本、材料曲线及来源、精简网格、场数据、收敛记录和报告。
 - 与 Maxwell 数值精度对齐的计划提纲及分项方案见 [accuracy-study.md](docs/plan/accuracy-study.md)。
 
-求解器提供四面体接收体积平均算子、非线性隐式本构迭代，以及空气测点的稳定场计算。支持 NumPy/CuPy；依赖平台原生 MagTense 库。完整 K 矩阵仍需二次方存储，FP64 约为 `72 N²` 字节。
+求解器提供四面体接收体积平均算子、非线性隐式本构迭代，以及空气测点的稳定场计算。支持 NumPy/CuPy；依赖平台原生 MagTense 库。native/cuda 的完整 K 矩阵仍需二次方存储，FP64 约为 `72 N²` 字节。新增可选 `--operator volume --k-builder fmm`，不生成完整 K；远场可选 CPU FMM3D 或 `--fmm-farfield cuda` 的原生 Windows GPU 插值 FMM，GPU 路径复用树并直接计算分批近场 H，无须 WSL。安装、内存预算和误差边界见 [FMM 使用说明](skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/README_GPU.md#无矩阵-fmm-模式)。尚未完成百万单元容量或性能验收。
 
 新增 `--operator volume --k-builder cuda --backend cupy`，在 GPU 上计算完整 K 的解析源积分与近邻归约，保持原四点/256 点积分和材料方程。CPU 原生构建仍为兼容默认。见 [GPU K 耗时与精度报告](validation/20261107_gpu_k/FINAL_REPORT.txt) 及 [阶段数据](validation/20261107_gpu_k/summary.json)。
 
@@ -46,7 +46,15 @@ python gpu_solver.py --self-test --backend numpy
 python -m pytest -q tests
 ```
 
-最新检查记录为 55 项通过、1 项因缺少 gfortran 跳过，包含 11 项 CUDA 专项检查；另有四组真实模型 FP64 K 与已有 Maxwell B 场对比。Maxwell 导出需已安装并授权的 AEDT；CUDA/CuPy 依赖需匹配本机环境。
+当前源码检查为 129 项通过、1 项因缺少 gfortran 跳过，包含 CUDA、FMM、自适应近场分块压缩、批量空气极限、FEM–BEM 积分/算子/AMG，以及原生磁盘包导入、完整性校验和离线求解检查。已有四组真实模型 FP64 稠密 K 与 Maxwell B 场对比的历史结论保持原范围；FMM 的检查与限制见上方使用说明。Maxwell 导出需已安装并授权的 AEDT；CUDA/CuPy 依赖需匹配本机环境。
+
+当前双模组模型已生成本机 [加密 AEDT 工程](validation/20261109_fmm_refined/gap3mm_fmm_3m.aedt)，实际为 **2,718,864 个磁性单元、8,679,245 个总单元**，并通过重新打开后的网格数量核对。复现入口为 [prepare_mesh.py](validation/20261109_fmm_refined/prepare_mesh.py)，计数和原工程不变性检查见 [mesh_generation.json](validation/20261109_fmm_refined/mesh_generation.json)。工程与同名 `.aedtresults` 网格目录保留本机；没有提交该大模型的 Maxwell 场求解。FMM 的 3629 单元流程验证见 [fmm_verification.json](validation/20261109_fmm_refined/fmm_verification.json)。大模型实际运行入口为 [run_fmm.py](validation/20261109_fmm_refined/run_fmm.py)，导出/求解状态、采样内存峰值及残差写入 [large_fmm_run.json](validation/20261109_fmm_refined/large_fmm_run.json)，原始资源采样为 `large_fmm_resources.csv`。失败阶段使用非零退出码，不能把完成网格导出当作求解通过。
+
+2026-11-10 的原生 Windows GPU 大模型实跑已因耗时和收敛速度不实用而停止：约 7 小时 53 分钟内完成 8 次全量场计算、4 次材料更新，FMM 本构残差由 `2.952195` 降至 `2.459533`，未达到 `1e-8`。最近一次场计算约 58.8 分钟，解析近场修正占约 91%。**当前实现未通过大规模非线性求解的实用性验收，不能作为已验证的 Maxwell 替代方案。** 同网格大模型的 Maxwell 端到端计时尚未进行，因此不报告严格加速倍率。停止原因、原始退出码和性能评估保存在上述运行记录中。
+
+替代路线的 [CUDA 分层 BEM＋稀疏 FEM/AMG 原型](skills/magtense-cupy-magnetostatics/references/architecture.md#cuda-hierarchical-boundary-and-sparse-amg) 已在该案例全部 2,718,864 个磁性单元上完成耦合求解：4 次 Newton 更新，弱残差 `5.84e-10`；缓存流程 17 分 22 秒。另一次完整 H 首次构建由 41 分 49 秒降至 27 分 20 秒，新旧数值缓存二进制相同；这些独立阶段实测不等于一次完整冷启动求解。空气、材料 B、边界法向 B 对保留的 333,613 总单元 Maxwell 解的采样误差为 3.24% / 7.37% / 9.33%，通过声明的 5% / 10% / 10% 门槛。但全边界原始 P1 单元法向通量差仍为 27.6%，**尚未认证 Maxwell 高阶局部精度或同精度加速比**。命令、精度配置、资源和限制见链接；记录在同一 `fmm_verification.json` 的 `fem_bem_large_runs`，失败历史保留。
+
+新增 [Ansys 18.2 原生导出与无 Maxwell 服务器流程](skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/README.md#ansys-182-原生导出与无-maxwell-服务器)：源机用内置 IronPython 导出网格、材料、变量、激励/边界和原始设置，服务器校验磁盘包后运行 FEM–BEM。无需 PyAEDT；已在 2022 R2 上实测原生导出及无 Ansys 依赖进程求解，18.2 源机实测待完成。
 
 ## 仓库与本地产物
 
