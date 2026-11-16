@@ -100,7 +100,12 @@ def command_fem_bem(args):
     source=model.get('source',{})
     _native_physics(dict(excitations=source.get('source_check',[]),boundaries=source.get('native_boundaries',[]),
         variables=source.get('native_variables',{})))
-    info=dict(state='running',backend=args.boundary,source_model_sha256=hashlib.sha256((root/'model.json').read_bytes()).hexdigest(),
+    info=dict(state='running',backend=args.boundary,compute_backend=args.compute_backend,
+        options=vars(args).copy(),
+        source_model_sha256=hashlib.sha256((root/'model.json').read_bytes()).hexdigest(),
+        source_sha256={name:hashlib.sha256((Path(__file__).resolve().parent/name).read_bytes()).hexdigest()
+            for name in ('bridge.py','fem_bem.py','fem_bem_cuda.py','gpu_solver.py',
+                         'boundary_hmatrix.py','tetra_cuda.py','tetra_cuda.cu')},
         scope='Offline P1/P0 magnetostatic field, zero free currents, infinite exterior air; native high-order equivalence not certified')
     def write():outputs[2].write_text(json.dumps(info,indent=2,default=str),encoding='utf-8')
     last_progress=[0.]
@@ -135,7 +140,8 @@ def command_fem_bem(args):
                 info['boundary_checks'].append(dict(input=label,relative_L2=error,tolerance=20*args.h_rtol))
                 if error>20*args.h_rtol:raise ArithmeticError(f'Original boundary probe failed: {label} {error}')
         u,q,solver=mesh.solve(tol=args.tol,maxiter=args.maxiter,linear_rtol=args.linear_rtol,
-            linear_maxiter=args.linear_cycles,fem_preconditioner=args.fem_preconditioner,progress=progress)
+            linear_maxiter=args.linear_cycles,fem_preconditioner=args.fem_preconditioner,progress=progress,
+            compute_backend=args.compute_backend)
         info['solver']=solver
         np.savez_compressed(outputs[0],potential_scaled_Apm=u,boundary_q_Apm=q)
         points=load_points(root,model)
@@ -370,6 +376,8 @@ def main(argv=None):
     fem.add_argument('--tol',type=float,default=1e-8);fem.add_argument('--maxiter',type=int,default=20)
     fem.add_argument('--linear-rtol',type=float,default=1e-6);fem.add_argument('--linear-cycles',type=int,default=10)
     fem.add_argument('--fem-preconditioner',choices=['lu','amg'],default='lu')
+    fem.add_argument('--compute-backend',choices=['numpy','cupy'],default='numpy',
+        help='cupy keeps FEM, materials, Krylov and AmgX on GPU; use --fem-preconditioner amg')
     fem.add_argument('--h-leaf',type=int,default=32);fem.add_argument('--h-eta',type=float,default=3.)
     fem.add_argument('--h-rtol',type=float,default=1e-6);fem.add_argument('--h-rank',type=int,default=64)
     fem.add_argument('--h-gib',type=float,default=6.);fem.add_argument('--h-storage',choices=['float64','float32'],default='float32')

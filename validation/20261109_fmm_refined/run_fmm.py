@@ -1020,6 +1020,10 @@ def validate_native_transfer():
     all Ansys/PyAEDT/COM/MagTense native modules. Require weak residual <=1e-8
     and native air-B sample error <=10%; this is transfer/solver integration,
     not high-order equivalence or actual AEDT18/Linux-host certification.
+    Also start from a saved project without any results database: the canonical
+    exporter must generate mesh on its own disposable copy, then a blocked-
+    dependency process must solve the imported data from a cold H cache.
+    Compare those air samples to the retained native reference at <=10%.
     Append source hashes and assertions to native_transfer_runs. Failure exits
     nonzero; missing AEDT is failure, not a passing skip. Temporary duplicate
     data are removed; existing native export and solutions remain untouched.
@@ -1086,7 +1090,7 @@ finally:
             env['MAGTENSE_OFFLINE_ARGS']=json.dumps(['solve-fem-bem','--out',str(work/'job'),
                 '--boundary','cuda_hmatrix','--fem-preconditioner','amg','--max-reference-error','0.10',
                 '--boundary-cache',str(ROOT/'native_transfer/offline/boundary_cache')])
-            script="""import sys,os,json,importlib.abc
+            offline_script="""import sys,os,json,importlib.abc
 class NoAnsys(importlib.abc.MetaPathFinder):
  def find_spec(self,fullname,path=None,target=None):
   if fullname.split('.')[0] in ('ansys','pyaedt','ScriptEnv','clr','win32com','pythoncom','magtense'):
@@ -1101,7 +1105,7 @@ sys.exit(main(json.loads(os.environ['MAGTENSE_OFFLINE_ARGS'])))
             for name in list(offline_env):
                 if name.startswith('ANSYSEM_ROOT') or name in ('ANSYSLMD_LICENSE_FILE','ANSYSLI_SERVERS','ANSYSLIC_DIR'):
                     del offline_env[name]
-            result=subprocess.run([sys.executable,'-c',script],env=offline_env,capture_output=True,text=True,
+            result=subprocess.run([sys.executable,'-c',offline_script],env=offline_env,capture_output=True,text=True,
                 encoding='utf-8',errors='replace',creationflags=subprocess.CREATE_NO_WINDOW)
             record['offline_exit_code']=result.returncode;record['offline_stdout']=result.stdout;record['offline_stderr']=result.stderr
             assert result.returncode==0,result.stderr
@@ -1110,9 +1114,10 @@ sys.exit(main(json.loads(os.environ['MAGTENSE_OFFLINE_ARGS'])))
             record['offline_solve']=solver
             record['offline_environment']='Ansys module imports blocked; Ansys PATH/root/license variables removed'
             record['native_manifest']=json.loads((work/'bundle/manifest.json').read_text(encoding='utf-8'))
-            # A fresh project copy has no result database. GenerateMesh is
-            # submitted only to that disposable copy; never submit Analyze.
+            # Do not generate mesh in this harness: exercise the canonical
+            # exporter's automatic no-results path, including copy isolation.
             mesh_project=work/'mesh_only.aedt';shutil.copyfile(source,mesh_project)
+            assert not mesh_project.with_suffix('.aedtresults').exists()
             config.update(project=str(mesh_project),out=str(work/'mesh_only_bundle'),reference_quantities=[])
             env['MAGTENSE_NATIVE_CONFIG']=json.dumps(config)
             script="""import sys,os,json
@@ -1122,10 +1127,7 @@ ScriptEnv.InitializeNew(NonGraphical=True)
 try:
  import aedt_export_native
  config=json.loads(os.environ['MAGTENSE_NATIVE_CONFIG'])
- p=oDesktop.OpenProject(config['project']);d=p.SetActiveDesign(config['design'])
- d.GenerateMesh('Reference')
  aedt_export_native.export_native(oDesktop,config)
- oDesktop.CloseProject(p.GetName())
 finally:
  ScriptEnv.Shutdown()
 """
@@ -1135,7 +1137,12 @@ finally:
             record['mesh_only_stdout']=result.stdout;record['mesh_only_stderr']=result.stderr
             assert result.returncode==0,result.stderr
             inputs=json.loads((work/'mesh_only_bundle/native_export.json').read_text(encoding='utf-8'))
+            assert inputs['source']['exporter_sha256']==record['source_sha256']['aedt_export_native.py']
             assert inputs['mode']=='inputs_only' and not inputs.get('reference_fields')
+            assert inputs['mesh_generation']['state']=='generated' and inputs['mesh_generation']['return_code']==0
+            assert inputs['mesh_generation']['isolated_project'] and not inputs['mesh_generation']['field_solve_submitted']
+            assert digest(mesh_project)==before and not mesh_project.with_suffix('.aedtresults').exists()
+            assert not list((work/'mesh_only_bundle').rglob('*.aedtresults'))
             job=import_native_bundle(work/'mesh_only_bundle',work/'mesh_only_job',max_tiles=120000)
             assert job['total_magnetic_tetra']>0 and not job.get('maxwell_field')
             from fem_bem import FEMBEM,material_laws
@@ -1145,7 +1152,30 @@ finally:
             assert geometry.info['components']==10
             record['mesh_only']=dict(field_solve_submitted=False,disposable_project_only=True,
                 source_mode=inputs['mode'],imported_without_reference=True,geometry=geometry.info,
-                native_evidence=inputs.get('native_evidence',{}))
+                native_evidence=inputs.get('native_evidence',{}),mesh_generation=inputs['mesh_generation'],
+                exporter_sha256=inputs['source']['exporter_sha256'],original_result_database_created=False)
+            del geometry,parts,ids
+            offline_env['MAGTENSE_OFFLINE_ARGS']=json.dumps(['solve-fem-bem','--out',str(work/'mesh_only_job'),
+                '--boundary','cuda_hmatrix','--fem-preconditioner','amg'])
+            assert not (work/'mesh_only_job/boundary_cache').exists()
+            print('NATIVE_TRANSFER auto_generated_mesh_offline_solve_cold_cache',flush=True)
+            result=subprocess.run([sys.executable,'-c',offline_script],env=offline_env,capture_output=True,text=True,
+                encoding='utf-8',errors='replace',creationflags=subprocess.CREATE_NO_WINDOW)
+            record['mesh_only'].update(offline_exit_code=result.returncode,offline_stdout=result.stdout,offline_stderr=result.stderr)
+            assert result.returncode==0,result.stderr
+            solved=json.loads((work/'mesh_only_job/fem_bem_solve_info.json').read_text(encoding='utf-8'))
+            assert solved['passed'] and solved['solver']['residual']<=1e-8
+            assert 'native_air_B_sample_relative_L2' not in solved
+            prediction=np.loadtxt(work/'mesh_only_job/fem_bem_B.csv',delimiter=',',skiprows=1,ndmin=2)
+            points=np.loadtxt(work/'job/points.csv',delimiter=',',skiprows=1,ndmin=2)
+            np.testing.assert_allclose(prediction[:,:3],points,rtol=0,atol=0)
+            reference,scale=read_maxwell_fld(work/'job'/model['maxwell_field'],points)
+            assert scale==1.
+            error=float(np.linalg.norm(prediction[:,3:]-reference)/np.linalg.norm(reference))
+            record['mesh_only'].update(offline_solve=solved,air_B_sample_relative_L2=error,air_B_tolerance=.10,
+                reference_scope='Same 485 air points from the retained solved project; fresh initial mesh differs',
+                native_manifest=json.loads((work/'mesh_only_bundle/manifest.json').read_text(encoding='utf-8')))
+            assert error<=.10,error
             assert digest(source)==before
             record.update(source_project_unchanged=True,state='complete',passed=True,elapsed_seconds=time.perf_counter()-started)
             save(path,report)

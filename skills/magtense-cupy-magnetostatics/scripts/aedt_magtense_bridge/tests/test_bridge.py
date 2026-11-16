@@ -195,48 +195,119 @@ def test_native_script_arguments_read_utf8_config_without_external_packages(tmp_
     assert captured==[(desktop,data)]
 
 
-@pytest.mark.parametrize('request_reference',[False,True])
-def test_native_mesh_only_export_needs_no_field_solution(tmp_path,request_reference):
-    """Native API contract stub: generated volume mesh exists, fields do not."""
-    from aedt_export_native import export_native
-    from aedt_export import import_native_bundle
+def _native_export_api_fixture(tmp_path,results_state='existing',generation_code=0):
+    """Native API stub with no fields; meshing writes only beside the opened copy."""
     project_file=tmp_path/'fixture.aedt'
     project_file.write_text("$begin 'Maxwell3DModel'\nName='fixture'\n$begin 'AnalysisSetup'\n$end 'AnalysisSetup'\n"
         "$begin 'BoundarySetup'\n$end 'BoundarySetup'\n$end 'Maxwell3DModel'\n")
-    original=project_file.read_bytes();points=tmp_path/'points.csv'
+    results=tmp_path/'fixture.aedtresults'
+    if results_state!='missing':
+        results.mkdir()
+        if results_state=='existing':(results/'mesh.info').write_text('existing mesh evidence')
+    points=tmp_path/'points.csv'
     points.write_text('x_m,y_m,z_m\n0.002,0.002,0.002\n')
-    calls=[];attrs={'Model':'true','Solve Inside':'true','Material':'"Fixture"','Orientation':'Global'}
+    calls=[];opened=[];ready=[results_state=='existing']
+    attrs={'Model':'true','Solve Inside':'true','Material':'"Fixture"','Orientation':'Global'}
     editor=types.SimpleNamespace(GetModelUnits=lambda:'mm',GetCoordinateSystems=lambda:['Global'],
         GetObjectsInGroup=lambda group:['tetra'] if group=='Solids' else [],GetObjectIDByName=lambda n:1,
         GetProperties=lambda *a:list(attrs),GetPropertyValue=lambda tab,n,key:attrs[key],
         GetVertexIDsFromObject=lambda n:[0,1,2,3],GetVertexPosition=lambda n:np.r_[np.zeros((1,3)),np.eye(3)][n].tolist(),
         GetFaceIDs=lambda n:[1,2,3,4],GetObjectVolume=lambda n:1/6)
-    reporter=types.SimpleNamespace(CreateFieldPlot=lambda *a:calls.append('create'),
+    def create_plot(*args):
+        if not ready[0]:raise RuntimeError('No volume mesh is available')
+        calls.append('create')
+    reporter=types.SimpleNamespace(CreateFieldPlot=create_plot,
         ExportFieldPlot=lambda name,flag,path:synthetic_aedtplt(Path(path),tet10=False),
         DeleteFieldPlot=lambda *a:calls.append('delete'))
     modules={'FieldsReporter':reporter,'BoundarySetup':types.SimpleNamespace(GetExcitations=lambda:[],GetBoundaries=lambda:[]),
         'AnalysisSetup':types.SimpleNamespace(GetSetups=lambda:['Reference']),
         'Solutions':types.SimpleNamespace(GetAvailableVariations=lambda s:calls.append('field_lookup') or [])}
     def unavailable(*args):raise RuntimeError('No field solution exists')
+    def generate(names):
+        assert names==['Reference'];calls.append('generate')
+        if generation_code==0:
+            ready[0]=True
+            folder=Path(opened[-1]).with_suffix('.aedtresults');folder.mkdir(exist_ok=True)
+            (folder/'mesh.info').write_text('generated mesh evidence')
+        return generation_code
     design=types.SimpleNamespace(GetDesignType=lambda:'Maxwell 3D',GetSolutionType=lambda:'Magnetostatic',
         SetActiveEditor=lambda n:editor,GetNominalVariation=lambda:'',GetVariables=lambda:[],GetModule=lambda n:modules[n],
-        ExportProfile=unavailable,ExportConvergence=unavailable,ExportMeshStats=unavailable)
+        ExportProfile=unavailable,ExportConvergence=unavailable,ExportMeshStats=unavailable,GenerateMesh=generate)
     project=types.SimpleNamespace(GetName=lambda:'fixture',SetActiveDesign=lambda n:design,GetVariables=lambda:[],
         GetDefinitionManager=lambda:types.SimpleNamespace(GetManager=lambda n:types.SimpleNamespace(GetData=lambda m:['NAME:Fixture','permeability:=','2'])))
     desktop=types.SimpleNamespace(GetVersion=lambda:'18.x-contract-fixture',GetProjectList=lambda:[],
-        OpenProject=lambda p:project,CloseProject=lambda n:calls.append('close'))
+        OpenProject=lambda p:opened.append(p) or project,CloseProject=lambda n:calls.append('close'))
     config=dict(project=str(project_file),design='fixture',solution='Reference : LastAdaptive',
-        out=str(tmp_path/'export'),points_csv=str(points),reference_quantities=['B'] if request_reference else [])
+        out=str(tmp_path/'export'),points_csv=str(points),reference_quantities=[])
+    return desktop,config,calls,opened
+
+
+@pytest.mark.parametrize('request_reference',[False,True])
+def test_native_mesh_only_export_needs_no_field_solution(tmp_path,request_reference):
+    """Existing mesh is reused; requesting missing fields cannot start a solve."""
+    from aedt_export_native import export_native
+    from aedt_export import import_native_bundle
+    desktop,config,calls,opened=_native_export_api_fixture(tmp_path)
+    original=Path(config['project']).read_bytes()
+    config['reference_quantities']=['B'] if request_reference else []
     if request_reference:
         with pytest.raises(ValueError,match='no saved field'):export_native(desktop,config)
         assert not (tmp_path/'export/manifest.json').exists()
     else:
         info=export_native(desktop,config)
         assert info['mode']=='inputs_only' and not info.get('reference_fields')
+        assert info['mesh_generation']['state']=='reused'
         assert all(v['state']=='unavailable' for v in info['native_evidence'].values())
         assert calls==['create','delete','close']
         assert import_native_bundle(tmp_path/'export',tmp_path/'job')['total_magnetic_tetra']==1
-    assert project_file.read_bytes()==original
+    assert Path(config['project']).read_bytes()==original
+    assert opened==[config['project']]
+
+
+@pytest.mark.parametrize('results_state,policy',[('missing','auto'),('empty','auto'),('existing','generate')])
+def test_native_auto_meshes_isolated_copy_then_solves_without_results(tmp_path,results_state,policy):
+    """Missing/empty database generates once; fresh meshing preserves any old database."""
+    from aedt_export_native import export_native
+    from aedt_export import import_native_bundle
+    desktop,config,calls,opened=_native_export_api_fixture(tmp_path,results_state)
+    project=Path(config['project']);original=project.read_bytes();results=project.with_suffix('.aedtresults')
+    before={p.name:p.read_bytes() for p in results.glob('*')}
+    config['mesh_policy']=policy
+    info=export_native(desktop,config)
+    assert info['mesh_generation']['state']=='generated' and info['mesh_generation']['return_code']==0
+    assert info['mesh_generation']['isolated_project'] and not info['mesh_generation']['field_solve_submitted']
+    assert not info.get('reference_fields') and calls==['generate','create','delete','close']
+    assert len(opened)==1 and opened[0]!=str(project) and not Path(opened[0]).parent.exists()
+    assert project.read_bytes()==original and {p.name:p.read_bytes() for p in results.glob('*')}==before
+    assert results.exists()==(results_state!='missing')
+    job=tmp_path/'job';import_native_bundle(tmp_path/'export',job)
+    assert main(['solve-fem-bem','--out',str(job)])==0
+    solved=json.loads((job/'fem_bem_solve_info.json').read_text())
+    assert solved['passed'] and solved['solver']['residual']==0
+    assert 'native_air_B_sample_relative_L2' not in solved
+    np.testing.assert_array_equal(np.loadtxt(job/'fem_bem_B.csv',delimiter=',',skiprows=1,ndmin=2)[:,3:],0)
+
+
+def test_native_mesh_generation_failure_has_no_complete_manifest(tmp_path):
+    from aedt_export_native import export_native
+    desktop,config,calls,opened=_native_export_api_fixture(tmp_path,'missing',generation_code=7)
+    with pytest.raises(RuntimeError,match='GenerateMesh failed'):export_native(desktop,config)
+    info=json.loads((tmp_path/'export/native_export.json').read_text())
+    assert info['state']=='failed' and info['mesh_generation']['return_code']==7
+    assert calls==['generate','close'] and not Path(opened[0]).parent.exists()
+    assert not (tmp_path/'export/manifest.json').exists()
+    assert not Path(config['project']).with_suffix('.aedtresults').exists()
+
+
+@pytest.mark.parametrize('policy,reference,message',[
+    ('invalid',False,'mesh_policy'),('generate',True,'cannot export saved reference fields'),
+    ('reuse',False,'No volume mesh'),('auto',True,'no saved field')])
+def test_native_mesh_policy_never_silently_solves_or_remeshes_reference(tmp_path,policy,reference,message):
+    from aedt_export_native import export_native
+    desktop,config,calls,opened=_native_export_api_fixture(tmp_path,'missing')
+    config.update(mesh_policy=policy,reference_quantities=['B'] if reference else [])
+    with pytest.raises((ValueError,RuntimeError),match=message):export_native(desktop,config)
+    assert 'generate' not in calls and not (tmp_path/'export/manifest.json').exists()
 
 
 def test_parser_rejects_surface(tmp_path):

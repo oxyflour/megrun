@@ -1,6 +1,6 @@
 ---
 name: magtense-cupy-magnetostatics
-description: Convert solved Ansys Maxwell AEDT 3D magnetostatic tetrahedral meshes to MagTense, solve isotropic nonlinear magnetostatic fields with multiple B-H curves on an NVIDIA GPU using CuPy, and compare magnetic B-field accuracy and runtime with Maxwell. Use for camera magnet interference, soft-magnetic shields, tetrahedral-mesh accuracy checks, and distance/geometry parameter-sweep prototypes. Not for transient EM, magnetic hysteresis, or unsupported coil-current sources.
+description: Export Ansys Maxwell AEDT 3D magnetostatic inputs and tetrahedral meshes, generate missing meshes without a field solve, and solve offline using FEM-BEM or MagTense/CuPy with isotropic nonlinear B-H curves. Compare fields with Maxwell when saved references exist. Use for camera magnet interference, soft-magnetic shields, tetrahedral-mesh accuracy checks, and distance/geometry sweeps. Not for transient EM, hysteresis, or unsupported coil-current sources.
 metadata:
   compatibility: Python 3.12+, MagTense native Python extension; optional Windows with Ansys AEDT/PyAEDT for export and NVIDIA CUDA with CuPy for GPU solve.
 ---
@@ -11,7 +11,7 @@ This skill ships an actual Python solver and Maxwell import/export/validation to
 
 ## Use this skill when
 
-- A user wants to import **solved** Ansys Maxwell 3D Magnetostatic (`.aedt` plus results) tetrahedral magnetic meshes, automatically omit air/vacuum, and compare fields with a MagTense/CuPy solver.
+- A user wants to export Ansys Maxwell 3D Magnetostatic inputs, automatically generate a missing mesh without a field solve, and solve on a no-Maxwell server. Saved native fields are optional and used only for comparison.
 - A user wants **multiple distinct isotropic, single-valued, non-hysteretic B–H curves**, linear soft magnets, and permanent magnets solved in a shared magnetostatic model.
 - A user wants to benchmark CPU MagTense analytical demagnetizing tensor generation versus GPU-resident CuPy nonlinear iteration, or investigate reuse of a dense K matrix across parameter sweeps.
 
@@ -31,7 +31,7 @@ python -m pytest -q tests
 
 5. If running the native MagTense reference `bridge.py solve` **with multiple B–H curves**, the upstream Fortran extension must be explicitly patched/rebuilt. **The CuPy path does not require that patch** because it uses MagTense only for tensors and computes material laws in Python. Never silently alter or uninstall the user's MagTense installation; request authorization before running the optional `scripts/install_multibh.ps1` or `.sh`.
 
-## Workflow 1: Import solved Maxwell 3D model
+## Workflow 1: Export Maxwell 3D inputs and optional reference fields
 
 The confirmed source-machine target is AEDT 18.2 without PyAEDT. Use the canonical standard-library-only
 `scripts/aedt_magtense_bridge/aedt_export_native.py` inside AEDT's IronPython,
@@ -45,7 +45,18 @@ transfer section in `scripts/aedt_magtense_bridge/README.md` for commands and
 validation scope: IronPython 2.7/AEDT 2022 R2 was exercised; actual AEDT 18.2
 and a separate server OS have not yet been certified.
 
-Require a **real project path**, design name, existing analysis sweep, and observation points inside air. Unless the user provided them, discover locally with AEDT when possible; never manufacture names/paths. Work in a new output directory to avoid modifying the `.aedt` project.
+No `.aedtresults` is required for an inputs-only native export: the default
+`mesh_policy=auto` generates the selected setup's initial mesh and mesh
+operations on a disposable project copy when the results directory is missing
+or empty. `generate` explicitly remeshes a fresh copy; `reuse` only reads an
+existing mesh. Never submit Analyze to obtain an export mesh. Keep the original
+project and result database intact, report generation time/return code, and
+disclose that initial meshing does not reproduce field-adaptive refinement.
+Meshing still requires AEDT on the source machine; the server imports the mesh
+and has no independent CAD mesher. Requesting native B/H still requires saved
+fields and cannot be combined with forced mesh generation.
+
+Require a **real project path**, design name, existing analysis setup, and observation points inside air. Unless the user provided them, discover locally with AEDT when possible; never manufacture names/paths. Work in a new output directory to avoid modifying the `.aedt` project. The legacy PyAEDT export below also requires saved native fields.
 
 Run from `TOOL_DIR`:
 

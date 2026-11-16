@@ -3,10 +3,11 @@
 
 Run with Tools > Run Script; Script Arguments is the absolute path to a JSON
 config containing project, design, solution ("Setup : LastAdaptive"), out and
-optionally points_csv (SI metres). The design needs an existing generated
-volume mesh; explicitly requested B/H references also require saved fields.
-This entry only reads the saved project
-and creates/deletes temporary Mesh field plots; it never solves or saves it.
+optionally points_csv (SI metres). mesh_policy defaults to auto: without a
+results database, generate the selected setup's mesh on a disposable saved
+project copy. generate always uses a fresh copy; reuse requires existing mesh.
+Explicitly requested B/H references require saved fields and cannot regenerate
+the mesh. This entry never submits a field solve or saves the original project.
 All model/Solve-Inside solids, including air, are archived, together with
 material definitions, variables, assignments and original solver settings.
 bridge.py import-native verifies hashes and creates the existing solver input.
@@ -26,6 +27,7 @@ import os
 import re
 import shutil
 import sys
+import tempfile
 import time
 import traceback
 import uuid
@@ -173,6 +175,14 @@ def export_native(desktop, config):
         raise ValueError('Reference quantities must be B or H')
     if reference_quantities and not config.get('points_csv'):
         raise ValueError('Reference fields require points_csv')
+    mesh_policy = config.get('mesh_policy', 'auto')
+    if mesh_policy not in ('auto', 'reuse', 'generate'):
+        raise ValueError('mesh_policy must be auto, reuse or generate')
+    if mesh_policy == 'generate' and reference_quantities:
+        raise ValueError('Fresh mesh generation cannot export saved reference fields; use reference_quantities=[]')
+    setup = config['solution'].split(':')[0].strip()
+    if not setup:
+        raise ValueError('solution must name an existing analysis setup')
     project_path = os.path.abspath(config['project']); root = os.path.abspath(config['out'])
     if not os.path.isfile(project_path):
         raise ValueError('Saved project not found: ' + project_path)
@@ -182,11 +192,17 @@ def export_native(desktop, config):
         os.makedirs(root)
     for folder in ('mesh', 'native'):
         os.mkdir(os.path.join(root, folder))
-    started = time.time(); before = _sha(project_path); opened = False; project = None
+    started = time.time(); before = _sha(project_path); opened = False; project = None; mesh_workspace = None
+    results_path = os.path.splitext(project_path)[0] + '.aedtresults'
+    results_present = os.path.isdir(results_path) and bool(os.listdir(results_path))
+    generate_mesh = mesh_policy == 'generate' or (mesh_policy == 'auto' and not results_present and not reference_quantities)
     info = dict(schema='aedt-native-disk-1', state='running', objects=[], materials={}, files={},
         source=dict(project=project_path, project_sha256=before, design=config['design'],
                     solution=config['solution'], aedt_version=_text(desktop.GetVersion()),exporter_sha256=_sha(__file__)),
-        capture_scope='All model Solve-Inside solid volume meshes plus saved native inputs; not internal solver matrices')
+        capture_scope='All model Solve-Inside solid volume meshes plus saved native inputs; not internal solver matrices',
+        mesh_generation=dict(policy=mesh_policy, state='pending' if generate_mesh else 'reused',
+            setup=setup, source_results_present=results_present, isolated_project=generate_mesh,
+            field_solve_submitted=False))
     info_path = os.path.join(root, 'native_export.json')
     def register(relative, role):
         path = os.path.join(root, relative.replace('/', os.sep))
@@ -194,19 +210,52 @@ def export_native(desktop, config):
             raise ValueError('Export did not produce a nonempty ' + role + ': ' + path)
         info['files'][relative] = dict(sha256=_sha(path), bytes=os.path.getsize(path), role=role)
         return relative
+    def close_project():
+        if opened and project is not None:
+            desktop.CloseProject(project.GetName())
+    def remove_mesh_workspace():
+        if mesh_workspace is not None:
+            target = os.path.abspath(mesh_workspace)
+            if (os.path.normcase(os.path.dirname(target)) != os.path.normcase(os.path.abspath(tempfile.gettempdir()))
+                    or not os.path.basename(target).startswith('magtense-native-mesh-')):
+                raise ValueError('Refusing to remove an unverified mesh workspace: ' + target)
+            shutil.rmtree(target)
     try:
+        _write(info_path, info)
+        native_copy = os.path.join(root, 'native', 'source_project.aedt')
+        shutil.copyfile(project_path, native_copy); register('native/source_project.aedt', 'saved original project inputs')
+        active_project_path = project_path
+        if generate_mesh:
+            mesh_workspace = tempfile.mkdtemp(prefix='magtense-native-mesh-')
+            # A new basename prevents AEDT from opening the original database.
+            active_project_path = os.path.join(mesh_workspace, 'mt_mesh_' + uuid.uuid4().hex + '.aedt')
+            shutil.copyfile(native_copy, active_project_path)
         # Reuse an already open project only when its full path is identical.
-        target_name = os.path.splitext(os.path.basename(project_path))[0]
+        target_name = os.path.splitext(os.path.basename(active_project_path))[0]
         if target_name in list(desktop.GetProjectList()):
             project = desktop.SetActiveProject(target_name)
             active_path = os.path.join(_text(project.GetPath()), _text(project.GetName()) + '.aedt')
-            if os.path.normcase(os.path.abspath(active_path)) != os.path.normcase(project_path):
+            if os.path.normcase(os.path.abspath(active_path)) != os.path.normcase(active_project_path):
                 raise ValueError('An open project has the same name but a different path')
         else:
-            project = desktop.OpenProject(project_path); opened = True
+            project = desktop.OpenProject(active_project_path); opened = True
         design = project.SetActiveDesign(config['design'])
         if _text(design.GetDesignType()) != 'Maxwell 3D' or _text(design.GetSolutionType()) != 'Magnetostatic':
             raise ValueError('Only Maxwell 3D Magnetostatic is supported by this transfer path')
+        setups = [_text(s) for s in design.GetModule('AnalysisSetup').GetSetups()]
+        if setup not in setups:
+            raise ValueError('Analysis setup not found: ' + setup)
+        info['setups'] = setups
+        if generate_mesh:
+            mesh_started = time.time()
+            info['mesh_generation']['state'] = 'running'; _write(info_path, info)
+            print('NATIVE_EXPORT GenerateMesh', json.dumps(setup, ensure_ascii=True))
+            code = design.GenerateMesh([setup])
+            info['mesh_generation'].update(return_code=_plain(code), elapsed_seconds=time.time()-mesh_started)
+            if code != 0:
+                info['mesh_generation']['state'] = 'failed'
+                raise RuntimeError('GenerateMesh failed for ' + setup + ': ' + _text(code))
+            info['mesh_generation']['state'] = 'generated'; _write(info_path, info)
         editor = design.SetActiveEditor('3D Modeler'); unit = _text(editor.GetModelUnits())
         nominal = _text(design.GetNominalVariation())
         variations=[]
@@ -217,8 +266,6 @@ def export_native(desktop, config):
         info.update(model_unit=unit, nominal_variation=nominal, available_variations=_plain(variations),
                     mode='inputs_with_reference' if reference_quantities else 'inputs_only',
                     variables=_variables(project, design), saved_context=_saved_context(project_path, config['design']))
-        native_copy = os.path.join(root, 'native', 'source_project.aedt')
-        shutil.copyfile(project_path, native_copy); register('native/source_project.aedt', 'saved original project inputs')
         boundaries = design.GetModule('BoundarySetup')
         excitations = list(boundaries.GetExcitations())
         if len(excitations) % 2:
@@ -229,7 +276,6 @@ def export_native(desktop, config):
         info['boundaries'] = [dict(name=_text(name), properties=_properties(design, 'Maxwell3D', 'BoundarySetup:' + _text(name)))
                               for name in boundaries.GetBoundaries()]
         info['coordinate_systems'] = _plain(editor.GetCoordinateSystems())
-        info['setups'] = _plain(design.GetModule('AnalysisSetup').GetSetups())
         materials = project.GetDefinitionManager().GetManager('Material')
         reporter = design.GetModule('FieldsReporter'); sequence = 0
         for group in ('Solids', 'Sheets', 'Lines'):
@@ -270,7 +316,7 @@ def export_native(desktop, config):
                 _write(info_path, info)
                 print('NATIVE_EXPORT', sequence, json.dumps(name, ensure_ascii=True), obj.get('mesh_raw', obj.get('mesh_omitted_reason')))
         if not any(obj.get('mesh_raw') for obj in info['objects']):
-            raise ValueError('No solved volume meshes were exported')
+            raise ValueError('No volume meshes were exported; use mesh_policy=generate to create a fresh mesh')
         if config.get('points_csv'):
             points = _points(config['points_csv'])
             shutil.copyfile(config['points_csv'], os.path.join(root, 'points.csv')); register('points.csv', 'SI observation points')
@@ -293,7 +339,6 @@ def export_native(desktop, config):
                     config['solution'], values, ['NAME:ExportOption', 'IncludePtInOutput:=', True,
                         'RefCSName:=', 'Global', 'PtInSI:=', True, 'FieldInRefCS:=', True])
                 info.setdefault('reference_fields', {})[quantity] = register(relative, 'native SI vector reference')
-        setup = config['solution'].split(':')[0].strip()
         for method, filename in [('ExportProfile', 'profile.txt'), ('ExportConvergence', 'convergence.txt'), ('ExportMeshStats', 'mesh_stats.txt')]:
             relative = 'native/' + filename
             try:
@@ -308,18 +353,26 @@ def export_native(desktop, config):
         after = _sha(project_path)
         if before != after:
             raise ValueError('Source project changed during export; bundle is not certified complete')
+        # Remove native meshing intermediates before publishing the manifest:
+        # only the per-object mesh exports are needed on the offline server.
+        close_project(); opened = False
+        remove_mesh_workspace(); mesh_workspace = None
         info.update(state='complete', source_project_unchanged=True, elapsed_seconds=time.time()-started)
         _write(info_path, info); register('native_export.json', 'native metadata and original settings')
         manifest = dict(schema='aedt-native-disk-1', state='complete', files=info['files'])
         _write(os.path.join(root, 'manifest.json'), manifest)
         return info
     except Exception as error:
+        if info['mesh_generation']['state'] == 'running':
+            info['mesh_generation']['state'] = 'failed'
         info.update(state='failed', error=_text(error), traceback=traceback.format_exc(), elapsed_seconds=time.time()-started)
         _write(info_path, info)
         raise
     finally:
-        if opened and project is not None:
-            desktop.CloseProject(project.GetName())
+        try:
+            close_project()
+        finally:
+            remove_mesh_workspace()
 
 
 def main(desktop=None, argument=None):

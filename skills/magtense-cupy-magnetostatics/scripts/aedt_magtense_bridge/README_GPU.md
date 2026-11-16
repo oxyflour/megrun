@@ -108,6 +108,72 @@ FEM–BEM 替代路线的全量网格统计可用同一入口的 `--assess-fem-b
 
 当前源码的 `fem_bem.py` 实现 FP64 的 P1 势 / P0 外侧法向导数耦合，复用现有 B(H) 及一致切线，采用阻尼 Newton–GMRES。外部衰减条件固定势基准，保留独立连通体的相对磁势。默认稠密 CPU 参考后端使用稀疏 FEM 加 Robin 项的 LU，以及边界 V 的 Cholesky；拒绝超过 4096 面或 256 MiB 预算数组的模型，该预算不含稀疏分解填充与积分临时空间。新增 `boundary_backend='cuda_hmatrix'` 采用全局 P0/P1 试探自由度的精确近块与 ACA 远块、对称单层算子及叶块边界预条件，FEM 可选 CPU PyAMG；[大模型命令、缓存及验证范围](../../references/architecture.md#cuda-hierarchical-boundary-and-sparse-amg)。这是混合 CPU/CUDA 实现，大模型成功仍须实测。
 
+FEM–BEM 现在同时检查弱残差和当前 Jacobian 的完整未阻尼场修正，避免高磁导块主导初始
+残差而掩盖其他材料的场误差。默认逐“连通体 × 输入材料／对象”检查体积 H／B RMS，
+逐连通体检查边界 q RMS：修正量不得超过 `atol + 1e-6*当前场 RMS`；H／q 的绝对
+容差为 `1e-6 A/m`，B 为 `1e-10 T`。Python `FEMBEM.solve` 可用 `field_rtol`、
+`field_h_atol`、`field_b_atol`、`field_q_atol` 配置；原 `tol` 继续控制弱残差，CLI
+自动使用这项新增检查的默认值。额外验证的 GMRES 计入总步数；迭代预算耗尽仍未满足
+场修正检查会失败。返回的 `field_correction`、`convergence_checks` 和
+`field_tolerances` 保留估计与门槛。该估计针对当前离散算子，不能代替网格／积分／
+独立原始边界算子验证。若验证 GMRES 因舍入停滞，必须额外通过 FEM 分量后向误差的
+机器精度预算和原边界线性残差要求，且场修正检查全部通过，才接受当前解；此时不施加
+未通过 GMRES 的修正。[收敛 benchmark、数值定义及旧失败／修复结果](../../../../docs/plan/02-validation-cases.md#8-当前求解器的收敛-benchmark)。
+
+### GPU 常驻 FEM–BEM 求解
+
+需要将迭代中的 FEM、材料、Krylov 向量和 AMG 一起留在 GPU 时，使用
+`--compute-backend cupy --fem-preconditioner amg`。当前入口是 `FEMBEM.solve`；
+可选模块 `fem_bem_cuda.py` 提供设备上下文、FP64 GPU GMRES 与原生 AmgX C API 连接。
+本构、FEM 方程、Newton／Armijo 及分区场修正验收与 CPU 路径共用。
+边界仍可选 `cuda_hmatrix`，其设备输出路径复用同一组内核和系数。
+
+```powershell
+$env:AMGX_LIBRARY = "$env:USERPROFILE/.cache/magtense-gpu/amgx/build/amgxsh.dll"
+& .\skill-test\.venv\Scripts\python.exe skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/bridge.py solve-fem-bem --out validation/20261109_fmm_refined/native_transfer/offline --boundary cuda_hmatrix --compute-backend cupy --fem-preconditioner amg --result-prefix gpu_resident_new --max-reference-error 0.05
+```
+
+CuPy 与本机 CUDA 运行时需正常工作；GPU AMG 另需
+[NVIDIA AmgX](https://github.com/NVIDIA/AMGX) 的共享库，`AMGX_LIBRARY` 可指向任意已安装的
+DLL／SO。默认也检查上例的用户缓存位置。缺少库会失败，不会改用 CPU AMG。
+FEM／Krylov／AMG 数值运算使用 FP64；AMG 为设备端层级构建及固定的一次 V-cycle，
+粗层使用 GPU dense LU，关闭主机粗层。CPU 仍负责一次性网格拓扑准备、控制分支和
+标量诊断。求解中不下载完整向量或矩阵，返回时仅下载最终 u／q 两个数组；
+独立场验收与导出继续通过现有入口完成。目前要求 CuPy 默认 CUDA stream。
+
+原 `--compute-backend numpy` 保留 CPU FEM／PyAMG 和可选 CUDA 边界的混合路径。
+`--compute-backend cupy` 的块预条件器要求 `--fem-preconditioner amg`；Python API
+也可传 `preconditioner='none'` 做诊断，benchmark 对应 `--preconditioner none`。
+仍需单独验证网格、积分及原始
+边界算子误差；设备驻留不改变任何误差门槛。
+
+本机 SDK 构建采用 AmgX 提交
+[`91a8413`](https://github.com/NVIDIA/AMGX/tree/91a8413ef267b1c32aff4014c02820e1c5897ac2)、
+CUDA 13.3／VS 2022 和 RTX 3090 Ti 的 `sm_86`。首次安装可在 VS 2022 的 x64
+Developer PowerShell 中执行以下命令；需让 VS 附带的 CMake／Ninja 可从 PATH 调用。
+CUDA 13.x 的 MSVC 构建需要 `/Zc:preprocessor`；这里不在仓库内复制依赖源码。
+
+```powershell
+$amgxSource = "$env:USERPROFILE/.cache/magtense-gpu/amgx"
+git clone --depth 1 --no-checkout https://github.com/NVIDIA/AMGX.git $amgxSource
+git -C $amgxSource fetch --depth 1 origin 91a8413ef267b1c32aff4014c02820e1c5897ac2
+git -C $amgxSource checkout --detach FETCH_HEAD
+$env:CL = '/Zc:preprocessor /utf-8'
+cmake -S $amgxSource -B "$amgxSource/build" -G Ninja -DCMAKE_CUDA_ARCHITECTURES=86 -DCMAKE_NO_MPI=ON -DCMAKE_BUILD_TYPE=Release
+cmake --build "$amgxSource/build" --target amgxsh --parallel 4
+```
+
+从仓库根目录运行原有 15 例的三后端对照，可保存一份含全部输入、源码／库哈希、
+误差及阶段耗时的报告；三个工作进程顺序执行，各自使用相同网格、材料和验收配置：
+
+```powershell
+& .\skill-test\.venv\Scripts\python.exe validation/20261109_fmm_refined/benchmark_convergence.py --compare-backends --output validation/20261109_fmm_refined/convergence_resident_comparison_new.json
+```
+
+本机该对照 45／45 通过；99,093 四面体真实模型的两对暖态复测约快 1.50 倍，
+首次 GPU 调用和这批小模型仍更慢。完整计时口径、逐例场误差及复现设置见
+[验证记录 8.7](../../../../docs/plan/02-validation-cases.md#87-femkrylovamgx-常驻-cuda2026-11-16)。
+
 从仓库根目录运行已有验证入口：
 
 ```powershell

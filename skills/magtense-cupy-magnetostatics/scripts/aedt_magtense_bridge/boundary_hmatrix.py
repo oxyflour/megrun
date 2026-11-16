@@ -597,7 +597,7 @@ class BoundaryHMatrix:
             errors=cp.maximum(errors,quantized_error)
         return U,W,cp.asnumpy(ranks),cp.asnumpy(errors)
 
-    def apply(self,q,trace):
+    def apply(self,q,trace,*,return_device=False):
         if self.metadata is None:
             raise ValueError('Coefficient-only probe has no assembled boundary operator')
         cp=self.cp;m=len(self.permutation)
@@ -611,18 +611,18 @@ class BoundaryHMatrix:
             (self.metadata,np.int32(count),np.int32(self.storage_dtype.itemsize),self.columns,self.reverse,self.scales,np.int32(m),
              q[self.permutation]*self.areas[self.permutation],result))
         original=cp.empty_like(result);original[self.permutation]=result
-        return cp.asnumpy(original)
+        return original if return_device else cp.asnumpy(original)
 
     def single(self,q):
         return self.apply(q,np.zeros(len(self.mesh.boundary_nodes)))
 
-    def precondition(self,vector):
+    def precondition(self,vector,*,return_device=False):
         cp=self.cp
         x=cp.asarray(vector)[self.permutation];y=cp.empty_like(x)
         self.module.get_function('bem_h_inverse')((len(self.inverse_metadata),),(128,),
             (self.inverse_metadata,self.inverse,x,y))
         original=cp.empty_like(y);original[self.permutation]=y
-        return cp.asnumpy(original)
+        return original if return_device else cp.asnumpy(original)
 
     def direct_rows(self,rows,q,trace):
         """Independent original-operator row sums, including V symmetrization."""

@@ -46,7 +46,7 @@ python gpu_solver.py --self-test --backend numpy
 python -m pytest -q tests
 ```
 
-当前源码检查为 129 项通过、1 项因缺少 gfortran 跳过，包含 CUDA、FMM、自适应近场分块压缩、批量空气极限、FEM–BEM 积分/算子/AMG，以及原生磁盘包导入、完整性校验和离线求解检查。已有四组真实模型 FP64 稠密 K 与 Maxwell B 场对比的历史结论保持原范围；FMM 的检查与限制见上方使用说明。Maxwell 导出需已安装并授权的 AEDT；CUDA/CuPy 依赖需匹配本机环境。
+当前源码检查为 144 项通过、1 项因缺少 gfortran 跳过，包含 CUDA、FMM、自适应近场分块压缩、批量空气极限、FEM–BEM 积分/算子/AMG、GPU 常驻 Krylov／多层 AmgX 与迭代数组无下载检查、强多材料场修正收敛判据及薄片验证的舍入检查，以及原生磁盘包导入、完整性校验、缺失网格自动生成与离线求解检查。已有四组真实模型 FP64 稠密 K 与 Maxwell B 场对比的历史结论保持原范围；FMM 的检查与限制见上方使用说明。Maxwell 导出需已安装并授权的 AEDT；CUDA/CuPy 依赖需匹配本机环境。
 
 当前双模组模型已生成本机 [加密 AEDT 工程](validation/20261109_fmm_refined/gap3mm_fmm_3m.aedt)，实际为 **2,718,864 个磁性单元、8,679,245 个总单元**，并通过重新打开后的网格数量核对。复现入口为 [prepare_mesh.py](validation/20261109_fmm_refined/prepare_mesh.py)，计数和原工程不变性检查见 [mesh_generation.json](validation/20261109_fmm_refined/mesh_generation.json)。工程与同名 `.aedtresults` 网格目录保留本机；没有提交该大模型的 Maxwell 场求解。FMM 的 3629 单元流程验证见 [fmm_verification.json](validation/20261109_fmm_refined/fmm_verification.json)。大模型实际运行入口为 [run_fmm.py](validation/20261109_fmm_refined/run_fmm.py)，导出/求解状态、采样内存峰值及残差写入 [large_fmm_run.json](validation/20261109_fmm_refined/large_fmm_run.json)，原始资源采样为 `large_fmm_resources.csv`。失败阶段使用非零退出码，不能把完成网格导出当作求解通过。
 
@@ -54,7 +54,7 @@ python -m pytest -q tests
 
 替代路线的 [CUDA 分层 BEM＋稀疏 FEM/AMG 原型](skills/magtense-cupy-magnetostatics/references/architecture.md#cuda-hierarchical-boundary-and-sparse-amg) 已在该案例全部 2,718,864 个磁性单元上完成耦合求解：4 次 Newton 更新，弱残差 `5.84e-10`；缓存流程 17 分 22 秒。另一次完整 H 首次构建由 41 分 49 秒降至 27 分 20 秒，新旧数值缓存二进制相同；这些独立阶段实测不等于一次完整冷启动求解。空气、材料 B、边界法向 B 对保留的 333,613 总单元 Maxwell 解的采样误差为 3.24% / 7.37% / 9.33%，通过声明的 5% / 10% / 10% 门槛。但全边界原始 P1 单元法向通量差仍为 27.6%，**尚未认证 Maxwell 高阶局部精度或同精度加速比**。命令、精度配置、资源和限制见链接；记录在同一 `fmm_verification.json` 的 `fem_bem_large_runs`，失败历史保留。
 
-新增 [Ansys 18.2 原生导出与无 Maxwell 服务器流程](skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/README.md#ansys-182-原生导出与无-maxwell-服务器)：源机用内置 IronPython 导出网格、材料、变量、激励/边界和原始设置，服务器校验磁盘包后运行 FEM–BEM。无需 PyAEDT；已在 2022 R2 上实测原生导出及无 Ansys 依赖进程求解，18.2 源机实测待完成。
+新增 [Ansys 18.2 原生导出与无 Maxwell 服务器流程](skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/README.md#ansys-182-原生导出与无-maxwell-服务器)：源机用内置 IronPython 导出网格、材料、变量、激励/边界和原始设置；没有 `.aedtresults` 时自动在临时工程副本上生成网格。服务器校验磁盘包后运行 FEM–BEM，无需 Maxwell 场结果或 PyAEDT。已在 2022 R2 上实测原生导出及无 Ansys 依赖进程求解，18.2 源机实测待完成。
 
 ## 仓库与本地产物
 

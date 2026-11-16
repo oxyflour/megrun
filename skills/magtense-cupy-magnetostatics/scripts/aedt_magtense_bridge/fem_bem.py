@@ -8,7 +8,9 @@ Only the scattered potential decays at infinity. No component is pinned.
 
 Exact flat-triangle source integrals (including single-layer self integrals),
 tensor Gauss/Duffy target integration. Dense CPU boundary storage is bounded;
-the optional CUDA H backend keeps sparse FEM and AMG on CPU. Full-model
+the default compute backend keeps sparse FEM and AMG on CPU. Explicit
+compute_backend='cupy' uses the resident CUDA/AmgX context with this same
+Newton driver and field-correction acceptance. Full-model
 accuracy and performance require the independent case verification gates.
 The current MaterialLaws supplies the unchanged M(H) and its consistent tangent.
 """
@@ -53,7 +55,10 @@ def material_laws(properties, cell_material):
         mu_r_ea=np.asarray(mus)[ids], mu_r_oa=np.asarray(mus)[ids],
         M_rem=np.asarray(rems)[ids], u_ea=np.asarray(dirs)[ids],
         stfcn_index=np.asarray(curve_ids)[ids])
-    return MaterialLaws(tiles, curves, np, 'float64')
+    laws = MaterialLaws(tiles, curves, np, 'float64')
+    # Retain exported material/object partitions for local convergence checks.
+    laws.cell_material = ids.copy()
+    return laws
 
 
 def triangle_rule(order):
@@ -235,25 +240,29 @@ class FEMBEM:
         return single, double
 
     def fields(self, u, H_external=(0., 0, 0)):
-        H = np.asarray(H_external) - np.einsum('tj,tji->ti', u[self.tets], self.gradients)
+        xp = getattr(self, '_xp', np)
+        H = xp.asarray(H_external) - xp.einsum('tj,tji->ti', u[self.tets], self.gradients)
         M, alpha, beta, direction = self.laws.eval(H)
         return H, MU0 * (H + M), alpha, beta, direction
 
     def volume_residual(self, u, H_external):
-        gradient = np.einsum('tj,tji->ti', u[self.tets], self.gradients)
-        M, alpha, beta, direction = self.laws.eval(np.asarray(H_external)-gradient)
+        xp = getattr(self, '_xp', np)
+        gradient = xp.einsum('tj,tji->ti', u[self.tets], self.gradients)
+        M, alpha, beta, direction = self.laws.eval(xp.asarray(H_external)-gradient)
         # Evaluate the scattered induction without B/mu0-H0 cancellation.
-        local = self.volumes[:, None] * np.einsum('ti,tji->tj', gradient-M, self.gradients)
-        residual = np.bincount(self.tets.ravel(), weights=local.ravel(), minlength=len(u))
-        tangent = ((1+alpha)[:, None, None] * np.eye(3)
+        local = self.volumes[:, None] * xp.einsum('ti,tji->tj', gradient-M, self.gradients)
+        residual = xp.bincount(self.tets.ravel(), weights=local.ravel(), minlength=len(u))
+        tangent = ((1+alpha)[:, None, None] * xp.eye(3)
             + (beta-alpha)[:, None, None] * direction[:, :, None] * direction[:, None, :])
-        values = self.volumes[:, None, None] * np.einsum('tia,tab,tjb->tij', self.gradients, tangent, self.gradients)
-        A = coo_matrix((values.ravel(), (self.rows, self.cols)), shape=(len(u), len(u))).tocsr()
+        values = self.volumes[:, None, None] * xp.einsum('tia,tab,tjb->tij', self.gradients, tangent, self.gradients)
+        constructor = getattr(self, '_coo_matrix', coo_matrix)
+        A = constructor((values.ravel(), (self.rows, self.cols)), shape=(len(u), len(u))).tocsr()
         return residual, A
 
     def residual(self, u, q, H_external):
         r, A = self.volume_residual(u, H_external)
-        return np.r_[r-self.mass @ q, self.boundary_residual(u,q)], A
+        xp = getattr(self, '_xp', np)
+        return xp.r_[r-self.mass @ q, self.boundary_residual(u,q)], A
 
     def boundary_residual(self, u, q):
         if self.boundary is None:
@@ -370,54 +379,151 @@ class FEMBEM:
                 progress('boundary_refinement_blocks_replaced',exact_blocks=len(refined),added_bytes=info['added_bytes'])
         raise NonConvergence(f'Exact K refinement did not pass the constant identity: {info["passes"][-1]}')
 
+    def _field_correction(self, u, q, step, H0, rtol, h_atol, b_atol, q_atol):
+        """Estimate forward error from the FULL, undamped Newton correction.
+
+        Small global weak residuals can hide O(1) local field errors when an
+        unrelated high-mu material dominates the initial residual. Check H/B
+        on each material within each connected component, and q per component.
+        This is a local Newton error estimate for this discrete operator, not
+        a bound on mesh, quadrature or compressed-boundary error.
+        """
+        xp = getattr(self, '_xp', np)
+        if not hasattr(self, '_convergence_regions'):
+            material = getattr(self.laws, 'cell_material', None)
+            if material is None:
+                signature = xp.column_stack((self.laws.kind_cpu, self.laws.ids_cpu,
+                    self.laws.chi, self.laws.rem))
+                _, material = xp.unique(signature, axis=0, return_inverse=True)
+            stride = int(xp.max(material))+1
+            codes = self.component_ids[self.tets[:, 0]]*stride+material
+            regions, inverse = xp.unique(codes, return_inverse=True)
+            self._convergence_regions = (regions//stride, regions % stride, inverse,
+                xp.bincount(inverse, weights=self.volumes))
+        components, materials, inverse, volumes = self._convergence_regions
+        n = len(u)
+        H = H0-xp.einsum('tj,tji->ti', u[self.tets], self.gradients)
+        # Compute dH directly, avoiding cancellation in H(u+du)-H(u).
+        dH = -xp.einsum('tj,tji->ti', step[:n][self.tets], self.gradients)
+        M = self.laws.eval(H)[0]
+        B = MU0*(H+M)
+        dB = MU0*(dH+self.laws.eval(H+dH)[0]-M)
+        def rms(value):
+            return xp.sqrt(xp.bincount(inverse,
+                weights=self.volumes*xp.einsum('ti,ti->t', value, value))/volumes)
+        h, b, dh, db = (rms(value) for value in (H, B, dH, dB))
+        h_ratio, b_ratio = dh/(h_atol+rtol*h), db/(b_atol+rtol*b)
+        face_components = self.component_ids[self.faces[:, 0]]
+        areas = xp.bincount(face_components, weights=self.areas)
+        q_rms = xp.sqrt(xp.bincount(face_components, weights=self.areas*q*q)/areas)
+        dq_rms = xp.sqrt(xp.bincount(face_components, weights=self.areas*step[n:]**2)/areas)
+        q_ratio = dq_rms/(q_atol+rtol*q_rms)
+        if not xp.isfinite(xp.concatenate((h, b, dh, db, q_rms, dq_rms,
+                                            h_ratio, b_ratio, q_ratio))).all():
+            raise NonConvergence('Nonfinite FEM-BEM field correction estimate')
+        maximum = float(max(xp.max(h_ratio), xp.max(b_ratio), xp.max(q_ratio)))
+        return dict(passed=maximum <= 1., max_ratio=maximum,
+            regions=[dict(component=int(c), material=int(k), H_RMS_Apm=float(h[i]),
+                B_RMS_T=float(b[i]), correction_H_RMS_Apm=float(dh[i]),
+                correction_B_RMS_T=float(db[i]), H_ratio=float(h_ratio[i]), B_ratio=float(b_ratio[i]))
+                for i, (c, k) in enumerate(zip(components, materials))],
+            boundary_components=[dict(component=i, q_RMS_Apm=float(q_rms[i]),
+                correction_q_RMS_Apm=float(dq_rms[i]), q_ratio=float(q_ratio[i]))
+                for i in range(len(areas))])
+
     def solve(self, *, H_external=(0., 0, 0), tol=1e-9, maxiter=40,
               preconditioner='block', linear_rtol=1e-10, linear_maxiter=30,
-              fem_preconditioner='lu', progress=None):
+              fem_preconditioner='lu', progress=None, field_rtol=1e-6,
+              field_h_atol=1e-6, field_b_atol=1e-10, field_q_atol=1e-6,
+              compute_backend='numpy'):
         """Damped Newton and GMRES; failures raise, never return an uncertified field.
 
         The dense reference uses exact V Cholesky and sparse FEM LU. The H
         backend uses exact diagonal-leaf V inverses and optional fixed CPU
         AMG V-cycles for A + E diag(V)^-1 E.T. Robin terms lift each FEM
         constant mode while retaining relative component potentials.
+
+        Acceptance requires both the initial-normalized weak residual <= tol
+        and a fresh undamped Newton correction with per-region RMS H/B and
+        per-component RMS q <= atol + field_rtol*RMS(current field). Absolute
+        floors are SI A/m for H/q and T for B. Exact zero residual needs no
+        extra solve. All verification Krylov work is included in the totals.
+        A roundoff-limited verification solve additionally needs componentwise
+        FEM backward stability and the unchanged boundary residual tolerance;
+        its FULL field correction must still pass. Newton updates never use
+        a failed linear solve.
         """
+        if compute_backend not in ('numpy', 'cupy'):
+            raise ValueError('Unknown FEM-BEM compute backend')
+        if compute_backend == 'cupy':
+            from fem_bem_cuda import CUDAFEM
+            context = CUDAFEM(self)
+            try:
+                u, q, info = context.solve(H_external=H_external, tol=tol, maxiter=maxiter,
+                    preconditioner=preconditioner, linear_rtol=linear_rtol, linear_maxiter=linear_maxiter,
+                    fem_preconditioner=fem_preconditioner, progress=progress, field_rtol=field_rtol,
+                    field_h_atol=field_h_atol, field_b_atol=field_b_atol, field_q_atol=field_q_atol)
+                downloaded = time.perf_counter()
+                u, q = context.to_host(u), context.to_host(q)
+                info['device_result_download_seconds'] = time.perf_counter()-downloaded
+                return u, q, info
+            finally:
+                context.close()
         if self.V is None:
             raise ValueError('Geometry-only preparation has no boundary operator')
         if (fem_preconditioner not in ('lu','amg') or preconditioner not in ('block', 'none') or not 0 < tol < 1
-                or not 0 < linear_rtol < 1 or maxiter < 1 or linear_maxiter < 1):
+                or not 0 < linear_rtol < 1 or maxiter < 1 or linear_maxiter < 1
+                or not 0 < field_rtol < 1 or not all(np.isfinite(v) and v > 0
+                    for v in (field_h_atol, field_b_atol, field_q_atol))):
             raise ValueError('Invalid FEM-BEM solver options')
-        H0 = np.asarray(H_external, dtype=float)
-        if H0.shape != (3,) or not np.isfinite(H0).all():
+        xp = getattr(self, '_xp', np)
+        operator_class = getattr(self, '_LinearOperator', LinearOperator)
+        diagonal_matrix = getattr(self, '_diags', diags)
+        linear_solve = getattr(self, '_gmres', gmres)
+        H0 = xp.asarray(H_external, dtype=float)
+        if H0.shape != (3,) or not xp.isfinite(H0).all():
             raise ValueError('Expected a finite uniform applied field')
         started = time.perf_counter()
         n, m = self.mass.shape
-        u, q = np.zeros(n), np.zeros(m)
+        u, q = xp.zeros(n), xp.zeros(m)
         r, A = self.residual(u, q, H0)
-        scale = max(float(np.linalg.norm(r)), np.finfo(float).tiny)
+        initial_norm = float(xp.linalg.norm(r))
+        scale = max(initial_norm, xp.finfo(float).tiny)
         history = []
+        checks = []
+        total_krylov = 0
+        field_limits = dict(rtol=field_rtol, H_atol_Apm=field_h_atol,
+                            B_atol_T=field_b_atol, q_atol_Apm=field_q_atol)
+        def finish(check):
+            info = dict(self.info, converged=True, residual=relative,
+                nonlinear_updates=iteration, history=history,
+                preconditioner=preconditioner, solve_seconds=time.perf_counter()-started,
+                total_gmres_iterations=total_krylov, initial_residual_norm=initial_norm,
+                field_correction=check, field_tolerances=field_limits,
+                convergence_checks=checks,
+                volume_weak_relative_residual=float(xp.linalg.norm(r[:n])/scale),
+                boundary_weak_relative_residual=float(xp.linalg.norm(r[n:]) /
+                    max(xp.linalg.norm(self.C @ u[self.boundary_nodes])+xp.linalg.norm(self.V @ q), scale*1e-12)))
+            return u, q, info
         for iteration in range(maxiter+1):
-            relative = float(np.linalg.norm(r)/scale)
+            relative = float(xp.linalg.norm(r)/scale)
             if progress:
                 progress('newton',iteration=iteration,residual=relative)
-            if relative <= tol:
-                info = dict(self.info, converged=True, residual=relative,
-                    nonlinear_updates=iteration, history=history,
-                    preconditioner=preconditioner, solve_seconds=time.perf_counter()-started,
-                    total_gmres_iterations=sum(h['gmres_iterations'] for h in history),
-                    volume_weak_relative_residual=float(np.linalg.norm(r[:n])/scale),
-                    boundary_weak_relative_residual=float(np.linalg.norm(r[n:]) /
-                        max(np.linalg.norm(self.C @ u[self.boundary_nodes])+np.linalg.norm(self.V @ q), scale*1e-12)))
-                return u, q, info
-            if iteration == maxiter:
+            if not xp.any(r):
+                return finish(dict(passed=True, max_ratio=0., exact_zero_residual=True))
+            if iteration == maxiter and relative > tol:
                 break
             def multiply(z):
-                return np.r_[A @ z[:n]-self.mass @ z[n:],
+                return xp.r_[A @ z[:n]-self.mass @ z[n:],
                     self.boundary_residual(z[:n],z[n:])]
-            operator = LinearOperator((n+m, n+m), matvec=multiply, dtype=float)
+            operator = operator_class((n+m, n+m), matvec=multiply, dtype=float)
             pc_started = time.perf_counter()
             pc = None
             if preconditioner == 'block':
-                robin = self.mass @ diags(1 / self.v_diagonal) @ self.mass.T
-                if fem_preconditioner == 'lu':
+                robin = self.mass @ diagonal_matrix(1 / self.v_diagonal) @ self.mass.T
+                if hasattr(self, '_fem_preconditioner'):
+                    fem_apply = self._fem_preconditioner(A+robin, fem_preconditioner)
+                elif fem_preconditioner == 'lu':
                     factor = splu((A+robin).tocsc())
                     fem_apply = factor.solve
                 else:
@@ -431,8 +537,8 @@ class FEMBEM:
                     vq = self.boundary_inverse(z[n:])
                     du = fem_apply(z[:n]+self.mass @ vq)
                     dq = self.boundary_inverse(z[n:]-self.C @ du[self.boundary_nodes])
-                    return np.r_[du, dq]
-                pc = LinearOperator(operator.shape, matvec=apply, dtype=float)
+                    return xp.r_[du, dq]
+                pc = operator_class(operator.shape, matvec=apply, dtype=float)
             pc_seconds = time.perf_counter()-pc_started
             krylov = []
             def linear_progress(value):
@@ -440,17 +546,54 @@ class FEMBEM:
                 if progress and len(krylov)%25==0:
                     progress('gmres',newton_iteration=iteration,linear_iterations=len(krylov),
                              preconditioned_relative_residual=float(value))
-            step, status = gmres(operator, -r, M=pc, rtol=linear_rtol, atol=0.,
+            step, status = linear_solve(operator, -r, M=pc, rtol=linear_rtol, atol=0.,
                 restart=min(100, n+m), maxiter=linear_maxiter,
                 callback=linear_progress, callback_type='pr_norm')
-            if status or not np.isfinite(step).all():
+            linear_roundoff = None
+            if status > 0 and relative <= tol and xp.isfinite(step).all():
+                # Near zero R, ||J*delta+R||/||R|| can hit a cancellation floor
+                # in thin/high-contrast FEM rows. Use the componentwise BERR
+                # denominator |A||delta_u|+E|delta_q|+|R| (LAPACK DGERFS),
+                # bounded by gamma_n for each sparse dot product. This is
+                # only a verification path, never permission for an update.
+                error = multiply(step)+r
+                magnitude = abs(A) @ abs(step[:n])+self.mass @ abs(step[n:])+abs(r[:n])
+                terms = xp.diff(A.indptr)+xp.diff(self.mass.indptr)+1
+                neps = terms*xp.finfo(float).eps
+                budget = neps/(1-neps)*magnitude
+                backward = float(xp.max(abs(error[:n])/xp.maximum(magnitude, xp.finfo(float).tiny)))
+                rounding_ratio = float(xp.max(abs(error[:n])/xp.maximum(budget, xp.finfo(float).tiny)))
+                boundary_linear = float(xp.linalg.norm(error[n:])/xp.linalg.norm(r))
+                linear_roundoff = dict(passed=bool(xp.isfinite(rounding_ratio) and rounding_ratio <= 1.
+                    and xp.isfinite(boundary_linear) and boundary_linear <= linear_rtol),
+                    volume_componentwise_backward_error=backward, volume_roundoff_ratio=rounding_ratio,
+                    boundary_relative_residual=boundary_linear, linear_rtol=linear_rtol)
+            if (not xp.isfinite(step).all() or status and
+                    (linear_roundoff is None or not linear_roundoff['passed'])):
                 raise NonConvergence(f'FEM-BEM GMRES failed at Newton {iteration}: status={status}, '
                                      f'iterations={len(krylov)}')
+            total_krylov += len(krylov)
+            if relative <= tol:
+                check = self._field_correction(u, q, step, H0, field_rtol,
+                                               field_h_atol, field_b_atol, field_q_atol)
+                checks.append(dict(iteration=iteration, residual=relative,
+                    gmres_iterations=len(krylov), preconditioner_seconds=pc_seconds,
+                    linear_status=int(status), linear_roundoff=linear_roundoff, **check))
+                if progress:
+                    progress('field_correction', iteration=iteration, residual=relative,
+                             max_ratio=check['max_ratio'], passed=check['passed'])
+                if check['passed']:
+                    return finish(check)
+                if status:
+                    raise NonConvergence(f'FEM-BEM GMRES failed at Newton {iteration}: '
+                        f'roundoff-limited solve cannot certify field correction {check["max_ratio"]}')
+            if iteration == maxiter:
+                break
             damping = 1.
             for _ in range(24):
                 un, qn = u+damping*step[:n], q+damping*step[n:]
                 rn, An = self.residual(un, qn, H0)
-                if np.linalg.norm(rn) <= (1-1e-4*damping)*np.linalg.norm(r):
+                if xp.linalg.norm(rn) <= (1-1e-4*damping)*xp.linalg.norm(r):
                     break
                 damping /= 2
             else:
@@ -458,7 +601,8 @@ class FEMBEM:
             history.append(dict(residual_before=relative, damping=damping,
                                 gmres_iterations=len(krylov), preconditioner_seconds=pc_seconds))
             u, q, r, A = un, qn, rn, An
-        raise NonConvergence(f'FEM-BEM Newton did not converge after {maxiter} updates: {relative}')
+        field_status = f'; field correction max_ratio={checks[-1]["max_ratio"]}' if checks else ''
+        raise NonConvergence(f'FEM-BEM Newton did not converge after {maxiter} updates: {relative}{field_status}')
 
     def potential(self, u, q, points_m):
         """Decaying scattered exterior potential, in A; caller must supply air points."""

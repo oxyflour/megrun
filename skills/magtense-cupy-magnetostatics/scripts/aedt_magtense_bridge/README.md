@@ -1,6 +1,6 @@
 # Maxwell AEDT → MagTense：任意四面体静磁场精度对比
 
-**目标**：不重新画长方体，直接读取**已完成求解的 Maxwell 3D Magnetostatic `.aedt` 项目**，将各磁性零件的体网格转换为 MagTense type-5 tetrahedral Tile，自动剔除空气/非磁性体，在同一批**空气中**的采样点对比 Maxwell 与 MagTense 的 `B = (Bx,By,Bz)`，输出误差指标。非线性软磁 B–H 曲线可以导出并传入 MagTense 底层 Fortran 求解函数。
+**目标**：读取 Maxwell 3D Magnetostatic `.aedt` 工程的几何、材料和设置，在源机导出体网格后独立求解。原生导出支持没有 `.aedtresults` 的工程，自动生成网格；已有 Maxwell 场结果时可在相同空气采样点比较 `B = (Bx,By,Bz)`。体网格可用于 FEM–BEM，也可转换为 MagTense type-5 tetrahedral Tile。非线性软磁 B–H 曲线可以导出并传入求解器。
 
 **状态**：已在 Windows、Maxwell 2022 R2、MagTense 3.0.1 与 RTX 3090 Ti 上完成实际导出和 CuPy 场对比。3 mm 双模组、零电流、VACOFLUX 50 厂家典型表基准，3629 个磁性四面体对 485 个空气点的 B 向量相对 L2 差约 3.66%；条件与局限见 skill 的 `references/validation-20261107.json`。GPU 路径的多 B–H 插值在 Python 中实现，不需要修改原生 ABI。可选原生多 B–H 补丁单独见 [README_MULTI_BH.md](README_MULTI_BH.md)，本次未编译该补丁。
 
@@ -8,7 +8,7 @@
 
 **原生 Fortran 多 B–H 求解需要补丁版 MagTense**：Windows 可在配置好 ifx、MKL 和 make 后运行 `powershell -ExecutionPolicy Bypass -File .\scripts\install_multibh.ps1`；Linux/WSL2 可用 `bash scripts/install_multibh.sh`。GPU 材料迭代及 FEM–BEM 路径无需该补丁。完整说明请看 [README_MULTI_BH.md](README_MULTI_BH.md)。
 
-推荐 Windows 11 + Python **3.12 或更新**。确保已安装并完成 Maxwell 求解（不仅是 `.aedt` 文件，工程对应的 `.aedtresults` 也要可用）。
+服务器求解环境使用 Python **3.12 或更新**。原生导出在安装 AEDT 的 Windows 源机执行，无需先完成场求解；只有导出 Maxwell 参考场的流程要求对应的 `.aedtresults` 和已保存场结果。
 
 ```powershell
 cd aedt_magtense_bridge
@@ -25,7 +25,7 @@ python -m pytest -q
 和原生脚本接口，源机不需要安装 Python 3、NumPy 或 PyAEDT。服务器使用现有
 `aedtplt.py`、材料转换及 `fem_bem.py`，只传数据，不产生第二套求解源码。
 
-先保存 **Maxwell 3D Magnetostatic** 工程，并为所选 setup 生成体网格。
+先保存 **Maxwell 3D Magnetostatic** 工程，确保已有分析 setup 和材料、边界、网格设置。
 准备 UTF-8 JSON 配置，例如 `D:\transfer\export_config.json`；下面只导出服务器重新求解的输入，
 不要求源机先完成 Maxwell 场求解：
 
@@ -34,17 +34,27 @@ python -m pytest -q
   "project": "D:\\sim\\camera.aedt",
   "design": "Maxwell3DDesign1",
   "solution": "Setup1 : LastAdaptive",
+  "mesh_policy": "auto",
   "out": "D:\\transfer\\camera_export",
   "points_csv": "D:\\sim\\air_points.csv",
   "reference_quantities": []
 }
 ```
 
-路径、设计名、已有解必须替换成源机实际值，输出目录须不存在或为空。`points_csv`
+路径、设计名、setup 名必须替换成源机实际值，输出目录须不存在或为空。`solution` 中
+的 `LastAdaptive` 是网格导出所用的原生 setup 标识，不要求已经完成自适应场求解。`points_csv`
 为全局坐标、单位米的 `x_m,y_m,z_m` CSV；用于离线空气场比较时，测点须在空气中。
 可以省略测点和参考场，在服务器导入时用 `--points-csv` 或 `--line-mm` 指定。
 如果源机已有对应 nominal variation 的场结果，将 `reference_quantities` 改成 `["B", "H"]`
 可同时导出校验用原生场；显式请求参考场但不存在时，导出失败。
+
+`mesh_policy` 默认 `auto`：同名 `.aedtresults` 目录缺失或为空，且未请求参考场时，
+在临时工程副本上调用 `GenerateMesh`，应用所选 setup 的初始网格与网格操作，随后自动
+导出。原 `.aedt` 和已有结果库不改变；临时工程及其结果库在导出结束后清理，传输包只需
+导出的网格数据。已有非空结果库时默认复用其网格。`generate` 强制从工程输入重新生成，
+适用于结果库存在但无可用网格的情况；`reuse` 只读取已有网格。`generate` 与显式参考场
+请求互斥，生成网格失败会中止且不发布完整 manifest。自动生成的是初始网格与指定网格
+操作的结果，不包含依赖 Maxwell 场求解的误差自适应加密。
 
 在源机 **Tools → Run Script** 选择 `aedt_export_native.py`，在 **Script Arguments**
 填配置 JSON 的绝对路径。也可以用实际的 18.2 `ansysedt.exe`：
@@ -55,7 +65,8 @@ python -m pytest -q
 
 `$aedt182` 指向源机 18.2 安装中的可执行文件，脚本路径按源码/共享路径设置。脚本执行方式见
 [Ansys 原生脚本说明](https://ansyshelp.ansys.com/public/Views/Secured/Electronics/v242/en/Subsystems/Maxwell/Content/RunningMaxwellFromaCommandLine.htm)。
-脚本读取并校验原工程，不执行求解、不保存原工程；临时 Mesh 图在导出后删除。
+脚本读取并校验原工程，需要时只生成网格，不提交 Maxwell 场求解、不保存原工程；
+临时 Mesh 图在导出后删除。网格生成接口见 [Ansys GenerateMesh](https://ansyshelp.ansys.com/public/Views/Secured/Electronics/v261/en/Subsystems/Maxwell/Subsystems/Maxwell%20Scripting/Content/GenerateMesh.htm)。
 
 导出目录包含：
 
@@ -63,6 +74,7 @@ python -m pytest -q
 - `native_export.json`：对象/材料关联、原始材料参数及 B–H 数据、CAD 顶点与面 ID、
   单位、坐标系、变量、激励/边界，以及原工程的分析、网格和坐标系设置。
   导出中该文件显示进度；失败保留原因和部分证据，导入器拒绝未完成包。
+  `mesh_generation` 另记录网格策略、生成耗时、原生返回码和临时副本隔离状态。
 - `mesh/*.aedtplt`：所有 model、Solve Inside 实体的体网格，包含空气和非磁性实体。
   Sheets/Lines、未启用 Solve Inside 的实体保留属性及原工程信息，其不存在的体网格不伪造。
 - `native/source_project.aedt`：原始已保存工程输入副本；`profile.txt`、`convergence.txt`、
@@ -70,6 +82,7 @@ python -m pytest -q
   显式请求并提供测点时另有原生 `B.fld`、`H.fld`。
 
 将**整个导出目录**传到服务器；服务器不需要 `.aedtresults`、Maxwell 或 Ansys license。
+当前网格生成仍由源机 AEDT 完成；服务器读取导出的体网格，尚未实现直接读取 CAD 的独立剖分器。
 以下命令在当前源码的 `aedt_magtense_bridge` 目录执行。FEM–BEM 的 CPU 小模型只需
 NumPy/SciPy；GPU H 边界另需适合服务器驱动的 CuPy 和 PyAMG，安装方法见 [README_GPU.md](README_GPU.md)。
 
@@ -100,8 +113,11 @@ B–H、永磁体和经核验为零的电流；非零/未解析电流及不支�
 四面体落盘，导入得到 10 个磁性对象、99,093 个磁性四面体。阻止 Ansys/PyAEDT/COM/
 MagTense 原生模块加载的独立进程完成了 FEM–BEM 求解：3 次 Newton、残差约 `1.57e-10`，
 485 个空气点相对已有原生 B 的 L2 差约 3.33%。这是输入转移和求解集成验证，
-不表示 Maxwell 高阶精度等价。另在没有结果库的临时工程上仅调用 `GenerateMesh`，
-未提交场求解，成功导出/导入 59,850 个磁性单元并构建 10 个连通分量的 FEM–BEM 几何。
+不表示 Maxwell 高阶精度等价。另从没有结果库的工程开始，由正式导出器自动在临时
+副本上调用 `GenerateMesh`，未提交 Maxwell 场求解；成功导出/导入 59,850 个磁性单元、
+10 个连通分量，并在禁用 Ansys 依赖的独立进程中从冷 H 缓存完成求解：2 次 Newton、
+残差约 `2.5e-13`，相同 485 个空气点对原有 Maxwell 参考场的 B 相对 L2 差约 3.37%。
+该网格与原生已求解工程的自适应网格不同，此项验证阈值为 10%，用于输入转移与求解集成。
 本机没有 AEDT 18.2，**18.2 原生运行仍待源机验证**；
 也未在另一台 Linux 服务器实跑。复现入口为仓库根目录下
 `validation/20261109_fmm_refined/run_fmm.py --validate-native-transfer`，前提及判定写在函数说明中；

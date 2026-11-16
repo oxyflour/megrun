@@ -281437,6 +281437,1831 @@
         "retained_offline_solution_hash_matches": true,
         "failed_snapshots_preserved_in_record": true
       }
+    },
+    {
+      "state": "complete",
+      "started_utc": "2026-11-13T13:02:55.348885+00:00",
+      "command": [
+        "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+        "validation/20261109_fmm_refined/run_fmm.py",
+        "--validate-native-transfer"
+      ],
+      "source_project_sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785",
+      "source_sha256": {
+        "aedt_export_native.py": "01014e7494dbabc88deb2a17ff3a6d3034ffc4125918adaf76c3f0df4c482dc0",
+        "aedt_export.py": "d515a99eba74e642dbb9494a6f2dec56646ac811ba7bb2be3b07aed9cf045f02",
+        "bridge.py": "56412697d4b4cb54080a06b2e4f5c2abce3671f3cef5067bd94f90a4f11e713d",
+        "fem_bem.py": "48b3ec0b7cc20619a285f1d5be2f1d8438347ad270a1bc4ca5f88d38e48c5429",
+        "boundary_hmatrix.py": "1d0cffc2bd5b2300d9482067784f9b444a96187785df461863776dafe62f441f",
+        "tetra_cuda.cu": "c2bee7865fdf722d6c304ffe3ee4e7333717f604fc3077c95f45d59e8d9bb96c"
+      },
+      "scope": "Actual AEDT 2022 R2 IronPython API + blocked-dependency offline process; AEDT18 and separate server OS not yet exercised",
+      "native_exit_code": 0,
+      "native_stdout": "NATIVE_EXPORT 1 \"A_YOKE_SOFT_MAGNETIC\" mesh/00000.aedtplt\nNATIVE_EXPORT 2 \"A_MAGNET_X_POS\" mesh/00001.aedtplt\nNATIVE_EXPORT 3 \"A_MAGNET_X_NEG\" mesh/00002.aedtplt\nNATIVE_EXPORT 4 \"A_MAGNET_Y_POS\" mesh/00003.aedtplt\nNATIVE_EXPORT 5 \"A_MAGNET_Y_NEG\" mesh/00004.aedtplt\nNATIVE_EXPORT 6 \"A_AF_COIL_COPPER\" mesh/00005.aedtplt\nNATIVE_EXPORT 7 \"B_YOKE_SOFT_MAGNETIC\" mesh/00006.aedtplt\nNATIVE_EXPORT 8 \"B_MAGNET_X_POS\" mesh/00007.aedtplt\nNATIVE_EXPORT 9 \"B_MAGNET_X_NEG\" mesh/00008.aedtplt\nNATIVE_EXPORT 10 \"B_MAGNET_Y_POS\" mesh/00009.aedtplt\nNATIVE_EXPORT 11 \"B_MAGNET_Y_NEG\" mesh/00010.aedtplt\nNATIVE_EXPORT 12 \"B_AF_COIL_COPPER\" mesh/00011.aedtplt\nNATIVE_EXPORT 13 \"Region\" mesh/00012.aedtplt\nNATIVE_EXPORT 14 \"A_Terminal\" Not a model Solve-Inside solid\nNATIVE_EXPORT 15 \"B_Terminal\" Not a model Solve-Inside solid\n",
+      "native_stderr": "",
+      "native_version": "2022.2.0",
+      "native_export_seconds": 23.765335083007812,
+      "total_domain_cells": 333613,
+      "exported_volume_solids": 13,
+      "magnetic_cells": 99093,
+      "normalized_inputs_equal_retained_export": true,
+      "offline_exit_code": 0,
+      "offline_stdout": "FEM_BEM boundary_refinement_identity {\"refinement_pass\": 0, \"maximum_constant_error\": 9.256132536827888e-05, \"bad_rows\": 1}\nFEM_BEM boundary_refinement_exact_probes {\"refinement_pass\": 0, \"rows\": 1}\nFEM_BEM boundary_refinement_blocks_replaced {\"exact_blocks\": 1, \"added_bytes\": 2852}\nFEM_BEM boundary_refinement_identity {\"refinement_pass\": 1, \"maximum_constant_error\": 9.100063202982511e-07, \"bad_rows\": 0}\nFEM_BEM newton {\"iteration\": 0, \"residual\": 1.0}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 25, \"preconditioned_relative_residual\": 147.80389484007108}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 50, \"preconditioned_relative_residual\": 1.6628895052752537}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 75, \"preconditioned_relative_residual\": 0.15265502994532174}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 100, \"preconditioned_relative_residual\": 0.006637507351668195}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 125, \"preconditioned_relative_residual\": 0.0033681141260222037}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 150, \"preconditioned_relative_residual\": 0.0003986947433692946}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 175, \"preconditioned_relative_residual\": 0.00016639687053959736}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 200, \"preconditioned_relative_residual\": 9.153134018411032e-05}\nFEM_BEM newton {\"iteration\": 1, \"residual\": 0.00020332028389216447}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 25, \"preconditioned_relative_residual\": 0.12812424483718063}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 50, \"preconditioned_relative_residual\": 0.03276308331161641}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 75, \"preconditioned_relative_residual\": 0.004640353009601725}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 100, \"preconditioned_relative_residual\": 1.4403597167270207e-05}\nFEM_BEM newton {\"iteration\": 2, \"residual\": 4.995216962063514e-06}\nFEM_BEM gmres {\"newton_iteration\": 2, \"linear_iterations\": 25, \"preconditioned_relative_residual\": 0.009448362338526929}\nFEM_BEM gmres {\"newton_iteration\": 2, \"linear_iterations\": 50, \"preconditioned_relative_residual\": 5.80926733098328e-05}\nFEM_BEM gmres {\"newton_iteration\": 2, \"linear_iterations\": 75, \"preconditioned_relative_residual\": 8.258272189251572e-06}\nFEM_BEM newton {\"iteration\": 3, \"residual\": 1.5723355352295962e-10}\nSaved offline FEM-BEM solution: C:\\Users\\oxyfl\\AppData\\Local\\Temp\\magtense-native-final-6or5bnxw\\job\\fem_bem_solution.npz\n",
+      "offline_stderr": "",
+      "offline_solve": {
+        "state": "complete",
+        "backend": "cuda_hmatrix",
+        "source_model_sha256": "e2c658f814136cf38277e2d75dd97772c0c2d976b60f3afbf33fd901d154c025",
+        "scope": "Offline P1/P0 magnetostatic field, zero free currents, infinite exterior air; native high-order equivalence not certified",
+        "phase": "newton",
+        "elapsed_seconds": 28.82827359996736,
+        "progress": {
+          "iteration": 3,
+          "residual": 1.5723355352295962e-10
+        },
+        "boundary_refinement": {
+          "kind": "full-order exact K blocks selected by independent coefficient errors",
+          "target": 2.4999999999999998e-05,
+          "block_absolute_row_L1_threshold": 1e-06,
+          "passes": [
+            {
+              "maximum_constant_error": 9.256132536827888e-05,
+              "component_constant_max_errors": [
+                4.9692436080709123e-08,
+                2.523569366361798e-08,
+                1.9830207309611347e-08,
+                6.63717132365349e-08,
+                5.5773827378767255e-08,
+                1.5410108313619948e-07,
+                2.7145548968531074e-08,
+                9.256761591752705e-05,
+                2.7885224150226223e-08,
+                3.675920102833991e-08
+              ],
+              "bad_rows": 1
+            },
+            {
+              "maximum_constant_error": 9.100063202982511e-07,
+              "component_constant_max_errors": [
+                4.9692436080709123e-08,
+                2.5235693664401397e-08,
+                1.983020734575073e-08,
+                6.63717131255126e-08,
+                5.5773827378767255e-08,
+                1.5410108313110857e-07,
+                2.7145548970626673e-08,
+                9.105470054615594e-07,
+                2.7885224150226223e-08,
+                3.675920102813509e-08
+              ],
+              "bad_rows": 0
+            }
+          ],
+          "blocks": [
+            {
+              "block": 95716,
+              "rows": 31,
+              "columns": 23,
+              "P1_columns": 14,
+              "sampled_absolute_row_L1_error": 9.257193666437144e-05,
+              "bytes": 2852
+            }
+          ],
+          "added_bytes": 2852,
+          "seconds": 0.9120839997194707,
+          "exact_entry_queries": 16271,
+          "added_metadata_bytes": 56
+        },
+        "boundary_checks": [
+          {
+            "input": "random",
+            "relative_L2": 1.6044003585946422e-08,
+            "tolerance": 1.9999999999999998e-05
+          },
+          {
+            "input": "flux_only",
+            "relative_L2": 1.051279290626613e-07,
+            "tolerance": 1.9999999999999998e-05
+          },
+          {
+            "input": "smooth",
+            "relative_L2": 7.2302922548944415e-09,
+            "tolerance": 1.9999999999999998e-05
+          }
+        ],
+        "solver": {
+          "tetrahedra": 99093,
+          "P1_nodes": 25470,
+          "P0_boundary_faces": 31642,
+          "components": 10,
+          "quadrature_order": 8,
+          "boundary_backend": "cuda_hmatrix",
+          "geometry_seconds": 0.8982293996959925,
+          "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+          "boundary_faces": 31642,
+          "clusters": 2047,
+          "trial_dofs": 47479,
+          "trial_clusters": 4095,
+          "leaf_clusters": 1024,
+          "terminal_blocks": 94674,
+          "admissible_blocks": 33182,
+          "exact_near_entries": 44066763,
+          "exact_near_storage_bytes": 176267052,
+          "hmatrix_rtol": 1e-06,
+          "hmatrix_leaf_size": 32,
+          "hmatrix_eta": 3.0,
+          "hmatrix_max_rank": 64,
+          "hmatrix_coefficient_storage_dtype": "float32",
+          "hmatrix_compute_dtype": "float64",
+          "hmatrix_far_pivot_quadrature_order": 4,
+          "hmatrix_reference_quadrature_order": 8,
+          "hmatrix_pivot_row_backend": "auto",
+          "hmatrix_skip_inactive": true,
+          "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+          "hmatrix_storage_bytes": 870008372,
+          "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+          "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+          "hmatrix_low_rank_blocks": 11967,
+          "hmatrix_retained_dense_blocks": 100203,
+          "hmatrix_max_retained_rank": 64,
+          "hmatrix_max_heldout_relative_error": 2.6658655528509684e-07,
+          "hmatrix_coefficient_entry_queries": 381247233,
+          "hmatrix_setup_seconds": 168.93058479996398,
+          "hmatrix_setup_phase_seconds": {
+            "partition_and_geometry": 1.9772696997970343,
+            "leaf_preconditioner": 0.3949234997853637,
+            "exact_near_blocks": 34.27212030021474,
+            "far_ACA_and_failed_block_fallback": 132.2160526998341,
+            "finalize": 0.0670928000472486
+          },
+          "hmatrix_cache_hit": true,
+          "hmatrix_row_reuse": {
+            "plans": 1180,
+            "plan_seconds": 1.4669159837067127,
+            "pivot_calls": 34330,
+            "expanded_panel_slots": 415635011,
+            "shared_panel_slots": 156032526
+          },
+          "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+          "hmatrix_cache_prefix": "C:\\Projects\\magtense-gpu\\validation\\20261109_fmm_refined\\native_transfer\\offline\\boundary_cache\\e82ce44e938342ea80c32cfd32a21ce87b755be1e49ecf6f1c00348aeebfd6d2",
+          "hmatrix_cache_load_seconds": 8.077745399903506,
+          "setup_seconds": 10.267616000026464,
+          "boundary_refinement": {
+            "kind": "full-order exact K blocks selected by independent coefficient errors",
+            "target": 2.4999999999999998e-05,
+            "block_absolute_row_L1_threshold": 1e-06,
+            "passes": [
+              {
+                "maximum_constant_error": 9.256132536827888e-05,
+                "component_constant_max_errors": [
+                  4.9692436080709123e-08,
+                  2.523569366361798e-08,
+                  1.9830207309611347e-08,
+                  6.63717132365349e-08,
+                  5.5773827378767255e-08,
+                  1.5410108313619948e-07,
+                  2.7145548968531074e-08,
+                  9.256761591752705e-05,
+                  2.7885224150226223e-08,
+                  3.675920102833991e-08
+                ],
+                "bad_rows": 1
+              },
+              {
+                "maximum_constant_error": 9.100063202982511e-07,
+                "component_constant_max_errors": [
+                  4.9692436080709123e-08,
+                  2.5235693664401397e-08,
+                  1.983020734575073e-08,
+                  6.63717131255126e-08,
+                  5.5773827378767255e-08,
+                  1.5410108313110857e-07,
+                  2.7145548970626673e-08,
+                  9.105470054615594e-07,
+                  2.7885224150226223e-08,
+                  3.675920102813509e-08
+                ],
+                "bad_rows": 0
+              }
+            ],
+            "blocks": [
+              {
+                "block": 95716,
+                "rows": 31,
+                "columns": 23,
+                "P1_columns": 14,
+                "sampled_absolute_row_L1_error": 9.257193666437144e-05,
+                "bytes": 2852
+              }
+            ],
+            "added_bytes": 2852,
+            "seconds": 0.9120839997194707,
+            "exact_entry_queries": 16271,
+            "added_metadata_bytes": 56
+          },
+          "hmatrix_cached_base_storage_bytes": 870005464,
+          "AMG_levels": 3,
+          "AMG_operator_complexity": 1.1317181652526598,
+          "converged": true,
+          "residual": 1.5723355352295962e-10,
+          "nonlinear_updates": 3,
+          "history": [
+            {
+              "residual_before": 1.0,
+              "damping": 1.0,
+              "gmres_iterations": 204,
+              "preconditioner_seconds": 0.32299180002883077
+            },
+            {
+              "residual_before": 0.00020332028389216447,
+              "damping": 1.0,
+              "gmres_iterations": 100,
+              "preconditioner_seconds": 0.09560679970309138
+            },
+            {
+              "residual_before": 4.995216962063514e-06,
+              "damping": 1.0,
+              "gmres_iterations": 81,
+              "preconditioner_seconds": 0.09127680025994778
+            }
+          ],
+          "preconditioner": "block",
+          "solve_seconds": 15.749741700012237,
+          "total_gmres_iterations": 385,
+          "volume_weak_relative_residual": 1.5723355352290407e-10,
+          "boundary_weak_relative_residual": 1.4233761149790645e-14
+        },
+        "air_gradient": {
+          "step_m": 2.06e-06,
+          "max_step_difference_Apm": 8.492062526376576e-07,
+          "method": "central difference / Richardson with verified air stencils"
+        },
+        "operator": {
+          "tetrahedra": 99093,
+          "P1_nodes": 25470,
+          "P0_boundary_faces": 31642,
+          "components": 10,
+          "quadrature_order": 8,
+          "boundary_backend": "cuda_hmatrix",
+          "geometry_seconds": 0.8982293996959925,
+          "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+          "boundary_faces": 31642,
+          "clusters": 2047,
+          "trial_dofs": 47479,
+          "trial_clusters": 4095,
+          "leaf_clusters": 1024,
+          "terminal_blocks": 94674,
+          "admissible_blocks": 33182,
+          "exact_near_entries": 44066763,
+          "exact_near_storage_bytes": 176267052,
+          "hmatrix_rtol": 1e-06,
+          "hmatrix_leaf_size": 32,
+          "hmatrix_eta": 3.0,
+          "hmatrix_max_rank": 64,
+          "hmatrix_coefficient_storage_dtype": "float32",
+          "hmatrix_compute_dtype": "float64",
+          "hmatrix_far_pivot_quadrature_order": 4,
+          "hmatrix_reference_quadrature_order": 8,
+          "hmatrix_pivot_row_backend": "auto",
+          "hmatrix_skip_inactive": true,
+          "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+          "hmatrix_storage_bytes": 870008372,
+          "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+          "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+          "hmatrix_low_rank_blocks": 11967,
+          "hmatrix_retained_dense_blocks": 100203,
+          "hmatrix_max_retained_rank": 64,
+          "hmatrix_max_heldout_relative_error": 2.6658655528509684e-07,
+          "hmatrix_coefficient_entry_queries": 381247233,
+          "hmatrix_setup_seconds": 168.93058479996398,
+          "hmatrix_setup_phase_seconds": {
+            "partition_and_geometry": 1.9772696997970343,
+            "leaf_preconditioner": 0.3949234997853637,
+            "exact_near_blocks": 34.27212030021474,
+            "far_ACA_and_failed_block_fallback": 132.2160526998341,
+            "finalize": 0.0670928000472486
+          },
+          "hmatrix_cache_hit": true,
+          "hmatrix_row_reuse": {
+            "plans": 1180,
+            "plan_seconds": 1.4669159837067127,
+            "pivot_calls": 34330,
+            "expanded_panel_slots": 415635011,
+            "shared_panel_slots": 156032526
+          },
+          "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+          "hmatrix_cache_prefix": "C:\\Projects\\magtense-gpu\\validation\\20261109_fmm_refined\\native_transfer\\offline\\boundary_cache\\e82ce44e938342ea80c32cfd32a21ce87b755be1e49ecf6f1c00348aeebfd6d2",
+          "hmatrix_cache_load_seconds": 8.077745399903506,
+          "setup_seconds": 10.267616000026464,
+          "boundary_refinement": {
+            "kind": "full-order exact K blocks selected by independent coefficient errors",
+            "target": 2.4999999999999998e-05,
+            "block_absolute_row_L1_threshold": 1e-06,
+            "passes": [
+              {
+                "maximum_constant_error": 9.256132536827888e-05,
+                "component_constant_max_errors": [
+                  4.9692436080709123e-08,
+                  2.523569366361798e-08,
+                  1.9830207309611347e-08,
+                  6.63717132365349e-08,
+                  5.5773827378767255e-08,
+                  1.5410108313619948e-07,
+                  2.7145548968531074e-08,
+                  9.256761591752705e-05,
+                  2.7885224150226223e-08,
+                  3.675920102833991e-08
+                ],
+                "bad_rows": 1
+              },
+              {
+                "maximum_constant_error": 9.100063202982511e-07,
+                "component_constant_max_errors": [
+                  4.9692436080709123e-08,
+                  2.5235693664401397e-08,
+                  1.983020734575073e-08,
+                  6.63717131255126e-08,
+                  5.5773827378767255e-08,
+                  1.5410108313110857e-07,
+                  2.7145548970626673e-08,
+                  9.105470054615594e-07,
+                  2.7885224150226223e-08,
+                  3.675920102813509e-08
+                ],
+                "bad_rows": 0
+              }
+            ],
+            "blocks": [
+              {
+                "block": 95716,
+                "rows": 31,
+                "columns": 23,
+                "P1_columns": 14,
+                "sampled_absolute_row_L1_error": 9.257193666437144e-05,
+                "bytes": 2852
+              }
+            ],
+            "added_bytes": 2852,
+            "seconds": 0.9120839997194707,
+            "exact_entry_queries": 16271,
+            "added_metadata_bytes": 56
+          },
+          "hmatrix_cached_base_storage_bytes": 870005464,
+          "AMG_levels": 3,
+          "AMG_operator_complexity": 1.1317181652526598
+        },
+        "solution_sha256": "9724ebafd45976546bcd9aba90e6159da8ac1a12f081c414f50672cfb6063172",
+        "native_air_B_sample_relative_L2": 0.03331617979525889,
+        "passed": true
+      },
+      "offline_environment": "Ansys module imports blocked; Ansys PATH/root/license variables removed",
+      "native_manifest": {
+        "schema": "aedt-native-disk-1",
+        "files": {
+          "native/B.fld": {
+            "bytes": 68309,
+            "role": "native SI vector reference",
+            "sha256": "893f0f2115bc6dd500c91bce955fea844c1921f216477acdcea9e457a5669e56"
+          },
+          "mesh/00006.aedtplt": {
+            "bytes": 5891459,
+            "role": "per-object volume mesh",
+            "sha256": "c784cf06699b85f668325945cad2b96625409de29f21c860cdb1d3fa5ac3700b"
+          },
+          "native/source_project.aedt": {
+            "bytes": 622954,
+            "role": "saved original project inputs",
+            "sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785"
+          },
+          "mesh/00005.aedtplt": {
+            "bytes": 1887425,
+            "role": "per-object volume mesh",
+            "sha256": "4096ed09313092756730de5452202bdc92e7bb165d068a7f2b2bb7b7c024c058"
+          },
+          "mesh/00002.aedtplt": {
+            "bytes": 938062,
+            "role": "per-object volume mesh",
+            "sha256": "7624f36229b48aa8cda2436a109a3282871641226d65e30b63cec15b777798fe"
+          },
+          "mesh/00001.aedtplt": {
+            "bytes": 965042,
+            "role": "per-object volume mesh",
+            "sha256": "05d4a558f1615e34acffb00b1fd875aa48738664e93d75b768517a0b2e5f42da"
+          },
+          "mesh/00009.aedtplt": {
+            "bytes": 1039711,
+            "role": "per-object volume mesh",
+            "sha256": "06f6359bd6d03cc240142f435ddf5e6a6ce0281721e619cba11d48eab53ef87b"
+          },
+          "mesh/00012.aedtplt": {
+            "bytes": 43518142,
+            "role": "per-object volume mesh",
+            "sha256": "a849372dbd4a0e4f402f0bf026481430f59698c7b767b640c58f306ba9f18b5e"
+          },
+          "native/convergence.txt": {
+            "bytes": 672,
+            "role": "available native setup evidence",
+            "sha256": "c041d2e102007962b129ff25dbb5cff78f857f30a9a2ddf2e9c32902d77f91d1"
+          },
+          "mesh/00011.aedtplt": {
+            "bytes": 1835291,
+            "role": "per-object volume mesh",
+            "sha256": "e5238017fb06e7811d7e93f9fbbd758134b17eeb9664b88f744587d4261f5b02"
+          },
+          "native/mesh_stats.txt": {
+            "bytes": 2602,
+            "role": "available native setup evidence",
+            "sha256": "0d0e0c7e5b701d255e1825bb500297e9d2ac59a3bcab0641e5bc2c6b4dd97382"
+          },
+          "native/profile.txt": {
+            "bytes": 8334,
+            "role": "available native setup evidence",
+            "sha256": "d6a47dbc265e92586fbd263d5cede1362535902431a35f660e01795da0c98f72"
+          },
+          "native_export.json": {
+            "bytes": 48777,
+            "role": "native metadata and original settings",
+            "sha256": "cb94232211bd93a39fbe74e1e0901fc0c960413d8186d571e581ba603750005a"
+          },
+          "mesh/00004.aedtplt": {
+            "bytes": 1034960,
+            "role": "per-object volume mesh",
+            "sha256": "9eb11cabaf7455e398a8ee50b107c5010e2b89ee288ccea6bc9edf887e8896d2"
+          },
+          "points.pts": {
+            "bytes": 6559,
+            "role": "native sample points in model units",
+            "sha256": "bf60b200c0138a6f15d8e356236594195134af066bb0a58c2a3e1888c30b6ed8"
+          },
+          "mesh/00000.aedtplt": {
+            "bytes": 5906787,
+            "role": "per-object volume mesh",
+            "sha256": "d03c58bd1da58178b87ea2a94eb718f535c6208f06e1f0d4aa979732823d5275"
+          },
+          "mesh/00007.aedtplt": {
+            "bytes": 1001409,
+            "role": "per-object volume mesh",
+            "sha256": "1f93be253d737300f2b5835dcc2c170b13157b951c86662f69f46855f28ffc6c"
+          },
+          "points.csv": {
+            "bytes": 37070,
+            "role": "SI observation points",
+            "sha256": "9e4867ab7b0846478e4f4825602352fe030dd12e799c3c679cc1f6f0d26806c6"
+          },
+          "mesh/00008.aedtplt": {
+            "bytes": 994612,
+            "role": "per-object volume mesh",
+            "sha256": "afc7ff5ffce72048732ddf2c3732387ec103952ac0a01e8c59415a55c988ff4d"
+          },
+          "mesh/00003.aedtplt": {
+            "bytes": 1004290,
+            "role": "per-object volume mesh",
+            "sha256": "7ffe9d1fe028ccb657e09398e4b4f5aa4c998554f938d5f757c9441cb9195415"
+          },
+          "mesh/00010.aedtplt": {
+            "bytes": 977915,
+            "role": "per-object volume mesh",
+            "sha256": "4ac726651049052f25823e303b963291ef6967d6ad646a5c89d0f2c16f38366a"
+          },
+          "native/H.fld": {
+            "bytes": 68309,
+            "role": "native SI vector reference",
+            "sha256": "544f3fc3af36eeaea08d7e83039ddeb3ebd9e4fdcd19485b98fea82a7805161d"
+          }
+        },
+        "state": "complete"
+      },
+      "mesh_only_stdout": "NATIVE_EXPORT GenerateMesh \"Reference\"\nNATIVE_EXPORT 1 \"A_YOKE_SOFT_MAGNETIC\" mesh/00000.aedtplt\nNATIVE_EXPORT 2 \"A_MAGNET_X_POS\" mesh/00001.aedtplt\nNATIVE_EXPORT 3 \"A_MAGNET_X_NEG\" mesh/00002.aedtplt\nNATIVE_EXPORT 4 \"A_MAGNET_Y_POS\" mesh/00003.aedtplt\nNATIVE_EXPORT 5 \"A_MAGNET_Y_NEG\" mesh/00004.aedtplt\nNATIVE_EXPORT 6 \"A_AF_COIL_COPPER\" mesh/00005.aedtplt\nNATIVE_EXPORT 7 \"B_YOKE_SOFT_MAGNETIC\" mesh/00006.aedtplt\nNATIVE_EXPORT 8 \"B_MAGNET_X_POS\" mesh/00007.aedtplt\nNATIVE_EXPORT 9 \"B_MAGNET_X_NEG\" mesh/00008.aedtplt\nNATIVE_EXPORT 10 \"B_MAGNET_Y_POS\" mesh/00009.aedtplt\nNATIVE_EXPORT 11 \"B_MAGNET_Y_NEG\" mesh/00010.aedtplt\nNATIVE_EXPORT 12 \"B_AF_COIL_COPPER\" mesh/00011.aedtplt\nNATIVE_EXPORT 13 \"Region\" mesh/00012.aedtplt\nNATIVE_EXPORT 14 \"A_Terminal\" Not a model Solve-Inside solid\nNATIVE_EXPORT 15 \"B_Terminal\" Not a model Solve-Inside solid\n",
+      "mesh_only_stderr": "",
+      "mesh_only": {
+        "field_solve_submitted": false,
+        "disposable_project_only": true,
+        "source_mode": "inputs_only",
+        "imported_without_reference": true,
+        "geometry": {
+          "tetrahedra": 59850,
+          "P1_nodes": 14982,
+          "P0_boundary_faces": 17818,
+          "components": 10,
+          "quadrature_order": 10,
+          "boundary_backend": "geometry",
+          "geometry_seconds": 0.5334915001876652,
+          "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means"
+        },
+        "native_evidence": {
+          "profile.txt": {
+            "state": "exported",
+            "file": "native/profile.txt"
+          },
+          "mesh_stats.txt": {
+            "state": "exported",
+            "file": "native/mesh_stats.txt"
+          },
+          "convergence.txt": {
+            "state": "exported",
+            "file": "native/convergence.txt"
+          }
+        },
+        "mesh_generation": {
+          "isolated_project": true,
+          "source_results_present": false,
+          "state": "generated",
+          "return_code": 0,
+          "elapsed_seconds": 24.29705047607422,
+          "policy": "auto",
+          "setup": "Reference",
+          "field_solve_submitted": false
+        },
+        "original_result_database_created": false,
+        "offline_exit_code": 0,
+        "offline_stdout": "FEM_BEM boundary_partition {\"boundary_faces\": 17818, \"clusters\": 2047, \"trial_dofs\": 26743, \"trial_clusters\": 2047, \"leaf_clusters\": 1024, \"terminal_blocks\": 62895, \"admissible_blocks\": 22338, \"exact_near_entries\": 18427538, \"exact_near_storage_bytes\": 73710152, \"boundary_backend\": \"cuda_hmatrix\", \"hmatrix_rtol\": 1e-06, \"hmatrix_leaf_size\": 32, \"hmatrix_eta\": 3.0, \"hmatrix_max_rank\": 64, \"hmatrix_coefficient_storage_dtype\": \"float32\", \"hmatrix_compute_dtype\": \"float64\", \"hmatrix_far_pivot_quadrature_order\": 4, \"hmatrix_reference_quadrature_order\": 8, \"hmatrix_pivot_row_backend\": \"auto\", \"hmatrix_skip_inactive\": true, \"hmatrix_error_scope\": \"ACA sampled block residual; independent global direct probes required\"}\nFEM_BEM boundary_build {\"completed_blocks\": 40557, \"pending_blocks\": 22339, \"stored_bytes\": 76192440, \"coefficient_pairs\": 19878832, \"boundary_elapsed_seconds\": 17.29337430000305}\nFEM_BEM boundary_build {\"completed_blocks\": 40665, \"pending_blocks\": 22292, \"stored_bytes\": 146199832, \"coefficient_pairs\": 54422888, \"boundary_elapsed_seconds\": 27.667350300122052}\nFEM_BEM boundary_build {\"completed_blocks\": 40905, \"pending_blocks\": 22078, \"stored_bytes\": 197100152, \"coefficient_pairs\": 72510352, \"boundary_elapsed_seconds\": 38.10208240011707}\nFEM_BEM boundary_build {\"completed_blocks\": 41619, \"pending_blocks\": 21371, \"stored_bytes\": 250277976, \"coefficient_pairs\": 89696754, \"boundary_elapsed_seconds\": 48.31443910021335}\nFEM_BEM boundary_build {\"completed_blocks\": 44061, \"pending_blocks\": 19794, \"stored_bytes\": 301355016, \"coefficient_pairs\": 110502490, \"boundary_elapsed_seconds\": 58.32304280018434}\nFEM_BEM boundary_build {\"completed_blocks\": 44845, \"pending_blocks\": 25225, \"stored_bytes\": 308412376, \"coefficient_pairs\": 128348725, \"boundary_elapsed_seconds\": 68.3295618002303}\nFEM_BEM boundary_build {\"completed_blocks\": 44863, \"pending_blocks\": 33393, \"stored_bytes\": 308471608, \"coefficient_pairs\": 141554283, \"boundary_elapsed_seconds\": 78.40409180009738}\nFEM_BEM boundary_build {\"completed_blocks\": 47135, \"pending_blocks\": 36449, \"stored_bytes\": 312851512, \"coefficient_pairs\": 153418699, \"boundary_elapsed_seconds\": 88.41110230004415}\nFEM_BEM boundary_build {\"completed_blocks\": 54815, \"pending_blocks\": 28769, \"stored_bytes\": 327228008, \"coefficient_pairs\": 164189687, \"boundary_elapsed_seconds\": 98.4231606000103}\nFEM_BEM boundary_build {\"completed_blocks\": 62614, \"pending_blocks\": 20970, \"stored_bytes\": 341758616, \"coefficient_pairs\": 175037723, \"boundary_elapsed_seconds\": 108.45356470020488}\nFEM_BEM boundary_build {\"completed_blocks\": 70334, \"pending_blocks\": 13250, \"stored_bytes\": 355462520, \"coefficient_pairs\": 185221427, \"boundary_elapsed_seconds\": 118.51866300031543}\nFEM_BEM boundary_build {\"completed_blocks\": 78334, \"pending_blocks\": 5250, \"stored_bytes\": 369606520, \"coefficient_pairs\": 195751923, \"boundary_elapsed_seconds\": 128.58443840034306}\nFEM_BEM boundary_refinement_identity {\"refinement_pass\": 0, \"maximum_constant_error\": 6.098900957596243e-07, \"bad_rows\": 0}\nFEM_BEM newton {\"iteration\": 0, \"residual\": 1.0}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 25, \"preconditioned_relative_residual\": 65.1647425940024}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 50, \"preconditioned_relative_residual\": 0.36655246762093274}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 75, \"preconditioned_relative_residual\": 0.062357598587584}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 100, \"preconditioned_relative_residual\": 0.003096765659909908}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 125, \"preconditioned_relative_residual\": 0.00045281201092660486}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 150, \"preconditioned_relative_residual\": 0.0001415622870194711}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 175, \"preconditioned_relative_residual\": 1.0858106893984681e-05}\nFEM_BEM newton {\"iteration\": 1, \"residual\": 2.5718630158647042e-08}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 25, \"preconditioned_relative_residual\": 66.53237148377916}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 50, \"preconditioned_relative_residual\": 21.41337123126752}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 75, \"preconditioned_relative_residual\": 0.4542843393557849}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 100, \"preconditioned_relative_residual\": 0.001283497508708111}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 125, \"preconditioned_relative_residual\": 0.00014135786738089903}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 150, \"preconditioned_relative_residual\": 5.4616176485709436e-05}\nFEM_BEM newton {\"iteration\": 2, \"residual\": 2.4435962276721346e-13}\nSaved offline FEM-BEM solution: C:\\Users\\oxyfl\\AppData\\Local\\Temp\\magtense-native-final-6or5bnxw\\mesh_only_job\\fem_bem_solution.npz\n",
+        "offline_stderr": "",
+        "offline_solve": {
+          "state": "complete",
+          "backend": "cuda_hmatrix",
+          "source_model_sha256": "75b0526c0c94b4304ae242e627a9df6c28cbec4c76e32f79b01018fd5f32514a",
+          "scope": "Offline P1/P0 magnetostatic field, zero free currents, infinite exterior air; native high-order equivalence not certified",
+          "phase": "newton",
+          "elapsed_seconds": 146.9395707999356,
+          "progress": {
+            "iteration": 2,
+            "residual": 2.4435962276721346e-13
+          },
+          "boundary_refinement": {
+            "kind": "full-order exact K blocks selected by independent coefficient errors",
+            "target": 2.4999999999999998e-05,
+            "block_absolute_row_L1_threshold": 1e-06,
+            "passes": [
+              {
+                "maximum_constant_error": 6.098900957596243e-07,
+                "component_constant_max_errors": [
+                  4.66958621522343e-08,
+                  1.6183796474849316e-08,
+                  1.6808951390668264e-08,
+                  1.8776991011298348e-08,
+                  1.543935814136267e-08,
+                  2.8800679063856194e-08,
+                  4.58244066066324e-08,
+                  6.145612818642121e-07,
+                  1.8626996813983307e-08,
+                  1.8591982789986442e-08
+                ],
+                "bad_rows": 0
+              }
+            ],
+            "blocks": [],
+            "added_bytes": 0,
+            "seconds": 0.18985369987785816,
+            "exact_entry_queries": 0,
+            "added_metadata_bytes": 0
+          },
+          "boundary_checks": [
+            {
+              "input": "random",
+              "relative_L2": 2.0177651436460935e-08,
+              "tolerance": 1.9999999999999998e-05
+            },
+            {
+              "input": "flux_only",
+              "relative_L2": 7.572818956600519e-08,
+              "tolerance": 1.9999999999999998e-05
+            },
+            {
+              "input": "smooth",
+              "relative_L2": 1.1384751684259345e-08,
+              "tolerance": 1.9999999999999998e-05
+            }
+          ],
+          "solver": {
+            "tetrahedra": 59850,
+            "P1_nodes": 14982,
+            "P0_boundary_faces": 17818,
+            "components": 10,
+            "quadrature_order": 8,
+            "boundary_backend": "cuda_hmatrix",
+            "geometry_seconds": 0.5597159001044929,
+            "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+            "boundary_faces": 17818,
+            "clusters": 2047,
+            "trial_dofs": 26743,
+            "trial_clusters": 2047,
+            "leaf_clusters": 1024,
+            "terminal_blocks": 62895,
+            "admissible_blocks": 22338,
+            "exact_near_entries": 18427538,
+            "exact_near_storage_bytes": 73710152,
+            "hmatrix_rtol": 1e-06,
+            "hmatrix_leaf_size": 32,
+            "hmatrix_eta": 3.0,
+            "hmatrix_max_rank": 64,
+            "hmatrix_coefficient_storage_dtype": "float32",
+            "hmatrix_compute_dtype": "float64",
+            "hmatrix_far_pivot_quadrature_order": 4,
+            "hmatrix_reference_quadrature_order": 8,
+            "hmatrix_pivot_row_backend": "auto",
+            "hmatrix_skip_inactive": true,
+            "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+            "hmatrix_storage_bytes": 389367092,
+            "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+            "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+            "hmatrix_low_rank_blocks": 4307,
+            "hmatrix_retained_dense_blocks": 79277,
+            "hmatrix_max_retained_rank": 64,
+            "hmatrix_max_heldout_relative_error": 4.6169214719710246e-07,
+            "hmatrix_coefficient_entry_queries": 202666087,
+            "hmatrix_setup_seconds": 135.38839050009847,
+            "hmatrix_setup_phase_seconds": {
+              "partition_and_geometry": 1.4932496002875268,
+              "leaf_preconditioner": 0.32364890025928617,
+              "exact_near_blocks": 15.00236459961161,
+              "far_ACA_and_failed_block_fallback": 118.48344410024583,
+              "finalize": 0.08266150020062923
+            },
+            "hmatrix_cache_hit": false,
+            "hmatrix_row_reuse": {
+              "plans": 1103,
+              "plan_seconds": 1.2825534055009484,
+              "pivot_calls": 26441,
+              "expanded_panel_slots": 223701415,
+              "shared_panel_slots": 86141911
+            },
+            "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+            "setup_seconds": 136.48346039978787,
+            "boundary_refinement": {
+              "kind": "full-order exact K blocks selected by independent coefficient errors",
+              "target": 2.4999999999999998e-05,
+              "block_absolute_row_L1_threshold": 1e-06,
+              "passes": [
+                {
+                  "maximum_constant_error": 6.098900957596243e-07,
+                  "component_constant_max_errors": [
+                    4.66958621522343e-08,
+                    1.6183796474849316e-08,
+                    1.6808951390668264e-08,
+                    1.8776991011298348e-08,
+                    1.543935814136267e-08,
+                    2.8800679063856194e-08,
+                    4.58244066066324e-08,
+                    6.145612818642121e-07,
+                    1.8626996813983307e-08,
+                    1.8591982789986442e-08
+                  ],
+                  "bad_rows": 0
+                }
+              ],
+              "blocks": [],
+              "added_bytes": 0,
+              "seconds": 0.18985369987785816,
+              "exact_entry_queries": 0,
+              "added_metadata_bytes": 0
+            },
+            "hmatrix_cached_base_storage_bytes": 389367092,
+            "AMG_levels": 3,
+            "AMG_operator_complexity": 1.110267034990792,
+            "converged": true,
+            "residual": 2.4435962276721346e-13,
+            "nonlinear_updates": 2,
+            "history": [
+              {
+                "residual_before": 1.0,
+                "damping": 1.0,
+                "gmres_iterations": 175,
+                "preconditioner_seconds": 0.15002369973808527
+              },
+              {
+                "residual_before": 2.5718630158647042e-08,
+                "damping": 1.0,
+                "gmres_iterations": 164,
+                "preconditioner_seconds": 0.05694649973884225
+              }
+            ],
+            "preconditioner": "block",
+            "solve_seconds": 7.345879899803549,
+            "total_gmres_iterations": 339,
+            "volume_weak_relative_residual": 2.44359622572195e-13,
+            "boundary_weak_relative_residual": 1.0446542881536201e-15
+          },
+          "air_gradient": {
+            "step_m": 2.06e-06,
+            "max_step_difference_Apm": 7.525877741469164e-07,
+            "method": "central difference / Richardson with verified air stencils"
+          },
+          "operator": {
+            "tetrahedra": 59850,
+            "P1_nodes": 14982,
+            "P0_boundary_faces": 17818,
+            "components": 10,
+            "quadrature_order": 8,
+            "boundary_backend": "cuda_hmatrix",
+            "geometry_seconds": 0.5597159001044929,
+            "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+            "boundary_faces": 17818,
+            "clusters": 2047,
+            "trial_dofs": 26743,
+            "trial_clusters": 2047,
+            "leaf_clusters": 1024,
+            "terminal_blocks": 62895,
+            "admissible_blocks": 22338,
+            "exact_near_entries": 18427538,
+            "exact_near_storage_bytes": 73710152,
+            "hmatrix_rtol": 1e-06,
+            "hmatrix_leaf_size": 32,
+            "hmatrix_eta": 3.0,
+            "hmatrix_max_rank": 64,
+            "hmatrix_coefficient_storage_dtype": "float32",
+            "hmatrix_compute_dtype": "float64",
+            "hmatrix_far_pivot_quadrature_order": 4,
+            "hmatrix_reference_quadrature_order": 8,
+            "hmatrix_pivot_row_backend": "auto",
+            "hmatrix_skip_inactive": true,
+            "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+            "hmatrix_storage_bytes": 389367092,
+            "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+            "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+            "hmatrix_low_rank_blocks": 4307,
+            "hmatrix_retained_dense_blocks": 79277,
+            "hmatrix_max_retained_rank": 64,
+            "hmatrix_max_heldout_relative_error": 4.6169214719710246e-07,
+            "hmatrix_coefficient_entry_queries": 202666087,
+            "hmatrix_setup_seconds": 135.38839050009847,
+            "hmatrix_setup_phase_seconds": {
+              "partition_and_geometry": 1.4932496002875268,
+              "leaf_preconditioner": 0.32364890025928617,
+              "exact_near_blocks": 15.00236459961161,
+              "far_ACA_and_failed_block_fallback": 118.48344410024583,
+              "finalize": 0.08266150020062923
+            },
+            "hmatrix_cache_hit": false,
+            "hmatrix_row_reuse": {
+              "plans": 1103,
+              "plan_seconds": 1.2825534055009484,
+              "pivot_calls": 26441,
+              "expanded_panel_slots": 223701415,
+              "shared_panel_slots": 86141911
+            },
+            "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+            "setup_seconds": 136.48346039978787,
+            "boundary_refinement": {
+              "kind": "full-order exact K blocks selected by independent coefficient errors",
+              "target": 2.4999999999999998e-05,
+              "block_absolute_row_L1_threshold": 1e-06,
+              "passes": [
+                {
+                  "maximum_constant_error": 6.098900957596243e-07,
+                  "component_constant_max_errors": [
+                    4.66958621522343e-08,
+                    1.6183796474849316e-08,
+                    1.6808951390668264e-08,
+                    1.8776991011298348e-08,
+                    1.543935814136267e-08,
+                    2.8800679063856194e-08,
+                    4.58244066066324e-08,
+                    6.145612818642121e-07,
+                    1.8626996813983307e-08,
+                    1.8591982789986442e-08
+                  ],
+                  "bad_rows": 0
+                }
+              ],
+              "blocks": [],
+              "added_bytes": 0,
+              "seconds": 0.18985369987785816,
+              "exact_entry_queries": 0,
+              "added_metadata_bytes": 0
+            },
+            "hmatrix_cached_base_storage_bytes": 389367092,
+            "AMG_levels": 3,
+            "AMG_operator_complexity": 1.110267034990792
+          },
+          "solution_sha256": "b777030247f9aafa7aec0c31e7d14027b4d3a6c4d1f60abcf1175ed190ac662e",
+          "passed": true
+        },
+        "air_B_sample_relative_L2": 0.03372347644959068,
+        "air_B_tolerance": 0.1,
+        "reference_scope": "Same 485 air points from the retained solved project; fresh initial mesh differs",
+        "native_manifest": {
+          "schema": "aedt-native-disk-1",
+          "files": {
+            "mesh/00006.aedtplt": {
+              "bytes": 4178132,
+              "role": "per-object volume mesh",
+              "sha256": "07a3ee76354492587b6d40c33af728183033daf782b571cb2af143a64ffcb83e"
+            },
+            "mesh/00000.aedtplt": {
+              "bytes": 4190892,
+              "role": "per-object volume mesh",
+              "sha256": "a865004dca81457aa86b34f70116a93aaf1ac2630493626bc50886b79b45b9e0"
+            },
+            "mesh/00003.aedtplt": {
+              "bytes": 418078,
+              "role": "per-object volume mesh",
+              "sha256": "d7da9c35d72256e618cc6208910b793b3deb44057cd4c98dcb4355ad1183aa80"
+            },
+            "mesh/00012.aedtplt": {
+              "bytes": 9960863,
+              "role": "per-object volume mesh",
+              "sha256": "559871c7966e3e4dfed5d558ee67646c7f57285c35984f0df23bc550cdb18a76"
+            },
+            "points.pts": {
+              "bytes": 6559,
+              "role": "native sample points in model units",
+              "sha256": "bf60b200c0138a6f15d8e356236594195134af066bb0a58c2a3e1888c30b6ed8"
+            },
+            "mesh/00007.aedtplt": {
+              "bytes": 430420,
+              "role": "per-object volume mesh",
+              "sha256": "e5cf0e9e2e05e1899c599c3a43d72e7c9ed3f31c918bd9a24f4f3b5a5b913878"
+            },
+            "mesh/00001.aedtplt": {
+              "bytes": 428338,
+              "role": "per-object volume mesh",
+              "sha256": "fa230dd8b52594ca93d414b2d61f8ed9bff2ca66d6737c46c98152c43b372a5d"
+            },
+            "native/source_project.aedt": {
+              "bytes": 622954,
+              "role": "saved original project inputs",
+              "sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785"
+            },
+            "points.csv": {
+              "bytes": 37070,
+              "role": "SI observation points",
+              "sha256": "9e4867ab7b0846478e4f4825602352fe030dd12e799c3c679cc1f6f0d26806c6"
+            },
+            "native/convergence.txt": {
+              "bytes": 303,
+              "role": "available native setup evidence",
+              "sha256": "518a256575b08d3343e695e51e10188d0c6d30c5d45de4e8310b04fd49d2f537"
+            },
+            "mesh/00010.aedtplt": {
+              "bytes": 436141,
+              "role": "per-object volume mesh",
+              "sha256": "2fdb4314363bc27a6d847a5605da98a734a070c54f1e70bfab3a85625a4ff15d"
+            },
+            "mesh/00004.aedtplt": {
+              "bytes": 446749,
+              "role": "per-object volume mesh",
+              "sha256": "267a126e9af373b009ed013ddf75f39e3fbd0243111b96f74bdd9710d40a2b1c"
+            },
+            "mesh/00008.aedtplt": {
+              "bytes": 422283,
+              "role": "per-object volume mesh",
+              "sha256": "4fe865503cf5c21ff499de0aea32242473c2cdd1305a59fd70afee46b50b1d28"
+            },
+            "native/profile.txt": {
+              "bytes": 1645,
+              "role": "available native setup evidence",
+              "sha256": "d4494e95a29feddf47837c20f5a0f5052894971932986d6fb689a2338b1210f3"
+            },
+            "mesh/00005.aedtplt": {
+              "bytes": 1083981,
+              "role": "per-object volume mesh",
+              "sha256": "1372baace2644c6398c7980a19da386b5e32a7344d6aba0883b34b416ae5a40a"
+            },
+            "mesh/00002.aedtplt": {
+              "bytes": 428847,
+              "role": "per-object volume mesh",
+              "sha256": "43f21cd43b8c2a2f0984ed17e692481be84fd84d87b65c8092f9797d3b79db58"
+            },
+            "mesh/00009.aedtplt": {
+              "bytes": 435872,
+              "role": "per-object volume mesh",
+              "sha256": "5554b3f25fe419b0433eff1c885449ee755045c926ad1b261d10a81feedaba78"
+            },
+            "native/mesh_stats.txt": {
+              "bytes": 2623,
+              "role": "available native setup evidence",
+              "sha256": "93e4baa5b9a335963269bdef806872d81d0ca05eb7b51fa69781a68e6dc5de28"
+            },
+            "native_export.json": {
+              "bytes": 48364,
+              "role": "native metadata and original settings",
+              "sha256": "6275dcbcad69c602f2c7aabd21a872f66eec84ee5cc904407173ffca3b03b497"
+            },
+            "mesh/00011.aedtplt": {
+              "bytes": 1108289,
+              "role": "per-object volume mesh",
+              "sha256": "6bbf82e9e923ff9093c628ce2e097ed89d67f3cdead96b8ca5df1b327924964e"
+            }
+          },
+          "state": "complete"
+        }
+      },
+      "source_project_unchanged": true,
+      "passed": true,
+      "elapsed_seconds": 284.6016957000829
+    },
+    {
+      "state": "complete",
+      "started_utc": "2026-11-13T13:08:09.133526+00:00",
+      "command": [
+        "C:\\Projects\\magtense-gpu\\skill-test\\.venv\\Scripts\\python.exe",
+        "validation/20261109_fmm_refined/run_fmm.py",
+        "--validate-native-transfer"
+      ],
+      "source_project_sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785",
+      "source_sha256": {
+        "aedt_export_native.py": "b9a93128c1095726a6319d2dcb5e7102c6926b5302a36b8a45ae6eea974462e5",
+        "aedt_export.py": "d515a99eba74e642dbb9494a6f2dec56646ac811ba7bb2be3b07aed9cf045f02",
+        "bridge.py": "56412697d4b4cb54080a06b2e4f5c2abce3671f3cef5067bd94f90a4f11e713d",
+        "fem_bem.py": "48b3ec0b7cc20619a285f1d5be2f1d8438347ad270a1bc4ca5f88d38e48c5429",
+        "boundary_hmatrix.py": "1d0cffc2bd5b2300d9482067784f9b444a96187785df461863776dafe62f441f",
+        "tetra_cuda.cu": "c2bee7865fdf722d6c304ffe3ee4e7333717f604fc3077c95f45d59e8d9bb96c"
+      },
+      "scope": "Actual AEDT 2022 R2 IronPython API + blocked-dependency offline process; AEDT18 and separate server OS not yet exercised",
+      "native_exit_code": 0,
+      "native_stdout": "NATIVE_EXPORT 1 \"A_YOKE_SOFT_MAGNETIC\" mesh/00000.aedtplt\nNATIVE_EXPORT 2 \"A_MAGNET_X_POS\" mesh/00001.aedtplt\nNATIVE_EXPORT 3 \"A_MAGNET_X_NEG\" mesh/00002.aedtplt\nNATIVE_EXPORT 4 \"A_MAGNET_Y_POS\" mesh/00003.aedtplt\nNATIVE_EXPORT 5 \"A_MAGNET_Y_NEG\" mesh/00004.aedtplt\nNATIVE_EXPORT 6 \"A_AF_COIL_COPPER\" mesh/00005.aedtplt\nNATIVE_EXPORT 7 \"B_YOKE_SOFT_MAGNETIC\" mesh/00006.aedtplt\nNATIVE_EXPORT 8 \"B_MAGNET_X_POS\" mesh/00007.aedtplt\nNATIVE_EXPORT 9 \"B_MAGNET_X_NEG\" mesh/00008.aedtplt\nNATIVE_EXPORT 10 \"B_MAGNET_Y_POS\" mesh/00009.aedtplt\nNATIVE_EXPORT 11 \"B_MAGNET_Y_NEG\" mesh/00010.aedtplt\nNATIVE_EXPORT 12 \"B_AF_COIL_COPPER\" mesh/00011.aedtplt\nNATIVE_EXPORT 13 \"Region\" mesh/00012.aedtplt\nNATIVE_EXPORT 14 \"A_Terminal\" Not a model Solve-Inside solid\nNATIVE_EXPORT 15 \"B_Terminal\" Not a model Solve-Inside solid\n",
+      "native_stderr": "",
+      "native_version": "2022.2.0",
+      "native_export_seconds": 23.172775268554688,
+      "total_domain_cells": 333613,
+      "exported_volume_solids": 13,
+      "magnetic_cells": 99093,
+      "normalized_inputs_equal_retained_export": true,
+      "offline_exit_code": 0,
+      "offline_stdout": "FEM_BEM boundary_refinement_identity {\"refinement_pass\": 0, \"maximum_constant_error\": 9.25613253683899e-05, \"bad_rows\": 1}\nFEM_BEM boundary_refinement_exact_probes {\"refinement_pass\": 0, \"rows\": 1}\nFEM_BEM boundary_refinement_blocks_replaced {\"exact_blocks\": 1, \"added_bytes\": 2852}\nFEM_BEM boundary_refinement_identity {\"refinement_pass\": 1, \"maximum_constant_error\": 9.100063202982511e-07, \"bad_rows\": 0}\nFEM_BEM newton {\"iteration\": 0, \"residual\": 1.0}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 25, \"preconditioned_relative_residual\": 147.80392047306808}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 50, \"preconditioned_relative_residual\": 1.6628895162246835}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 75, \"preconditioned_relative_residual\": 0.1526550228390258}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 100, \"preconditioned_relative_residual\": 0.006637494000452139}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 125, \"preconditioned_relative_residual\": 0.0033681105100560093}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 150, \"preconditioned_relative_residual\": 0.0003986916856729078}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 175, \"preconditioned_relative_residual\": 0.00016639578222446118}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 200, \"preconditioned_relative_residual\": 9.153073157989581e-05}\nFEM_BEM newton {\"iteration\": 1, \"residual\": 0.0002033202838771174}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 25, \"preconditioned_relative_residual\": 0.12812453177672678}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 50, \"preconditioned_relative_residual\": 0.032762651832653596}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 75, \"preconditioned_relative_residual\": 0.004640225145707753}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 100, \"preconditioned_relative_residual\": 1.440319225390739e-05}\nFEM_BEM newton {\"iteration\": 2, \"residual\": 4.995216959981385e-06}\nFEM_BEM gmres {\"newton_iteration\": 2, \"linear_iterations\": 25, \"preconditioned_relative_residual\": 0.00944793825757788}\nFEM_BEM gmres {\"newton_iteration\": 2, \"linear_iterations\": 50, \"preconditioned_relative_residual\": 5.807873155472271e-05}\nFEM_BEM gmres {\"newton_iteration\": 2, \"linear_iterations\": 75, \"preconditioned_relative_residual\": 8.259940967106816e-06}\nFEM_BEM newton {\"iteration\": 3, \"residual\": 1.5723620218251814e-10}\nSaved offline FEM-BEM solution: C:\\Users\\oxyfl\\AppData\\Local\\Temp\\magtense-native-final-zrlap6n5\\job\\fem_bem_solution.npz\n",
+      "offline_stderr": "",
+      "offline_solve": {
+        "state": "complete",
+        "backend": "cuda_hmatrix",
+        "source_model_sha256": "4db8a9060ae07a3a50ea98453123c9aa15bf51438c95dd6c136f42de7e560963",
+        "scope": "Offline P1/P0 magnetostatic field, zero free currents, infinite exterior air; native high-order equivalence not certified",
+        "phase": "newton",
+        "elapsed_seconds": 24.635318099986762,
+        "progress": {
+          "iteration": 3,
+          "residual": 1.5723620218251814e-10
+        },
+        "boundary_refinement": {
+          "kind": "full-order exact K blocks selected by independent coefficient errors",
+          "target": 2.4999999999999998e-05,
+          "block_absolute_row_L1_threshold": 1e-06,
+          "passes": [
+            {
+              "maximum_constant_error": 9.25613253683899e-05,
+              "component_constant_max_errors": [
+                4.9692436080709123e-08,
+                2.523569366361798e-08,
+                1.983020738562867e-08,
+                6.63717132365349e-08,
+                5.5773827378767255e-08,
+                1.5410108312324085e-07,
+                2.714554898529586e-08,
+                9.256761591752705e-05,
+                2.7885224150226223e-08,
+                3.6759201029773625e-08
+              ],
+              "bad_rows": 1
+            },
+            {
+              "maximum_constant_error": 9.100063202982511e-07,
+              "component_constant_max_errors": [
+                4.9692436080709123e-08,
+                2.523569366361798e-08,
+                1.9830207361535747e-08,
+                6.63717133475572e-08,
+                5.5773827378767255e-08,
+                1.5410108312370365e-07,
+                2.7145548981104666e-08,
+                9.105470054615594e-07,
+                2.7885224150226223e-08,
+                3.6759201029773625e-08
+              ],
+              "bad_rows": 0
+            }
+          ],
+          "blocks": [
+            {
+              "block": 95716,
+              "rows": 31,
+              "columns": 23,
+              "P1_columns": 14,
+              "sampled_absolute_row_L1_error": 9.257193666437144e-05,
+              "bytes": 2852
+            }
+          ],
+          "added_bytes": 2852,
+          "seconds": 0.5710326000116765,
+          "exact_entry_queries": 16271,
+          "added_metadata_bytes": 56
+        },
+        "boundary_checks": [
+          {
+            "input": "random",
+            "relative_L2": 1.604400359757958e-08,
+            "tolerance": 1.9999999999999998e-05
+          },
+          {
+            "input": "flux_only",
+            "relative_L2": 1.0512792880383877e-07,
+            "tolerance": 1.9999999999999998e-05
+          },
+          {
+            "input": "smooth",
+            "relative_L2": 7.230292230939866e-09,
+            "tolerance": 1.9999999999999998e-05
+          }
+        ],
+        "solver": {
+          "tetrahedra": 99093,
+          "P1_nodes": 25470,
+          "P0_boundary_faces": 31642,
+          "components": 10,
+          "quadrature_order": 8,
+          "boundary_backend": "cuda_hmatrix",
+          "geometry_seconds": 0.9791088998317719,
+          "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+          "boundary_faces": 31642,
+          "clusters": 2047,
+          "trial_dofs": 47479,
+          "trial_clusters": 4095,
+          "leaf_clusters": 1024,
+          "terminal_blocks": 94674,
+          "admissible_blocks": 33182,
+          "exact_near_entries": 44066763,
+          "exact_near_storage_bytes": 176267052,
+          "hmatrix_rtol": 1e-06,
+          "hmatrix_leaf_size": 32,
+          "hmatrix_eta": 3.0,
+          "hmatrix_max_rank": 64,
+          "hmatrix_coefficient_storage_dtype": "float32",
+          "hmatrix_compute_dtype": "float64",
+          "hmatrix_far_pivot_quadrature_order": 4,
+          "hmatrix_reference_quadrature_order": 8,
+          "hmatrix_pivot_row_backend": "auto",
+          "hmatrix_skip_inactive": true,
+          "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+          "hmatrix_storage_bytes": 870008372,
+          "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+          "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+          "hmatrix_low_rank_blocks": 11967,
+          "hmatrix_retained_dense_blocks": 100203,
+          "hmatrix_max_retained_rank": 64,
+          "hmatrix_max_heldout_relative_error": 2.6658655528509684e-07,
+          "hmatrix_coefficient_entry_queries": 381247233,
+          "hmatrix_setup_seconds": 168.93058479996398,
+          "hmatrix_setup_phase_seconds": {
+            "partition_and_geometry": 1.9772696997970343,
+            "leaf_preconditioner": 0.3949234997853637,
+            "exact_near_blocks": 34.27212030021474,
+            "far_ACA_and_failed_block_fallback": 132.2160526998341,
+            "finalize": 0.0670928000472486
+          },
+          "hmatrix_cache_hit": true,
+          "hmatrix_row_reuse": {
+            "plans": 1180,
+            "plan_seconds": 1.4669159837067127,
+            "pivot_calls": 34330,
+            "expanded_panel_slots": 415635011,
+            "shared_panel_slots": 156032526
+          },
+          "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+          "hmatrix_cache_prefix": "C:\\Projects\\magtense-gpu\\validation\\20261109_fmm_refined\\native_transfer\\offline\\boundary_cache\\e82ce44e938342ea80c32cfd32a21ce87b755be1e49ecf6f1c00348aeebfd6d2",
+          "hmatrix_cache_load_seconds": 5.229198199696839,
+          "setup_seconds": 6.724082899745554,
+          "boundary_refinement": {
+            "kind": "full-order exact K blocks selected by independent coefficient errors",
+            "target": 2.4999999999999998e-05,
+            "block_absolute_row_L1_threshold": 1e-06,
+            "passes": [
+              {
+                "maximum_constant_error": 9.25613253683899e-05,
+                "component_constant_max_errors": [
+                  4.9692436080709123e-08,
+                  2.523569366361798e-08,
+                  1.983020738562867e-08,
+                  6.63717132365349e-08,
+                  5.5773827378767255e-08,
+                  1.5410108312324085e-07,
+                  2.714554898529586e-08,
+                  9.256761591752705e-05,
+                  2.7885224150226223e-08,
+                  3.6759201029773625e-08
+                ],
+                "bad_rows": 1
+              },
+              {
+                "maximum_constant_error": 9.100063202982511e-07,
+                "component_constant_max_errors": [
+                  4.9692436080709123e-08,
+                  2.523569366361798e-08,
+                  1.9830207361535747e-08,
+                  6.63717133475572e-08,
+                  5.5773827378767255e-08,
+                  1.5410108312370365e-07,
+                  2.7145548981104666e-08,
+                  9.105470054615594e-07,
+                  2.7885224150226223e-08,
+                  3.6759201029773625e-08
+                ],
+                "bad_rows": 0
+              }
+            ],
+            "blocks": [
+              {
+                "block": 95716,
+                "rows": 31,
+                "columns": 23,
+                "P1_columns": 14,
+                "sampled_absolute_row_L1_error": 9.257193666437144e-05,
+                "bytes": 2852
+              }
+            ],
+            "added_bytes": 2852,
+            "seconds": 0.5710326000116765,
+            "exact_entry_queries": 16271,
+            "added_metadata_bytes": 56
+          },
+          "hmatrix_cached_base_storage_bytes": 870005464,
+          "AMG_levels": 3,
+          "AMG_operator_complexity": 1.1317181652526598,
+          "converged": true,
+          "residual": 1.5723620218251814e-10,
+          "nonlinear_updates": 3,
+          "history": [
+            {
+              "residual_before": 1.0,
+              "damping": 1.0,
+              "gmres_iterations": 204,
+              "preconditioner_seconds": 0.17027910007163882
+            },
+            {
+              "residual_before": 0.0002033202838771174,
+              "damping": 1.0,
+              "gmres_iterations": 100,
+              "preconditioner_seconds": 0.08536829985678196
+            },
+            {
+              "residual_before": 4.995216959981385e-06,
+              "damping": 1.0,
+              "gmres_iterations": 81,
+              "preconditioner_seconds": 0.08631470007821918
+            }
+          ],
+          "preconditioner": "block",
+          "solve_seconds": 15.460687099955976,
+          "total_gmres_iterations": 385,
+          "volume_weak_relative_residual": 1.5723620218246414e-10,
+          "boundary_weak_relative_residual": 1.4039166273089062e-14
+        },
+        "air_gradient": {
+          "step_m": 2.06e-06,
+          "max_step_difference_Apm": 8.731767288227665e-07,
+          "method": "central difference / Richardson with verified air stencils"
+        },
+        "operator": {
+          "tetrahedra": 99093,
+          "P1_nodes": 25470,
+          "P0_boundary_faces": 31642,
+          "components": 10,
+          "quadrature_order": 8,
+          "boundary_backend": "cuda_hmatrix",
+          "geometry_seconds": 0.9791088998317719,
+          "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+          "boundary_faces": 31642,
+          "clusters": 2047,
+          "trial_dofs": 47479,
+          "trial_clusters": 4095,
+          "leaf_clusters": 1024,
+          "terminal_blocks": 94674,
+          "admissible_blocks": 33182,
+          "exact_near_entries": 44066763,
+          "exact_near_storage_bytes": 176267052,
+          "hmatrix_rtol": 1e-06,
+          "hmatrix_leaf_size": 32,
+          "hmatrix_eta": 3.0,
+          "hmatrix_max_rank": 64,
+          "hmatrix_coefficient_storage_dtype": "float32",
+          "hmatrix_compute_dtype": "float64",
+          "hmatrix_far_pivot_quadrature_order": 4,
+          "hmatrix_reference_quadrature_order": 8,
+          "hmatrix_pivot_row_backend": "auto",
+          "hmatrix_skip_inactive": true,
+          "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+          "hmatrix_storage_bytes": 870008372,
+          "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+          "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+          "hmatrix_low_rank_blocks": 11967,
+          "hmatrix_retained_dense_blocks": 100203,
+          "hmatrix_max_retained_rank": 64,
+          "hmatrix_max_heldout_relative_error": 2.6658655528509684e-07,
+          "hmatrix_coefficient_entry_queries": 381247233,
+          "hmatrix_setup_seconds": 168.93058479996398,
+          "hmatrix_setup_phase_seconds": {
+            "partition_and_geometry": 1.9772696997970343,
+            "leaf_preconditioner": 0.3949234997853637,
+            "exact_near_blocks": 34.27212030021474,
+            "far_ACA_and_failed_block_fallback": 132.2160526998341,
+            "finalize": 0.0670928000472486
+          },
+          "hmatrix_cache_hit": true,
+          "hmatrix_row_reuse": {
+            "plans": 1180,
+            "plan_seconds": 1.4669159837067127,
+            "pivot_calls": 34330,
+            "expanded_panel_slots": 415635011,
+            "shared_panel_slots": 156032526
+          },
+          "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+          "hmatrix_cache_prefix": "C:\\Projects\\magtense-gpu\\validation\\20261109_fmm_refined\\native_transfer\\offline\\boundary_cache\\e82ce44e938342ea80c32cfd32a21ce87b755be1e49ecf6f1c00348aeebfd6d2",
+          "hmatrix_cache_load_seconds": 5.229198199696839,
+          "setup_seconds": 6.724082899745554,
+          "boundary_refinement": {
+            "kind": "full-order exact K blocks selected by independent coefficient errors",
+            "target": 2.4999999999999998e-05,
+            "block_absolute_row_L1_threshold": 1e-06,
+            "passes": [
+              {
+                "maximum_constant_error": 9.25613253683899e-05,
+                "component_constant_max_errors": [
+                  4.9692436080709123e-08,
+                  2.523569366361798e-08,
+                  1.983020738562867e-08,
+                  6.63717132365349e-08,
+                  5.5773827378767255e-08,
+                  1.5410108312324085e-07,
+                  2.714554898529586e-08,
+                  9.256761591752705e-05,
+                  2.7885224150226223e-08,
+                  3.6759201029773625e-08
+                ],
+                "bad_rows": 1
+              },
+              {
+                "maximum_constant_error": 9.100063202982511e-07,
+                "component_constant_max_errors": [
+                  4.9692436080709123e-08,
+                  2.523569366361798e-08,
+                  1.9830207361535747e-08,
+                  6.63717133475572e-08,
+                  5.5773827378767255e-08,
+                  1.5410108312370365e-07,
+                  2.7145548981104666e-08,
+                  9.105470054615594e-07,
+                  2.7885224150226223e-08,
+                  3.6759201029773625e-08
+                ],
+                "bad_rows": 0
+              }
+            ],
+            "blocks": [
+              {
+                "block": 95716,
+                "rows": 31,
+                "columns": 23,
+                "P1_columns": 14,
+                "sampled_absolute_row_L1_error": 9.257193666437144e-05,
+                "bytes": 2852
+              }
+            ],
+            "added_bytes": 2852,
+            "seconds": 0.5710326000116765,
+            "exact_entry_queries": 16271,
+            "added_metadata_bytes": 56
+          },
+          "hmatrix_cached_base_storage_bytes": 870005464,
+          "AMG_levels": 3,
+          "AMG_operator_complexity": 1.1317181652526598
+        },
+        "solution_sha256": "0b28aeb9c98241423e6d23de2ab659c83098a2989b01280256571fc666169d49",
+        "native_air_B_sample_relative_L2": 0.03331617979525287,
+        "passed": true
+      },
+      "offline_environment": "Ansys module imports blocked; Ansys PATH/root/license variables removed",
+      "native_manifest": {
+        "schema": "aedt-native-disk-1",
+        "files": {
+          "native/B.fld": {
+            "bytes": 68309,
+            "role": "native SI vector reference",
+            "sha256": "893f0f2115bc6dd500c91bce955fea844c1921f216477acdcea9e457a5669e56"
+          },
+          "mesh/00006.aedtplt": {
+            "bytes": 5891459,
+            "role": "per-object volume mesh",
+            "sha256": "c784cf06699b85f668325945cad2b96625409de29f21c860cdb1d3fa5ac3700b"
+          },
+          "native/source_project.aedt": {
+            "bytes": 622954,
+            "role": "saved original project inputs",
+            "sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785"
+          },
+          "mesh/00005.aedtplt": {
+            "bytes": 1887425,
+            "role": "per-object volume mesh",
+            "sha256": "4096ed09313092756730de5452202bdc92e7bb165d068a7f2b2bb7b7c024c058"
+          },
+          "mesh/00002.aedtplt": {
+            "bytes": 938062,
+            "role": "per-object volume mesh",
+            "sha256": "7624f36229b48aa8cda2436a109a3282871641226d65e30b63cec15b777798fe"
+          },
+          "mesh/00001.aedtplt": {
+            "bytes": 965042,
+            "role": "per-object volume mesh",
+            "sha256": "05d4a558f1615e34acffb00b1fd875aa48738664e93d75b768517a0b2e5f42da"
+          },
+          "mesh/00009.aedtplt": {
+            "bytes": 1039711,
+            "role": "per-object volume mesh",
+            "sha256": "06f6359bd6d03cc240142f435ddf5e6a6ce0281721e619cba11d48eab53ef87b"
+          },
+          "mesh/00012.aedtplt": {
+            "bytes": 43518142,
+            "role": "per-object volume mesh",
+            "sha256": "a849372dbd4a0e4f402f0bf026481430f59698c7b767b640c58f306ba9f18b5e"
+          },
+          "native/convergence.txt": {
+            "bytes": 672,
+            "role": "available native setup evidence",
+            "sha256": "c041d2e102007962b129ff25dbb5cff78f857f30a9a2ddf2e9c32902d77f91d1"
+          },
+          "mesh/00011.aedtplt": {
+            "bytes": 1835291,
+            "role": "per-object volume mesh",
+            "sha256": "e5238017fb06e7811d7e93f9fbbd758134b17eeb9664b88f744587d4261f5b02"
+          },
+          "native/mesh_stats.txt": {
+            "bytes": 2602,
+            "role": "available native setup evidence",
+            "sha256": "0d0e0c7e5b701d255e1825bb500297e9d2ac59a3bcab0641e5bc2c6b4dd97382"
+          },
+          "native/profile.txt": {
+            "bytes": 8334,
+            "role": "available native setup evidence",
+            "sha256": "d6a47dbc265e92586fbd263d5cede1362535902431a35f660e01795da0c98f72"
+          },
+          "native_export.json": {
+            "bytes": 48777,
+            "role": "native metadata and original settings",
+            "sha256": "ad0d88e6fbc8b8f6983762bad2d418eb9746160b025c4af58e6d61a172adab8b"
+          },
+          "mesh/00004.aedtplt": {
+            "bytes": 1034960,
+            "role": "per-object volume mesh",
+            "sha256": "9eb11cabaf7455e398a8ee50b107c5010e2b89ee288ccea6bc9edf887e8896d2"
+          },
+          "points.pts": {
+            "bytes": 6559,
+            "role": "native sample points in model units",
+            "sha256": "bf60b200c0138a6f15d8e356236594195134af066bb0a58c2a3e1888c30b6ed8"
+          },
+          "mesh/00000.aedtplt": {
+            "bytes": 5906787,
+            "role": "per-object volume mesh",
+            "sha256": "d03c58bd1da58178b87ea2a94eb718f535c6208f06e1f0d4aa979732823d5275"
+          },
+          "mesh/00007.aedtplt": {
+            "bytes": 1001409,
+            "role": "per-object volume mesh",
+            "sha256": "1f93be253d737300f2b5835dcc2c170b13157b951c86662f69f46855f28ffc6c"
+          },
+          "points.csv": {
+            "bytes": 37070,
+            "role": "SI observation points",
+            "sha256": "9e4867ab7b0846478e4f4825602352fe030dd12e799c3c679cc1f6f0d26806c6"
+          },
+          "mesh/00008.aedtplt": {
+            "bytes": 994612,
+            "role": "per-object volume mesh",
+            "sha256": "afc7ff5ffce72048732ddf2c3732387ec103952ac0a01e8c59415a55c988ff4d"
+          },
+          "mesh/00003.aedtplt": {
+            "bytes": 1004290,
+            "role": "per-object volume mesh",
+            "sha256": "7ffe9d1fe028ccb657e09398e4b4f5aa4c998554f938d5f757c9441cb9195415"
+          },
+          "mesh/00010.aedtplt": {
+            "bytes": 977915,
+            "role": "per-object volume mesh",
+            "sha256": "4ac726651049052f25823e303b963291ef6967d6ad646a5c89d0f2c16f38366a"
+          },
+          "native/H.fld": {
+            "bytes": 68309,
+            "role": "native SI vector reference",
+            "sha256": "544f3fc3af36eeaea08d7e83039ddeb3ebd9e4fdcd19485b98fea82a7805161d"
+          }
+        },
+        "state": "complete"
+      },
+      "mesh_only_stdout": "NATIVE_EXPORT GenerateMesh \"Reference\"\nNATIVE_EXPORT 1 \"A_YOKE_SOFT_MAGNETIC\" mesh/00000.aedtplt\nNATIVE_EXPORT 2 \"A_MAGNET_X_POS\" mesh/00001.aedtplt\nNATIVE_EXPORT 3 \"A_MAGNET_X_NEG\" mesh/00002.aedtplt\nNATIVE_EXPORT 4 \"A_MAGNET_Y_POS\" mesh/00003.aedtplt\nNATIVE_EXPORT 5 \"A_MAGNET_Y_NEG\" mesh/00004.aedtplt\nNATIVE_EXPORT 6 \"A_AF_COIL_COPPER\" mesh/00005.aedtplt\nNATIVE_EXPORT 7 \"B_YOKE_SOFT_MAGNETIC\" mesh/00006.aedtplt\nNATIVE_EXPORT 8 \"B_MAGNET_X_POS\" mesh/00007.aedtplt\nNATIVE_EXPORT 9 \"B_MAGNET_X_NEG\" mesh/00008.aedtplt\nNATIVE_EXPORT 10 \"B_MAGNET_Y_POS\" mesh/00009.aedtplt\nNATIVE_EXPORT 11 \"B_MAGNET_Y_NEG\" mesh/00010.aedtplt\nNATIVE_EXPORT 12 \"B_AF_COIL_COPPER\" mesh/00011.aedtplt\nNATIVE_EXPORT 13 \"Region\" mesh/00012.aedtplt\nNATIVE_EXPORT 14 \"A_Terminal\" Not a model Solve-Inside solid\nNATIVE_EXPORT 15 \"B_Terminal\" Not a model Solve-Inside solid\n",
+      "mesh_only_stderr": "",
+      "mesh_only": {
+        "field_solve_submitted": false,
+        "disposable_project_only": true,
+        "source_mode": "inputs_only",
+        "imported_without_reference": true,
+        "geometry": {
+          "tetrahedra": 59850,
+          "P1_nodes": 14982,
+          "P0_boundary_faces": 17818,
+          "components": 10,
+          "quadrature_order": 10,
+          "boundary_backend": "geometry",
+          "geometry_seconds": 0.5501796002499759,
+          "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means"
+        },
+        "native_evidence": {
+          "profile.txt": {
+            "state": "exported",
+            "file": "native/profile.txt"
+          },
+          "mesh_stats.txt": {
+            "state": "exported",
+            "file": "native/mesh_stats.txt"
+          },
+          "convergence.txt": {
+            "state": "exported",
+            "file": "native/convergence.txt"
+          }
+        },
+        "mesh_generation": {
+          "isolated_project": true,
+          "source_results_present": false,
+          "state": "generated",
+          "return_code": 0,
+          "elapsed_seconds": 24.48876953125,
+          "policy": "auto",
+          "setup": "Reference",
+          "field_solve_submitted": false
+        },
+        "exporter_sha256": "b9a93128c1095726a6319d2dcb5e7102c6926b5302a36b8a45ae6eea974462e5",
+        "original_result_database_created": false,
+        "offline_exit_code": 0,
+        "offline_stdout": "FEM_BEM boundary_partition {\"boundary_faces\": 17818, \"clusters\": 2047, \"trial_dofs\": 26743, \"trial_clusters\": 2047, \"leaf_clusters\": 1024, \"terminal_blocks\": 62895, \"admissible_blocks\": 22338, \"exact_near_entries\": 18427538, \"exact_near_storage_bytes\": 73710152, \"boundary_backend\": \"cuda_hmatrix\", \"hmatrix_rtol\": 1e-06, \"hmatrix_leaf_size\": 32, \"hmatrix_eta\": 3.0, \"hmatrix_max_rank\": 64, \"hmatrix_coefficient_storage_dtype\": \"float32\", \"hmatrix_compute_dtype\": \"float64\", \"hmatrix_far_pivot_quadrature_order\": 4, \"hmatrix_reference_quadrature_order\": 8, \"hmatrix_pivot_row_backend\": \"auto\", \"hmatrix_skip_inactive\": true, \"hmatrix_error_scope\": \"ACA sampled block residual; independent global direct probes required\"}\nFEM_BEM boundary_build {\"completed_blocks\": 40557, \"pending_blocks\": 22339, \"stored_bytes\": 76192440, \"coefficient_pairs\": 19878832, \"boundary_elapsed_seconds\": 16.635403400287032}\nFEM_BEM boundary_build {\"completed_blocks\": 40832, \"pending_blocks\": 22143, \"stored_bytes\": 186278936, \"coefficient_pairs\": 68459404, \"boundary_elapsed_seconds\": 26.858711400069296}\nFEM_BEM boundary_build {\"completed_blocks\": 42173, \"pending_blocks\": 20830, \"stored_bytes\": 269626296, \"coefficient_pairs\": 96252106, \"boundary_elapsed_seconds\": 36.933997000101954}\nFEM_BEM boundary_build {\"completed_blocks\": 44385, \"pending_blocks\": 21274, \"stored_bytes\": 305304312, \"coefficient_pairs\": 117014723, \"boundary_elapsed_seconds\": 46.96763430023566}\nFEM_BEM boundary_build {\"completed_blocks\": 44862, \"pending_blocks\": 27827, \"stored_bytes\": 308468680, \"coefficient_pairs\": 132382315, \"boundary_elapsed_seconds\": 56.98048700019717}\nFEM_BEM boundary_build {\"completed_blocks\": 44863, \"pending_blocks\": 35761, \"stored_bytes\": 308471608, \"coefficient_pairs\": 145401067, \"boundary_elapsed_seconds\": 67.05535909999162}\nFEM_BEM boundary_build {\"completed_blocks\": 49631, \"pending_blocks\": 33953, \"stored_bytes\": 317523560, \"coefficient_pairs\": 156922615, \"boundary_elapsed_seconds\": 77.12860709987581}\nFEM_BEM boundary_build {\"completed_blocks\": 57311, \"pending_blocks\": 26273, \"stored_bytes\": 331900520, \"coefficient_pairs\": 167694071, \"boundary_elapsed_seconds\": 87.13978060008958}\nFEM_BEM boundary_build {\"completed_blocks\": 65278, \"pending_blocks\": 18306, \"stored_bytes\": 346523512, \"coefficient_pairs\": 178573683, \"boundary_elapsed_seconds\": 97.18528060009703}\nFEM_BEM boundary_build {\"completed_blocks\": 72830, \"pending_blocks\": 10754, \"stored_bytes\": 359875448, \"coefficient_pairs\": 188505907, \"boundary_elapsed_seconds\": 107.20613500010222}\nFEM_BEM boundary_build {\"completed_blocks\": 80894, \"pending_blocks\": 2690, \"stored_bytes\": 374132600, \"coefficient_pairs\": 199123443, \"boundary_elapsed_seconds\": 117.28225609986112}\nFEM_BEM boundary_refinement_identity {\"refinement_pass\": 0, \"maximum_constant_error\": 6.098900958706466e-07, \"bad_rows\": 0}\nFEM_BEM newton {\"iteration\": 0, \"residual\": 1.0}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 25, \"preconditioned_relative_residual\": 65.16475497115273}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 50, \"preconditioned_relative_residual\": 0.36655261635756836}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 75, \"preconditioned_relative_residual\": 0.06235760274637236}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 100, \"preconditioned_relative_residual\": 0.0030967769637726726}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 125, \"preconditioned_relative_residual\": 0.0004528129396538171}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 150, \"preconditioned_relative_residual\": 0.00014156310451173316}\nFEM_BEM gmres {\"newton_iteration\": 0, \"linear_iterations\": 175, \"preconditioned_relative_residual\": 1.0858135935576765e-05}\nFEM_BEM newton {\"iteration\": 1, \"residual\": 2.571880147552137e-08}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 25, \"preconditioned_relative_residual\": 66.53375690243828}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 50, \"preconditioned_relative_residual\": 21.413574292204796}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 75, \"preconditioned_relative_residual\": 0.4542807838923817}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 100, \"preconditioned_relative_residual\": 0.0012834903209884157}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 125, \"preconditioned_relative_residual\": 0.00014135532150253742}\nFEM_BEM gmres {\"newton_iteration\": 1, \"linear_iterations\": 150, \"preconditioned_relative_residual\": 5.4618980014169525e-05}\nFEM_BEM newton {\"iteration\": 2, \"residual\": 2.4618672347024377e-13}\nSaved offline FEM-BEM solution: C:\\Users\\oxyfl\\AppData\\Local\\Temp\\magtense-native-final-zrlap6n5\\mesh_only_job\\fem_bem_solution.npz\n",
+        "offline_stderr": "",
+        "offline_solve": {
+          "state": "complete",
+          "backend": "cuda_hmatrix",
+          "source_model_sha256": "50f3c0c5290d43b5c3f843c4b5502fa24a6ab4d89976962042b13e4ee840e35e",
+          "scope": "Offline P1/P0 magnetostatic field, zero free currents, infinite exterior air; native high-order equivalence not certified",
+          "phase": "newton",
+          "elapsed_seconds": 131.59677780000493,
+          "progress": {
+            "iteration": 2,
+            "residual": 2.4618672347024377e-13
+          },
+          "boundary_refinement": {
+            "kind": "full-order exact K blocks selected by independent coefficient errors",
+            "target": 2.4999999999999998e-05,
+            "block_absolute_row_L1_threshold": 1e-06,
+            "passes": [
+              {
+                "maximum_constant_error": 6.098900958706466e-07,
+                "component_constant_max_errors": [
+                  4.669586216003835e-08,
+                  1.618379639347022e-08,
+                  1.6808951402273198e-08,
+                  1.877699099231653e-08,
+                  1.5439358099962486e-08,
+                  2.880067895283389e-08,
+                  4.5824406610670624e-08,
+                  6.145612818642121e-07,
+                  1.8626996839748994e-08,
+                  1.859198283040384e-08
+                ],
+                "bad_rows": 0
+              }
+            ],
+            "blocks": [],
+            "added_bytes": 0,
+            "seconds": 0.06289829965680838,
+            "exact_entry_queries": 0,
+            "added_metadata_bytes": 0
+          },
+          "boundary_checks": [
+            {
+              "input": "random",
+              "relative_L2": 2.017765149220457e-08,
+              "tolerance": 1.9999999999999998e-05
+            },
+            {
+              "input": "flux_only",
+              "relative_L2": 7.572818951941013e-08,
+              "tolerance": 1.9999999999999998e-05
+            },
+            {
+              "input": "smooth",
+              "relative_L2": 1.138475150027145e-08,
+              "tolerance": 1.9999999999999998e-05
+            }
+          ],
+          "solver": {
+            "tetrahedra": 59850,
+            "P1_nodes": 14982,
+            "P0_boundary_faces": 17818,
+            "components": 10,
+            "quadrature_order": 8,
+            "boundary_backend": "cuda_hmatrix",
+            "geometry_seconds": 0.5333254998549819,
+            "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+            "boundary_faces": 17818,
+            "clusters": 2047,
+            "trial_dofs": 26743,
+            "trial_clusters": 2047,
+            "leaf_clusters": 1024,
+            "terminal_blocks": 62895,
+            "admissible_blocks": 22338,
+            "exact_near_entries": 18427538,
+            "exact_near_storage_bytes": 73710152,
+            "hmatrix_rtol": 1e-06,
+            "hmatrix_leaf_size": 32,
+            "hmatrix_eta": 3.0,
+            "hmatrix_max_rank": 64,
+            "hmatrix_coefficient_storage_dtype": "float32",
+            "hmatrix_compute_dtype": "float64",
+            "hmatrix_far_pivot_quadrature_order": 4,
+            "hmatrix_reference_quadrature_order": 8,
+            "hmatrix_pivot_row_backend": "auto",
+            "hmatrix_skip_inactive": true,
+            "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+            "hmatrix_storage_bytes": 389367092,
+            "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+            "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+            "hmatrix_low_rank_blocks": 4307,
+            "hmatrix_retained_dense_blocks": 79277,
+            "hmatrix_max_retained_rank": 64,
+            "hmatrix_max_heldout_relative_error": 4.6169214719710246e-07,
+            "hmatrix_coefficient_entry_queries": 202666087,
+            "hmatrix_setup_seconds": 120.74841720005497,
+            "hmatrix_setup_phase_seconds": {
+              "partition_and_geometry": 1.2248010002076626,
+              "leaf_preconditioner": 0.2876344998367131,
+              "exact_near_blocks": 14.74895429983735,
+              "far_ACA_and_failed_block_fallback": 104.43834090000018,
+              "finalize": 0.04750319989398122
+            },
+            "hmatrix_cache_hit": false,
+            "hmatrix_row_reuse": {
+              "plans": 1103,
+              "plan_seconds": 1.2554886038415134,
+              "pivot_calls": 26441,
+              "expanded_panel_slots": 223701415,
+              "shared_panel_slots": 86141911
+            },
+            "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+            "setup_seconds": 121.74683520011604,
+            "boundary_refinement": {
+              "kind": "full-order exact K blocks selected by independent coefficient errors",
+              "target": 2.4999999999999998e-05,
+              "block_absolute_row_L1_threshold": 1e-06,
+              "passes": [
+                {
+                  "maximum_constant_error": 6.098900958706466e-07,
+                  "component_constant_max_errors": [
+                    4.669586216003835e-08,
+                    1.618379639347022e-08,
+                    1.6808951402273198e-08,
+                    1.877699099231653e-08,
+                    1.5439358099962486e-08,
+                    2.880067895283389e-08,
+                    4.5824406610670624e-08,
+                    6.145612818642121e-07,
+                    1.8626996839748994e-08,
+                    1.859198283040384e-08
+                  ],
+                  "bad_rows": 0
+                }
+              ],
+              "blocks": [],
+              "added_bytes": 0,
+              "seconds": 0.06289829965680838,
+              "exact_entry_queries": 0,
+              "added_metadata_bytes": 0
+            },
+            "hmatrix_cached_base_storage_bytes": 389367092,
+            "AMG_levels": 3,
+            "AMG_operator_complexity": 1.110267034990792,
+            "converged": true,
+            "residual": 2.4618672347024377e-13,
+            "nonlinear_updates": 2,
+            "history": [
+              {
+                "residual_before": 1.0,
+                "damping": 1.0,
+                "gmres_iterations": 175,
+                "preconditioner_seconds": 0.14164469996467233
+              },
+              {
+                "residual_before": 2.571880147552137e-08,
+                "damping": 1.0,
+                "gmres_iterations": 164,
+                "preconditioner_seconds": 0.059446700382977724
+              }
+            ],
+            "preconditioner": "block",
+            "solve_seconds": 7.1978624002076685,
+            "total_gmres_iterations": 339,
+            "volume_weak_relative_residual": 2.461867233469733e-13,
+            "boundary_weak_relative_residual": 8.33646131227149e-16
+          },
+          "air_gradient": {
+            "step_m": 2.06e-06,
+            "max_step_difference_Apm": 7.555783401295886e-07,
+            "method": "central difference / Richardson with verified air stencils"
+          },
+          "operator": {
+            "tetrahedra": 59850,
+            "P1_nodes": 14982,
+            "P0_boundary_faces": 17818,
+            "components": 10,
+            "quadrature_order": 8,
+            "boundary_backend": "cuda_hmatrix",
+            "geometry_seconds": 0.5333254998549819,
+            "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+            "boundary_faces": 17818,
+            "clusters": 2047,
+            "trial_dofs": 26743,
+            "trial_clusters": 2047,
+            "leaf_clusters": 1024,
+            "terminal_blocks": 62895,
+            "admissible_blocks": 22338,
+            "exact_near_entries": 18427538,
+            "exact_near_storage_bytes": 73710152,
+            "hmatrix_rtol": 1e-06,
+            "hmatrix_leaf_size": 32,
+            "hmatrix_eta": 3.0,
+            "hmatrix_max_rank": 64,
+            "hmatrix_coefficient_storage_dtype": "float32",
+            "hmatrix_compute_dtype": "float64",
+            "hmatrix_far_pivot_quadrature_order": 4,
+            "hmatrix_reference_quadrature_order": 8,
+            "hmatrix_pivot_row_backend": "auto",
+            "hmatrix_skip_inactive": true,
+            "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+            "hmatrix_storage_bytes": 389367092,
+            "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+            "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+            "hmatrix_low_rank_blocks": 4307,
+            "hmatrix_retained_dense_blocks": 79277,
+            "hmatrix_max_retained_rank": 64,
+            "hmatrix_max_heldout_relative_error": 4.6169214719710246e-07,
+            "hmatrix_coefficient_entry_queries": 202666087,
+            "hmatrix_setup_seconds": 120.74841720005497,
+            "hmatrix_setup_phase_seconds": {
+              "partition_and_geometry": 1.2248010002076626,
+              "leaf_preconditioner": 0.2876344998367131,
+              "exact_near_blocks": 14.74895429983735,
+              "far_ACA_and_failed_block_fallback": 104.43834090000018,
+              "finalize": 0.04750319989398122
+            },
+            "hmatrix_cache_hit": false,
+            "hmatrix_row_reuse": {
+              "plans": 1103,
+              "plan_seconds": 1.2554886038415134,
+              "pivot_calls": 26441,
+              "expanded_panel_slots": 223701415,
+              "shared_panel_slots": 86141911
+            },
+            "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+            "setup_seconds": 121.74683520011604,
+            "boundary_refinement": {
+              "kind": "full-order exact K blocks selected by independent coefficient errors",
+              "target": 2.4999999999999998e-05,
+              "block_absolute_row_L1_threshold": 1e-06,
+              "passes": [
+                {
+                  "maximum_constant_error": 6.098900958706466e-07,
+                  "component_constant_max_errors": [
+                    4.669586216003835e-08,
+                    1.618379639347022e-08,
+                    1.6808951402273198e-08,
+                    1.877699099231653e-08,
+                    1.5439358099962486e-08,
+                    2.880067895283389e-08,
+                    4.5824406610670624e-08,
+                    6.145612818642121e-07,
+                    1.8626996839748994e-08,
+                    1.859198283040384e-08
+                  ],
+                  "bad_rows": 0
+                }
+              ],
+              "blocks": [],
+              "added_bytes": 0,
+              "seconds": 0.06289829965680838,
+              "exact_entry_queries": 0,
+              "added_metadata_bytes": 0
+            },
+            "hmatrix_cached_base_storage_bytes": 389367092,
+            "AMG_levels": 3,
+            "AMG_operator_complexity": 1.110267034990792
+          },
+          "solution_sha256": "dbe9ed27109552c7aadf3124d33bf49ee63d2b137c17305304f16d91242a0207",
+          "passed": true
+        },
+        "air_B_sample_relative_L2": 0.0337234764495765,
+        "air_B_tolerance": 0.1,
+        "reference_scope": "Same 485 air points from the retained solved project; fresh initial mesh differs",
+        "native_manifest": {
+          "schema": "aedt-native-disk-1",
+          "files": {
+            "mesh/00006.aedtplt": {
+              "bytes": 4178132,
+              "role": "per-object volume mesh",
+              "sha256": "07a3ee76354492587b6d40c33af728183033daf782b571cb2af143a64ffcb83e"
+            },
+            "mesh/00000.aedtplt": {
+              "bytes": 4190892,
+              "role": "per-object volume mesh",
+              "sha256": "a865004dca81457aa86b34f70116a93aaf1ac2630493626bc50886b79b45b9e0"
+            },
+            "mesh/00003.aedtplt": {
+              "bytes": 418078,
+              "role": "per-object volume mesh",
+              "sha256": "d7da9c35d72256e618cc6208910b793b3deb44057cd4c98dcb4355ad1183aa80"
+            },
+            "mesh/00012.aedtplt": {
+              "bytes": 9960863,
+              "role": "per-object volume mesh",
+              "sha256": "559871c7966e3e4dfed5d558ee67646c7f57285c35984f0df23bc550cdb18a76"
+            },
+            "points.pts": {
+              "bytes": 6559,
+              "role": "native sample points in model units",
+              "sha256": "bf60b200c0138a6f15d8e356236594195134af066bb0a58c2a3e1888c30b6ed8"
+            },
+            "mesh/00007.aedtplt": {
+              "bytes": 430420,
+              "role": "per-object volume mesh",
+              "sha256": "e5cf0e9e2e05e1899c599c3a43d72e7c9ed3f31c918bd9a24f4f3b5a5b913878"
+            },
+            "mesh/00001.aedtplt": {
+              "bytes": 428338,
+              "role": "per-object volume mesh",
+              "sha256": "fa230dd8b52594ca93d414b2d61f8ed9bff2ca66d6737c46c98152c43b372a5d"
+            },
+            "native/source_project.aedt": {
+              "bytes": 622954,
+              "role": "saved original project inputs",
+              "sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785"
+            },
+            "points.csv": {
+              "bytes": 37070,
+              "role": "SI observation points",
+              "sha256": "9e4867ab7b0846478e4f4825602352fe030dd12e799c3c679cc1f6f0d26806c6"
+            },
+            "native/convergence.txt": {
+              "bytes": 303,
+              "role": "available native setup evidence",
+              "sha256": "518a256575b08d3343e695e51e10188d0c6d30c5d45de4e8310b04fd49d2f537"
+            },
+            "mesh/00010.aedtplt": {
+              "bytes": 436141,
+              "role": "per-object volume mesh",
+              "sha256": "2fdb4314363bc27a6d847a5605da98a734a070c54f1e70bfab3a85625a4ff15d"
+            },
+            "mesh/00004.aedtplt": {
+              "bytes": 446749,
+              "role": "per-object volume mesh",
+              "sha256": "267a126e9af373b009ed013ddf75f39e3fbd0243111b96f74bdd9710d40a2b1c"
+            },
+            "mesh/00008.aedtplt": {
+              "bytes": 422283,
+              "role": "per-object volume mesh",
+              "sha256": "4fe865503cf5c21ff499de0aea32242473c2cdd1305a59fd70afee46b50b1d28"
+            },
+            "native/profile.txt": {
+              "bytes": 1641,
+              "role": "available native setup evidence",
+              "sha256": "10eff2857aafcbb1f6d159ca1ee646a247df345b7108cb2c01558aff8d368764"
+            },
+            "mesh/00005.aedtplt": {
+              "bytes": 1083981,
+              "role": "per-object volume mesh",
+              "sha256": "1372baace2644c6398c7980a19da386b5e32a7344d6aba0883b34b416ae5a40a"
+            },
+            "mesh/00002.aedtplt": {
+              "bytes": 428847,
+              "role": "per-object volume mesh",
+              "sha256": "43f21cd43b8c2a2f0984ed17e692481be84fd84d87b65c8092f9797d3b79db58"
+            },
+            "mesh/00009.aedtplt": {
+              "bytes": 435872,
+              "role": "per-object volume mesh",
+              "sha256": "5554b3f25fe419b0433eff1c885449ee755045c926ad1b261d10a81feedaba78"
+            },
+            "native/mesh_stats.txt": {
+              "bytes": 2623,
+              "role": "available native setup evidence",
+              "sha256": "621984e786aae398919159e679f95ca02fe747a100f2d7dce64cc4fcca120b13"
+            },
+            "native_export.json": {
+              "bytes": 48360,
+              "role": "native metadata and original settings",
+              "sha256": "0725c9891fd56079cd164eb824f59629160b572e3f9a2fda18a311c8821b8c91"
+            },
+            "mesh/00011.aedtplt": {
+              "bytes": 1108289,
+              "role": "per-object volume mesh",
+              "sha256": "6bbf82e9e923ff9093c628ce2e097ed89d67f3cdead96b8ca5df1b327924964e"
+            }
+          },
+          "state": "complete"
+        }
+      },
+      "source_project_unchanged": true,
+      "passed": true,
+      "elapsed_seconds": 257.8836660999805
     }
   ]
 }
