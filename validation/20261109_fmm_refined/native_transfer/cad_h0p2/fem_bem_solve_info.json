@@ -1,0 +1,686 @@
+{
+  "state": "complete",
+  "backend": "cuda_hmatrix",
+  "compute_backend": "cupy",
+  "options": {
+    "cmd": "solve-fem-bem",
+    "out": "C:\\Projects\\magtense-gpu\\validation\\20261109_fmm_refined\\native_transfer\\cad_h0p2",
+    "result_prefix": "fem_bem",
+    "boundary_cache": null,
+    "boundary": "cuda_hmatrix",
+    "tol": 1e-09,
+    "maxiter": 40,
+    "linear_rtol": 1e-10,
+    "linear_cycles": 30,
+    "fem_preconditioner": "amg",
+    "compute_backend": "cupy",
+    "h_leaf": 32,
+    "h_eta": 3.0,
+    "h_rtol": 1e-06,
+    "h_rank": 64,
+    "h_gib": 2.0,
+    "h_storage": "float32",
+    "h_far_order": 4,
+    "max_reference_error": 0.05
+  },
+  "source_model_sha256": "8b2b16576b3bc142b3b1fe532ad7eb7f03e66303a65948cab0a9c1d47004d051",
+  "source_sha256": {
+    "bridge.py": "7ddf119500bbad59efeafe6d20e4e1d238a3d5e14478d7bcca54c9ffff3c02a3",
+    "fem_bem.py": "a50ca64896278b55a9b3a318c31e579316f946ef5e7626dafe134d98bf818f7c",
+    "fem_bem_cuda.py": "fcbd7d1592771482da7f1d2851059e7ca5f2eb9dac8bb2c5d4249099665c90ee",
+    "gpu_solver.py": "add98cbb5a3e08d2bac614414e238315a9fd61aa99f813115f2b2ab66116610a",
+    "boundary_hmatrix.py": "2c1971e80c6d1b4166db089a311898adda221db131b8682cdfdf8369817bc845",
+    "tetra_cuda.py": "9d671fb963976ae2958f0eb44403a14e65a474f20bd3e317604b04bda60d2dfc",
+    "tetra_cuda.cu": "c2bee7865fdf722d6c304ffe3ee4e7333717f604fc3077c95f45d59e8d9bb96c"
+  },
+  "scope": "Offline P1/P0 magnetostatic field, zero free currents, infinite exterior air; native high-order equivalence not certified",
+  "phase": "field_correction",
+  "elapsed_seconds": 459.81337750004604,
+  "progress": {
+    "iteration": 3,
+    "residual": 6.116882052013073e-13,
+    "max_ratio": 3.637746223074375e-07,
+    "passed": true
+  },
+  "boundary_refinement": {
+    "kind": "full-order exact K blocks selected by independent coefficient errors",
+    "target": 2.4999999999999998e-05,
+    "block_absolute_row_L1_threshold": 1e-06,
+    "passes": [
+      {
+        "maximum_constant_error": 6.489208707938232e-06,
+        "component_constant_max_errors": [
+          3.574711845977241e-06,
+          6.483213092267626e-06,
+          3.92739255672403e-07,
+          3.0250257410102677e-08,
+          7.438983988250492e-07,
+          1.6250130380202066e-07,
+          5.111289342885073e-07,
+          1.5461559477181197e-08,
+          1.4485999355606793e-07,
+          2.527428047960356e-07
+        ],
+        "bad_rows": 0
+      }
+    ],
+    "blocks": [],
+    "added_bytes": 0,
+    "seconds": 0.36108139995485544,
+    "exact_entry_queries": 0,
+    "added_metadata_bytes": 0
+  },
+  "boundary_checks": [
+    {
+      "input": "random",
+      "relative_L2": 1.968846084544525e-08,
+      "tolerance": 1.9999999999999998e-05
+    },
+    {
+      "input": "flux_only",
+      "relative_L2": 3.931597492240494e-08,
+      "tolerance": 1.9999999999999998e-05
+    },
+    {
+      "input": "smooth",
+      "relative_L2": 1.6453162172764113e-08,
+      "tolerance": 1.9999999999999998e-05
+    }
+  ],
+  "solver": {
+    "tetrahedra": 130125,
+    "P1_nodes": 34083,
+    "P0_boundary_faces": 50040,
+    "components": 10,
+    "quadrature_order": 8,
+    "boundary_backend": "cuda_hmatrix",
+    "geometry_seconds": 1.278921800199896,
+    "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+    "boundary_faces": 50040,
+    "clusters": 4095,
+    "trial_dofs": 75076,
+    "trial_clusters": 8191,
+    "leaf_clusters": 2048,
+    "terminal_blocks": 198526,
+    "admissible_blocks": 84308,
+    "exact_near_entries": 51270714,
+    "exact_near_storage_bytes": 205082856,
+    "hmatrix_rtol": 1e-06,
+    "hmatrix_leaf_size": 32,
+    "hmatrix_eta": 3.0,
+    "hmatrix_max_rank": 64,
+    "hmatrix_coefficient_storage_dtype": "float32",
+    "hmatrix_compute_dtype": "float64",
+    "hmatrix_far_pivot_quadrature_order": 4,
+    "hmatrix_reference_quadrature_order": 8,
+    "hmatrix_pivot_row_backend": "auto",
+    "hmatrix_skip_inactive": true,
+    "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+    "hmatrix_storage_bytes": 1658067940,
+    "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+    "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+    "hmatrix_low_rank_blocks": 18659,
+    "hmatrix_retained_dense_blocks": 262922,
+    "hmatrix_max_retained_rank": 64,
+    "hmatrix_max_heldout_relative_error": 6.54511485997474e-07,
+    "hmatrix_coefficient_entry_queries": 866992582,
+    "hmatrix_setup_seconds": 394.4208673997782,
+    "hmatrix_setup_phase_seconds": {
+      "partition_and_geometry": 3.4819021997973323,
+      "leaf_preconditioner": 0.6859091999940574,
+      "exact_near_blocks": 34.31957249995321,
+      "far_ACA_and_failed_block_fallback": 355.7666918998584,
+      "finalize": 0.1601104000583291
+    },
+    "hmatrix_cache_hit": false,
+    "hmatrix_row_reuse": {
+      "plans": 3926,
+      "plan_seconds": 4.599142019636929,
+      "pivot_calls": 91605,
+      "expanded_panel_slots": 986171241,
+      "shared_panel_slots": 363757940
+    },
+    "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+    "setup_seconds": 396.14561500027776,
+    "boundary_refinement": {
+      "kind": "full-order exact K blocks selected by independent coefficient errors",
+      "target": 2.4999999999999998e-05,
+      "block_absolute_row_L1_threshold": 1e-06,
+      "passes": [
+        {
+          "maximum_constant_error": 6.489208707938232e-06,
+          "component_constant_max_errors": [
+            3.574711845977241e-06,
+            6.483213092267626e-06,
+            3.92739255672403e-07,
+            3.0250257410102677e-08,
+            7.438983988250492e-07,
+            1.6250130380202066e-07,
+            5.111289342885073e-07,
+            1.5461559477181197e-08,
+            1.4485999355606793e-07,
+            2.527428047960356e-07
+          ],
+          "bad_rows": 0
+        }
+      ],
+      "blocks": [],
+      "added_bytes": 0,
+      "seconds": 0.36108139995485544,
+      "exact_entry_queries": 0,
+      "added_metadata_bytes": 0
+    },
+    "hmatrix_cached_base_storage_bytes": 1658067940,
+    "compute_backend": "cupy",
+    "backend": "CUDA FP64 FEM/material/GMRES + device AmgX + CUDA boundary",
+    "iteration_vector_host_transfers": 0,
+    "result_vector_host_transfers": 2,
+    "scalar_convergence_telemetry_on_host": true,
+    "device_upload_seconds": 0.05544640030711889,
+    "AMG_backend": "AmgX FP64 device V-cycle",
+    "AMGX_library": "C:\\Users\\oxyfl\\.cache\\magtense-gpu\\amgx\\build\\amgxsh.dll",
+    "AMGX_library_sha256": "7baf201f0d51f745f956b51323bb33f00c0547f8cf74085cd0f8d20169a86c9b",
+    "AMG_setup_location": "GPU",
+    "AMG_apply_location": "GPU",
+    "AMGX_config": {
+      "config_version": 2,
+      "determinism_flag": 1,
+      "solver": {
+        "solver": "AMG",
+        "scope": "resident",
+        "algorithm": "AGGREGATION",
+        "cycle": "V",
+        "smoother": "BLOCK_JACOBI",
+        "selector": "SIZE_2",
+        "presweeps": 2,
+        "postsweeps": 2,
+        "min_coarse_rows": 200,
+        "max_levels": 30,
+        "coarse_solver": "DENSE_LU_SOLVER",
+        "amg_host_levels_rows": -1,
+        "verbosity_level": 3,
+        "max_iters": 1,
+        "monitor_residual": 0,
+        "print_grid_stats": 1,
+        "print_solve_stats": 0,
+        "obtain_timings": 0,
+        "tolerance": 0.0
+      }
+    },
+    "AMG_levels": 8,
+    "AMG_operator_complexity": 1.84676,
+    "converged": true,
+    "residual": 6.116882052013073e-13,
+    "nonlinear_updates": 3,
+    "history": [
+      {
+        "residual_before": 1.0,
+        "damping": 1.0,
+        "gmres_iterations": 400,
+        "preconditioner_seconds": 0.2810651999898255
+      },
+      {
+        "residual_before": 0.0008316843921309347,
+        "damping": 1.0,
+        "gmres_iterations": 300,
+        "preconditioner_seconds": 0.02057120017707348
+      },
+      {
+        "residual_before": 6.047628285587795e-07,
+        "damping": 1.0,
+        "gmres_iterations": 300,
+        "preconditioner_seconds": 0.022792800329625607
+      }
+    ],
+    "preconditioner": "block",
+    "solve_seconds": 52.303154999855906,
+    "total_gmres_iterations": 1400,
+    "initial_residual_norm": 5490.054366209354,
+    "field_correction": {
+      "passed": true,
+      "max_ratio": 3.637746223074375e-07,
+      "regions": [
+        {
+          "component": 0,
+          "material": 0,
+          "H_RMS_Apm": 78.40932124264562,
+          "B_RMS_T": 0.4965869377675868,
+          "correction_H_RMS_Apm": 1.823005761090356e-11,
+          "correction_B_RMS_T": 1.1544763672864562e-13,
+          "H_ratio": 2.295707522193676e-07,
+          "B_ratio": 2.3243541947677853e-07
+        },
+        {
+          "component": 1,
+          "material": 2,
+          "H_RMS_Apm": 586155.802291607,
+          "B_RMS_T": 0.4921787767632183,
+          "correction_H_RMS_Apm": 5.805279476592425e-10,
+          "correction_B_RMS_T": 7.692016005190459e-16,
+          "H_ratio": 9.903970155931684e-10,
+          "B_ratio": 1.5625325259330142e-09
+        },
+        {
+          "component": 2,
+          "material": 4,
+          "H_RMS_Apm": 586283.2924258875,
+          "B_RMS_T": 0.4919843982839472,
+          "correction_H_RMS_Apm": 5.193405266079973e-10,
+          "correction_B_RMS_T": 6.882252503152261e-16,
+          "H_ratio": 8.858168866491462e-10,
+          "B_ratio": 1.3985918934135762e-09
+        },
+        {
+          "component": 3,
+          "material": 3,
+          "H_RMS_Apm": 586298.349393155,
+          "B_RMS_T": 0.4919909530116792,
+          "correction_H_RMS_Apm": 6.293356527124374e-10,
+          "correction_B_RMS_T": 8.319999003017803e-16,
+          "H_ratio": 1.0734032936653039e-09,
+          "B_ratio": 1.6907441504660902e-09
+        },
+        {
+          "component": 4,
+          "material": 1,
+          "H_RMS_Apm": 586206.2732447824,
+          "B_RMS_T": 0.49207357701956805,
+          "correction_H_RMS_Apm": 7.039850172889277e-10,
+          "correction_B_RMS_T": 9.327942615268495e-16,
+          "H_ratio": 1.2009148460274474e-09,
+          "B_ratio": 1.895254652180897e-09
+        },
+        {
+          "component": 5,
+          "material": 5,
+          "H_RMS_Apm": 78.42564761082744,
+          "B_RMS_T": 0.49668018469912184,
+          "correction_H_RMS_Apm": 2.8893034961152378e-11,
+          "correction_B_RMS_T": 1.7200890726063133e-13,
+          "H_ratio": 3.637746223074375e-07,
+          "B_ratio": 3.4624752065102934e-07
+        },
+        {
+          "component": 6,
+          "material": 7,
+          "H_RMS_Apm": 586371.690896708,
+          "B_RMS_T": 0.4919434619465813,
+          "correction_H_RMS_Apm": 4.675287408554469e-10,
+          "correction_B_RMS_T": 6.194082468171781e-16,
+          "H_ratio": 7.973235249760361e-10,
+          "B_ratio": 1.2588486479765974e-09
+        },
+        {
+          "component": 7,
+          "material": 9,
+          "H_RMS_Apm": 586317.7529432545,
+          "B_RMS_T": 0.491996448899009,
+          "correction_H_RMS_Apm": 5.773765602325876e-10,
+          "correction_B_RMS_T": 7.642292928857657e-16,
+          "H_ratio": 9.847485814400816e-10,
+          "B_ratio": 1.5530071281668718e-09
+        },
+        {
+          "component": 8,
+          "material": 8,
+          "H_RMS_Apm": 586232.0156337835,
+          "B_RMS_T": 0.4920554223124008,
+          "correction_H_RMS_Apm": 5.711263333044523e-10,
+          "correction_B_RMS_T": 7.552172889888603e-16,
+          "H_ratio": 9.74230925371886e-10,
+          "B_ratio": 1.5345097397087669e-09
+        },
+        {
+          "component": 9,
+          "material": 6,
+          "H_RMS_Apm": 586214.1122011105,
+          "B_RMS_T": 0.4921082971842262,
+          "correction_H_RMS_Apm": 5.088859696704223e-10,
+          "correction_B_RMS_T": 6.743648729465816e-16,
+          "H_ratio": 8.680874291344452e-10,
+          "B_ratio": 1.3700802623694434e-09
+        }
+      ],
+      "boundary_components": [
+        {
+          "component": 0,
+          "q_RMS_Apm": 189033.4083569383,
+          "correction_q_RMS_Apm": 2.679677722208587e-09,
+          "q_ratio": 1.4175608268885998e-08
+        },
+        {
+          "component": 1,
+          "q_RMS_Apm": 315574.6175473994,
+          "correction_q_RMS_Apm": 5.010258869930687e-09,
+          "q_ratio": 1.5876571545259347e-08
+        },
+        {
+          "component": 2,
+          "q_RMS_Apm": 315436.62459261704,
+          "correction_q_RMS_Apm": 5.461658938267939e-09,
+          "q_ratio": 1.7314544976432632e-08
+        },
+        {
+          "component": 3,
+          "q_RMS_Apm": 315233.8011286997,
+          "correction_q_RMS_Apm": 5.9305765284591086e-09,
+          "q_ratio": 1.8813203704745328e-08
+        },
+        {
+          "component": 4,
+          "q_RMS_Apm": 315508.22491178435,
+          "correction_q_RMS_Apm": 6.418482643759084e-09,
+          "q_ratio": 2.0343248745115705e-08
+        },
+        {
+          "component": 5,
+          "q_RMS_Apm": 189059.03308143615,
+          "correction_q_RMS_Apm": 2.6375401227195507e-09,
+          "q_ratio": 1.395080747491169e-08
+        },
+        {
+          "component": 6,
+          "q_RMS_Apm": 315324.9758193671,
+          "correction_q_RMS_Apm": 5.5275204389750896e-09,
+          "q_ratio": 1.7529543592506007e-08
+        },
+        {
+          "component": 7,
+          "q_RMS_Apm": 315305.5351828195,
+          "correction_q_RMS_Apm": 5.585451529077037e-09,
+          "q_ratio": 1.771435382980092e-08
+        },
+        {
+          "component": 8,
+          "q_RMS_Apm": 315493.30467532197,
+          "correction_q_RMS_Apm": 5.662937603598089e-09,
+          "q_ratio": 1.794941309455925e-08
+        },
+        {
+          "component": 9,
+          "q_RMS_Apm": 315518.79192020465,
+          "correction_q_RMS_Apm": 6.043777107134554e-09,
+          "q_ratio": 1.9154985715327275e-08
+        }
+      ]
+    },
+    "field_tolerances": {
+      "rtol": 1e-06,
+      "H_atol_Apm": 1e-06,
+      "B_atol_T": 1e-10,
+      "q_atol_Apm": 1e-06
+    },
+    "convergence_checks": [
+      {
+        "iteration": 3,
+        "residual": 6.116882052013073e-13,
+        "gmres_iterations": 400,
+        "preconditioner_seconds": 0.01727639976888895,
+        "linear_status": 0,
+        "linear_roundoff": null,
+        "passed": true,
+        "max_ratio": 3.637746223074375e-07,
+        "regions": [
+          {
+            "component": 0,
+            "material": 0,
+            "H_RMS_Apm": 78.40932124264562,
+            "B_RMS_T": 0.4965869377675868,
+            "correction_H_RMS_Apm": 1.823005761090356e-11,
+            "correction_B_RMS_T": 1.1544763672864562e-13,
+            "H_ratio": 2.295707522193676e-07,
+            "B_ratio": 2.3243541947677853e-07
+          },
+          {
+            "component": 1,
+            "material": 2,
+            "H_RMS_Apm": 586155.802291607,
+            "B_RMS_T": 0.4921787767632183,
+            "correction_H_RMS_Apm": 5.805279476592425e-10,
+            "correction_B_RMS_T": 7.692016005190459e-16,
+            "H_ratio": 9.903970155931684e-10,
+            "B_ratio": 1.5625325259330142e-09
+          },
+          {
+            "component": 2,
+            "material": 4,
+            "H_RMS_Apm": 586283.2924258875,
+            "B_RMS_T": 0.4919843982839472,
+            "correction_H_RMS_Apm": 5.193405266079973e-10,
+            "correction_B_RMS_T": 6.882252503152261e-16,
+            "H_ratio": 8.858168866491462e-10,
+            "B_ratio": 1.3985918934135762e-09
+          },
+          {
+            "component": 3,
+            "material": 3,
+            "H_RMS_Apm": 586298.349393155,
+            "B_RMS_T": 0.4919909530116792,
+            "correction_H_RMS_Apm": 6.293356527124374e-10,
+            "correction_B_RMS_T": 8.319999003017803e-16,
+            "H_ratio": 1.0734032936653039e-09,
+            "B_ratio": 1.6907441504660902e-09
+          },
+          {
+            "component": 4,
+            "material": 1,
+            "H_RMS_Apm": 586206.2732447824,
+            "B_RMS_T": 0.49207357701956805,
+            "correction_H_RMS_Apm": 7.039850172889277e-10,
+            "correction_B_RMS_T": 9.327942615268495e-16,
+            "H_ratio": 1.2009148460274474e-09,
+            "B_ratio": 1.895254652180897e-09
+          },
+          {
+            "component": 5,
+            "material": 5,
+            "H_RMS_Apm": 78.42564761082744,
+            "B_RMS_T": 0.49668018469912184,
+            "correction_H_RMS_Apm": 2.8893034961152378e-11,
+            "correction_B_RMS_T": 1.7200890726063133e-13,
+            "H_ratio": 3.637746223074375e-07,
+            "B_ratio": 3.4624752065102934e-07
+          },
+          {
+            "component": 6,
+            "material": 7,
+            "H_RMS_Apm": 586371.690896708,
+            "B_RMS_T": 0.4919434619465813,
+            "correction_H_RMS_Apm": 4.675287408554469e-10,
+            "correction_B_RMS_T": 6.194082468171781e-16,
+            "H_ratio": 7.973235249760361e-10,
+            "B_ratio": 1.2588486479765974e-09
+          },
+          {
+            "component": 7,
+            "material": 9,
+            "H_RMS_Apm": 586317.7529432545,
+            "B_RMS_T": 0.491996448899009,
+            "correction_H_RMS_Apm": 5.773765602325876e-10,
+            "correction_B_RMS_T": 7.642292928857657e-16,
+            "H_ratio": 9.847485814400816e-10,
+            "B_ratio": 1.5530071281668718e-09
+          },
+          {
+            "component": 8,
+            "material": 8,
+            "H_RMS_Apm": 586232.0156337835,
+            "B_RMS_T": 0.4920554223124008,
+            "correction_H_RMS_Apm": 5.711263333044523e-10,
+            "correction_B_RMS_T": 7.552172889888603e-16,
+            "H_ratio": 9.74230925371886e-10,
+            "B_ratio": 1.5345097397087669e-09
+          },
+          {
+            "component": 9,
+            "material": 6,
+            "H_RMS_Apm": 586214.1122011105,
+            "B_RMS_T": 0.4921082971842262,
+            "correction_H_RMS_Apm": 5.088859696704223e-10,
+            "correction_B_RMS_T": 6.743648729465816e-16,
+            "H_ratio": 8.680874291344452e-10,
+            "B_ratio": 1.3700802623694434e-09
+          }
+        ],
+        "boundary_components": [
+          {
+            "component": 0,
+            "q_RMS_Apm": 189033.4083569383,
+            "correction_q_RMS_Apm": 2.679677722208587e-09,
+            "q_ratio": 1.4175608268885998e-08
+          },
+          {
+            "component": 1,
+            "q_RMS_Apm": 315574.6175473994,
+            "correction_q_RMS_Apm": 5.010258869930687e-09,
+            "q_ratio": 1.5876571545259347e-08
+          },
+          {
+            "component": 2,
+            "q_RMS_Apm": 315436.62459261704,
+            "correction_q_RMS_Apm": 5.461658938267939e-09,
+            "q_ratio": 1.7314544976432632e-08
+          },
+          {
+            "component": 3,
+            "q_RMS_Apm": 315233.8011286997,
+            "correction_q_RMS_Apm": 5.9305765284591086e-09,
+            "q_ratio": 1.8813203704745328e-08
+          },
+          {
+            "component": 4,
+            "q_RMS_Apm": 315508.22491178435,
+            "correction_q_RMS_Apm": 6.418482643759084e-09,
+            "q_ratio": 2.0343248745115705e-08
+          },
+          {
+            "component": 5,
+            "q_RMS_Apm": 189059.03308143615,
+            "correction_q_RMS_Apm": 2.6375401227195507e-09,
+            "q_ratio": 1.395080747491169e-08
+          },
+          {
+            "component": 6,
+            "q_RMS_Apm": 315324.9758193671,
+            "correction_q_RMS_Apm": 5.5275204389750896e-09,
+            "q_ratio": 1.7529543592506007e-08
+          },
+          {
+            "component": 7,
+            "q_RMS_Apm": 315305.5351828195,
+            "correction_q_RMS_Apm": 5.585451529077037e-09,
+            "q_ratio": 1.771435382980092e-08
+          },
+          {
+            "component": 8,
+            "q_RMS_Apm": 315493.30467532197,
+            "correction_q_RMS_Apm": 5.662937603598089e-09,
+            "q_ratio": 1.794941309455925e-08
+          },
+          {
+            "component": 9,
+            "q_RMS_Apm": 315518.79192020465,
+            "correction_q_RMS_Apm": 6.043777107134554e-09,
+            "q_ratio": 1.9154985715327275e-08
+          }
+        ]
+      }
+    ],
+    "volume_weak_relative_residual": 6.116882050675411e-13,
+    "boundary_weak_relative_residual": 1.3986411892362114e-15,
+    "device_result_download_seconds": 0.00025250017642974854
+  },
+  "air_gradient": {
+    "step_m": 2.06e-06,
+    "max_step_difference_Apm": 9.181615924703135e-07,
+    "method": "central difference / Richardson with verified air stencils"
+  },
+  "operator": {
+    "tetrahedra": 130125,
+    "P1_nodes": 34083,
+    "P0_boundary_faces": 50040,
+    "components": 10,
+    "quadrature_order": 8,
+    "boundary_backend": "cuda_hmatrix",
+    "geometry_seconds": 1.278921800199896,
+    "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means",
+    "boundary_faces": 50040,
+    "clusters": 4095,
+    "trial_dofs": 75076,
+    "trial_clusters": 8191,
+    "leaf_clusters": 2048,
+    "terminal_blocks": 198526,
+    "admissible_blocks": 84308,
+    "exact_near_entries": 51270714,
+    "exact_near_storage_bytes": 205082856,
+    "hmatrix_rtol": 1e-06,
+    "hmatrix_leaf_size": 32,
+    "hmatrix_eta": 3.0,
+    "hmatrix_max_rank": 64,
+    "hmatrix_coefficient_storage_dtype": "float32",
+    "hmatrix_compute_dtype": "float64",
+    "hmatrix_far_pivot_quadrature_order": 4,
+    "hmatrix_reference_quadrature_order": 8,
+    "hmatrix_pivot_row_backend": "auto",
+    "hmatrix_skip_inactive": true,
+    "hmatrix_error_scope": "ACA sampled block residual; independent global direct probes required",
+    "hmatrix_storage_bytes": 1658067940,
+    "hmatrix_trial_layout": "global P0 flux faces + global P1 trace nodes; area-averaged tests and equilibrated kernel columns",
+    "hmatrix_payload_layout": "persistent individual buffers; no concatenation copy of the H-matrix payload",
+    "hmatrix_low_rank_blocks": 18659,
+    "hmatrix_retained_dense_blocks": 262922,
+    "hmatrix_max_retained_rank": 64,
+    "hmatrix_max_heldout_relative_error": 6.54511485997474e-07,
+    "hmatrix_coefficient_entry_queries": 866992582,
+    "hmatrix_setup_seconds": 394.4208673997782,
+    "hmatrix_setup_phase_seconds": {
+      "partition_and_geometry": 3.4819021997973323,
+      "leaf_preconditioner": 0.6859091999940574,
+      "exact_near_blocks": 34.31957249995321,
+      "far_ACA_and_failed_block_fallback": 355.7666918998584,
+      "finalize": 0.1601104000583291
+    },
+    "hmatrix_cache_hit": false,
+    "hmatrix_row_reuse": {
+      "plans": 3926,
+      "plan_seconds": 4.599142019636929,
+      "pivot_calls": 91605,
+      "expanded_panel_slots": 986171241,
+      "shared_panel_slots": 363757940
+    },
+    "boundary_inverse": "exact diagonal-leaf block Jacobi; no global dense factorization",
+    "setup_seconds": 396.14561500027776,
+    "boundary_refinement": {
+      "kind": "full-order exact K blocks selected by independent coefficient errors",
+      "target": 2.4999999999999998e-05,
+      "block_absolute_row_L1_threshold": 1e-06,
+      "passes": [
+        {
+          "maximum_constant_error": 6.489208707938232e-06,
+          "component_constant_max_errors": [
+            3.574711845977241e-06,
+            6.483213092267626e-06,
+            3.92739255672403e-07,
+            3.0250257410102677e-08,
+            7.438983988250492e-07,
+            1.6250130380202066e-07,
+            5.111289342885073e-07,
+            1.5461559477181197e-08,
+            1.4485999355606793e-07,
+            2.527428047960356e-07
+          ],
+          "bad_rows": 0
+        }
+      ],
+      "blocks": [],
+      "added_bytes": 0,
+      "seconds": 0.36108139995485544,
+      "exact_entry_queries": 0,
+      "added_metadata_bytes": 0
+    },
+    "hmatrix_cached_base_storage_bytes": 1658067940
+  },
+  "solution_sha256": "4c4941bae5247a1a3c21b709acb31911f6fc605523190db90abae37e7329513c",
+  "native_air_B_sample_relative_L2": 0.03316754684981619,
+  "passed": true
+}

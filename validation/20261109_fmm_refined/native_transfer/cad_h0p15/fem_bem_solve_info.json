@@ -1,0 +1,228 @@
+{
+  "state": "failed",
+  "backend": "cuda_hmatrix",
+  "compute_backend": "cupy",
+  "options": {
+    "cmd": "solve-fem-bem",
+    "out": "C:\\Projects\\magtense-gpu\\validation\\20261109_fmm_refined\\native_transfer\\cad_h0p15",
+    "result_prefix": "fem_bem",
+    "boundary_cache": null,
+    "boundary": "cuda_hmatrix",
+    "tol": 1e-09,
+    "maxiter": 40,
+    "linear_rtol": 1e-10,
+    "linear_cycles": 30,
+    "fem_preconditioner": "amg",
+    "compute_backend": "cupy",
+    "h_leaf": 32,
+    "h_eta": 3.0,
+    "h_rtol": 1e-06,
+    "h_rank": 64,
+    "h_gib": 4.0,
+    "h_storage": "float32",
+    "h_far_order": 4,
+    "max_reference_error": 0.05
+  },
+  "source_model_sha256": "5b7809140f0b3bde367ed8b7fcaa99243a5f9dd45548a998c2eeaabbdfeb0869",
+  "source_sha256": {
+    "bridge.py": "7ddf119500bbad59efeafe6d20e4e1d238a3d5e14478d7bcca54c9ffff3c02a3",
+    "fem_bem.py": "a50ca64896278b55a9b3a318c31e579316f946ef5e7626dafe134d98bf818f7c",
+    "fem_bem_cuda.py": "fcbd7d1592771482da7f1d2851059e7ca5f2eb9dac8bb2c5d4249099665c90ee",
+    "gpu_solver.py": "add98cbb5a3e08d2bac614414e238315a9fd61aa99f813115f2b2ab66116610a",
+    "boundary_hmatrix.py": "2c1971e80c6d1b4166db089a311898adda221db131b8682cdfdf8369817bc845",
+    "tetra_cuda.py": "9d671fb963976ae2958f0eb44403a14e65a474f20bd3e317604b04bda60d2dfc",
+    "tetra_cuda.cu": "c2bee7865fdf722d6c304ffe3ee4e7333717f604fc3077c95f45d59e8d9bb96c"
+  },
+  "scope": "Offline P1/P0 magnetostatic field, zero free currents, infinite exterior air; native high-order equivalence not certified",
+  "phase": "gmres",
+  "elapsed_seconds": 1026.4790676999837,
+  "progress": {
+    "newton_iteration": 0,
+    "linear_iterations": 3000,
+    "preconditioned_relative_residual": 0.06544333890530042
+  },
+  "boundary_refinement": {
+    "kind": "full-order exact K blocks selected by independent coefficient errors",
+    "target": 2.4999999999999998e-05,
+    "block_absolute_row_L1_threshold": 1e-06,
+    "passes": [
+      {
+        "maximum_constant_error": 0.0016565098869834594,
+        "component_constant_max_errors": [
+          0.00045233360424322216,
+          2.08028813408756e-06,
+          0.00011678910980550405,
+          1.0434463232344982e-06,
+          5.034003923842946e-07,
+          0.0016565138111085398,
+          1.5223024975030697e-06,
+          4.7420554982746665e-07,
+          0.0005463024215947021,
+          3.957541484023164e-06
+        ],
+        "bad_rows": 31
+      },
+      {
+        "maximum_constant_error": 1.3703524715191762e-05,
+        "component_constant_max_errors": [
+          1.3701153304568336e-05,
+          2.0802881341985824e-06,
+          6.660893051013694e-07,
+          1.0434463232344982e-06,
+          5.034003923838525e-07,
+          1.2928692354030602e-05,
+          1.5223024975030697e-06,
+          4.7420554982746665e-07,
+          4.101724120353367e-07,
+          3.957541484134186e-06
+        ],
+        "bad_rows": 0
+      }
+    ],
+    "blocks": [
+      {
+        "block": 214772,
+        "rows": 87,
+        "columns": 65,
+        "P1_columns": 17,
+        "sampled_absolute_row_L1_error": 7.626795512656086e-05,
+        "bytes": 22620
+      },
+      {
+        "block": 217687,
+        "rows": 87,
+        "columns": 33,
+        "P1_columns": 16,
+        "sampled_absolute_row_L1_error": 0.00022634606445405065,
+        "bytes": 11484
+      },
+      {
+        "block": 217732,
+        "rows": 87,
+        "columns": 33,
+        "P1_columns": 10,
+        "sampled_absolute_row_L1_error": 4.769497882880039e-05,
+        "bytes": 11484
+      },
+      {
+        "block": 217919,
+        "rows": 87,
+        "columns": 32,
+        "P1_columns": 8,
+        "sampled_absolute_row_L1_error": 1.1966878987657522e-05,
+        "bytes": 11136
+      },
+      {
+        "block": 223253,
+        "rows": 43,
+        "columns": 65,
+        "P1_columns": 22,
+        "sampled_absolute_row_L1_error": 0.00046286575455785356,
+        "bytes": 11180
+      },
+      {
+        "block": 223692,
+        "rows": 87,
+        "columns": 16,
+        "P1_columns": 8,
+        "sampled_absolute_row_L1_error": 0.00011678817909874736,
+        "bytes": 5568
+      },
+      {
+        "block": 226650,
+        "rows": 43,
+        "columns": 17,
+        "P1_columns": 5,
+        "sampled_absolute_row_L1_error": 1.974546334707856e-06,
+        "bytes": 2924
+      },
+      {
+        "block": 226840,
+        "rows": 22,
+        "columns": 33,
+        "P1_columns": 12,
+        "sampled_absolute_row_L1_error": 0.00037833665091133525,
+        "bytes": 2904
+      },
+      {
+        "block": 227339,
+        "rows": 22,
+        "columns": 33,
+        "P1_columns": 12,
+        "sampled_absolute_row_L1_error": 0.0003796736663331196,
+        "bytes": 2904
+      },
+      {
+        "block": 227413,
+        "rows": 22,
+        "columns": 33,
+        "P1_columns": 9,
+        "sampled_absolute_row_L1_error": 0.0002080945937335349,
+        "bytes": 2904
+      },
+      {
+        "block": 301090,
+        "rows": 21,
+        "columns": 32,
+        "P1_columns": 13,
+        "sampled_absolute_row_L1_error": 1.1123322947988642e-05,
+        "bytes": 2688
+      },
+      {
+        "block": 315194,
+        "rows": 22,
+        "columns": 17,
+        "P1_columns": 13,
+        "sampled_absolute_row_L1_error": 0.0016565131873031136,
+        "bytes": 1496
+      },
+      {
+        "block": 337721,
+        "rows": 22,
+        "columns": 17,
+        "P1_columns": 7,
+        "sampled_absolute_row_L1_error": 0.0002001981128177279,
+        "bytes": 1496
+      },
+      {
+        "block": 409770,
+        "rows": 22,
+        "columns": 16,
+        "P1_columns": 6,
+        "sampled_absolute_row_L1_error": 0.00045232513121624366,
+        "bytes": 1408
+      },
+      {
+        "block": 433258,
+        "rows": 22,
+        "columns": 16,
+        "P1_columns": 6,
+        "sampled_absolute_row_L1_error": 0.00014030011285149073,
+        "bytes": 1408
+      }
+    ],
+    "added_bytes": 93604,
+    "seconds": 5.927377000451088,
+    "exact_entry_queries": 1385575,
+    "added_metadata_bytes": 840
+  },
+  "boundary_checks": [
+    {
+      "input": "random",
+      "relative_L2": 2.7903138621838607e-08,
+      "tolerance": 1.9999999999999998e-05
+    },
+    {
+      "input": "flux_only",
+      "relative_L2": 3.8842311047574493e-08,
+      "tolerance": 1.9999999999999998e-05
+    },
+    {
+      "input": "smooth",
+      "relative_L2": 3.8595449640852525e-08,
+      "tolerance": 1.9999999999999998e-05
+    }
+  ],
+  "passed": false,
+  "error": "NonConvergence: FEM-BEM GMRES failed at Newton 0: status=30, iterations=3000"
+}

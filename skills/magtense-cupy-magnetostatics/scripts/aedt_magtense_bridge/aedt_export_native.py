@@ -12,6 +12,8 @@ All model/Solve-Inside solids, including air, are archived, together with
 material definitions, variables, assignments and original solver settings.
 bridge.py import-native verifies hashes and creates the existing solver input.
 This archives inputs/native evidence, not Maxwell's internal factorization.
+mesh_source='cad' exports per-solid STEP instead, without GenerateMesh or any
+mesh field plot. bridge.py mesh-cad meshes only the selected magnetic solids.
 
 Keep this file Python 2.7 compatible and standard-library-only: AEDT 18's
 embedded interpreter cannot import the Python 3/NumPy/PyAEDT export module.
@@ -176,8 +178,13 @@ def export_native(desktop, config):
     if reference_quantities and not config.get('points_csv'):
         raise ValueError('Reference fields require points_csv')
     mesh_policy = config.get('mesh_policy', 'auto')
+    mesh_source = config.get('mesh_source', 'maxwell')
+    if mesh_source not in ('maxwell', 'cad'):
+        raise ValueError('mesh_source must be maxwell or cad')
     if mesh_policy not in ('auto', 'reuse', 'generate'):
         raise ValueError('mesh_policy must be auto, reuse or generate')
+    if mesh_source == 'cad' and mesh_policy == 'generate':
+        raise ValueError('mesh_source=cad never generates a Maxwell mesh')
     if mesh_policy == 'generate' and reference_quantities:
         raise ValueError('Fresh mesh generation cannot export saved reference fields; use reference_quantities=[]')
     setup = config['solution'].split(':')[0].strip()
@@ -192,15 +199,21 @@ def export_native(desktop, config):
         os.makedirs(root)
     for folder in ('mesh', 'native'):
         os.mkdir(os.path.join(root, folder))
+    if mesh_source == 'cad':
+        os.mkdir(os.path.join(root, 'cad'))
     started = time.time(); before = _sha(project_path); opened = False; project = None; mesh_workspace = None
     results_path = os.path.splitext(project_path)[0] + '.aedtresults'
     results_present = os.path.isdir(results_path) and bool(os.listdir(results_path))
-    generate_mesh = mesh_policy == 'generate' or (mesh_policy == 'auto' and not results_present and not reference_quantities)
+    generate_mesh = mesh_source == 'maxwell' and (mesh_policy == 'generate' or
+        (mesh_policy == 'auto' and not results_present and not reference_quantities))
     info = dict(schema='aedt-native-disk-1', state='running', objects=[], materials={}, files={},
         source=dict(project=project_path, project_sha256=before, design=config['design'],
                     solution=config['solution'], aedt_version=_text(desktop.GetVersion()),exporter_sha256=_sha(__file__)),
-        capture_scope='All model Solve-Inside solid volume meshes plus saved native inputs; not internal solver matrices',
-        mesh_generation=dict(policy=mesh_policy, state='pending' if generate_mesh else 'reused',
+        mesh_source=mesh_source,
+        capture_scope=('Per-solid STEP CAD and saved native inputs; no Maxwell mesh generation' if mesh_source == 'cad'
+            else 'All model Solve-Inside solid volume meshes plus saved native inputs; not internal solver matrices'),
+        mesh_generation=dict(policy=mesh_policy, state=('not_requested' if mesh_source == 'cad' else
+            'pending' if generate_mesh else 'reused'),
             setup=setup, source_results_present=results_present, isolated_project=generate_mesh,
             field_solve_submitted=False))
     info_path = os.path.join(root, 'native_export.json')
@@ -294,7 +307,18 @@ def export_native(desktop, config):
                         obj['cad_volume_query_error'] = _text(error)
                 if material and material not in info['materials']:
                     info['materials'][material] = _plain(materials.GetData(material))
-                if group == 'Solids' and _bool_value(props.get('Model', True)) and _bool_value(props.get('Solve Inside', False)):
+                if (mesh_source == 'cad' and group == 'Solids' and _bool_value(props.get('Model', True))
+                        and material.lower() not in ('air', 'vacuum')):
+                    if not material:
+                        raise ValueError('Missing material assignment: ' + name)
+                    relative = 'cad/{0:05d}.step'.format(sequence)
+                    editor.Export(['NAME:ExportParameters',
+                        'AllowRegionDependentPartSelectionForPMLCreation:=', False,
+                        'AllowRegionSelectionForPMLCreation:=', False,
+                        'Selections:=', name, 'File Name:=', os.path.join(root, relative.replace('/', os.sep)),
+                        'Major Version:=', -1, 'Minor Version:=', -1])
+                    obj['cad_step'] = register(relative, 'per-object STEP solid in assembly coordinates')
+                elif mesh_source == 'maxwell' and group == 'Solids' and _bool_value(props.get('Model', True)) and _bool_value(props.get('Solve Inside', False)):
                     if not material:
                         raise ValueError('Missing material assignment: ' + name)
                     relative = 'mesh/{0:05d}.aedtplt'.format(sequence)
@@ -315,8 +339,8 @@ def export_native(desktop, config):
                 info['objects'].append(obj); sequence += 1
                 _write(info_path, info)
                 print('NATIVE_EXPORT', sequence, json.dumps(name, ensure_ascii=True), obj.get('mesh_raw', obj.get('mesh_omitted_reason')))
-        if not any(obj.get('mesh_raw') for obj in info['objects']):
-            raise ValueError('No volume meshes were exported; use mesh_policy=generate to create a fresh mesh')
+        if not any(obj.get('mesh_raw') or obj.get('cad_step') for obj in info['objects']):
+            raise ValueError('No volume meshes or CAD solids were exported; check model solids or mesh_policy')
         if config.get('points_csv'):
             points = _points(config['points_csv'])
             shutil.copyfile(config['points_csv'], os.path.join(root, 'points.csv')); register('points.csv', 'SI observation points')

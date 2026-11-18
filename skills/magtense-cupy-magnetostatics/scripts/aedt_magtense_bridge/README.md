@@ -82,7 +82,7 @@ python -m pytest -q
   显式请求并提供测点时另有原生 `B.fld`、`H.fld`。
 
 将**整个导出目录**传到服务器；服务器不需要 `.aedtresults`、Maxwell 或 Ansys license。
-当前网格生成仍由源机 AEDT 完成；服务器读取导出的体网格，尚未实现直接读取 CAD 的独立剖分器。
+默认路径由源机 AEDT 生成网格；也可使用下面的 CAD-only 路径，在服务器独立剖分。
 以下命令在当前源码的 `aedt_magtense_bridge` 目录执行。FEM–BEM 的 CPU 小模型只需
 NumPy/SciPy；GPU H 边界另需适合服务器驱动的 CuPy 和 PyAMG，安装方法见 [README_GPU.md](README_GPU.md)。
 
@@ -96,6 +96,46 @@ OMP_NUM_THREADS=4 python bridge.py solve-fem-bem --out /data/camera_job --bounda
 TET4/TET10 和材料，生成可独立使用的 `model.json`、SI `mesh/*.npz`、测点与可选 B 参考。
 导入后的网格/测点也有校验值。空气及非磁性网格保留在原包中，当前无限空气求解器只装入
 磁性体；TET10 仍按角点线性化，原始高阶数据保留在归档中。
+
+### 按 CAD 零件独立剖分，不生成 Maxwell 网格
+
+面向没有 Maxwell 体网格、或需要自行控制磁性零件网格的用户。在上述原生导出配置中
+增加 `"mesh_source": "cad"`，保持 `mesh_policy=auto`（不能用 `generate`）。源机仅导出
+装配坐标下逐实体的 `cad/*.step` 与材料／设置，不调用 `GenerateMesh`，不创建 Mesh 场图，
+也不剖分空气。可选参考 B/H 仍要求已有场结果；不需要参考时保留空列表即可。
+整个 manifest 校验的包仍需传到服务器。
+
+服务器安装可选依赖 Gmsh 4.15.2 后运行当前入口，无需 Ansys/PyAEDT：
+
+```bash
+python -m pip install gmsh==4.15.2
+python bridge.py mesh-cad --bundle /data/camera_cad --out /data/camera_job --size-mm 0.4 --max-tiles 1000000
+python bridge.py solve-fem-bem --out /data/camera_job --boundary cuda_hmatrix --compute-backend cupy --fem-preconditioner amg --tol 1e-9 --linear-rtol 1e-10 --linear-cycles 30 --max-reference-error 0.05
+```
+
+`--size-mm` 是默认目标边长；`--part-sizes sizes.json` 可按原对象名指定，例如
+`{"A_YOKE_SOFT_MAGNETIC": 0.2, "B_YOKE_SOFT_MAGNETIC": 0.2}`，未列出的零件使用默认值。
+可用 `--threads` 控制 Gmsh 线程数（默认 1）。只剖分经原材料／零电流检查通过的磁性体，
+保留对象、材料、原 B–H 和全局剩磁方向映射。CAD 内核以毫米工作，输出节点严格转为米。
+
+相离零件保留真实气隙，接触零件通过 OpenCASCADE fragment 共用界面三角形；体积重叠会
+失败。每个零件仍单独输出原格式 `mesh/*.npz`，求解时由同一个全局 FEM–BEM 系统耦合。
+共享面必须在两个体网格中均为内部面，外部三角形必须与 CAD 外表面一致；还检查闭合性、
+退化单元及 CAD／四面体体积。默认体积相对容差为 0.5%，这只是几何检查，不能替代场精度。
+`meshing_info.json` 保留设置、源码／CAD 哈希和判定；失败不发布 `model.json`。
+
+真实十零件／485 个 Maxwell 测点的网格序列入口位于仓库根目录：
+
+```powershell
+python validation/20261109_fmm_refined/run_fmm.py --validate-cad-mesh --cad-sizes-mm 0.8 0.4 0.2 0.15 --cad-h-gib 4 --cad-result-prefix jacobi_stable
+```
+
+该验证在独立进程阻止 Ansys 模块导入，使用同一 CAD 和材料，记录各档网格的原始结果；
+最细两档均需通过原 5% Maxwell B 门槛，且两档全部空气点的 B 变化不超过 0.5%。
+实测四档均通过 5% 门槛，最后两档变化 0.1448%；0.15 mm 网格的 B 误差为 3.2762%。
+该细网格曾触发 AmgX 默认 Jacobi 权重不稳定，现已显式使用独立作用域的 0.5 权重；
+失败记录和 LU 参考保留。修复没有放宽收敛或场误差门槛。
+实际结果与适用范围见 [验证记录](../../../../docs/plan/02-validation-cases.md)。
 
 `solve-fem-bem` 输出 `fem_bem_solution.npz`（phi/L、q）、`fem_bem_B.csv` 和
 `fem_bem_solve_info.json`（进度、收敛、算子检查和原生采样误差）。H 后端使用与大案例

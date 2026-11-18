@@ -559,3 +559,38 @@ def test_resident_amgx_multilevel_preserves_component_potentials():
         assert amg.info['AMG_levels'] > 1
     finally:
         amg.close()
+
+
+def test_resident_amgx_reduces_energy_of_obtuse_tet_high_frequency_mode():
+    """The old unscoped .9 smoother amplifies this mode by 3.37 per V-cycle.
+
+    Reference is the independently computed largest diagonally scaled FEM
+    eigenmode. A stable symmetric V-cycle must reduce its exact energy error.
+    """
+    cp=pytest.importorskip('cupy')
+    import os
+    from itertools import product
+    from scipy.sparse import diags
+    from scipy.sparse.linalg import eigsh
+    from cupyx.scipy.sparse import csr_matrix
+    from fem_bem_cuda import GPUAMG
+    library=Path(os.environ.get('AMGX_LIBRARY',str(Path.home()/'.cache/magtense-gpu/amgx/build/amgxsh.dll')))
+    if not library.is_file():pytest.skip('AmgX missing; obtuse-tet smoother regression has not run')
+    one=np.concatenate([cube(shift)/6 for shift in product(range(6),repeat=3)])
+    tetra=np.r_[one,one+[3.,.1,.2]]
+    tetra[:,:,0]+=1.5*tetra[:,:,1]+.75*tetra[:,:,2];tetra[:,:,2]*=.25
+    mesh=FEMBEM(tetra,material_laws([dict(kind='linear',mu_r=1),dict(kind='linear',mu_r=5000)],
+        [0]*len(one)+[1]*len(one)),boundary_backend='geometry')
+    _,A=mesh.volume_residual(np.zeros(len(mesh.vertices)),np.zeros(3))
+    P=A+mesh.mass@diags(1/mesh.areas)@mesh.mass.T
+    scaling=1/np.sqrt(P.diagonal())
+    eigenvalues,vectors=eigsh(diags(scaling)@P@diags(scaling),k=1,which='LA')
+    assert 1-.9*eigenvalues[0]<-1.  # The original Jacobi relaxation is unstable.
+    exact=cp.asarray(scaling*vectors[:,0]);matrix=csr_matrix(P)
+    amg=GPUAMG()
+    try:
+        amg.setup(matrix);error=amg.apply(matrix@exact)-exact
+        ratio=float(cp.sqrt((error@(matrix@error))/(exact@(matrix@exact))))
+        assert amg.info['AMG_levels']>1
+        assert ratio<1.,f'AMG amplified the high-frequency energy error: {ratio}'
+    finally:amg.close()

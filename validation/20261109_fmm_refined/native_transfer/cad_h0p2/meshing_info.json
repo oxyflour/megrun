@@ -1,0 +1,169 @@
+{
+  "state": "complete",
+  "passed": true,
+  "gmsh_version": "4.15.2",
+  "source_manifest_sha256": "33b84a39a59470a32048b8c487c9049dd347ede901722855f088ee79f345dc6d",
+  "source_sha256": {
+    "cad_mesh.py": "7da4a3e21c856c6a6d06ff6a36d5dc5eae3cbc7d36abef13f175b864ec125f50",
+    "aedt_export.py": "eb9cd2092b79fea15cb61d89ae967576b6be4394500da7378e07264e702f7771",
+    "fem_bem.py": "a50ca64896278b55a9b3a318c31e579316f946ef5e7626dafe134d98bf818f7c"
+  },
+  "settings": {
+    "size_mm": 0.2,
+    "part_sizes_mm": {},
+    "volume_rtol": 0.005,
+    "threads": 1,
+    "algorithm_3d": 1,
+    "element_order": 1,
+    "STEP_target_unit": "MM",
+    "output_unit": "m",
+    "boolean_tolerance_m": 1e-11
+  },
+  "scope": "CAD geometry and conforming TET4 checks; field/Maxwell accuracy requires a separate solve",
+  "elapsed_seconds": 7.290268899872899,
+  "geometry": {
+    "tetrahedra": 130125,
+    "P1_nodes": 34083,
+    "P0_boundary_faces": 50040,
+    "components": 10,
+    "quadrature_order": 10,
+    "boundary_backend": "geometry",
+    "geometry_seconds": 1.3336453000083566,
+    "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means"
+  },
+  "shared_interface_triangles": 0,
+  "shared_CAD_surfaces": 0,
+  "exterior_triangles": 50040,
+  "objects": [
+    {
+      "name": "A_YOKE_SOFT_MAGNETIC",
+      "gmsh_volumes": [
+        1
+      ],
+      "tetra_count": 45561,
+      "volume_m3": 6.675e-08,
+      "cad_volume_m3": 6.675000000000007e-08,
+      "cad_volume_relative_mismatch": 9.91377513172167e-16,
+      "curved": false,
+      "element_order": 1,
+      "target_size_mm": 0.2
+    },
+    {
+      "name": "A_MAGNET_X_POS",
+      "gmsh_volumes": [
+        2
+      ],
+      "tetra_count": 4838,
+      "volume_m3": 6.911999999999999e-09,
+      "cad_volume_m3": 6.911999999999996e-09,
+      "cad_volume_relative_mismatch": 4.786924841163357e-16,
+      "curved": false,
+      "element_order": 1,
+      "target_size_mm": 0.2
+    },
+    {
+      "name": "A_MAGNET_X_NEG",
+      "gmsh_volumes": [
+        3
+      ],
+      "tetra_count": 4948,
+      "volume_m3": 6.911999999999999e-09,
+      "cad_volume_m3": 6.911999999999996e-09,
+      "cad_volume_relative_mismatch": 4.786924841163357e-16,
+      "curved": false,
+      "element_order": 1,
+      "target_size_mm": 0.2
+    },
+    {
+      "name": "A_MAGNET_Y_POS",
+      "gmsh_volumes": [
+        4
+      ],
+      "tetra_count": 4864,
+      "volume_m3": 6.911999999999999e-09,
+      "cad_volume_m3": 6.911999999999997e-09,
+      "cad_volume_relative_mismatch": 3.5901936308725175e-16,
+      "curved": false,
+      "element_order": 1,
+      "target_size_mm": 0.2
+    },
+    {
+      "name": "A_MAGNET_Y_NEG",
+      "gmsh_volumes": [
+        5
+      ],
+      "tetra_count": 4849,
+      "volume_m3": 6.9119999999999985e-09,
+      "cad_volume_m3": 6.911999999999997e-09,
+      "cad_volume_relative_mismatch": 2.3934624205816785e-16,
+      "curved": false,
+      "element_order": 1,
+      "target_size_mm": 0.2
+    },
+    {
+      "name": "B_YOKE_SOFT_MAGNETIC",
+      "gmsh_volumes": [
+        6
+      ],
+      "tetra_count": 45470,
+      "volume_m3": 6.674999999999996e-08,
+      "cad_volume_m3": 6.674999999999999e-08,
+      "cad_volume_relative_mismatch": 3.965510052688673e-16,
+      "curved": false,
+      "element_order": 1,
+      "target_size_mm": 0.2
+    },
+    {
+      "name": "B_MAGNET_X_POS",
+      "gmsh_volumes": [
+        7
+      ],
+      "tetra_count": 4947,
+      "volume_m3": 6.9119999999999985e-09,
+      "cad_volume_m3": 6.911999999999998e-09,
+      "cad_volume_relative_mismatch": 1.196731210290839e-16,
+      "curved": false,
+      "element_order": 1,
+      "target_size_mm": 0.2
+    },
+    {
+      "name": "B_MAGNET_X_NEG",
+      "gmsh_volumes": [
+        8
+      ],
+      "tetra_count": 4874,
+      "volume_m3": 6.911999999999999e-09,
+      "cad_volume_m3": 6.911999999999996e-09,
+      "cad_volume_relative_mismatch": 4.786924841163357e-16,
+      "curved": false,
+      "element_order": 1,
+      "target_size_mm": 0.2
+    },
+    {
+      "name": "B_MAGNET_Y_POS",
+      "gmsh_volumes": [
+        9
+      ],
+      "tetra_count": 4928,
+      "volume_m3": 6.911999999999998e-09,
+      "cad_volume_m3": 6.911999999999995e-09,
+      "cad_volume_relative_mismatch": 3.5901936308725185e-16,
+      "curved": false,
+      "element_order": 1,
+      "target_size_mm": 0.2
+    },
+    {
+      "name": "B_MAGNET_Y_NEG",
+      "gmsh_volumes": [
+        10
+      ],
+      "tetra_count": 4846,
+      "volume_m3": 6.911999999999998e-09,
+      "cad_volume_m3": 6.911999999999995e-09,
+      "cad_volume_relative_mismatch": 3.5901936308725185e-16,
+      "curved": false,
+      "element_order": 1,
+      "target_size_mm": 0.2
+    }
+  ]
+}

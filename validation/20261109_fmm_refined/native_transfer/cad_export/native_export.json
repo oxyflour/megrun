@@ -1,0 +1,2144 @@
+{
+  "excitations": [
+    {
+      "type": "Current", 
+      "name": "A_AmpereTurns", 
+      "properties": {
+        "Name": "A_AmpereTurns", 
+        "Type": "Current", 
+        "Direction": "Point into terminal", 
+        "IsSolid": "Stranded", 
+        "Current": "0A"
+      }
+    }, 
+    {
+      "type": "Current", 
+      "name": "B_AmpereTurns", 
+      "properties": {
+        "Name": "B_AmpereTurns", 
+        "Type": "Current", 
+        "Direction": "Point into terminal", 
+        "IsSolid": "Stranded", 
+        "Current": "0A"
+      }
+    }
+  ], 
+  "source_project_unchanged": true, 
+  "boundaries": [], 
+  "source": {
+    "design": "Gap_3mm_CCW", 
+    "solution": "Reference : LastAdaptive", 
+    "aedt_version": "2022.2.0", 
+    "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_reference.aedt", 
+    "project_sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785", 
+    "exporter_sha256": "8ffbe9542cb931013ad433a143915aef9bb4961b06c2f937c27194495c2f4bb6"
+  }, 
+  "saved_context": {
+    "MaxwellParameterSetup": [
+      "\t\t$begin 'MaxwellParameterSetup'\n\t\t\t$begin 'MaxwellParameters'\n\t\t\t\tNextUniqueID=2\n\t\t\t\tMoveBackwards=false\n\t\t\t\t$begin 'Force_A'\n\t\t\t\t\tID=0\n\t\t\t\t\tMaxwellParameterType='Force'\n\t\t\t\t\t'Reference CS'=1\n\t\t\t\t\t'Is Virtual'=false\n\t\t\t\t\tObjects(195)\n\t\t\t\t$end 'Force_A'\n\t\t\t\t$begin 'Force_B'\n\t\t\t\t\tID=1\n\t\t\t\t\tMaxwellParameterType='Force'\n\t\t\t\t\t'Reference CS'=1\n\t\t\t\t\t'Is Virtual'=false\n\t\t\t\t\tObjects(436)\n\t\t\t\t$end 'Force_B'\n\t\t\t$end 'MaxwellParameters'\n\t\t\tMotionParams()\n\t\t$end 'MaxwellParameterSetup'\n"
+    ], 
+    "CoordinateSystems": [
+      "\t\t\t\t\t$begin 'CoordinateSystems'\n\t\t\t\t\t$end 'CoordinateSystems'\n"
+    ], 
+    "AnalysisSetup": [
+      "\t\t$begin 'AnalysisSetup'\n\t\t\t$begin 'SolveSetups'\n\t\t\t\tNextUniqueID=1\n\t\t\t\tMoveBackwards=false\n\t\t\t\t$begin 'Reference'\n\t\t\t\t\tID=0\n\t\t\t\t\tSetupType='Magnetostatic'\n\t\t\t\t\tEnabled=true\n\t\t\t\t\t$begin 'MeshLink'\n\t\t\t\t\t\tImportMesh=false\n\t\t\t\t\t$end 'MeshLink'\n\t\t\t\t\tMaximumPasses=8\n\t\t\t\t\tMinimumPasses=3\n\t\t\t\t\tMinimumConvergedPasses=2\n\t\t\t\t\tPercentRefinement=30\n\t\t\t\t\tSolveFieldOnly=false\n\t\t\t\t\tPercentError=0.5\n\t\t\t\t\tSolveMatrixAtLast=true\n\t\t\t\t\tUseNonLinearIterNum=false\n\t\t\t\t\tUseIterativeSolver=false\n\t\t\t\t\tRelativeResidual=1e-06\n\t\t\t\t\tNonLinearResidual=1e-05\n\t\t\t\t\tSmoothBHCurve=false\n\t\t\t\t\t$begin 'MuOption'\n\t\t\t\t\t\tMuNonLinearBH=true\n\t\t\t\t\t$end 'MuOption'\n\t\t\t\t$end 'Reference'\n\t\t\t$end 'SolveSetups'\n\t\t$end 'AnalysisSetup'\n"
+    ], 
+    "LocalVariables": [], 
+    "MeshSetup": [
+      "\t\t$begin 'MeshSetup'\n\t\t\t$begin 'MeshSettings'\n\t\t\t\t$begin 'GlobalSurfApproximation'\n\t\t\t\t\tCurvedSurfaceApproxChoice='UseSlider'\n\t\t\t\t\tSliderMeshSettings=5\n\t\t\t\t$end 'GlobalSurfApproximation'\n\t\t\t\t$begin 'GlobalCurvilinear'\n\t\t\t\t\tApply=true\n\t\t\t\t$end 'GlobalCurvilinear'\n\t\t\t\t$begin 'GlobalModelRes'\n\t\t\t\t\tUseAutoLength=true\n\t\t\t\t$end 'GlobalModelRes'\n\t\t\t\tMeshMethod='Auto'\n\t\t\t\tUseLegacyFaceterForTauVolumeMesh=false\n\t\t\t\tDynamicSurfaceResolution=false\n\t\t\t\tUseFlexMeshingForTAUvolumeMesh=false\n\t\t\t\tUseAlternativeMeshMethodsAsFallBack=true\n\t\t\t\tAllowPhiForLayeredGeometry=false\n\t\t\t$end 'MeshSettings'\n\t\t\t$begin 'MeshOperations'\n\t\t\t\tNextUniqueID=1\n\t\t\t\tMoveBackwards=false\n\t\t\t\t$begin 'Reference_Length'\n\t\t\t\t\tRefineInside=true\n\t\t\t\t\tID=0\n\t\t\t\t\tType='LengthBased'\n\t\t\t\t\tIsComponent=false\n\t\t\t\t\tEnabled=true\n\t\t\t\t\tObjects(195, 111, 83, 167, 139, 6, 436, 352, 324, 408, 380, 247)\n\t\t\t\t\tRestrictElem=false\n\t\t\t\t\tNumMaxElem='1000'\n\t\t\t\t\tRestrictLength=true\n\t\t\t\t\tMaxLength='0.5mm'\n\t\t\t\t$end 'Reference_Length'\n\t\t\t$end 'MeshOperations'\n\t\t$end 'MeshSetup'\n"
+    ], 
+    "DesignDatasets": [
+      "\t\t\t$begin 'DesignDatasets'\n\t\t\t\tNextUniqueID=0\n\t\t\t\tMoveBackwards=false\n\t\t\t\tDatasetType='DesignDatasetType'\n\t\t\t\t$begin 'DatasetDefinitions'\n\t\t\t\t$end 'DatasetDefinitions'\n\t\t\t$end 'DesignDatasets'\n"
+    ], 
+    "BoundarySetup": [
+      "\t\t$begin 'BoundarySetup'\n\t\t\t$begin 'GlobalBoundData'\n\t\t\t\t$begin 'OP_Option'\n\t\t\t\t\tLinkType='None'\n\t\t\t\t$end 'OP_Option'\n\t\t\t$end 'GlobalBoundData'\n\t\t\t$begin 'Boundaries'\n\t\t\t\tNextUniqueID=2\n\t\t\t\tMoveBackwards=false\n\t\t\t\t$begin 'A_AmpereTurns'\n\t\t\t\t\tID=0\n\t\t\t\t\tBoundType='Current'\n\t\t\t\t\tIsComponent=false\n\t\t\t\t\tObjects(494)\n\t\t\t\t\tParentBndID=-1\n\t\t\t\t\tCurrent='0A'\n\t\t\t\t\tIsSolid=false\n\t\t\t\t\t'Point out of terminal'=false\n\t\t\t\t$end 'A_AmpereTurns'\n\t\t\t\t$begin 'B_AmpereTurns'\n\t\t\t\t\tID=1\n\t\t\t\t\tBoundType='Current'\n\t\t\t\t\tIsComponent=false\n\t\t\t\t\tObjects(506)\n\t\t\t\t\tParentBndID=-1\n\t\t\t\t\tCurrent='0A'\n\t\t\t\t\tIsSolid=false\n\t\t\t\t\t'Point out of terminal'=false\n\t\t\t\t$end 'B_AmpereTurns'\n\t\t\t$end 'Boundaries'\n\t\t\t$begin 'ProductSpecificData'\n\t\t\t$end 'ProductSpecificData'\n\t\t$end 'BoundarySetup'\n"
+    ]
+  }, 
+  "coordinate_systems": [
+    "Global"
+  ], 
+  "materials": {
+    "Magrun_MAGNET_Y_POS": [
+      "NAME:Magrun_MAGNET_Y_POS", 
+      "CoordinateSystemType:=", 
+      "Cartesian", 
+      "BulkOrSurfaceType:=", 
+      1, 
+      [
+        "NAME:PhysicsTypes", 
+        "set:=", 
+        [
+          "Electromagnetic", 
+          "Thermal", 
+          "Structural"
+        ]
+      ], 
+      [
+        "NAME:AttachedData", 
+        [
+          "NAME:MatAppearanceData", 
+          "property_data:=", 
+          "appearance_data", 
+          "Red:=", 
+          143, 
+          "Green:=", 
+          188, 
+          "Blue:=", 
+          143, 
+          "Transparency:=", 
+          0.0
+        ]
+      ], 
+      "permittivity:=", 
+      "1", 
+      "permeability:=", 
+      "1.05", 
+      "conductivity:=", 
+      "0", 
+      "dielectric_loss_tangent:=", 
+      "0", 
+      "magnetic_loss_tangent:=", 
+      "0", 
+      [
+        "NAME:magnetic_coercivity", 
+        "property_type:=", 
+        "VectorProperty", 
+        "Magnitude:=", 
+        "-909456.817667973A_per_meter", 
+        "DirComp1:=", 
+        "0", 
+        "DirComp2:=", 
+        "-1", 
+        "DirComp3:=", 
+        "0"
+      ], 
+      "thermal_conductivity:=", 
+      "0.01", 
+      "mass_density:=", 
+      "0", 
+      "specific_heat:=", 
+      "0", 
+      "youngs_modulus:=", 
+      "0", 
+      "poissons_ratio:=", 
+      "0", 
+      "thermal_expansion_coefficient:=", 
+      "0", 
+      "diffusivity:=", 
+      "0.8", 
+      "molecular_mass:=", 
+      "0", 
+      "viscosity:=", 
+      "0"
+    ], 
+    "Magrun_MAGNET_Y_NEG": [
+      "NAME:Magrun_MAGNET_Y_NEG", 
+      "CoordinateSystemType:=", 
+      "Cartesian", 
+      "BulkOrSurfaceType:=", 
+      1, 
+      [
+        "NAME:PhysicsTypes", 
+        "set:=", 
+        [
+          "Electromagnetic", 
+          "Thermal", 
+          "Structural"
+        ]
+      ], 
+      [
+        "NAME:AttachedData", 
+        [
+          "NAME:MatAppearanceData", 
+          "property_data:=", 
+          "appearance_data", 
+          "Red:=", 
+          139, 
+          "Green:=", 
+          0, 
+          "Blue:=", 
+          139, 
+          "Transparency:=", 
+          0.0
+        ]
+      ], 
+      "permittivity:=", 
+      "1", 
+      "permeability:=", 
+      "1.05", 
+      "conductivity:=", 
+      "0", 
+      "dielectric_loss_tangent:=", 
+      "0", 
+      "magnetic_loss_tangent:=", 
+      "0", 
+      [
+        "NAME:magnetic_coercivity", 
+        "property_type:=", 
+        "VectorProperty", 
+        "Magnitude:=", 
+        "-909456.817667973A_per_meter", 
+        "DirComp1:=", 
+        "0", 
+        "DirComp2:=", 
+        "1", 
+        "DirComp3:=", 
+        "0"
+      ], 
+      "thermal_conductivity:=", 
+      "0.01", 
+      "mass_density:=", 
+      "0", 
+      "specific_heat:=", 
+      "0", 
+      "youngs_modulus:=", 
+      "0", 
+      "poissons_ratio:=", 
+      "0", 
+      "thermal_expansion_coefficient:=", 
+      "0", 
+      "diffusivity:=", 
+      "0.8", 
+      "molecular_mass:=", 
+      "0", 
+      "viscosity:=", 
+      "0"
+    ], 
+    "Magrun_MAGNET_X_NEG": [
+      "NAME:Magrun_MAGNET_X_NEG", 
+      "CoordinateSystemType:=", 
+      "Cartesian", 
+      "BulkOrSurfaceType:=", 
+      1, 
+      [
+        "NAME:PhysicsTypes", 
+        "set:=", 
+        [
+          "Electromagnetic", 
+          "Thermal", 
+          "Structural"
+        ]
+      ], 
+      [
+        "NAME:AttachedData", 
+        [
+          "NAME:MatAppearanceData", 
+          "property_data:=", 
+          "appearance_data", 
+          "Red:=", 
+          255, 
+          "Green:=", 
+          69, 
+          "Blue:=", 
+          0, 
+          "Transparency:=", 
+          0.0
+        ]
+      ], 
+      "permittivity:=", 
+      "1", 
+      "permeability:=", 
+      "1.05", 
+      "conductivity:=", 
+      "0", 
+      "dielectric_loss_tangent:=", 
+      "0", 
+      "magnetic_loss_tangent:=", 
+      "0", 
+      [
+        "NAME:magnetic_coercivity", 
+        "property_type:=", 
+        "VectorProperty", 
+        "Magnitude:=", 
+        "-909456.817667973A_per_meter", 
+        "DirComp1:=", 
+        "1", 
+        "DirComp2:=", 
+        "0", 
+        "DirComp3:=", 
+        "0"
+      ], 
+      "thermal_conductivity:=", 
+      "0.01", 
+      "mass_density:=", 
+      "0", 
+      "specific_heat:=", 
+      "0", 
+      "youngs_modulus:=", 
+      "0", 
+      "poissons_ratio:=", 
+      "0", 
+      "thermal_expansion_coefficient:=", 
+      "0", 
+      "diffusivity:=", 
+      "0.8", 
+      "molecular_mass:=", 
+      "0", 
+      "viscosity:=", 
+      "0"
+    ], 
+    "copper": [
+      "NAME:copper", 
+      "CoordinateSystemType:=", 
+      "Cartesian", 
+      "BulkOrSurfaceType:=", 
+      1, 
+      [
+        "NAME:PhysicsTypes", 
+        "set:=", 
+        [
+          "Electromagnetic", 
+          "Thermal", 
+          "Structural"
+        ]
+      ], 
+      [
+        "NAME:AttachedData", 
+        [
+          "NAME:MatAppearanceData", 
+          "property_data:=", 
+          "appearance_data", 
+          "Red:=", 
+          242, 
+          "Green:=", 
+          140, 
+          "Blue:=", 
+          102
+        ]
+      ], 
+      "permeability:=", 
+      "1", 
+      "conductivity:=", 
+      "58000000", 
+      "thermal_conductivity:=", 
+      "400", 
+      "mass_density:=", 
+      "8933", 
+      "specific_heat:=", 
+      "385", 
+      "youngs_modulus:=", 
+      "120000000000", 
+      "poissons_ratio:=", 
+      "0.38", 
+      "thermal_expansion_coefficient:=", 
+      "1.77e-05"
+    ], 
+    "vacuum": [
+      "NAME:vacuum", 
+      "CoordinateSystemType:=", 
+      "Cartesian", 
+      "BulkOrSurfaceType:=", 
+      1, 
+      [
+        "NAME:PhysicsTypes", 
+        "set:=", 
+        [
+          "Electromagnetic"
+        ]
+      ], 
+      [
+        "NAME:AttachedData", 
+        [
+          "NAME:MatAppearanceData", 
+          "property_data:=", 
+          "appearance_data", 
+          "Red:=", 
+          230, 
+          "Green:=", 
+          230, 
+          "Blue:=", 
+          230, 
+          "Transparency:=", 
+          0.94999998807907104
+        ]
+      ], 
+      "permittivity:=", 
+      "1"
+    ], 
+    "Magrun_MAGNET_X_POS": [
+      "NAME:Magrun_MAGNET_X_POS", 
+      "CoordinateSystemType:=", 
+      "Cartesian", 
+      "BulkOrSurfaceType:=", 
+      1, 
+      [
+        "NAME:PhysicsTypes", 
+        "set:=", 
+        [
+          "Electromagnetic", 
+          "Thermal", 
+          "Structural"
+        ]
+      ], 
+      [
+        "NAME:AttachedData", 
+        [
+          "NAME:MatAppearanceData", 
+          "property_data:=", 
+          "appearance_data", 
+          "Red:=", 
+          0, 
+          "Green:=", 
+          100, 
+          "Blue:=", 
+          0, 
+          "Transparency:=", 
+          0.0
+        ]
+      ], 
+      "permittivity:=", 
+      "1", 
+      "permeability:=", 
+      "1.05", 
+      "conductivity:=", 
+      "0", 
+      "dielectric_loss_tangent:=", 
+      "0", 
+      "magnetic_loss_tangent:=", 
+      "0", 
+      [
+        "NAME:magnetic_coercivity", 
+        "property_type:=", 
+        "VectorProperty", 
+        "Magnitude:=", 
+        "-909456.817667973A_per_meter", 
+        "DirComp1:=", 
+        "-1", 
+        "DirComp2:=", 
+        "0", 
+        "DirComp3:=", 
+        "0"
+      ], 
+      "thermal_conductivity:=", 
+      "0.01", 
+      "mass_density:=", 
+      "0", 
+      "specific_heat:=", 
+      "0", 
+      "youngs_modulus:=", 
+      "0", 
+      "poissons_ratio:=", 
+      "0", 
+      "thermal_expansion_coefficient:=", 
+      "0", 
+      "diffusivity:=", 
+      "0.8", 
+      "molecular_mass:=", 
+      "0", 
+      "viscosity:=", 
+      "0"
+    ], 
+    "Magrun_Steel_BH": [
+      "NAME:Magrun_Steel_BH", 
+      "CoordinateSystemType:=", 
+      "Cartesian", 
+      "BulkOrSurfaceType:=", 
+      1, 
+      [
+        "NAME:PhysicsTypes", 
+        "set:=", 
+        [
+          "Electromagnetic", 
+          "Thermal", 
+          "Structural"
+        ]
+      ], 
+      [
+        "NAME:AttachedData", 
+        [
+          "NAME:MatAppearanceData", 
+          "property_data:=", 
+          "appearance_data", 
+          "Red:=", 
+          210, 
+          "Green:=", 
+          105, 
+          "Blue:=", 
+          30, 
+          "Transparency:=", 
+          0.0
+        ]
+      ], 
+      "permittivity:=", 
+      "1", 
+      [
+        "NAME:permeability", 
+        "property_type:=", 
+        "nonlinear", 
+        "BTypeForSingleCurve:=", 
+        "normal", 
+        "HUnit:=", 
+        "A_per_meter", 
+        "BUnit:=", 
+        "tesla", 
+        "IsTemperatureDependent:=", 
+        false, 
+        [
+          "NAME:BHCoordinates", 
+          [
+            "NAME:DimUnits", 
+            "", 
+            ""
+          ], 
+          [
+            "NAME:Point", 
+            0.0, 
+            0.0
+          ], 
+          [
+            "NAME:Point", 
+            300.0, 
+            1.9
+          ], 
+          [
+            "NAME:Point", 
+            800.0, 
+            2.1
+          ], 
+          [
+            "NAME:Point", 
+            1600.0, 
+            2.2
+          ], 
+          [
+            "NAME:Point", 
+            4000.0, 
+            2.255
+          ], 
+          [
+            "NAME:Point", 
+            8000.0, 
+            2.28
+          ], 
+          [
+            "NAME:Point", 
+            16000.0, 
+            2.3
+          ], 
+          [
+            "NAME:Point", 
+            200000.0, 
+            2.53122121930421
+          ]
+        ], 
+        [
+          "NAME:Temperatures"
+        ]
+      ], 
+      "conductivity:=", 
+      "0", 
+      "dielectric_loss_tangent:=", 
+      "0", 
+      "magnetic_loss_tangent:=", 
+      "0", 
+      "thermal_conductivity:=", 
+      "0.01", 
+      "mass_density:=", 
+      "0", 
+      "specific_heat:=", 
+      "0", 
+      "youngs_modulus:=", 
+      "0", 
+      "poissons_ratio:=", 
+      "0", 
+      "thermal_expansion_coefficient:=", 
+      "0", 
+      "diffusivity:=", 
+      "0.8", 
+      "molecular_mass:=", 
+      "0", 
+      "viscosity:=", 
+      "0"
+    ]
+  }, 
+  "mesh_source": "cad", 
+  "capture_scope": "Per-solid STEP CAD and saved native inputs; no Maxwell mesh generation", 
+  "points": "points.csv", 
+  "schema": "aedt-native-disk-1", 
+  "model_unit": "mm", 
+  "objects": [
+    {
+      "cad_volume_model_units3": 66.75, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "A_YOKE_SOFT_MAGNETIC", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"Magrun_Steel_BH\"", 
+        "Color": "6379865", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "58", 
+        "59", 
+        "60", 
+        "61", 
+        "62", 
+        "63", 
+        "64", 
+        "65", 
+        "66", 
+        "67", 
+        "68", 
+        "69", 
+        "70", 
+        "71", 
+        "72", 
+        "73", 
+        "74", 
+        "75", 
+        "76", 
+        "77", 
+        "78", 
+        "79", 
+        "80", 
+        "81"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "-4.4", 
+          "-4.4", 
+          "4.8"
+        ], 
+        [
+          "-4.4", 
+          "4.4", 
+          "4.8"
+        ], 
+        [
+          "-4.4", 
+          "4.4", 
+          "1.4"
+        ], 
+        [
+          "-4.4", 
+          "-4.4", 
+          "1.4"
+        ], 
+        [
+          "4.4", 
+          "-4.4", 
+          "4.8"
+        ], 
+        [
+          "4.4", 
+          "4.4", 
+          "4.8"
+        ], 
+        [
+          "3.35", 
+          "-3.35", 
+          "4.8"
+        ], 
+        [
+          "-3.35", 
+          "-3.35", 
+          "4.8"
+        ], 
+        [
+          "-3.35", 
+          "3.35", 
+          "4.8"
+        ], 
+        [
+          "3.35", 
+          "3.35", 
+          "4.8"
+        ], 
+        [
+          "-3.35", 
+          "-3.35", 
+          "4.45"
+        ], 
+        [
+          "-3.35", 
+          "3.35", 
+          "4.45"
+        ], 
+        [
+          "-3.85", 
+          "-3.85", 
+          "4.45"
+        ], 
+        [
+          "-3.85", 
+          "3.85", 
+          "4.45"
+        ], 
+        [
+          "3.85", 
+          "3.85", 
+          "4.45"
+        ], 
+        [
+          "3.85", 
+          "-3.85", 
+          "4.45"
+        ], 
+        [
+          "3.35", 
+          "-3.35", 
+          "4.45"
+        ], 
+        [
+          "3.35", 
+          "3.35", 
+          "4.45"
+        ], 
+        [
+          "3.85", 
+          "3.85", 
+          "1.4"
+        ], 
+        [
+          "3.85", 
+          "-3.85", 
+          "1.4"
+        ], 
+        [
+          "-3.85", 
+          "3.85", 
+          "1.4"
+        ], 
+        [
+          "-3.85", 
+          "-3.85", 
+          "1.4"
+        ], 
+        [
+          "4.4", 
+          "-4.4", 
+          "1.4"
+        ], 
+        [
+          "4.4", 
+          "4.4", 
+          "1.4"
+        ]
+      ], 
+      "face_ids": [
+        "7", 
+        "8", 
+        "9", 
+        "10", 
+        "11", 
+        "12", 
+        "13", 
+        "14", 
+        "15", 
+        "16", 
+        "17", 
+        "18", 
+        "19", 
+        "20", 
+        "21"
+      ], 
+      "name": "A_YOKE_SOFT_MAGNETIC", 
+      "cad_step": "cad/00000.step", 
+      "object_id": 6, 
+      "material": "Magrun_Steel_BH"
+    }, 
+    {
+      "cad_volume_model_units3": 6.912, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "A_MAGNET_X_POS", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"Magrun_MAGNET_X_POS\"", 
+        "Color": "3355583", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "102", 
+        "103", 
+        "104", 
+        "105", 
+        "106", 
+        "107", 
+        "108", 
+        "109"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "3.2", 
+          "-2.4", 
+          "4.2"
+        ], 
+        [
+          "3.2", 
+          "2.4", 
+          "4.2"
+        ], 
+        [
+          "3.2", 
+          "2.4", 
+          "1.8"
+        ], 
+        [
+          "3.2", 
+          "-2.4", 
+          "1.8"
+        ], 
+        [
+          "3.8", 
+          "-2.4", 
+          "4.2"
+        ], 
+        [
+          "3.8", 
+          "-2.4", 
+          "1.8"
+        ], 
+        [
+          "3.8", 
+          "2.4", 
+          "1.8"
+        ], 
+        [
+          "3.8", 
+          "2.4", 
+          "4.2"
+        ]
+      ], 
+      "face_ids": [
+        "84", 
+        "85", 
+        "86", 
+        "87", 
+        "88", 
+        "89"
+      ], 
+      "name": "A_MAGNET_X_POS", 
+      "cad_step": "cad/00001.step", 
+      "object_id": 83, 
+      "material": "Magrun_MAGNET_X_POS"
+    }, 
+    {
+      "cad_volume_model_units3": 6.912, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "A_MAGNET_X_NEG", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"Magrun_MAGNET_X_NEG\"", 
+        "Color": "3355583", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "130", 
+        "131", 
+        "132", 
+        "133", 
+        "134", 
+        "135", 
+        "136", 
+        "137"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "-3.8", 
+          "-2.4", 
+          "4.2"
+        ], 
+        [
+          "-3.8", 
+          "2.4", 
+          "4.2"
+        ], 
+        [
+          "-3.8", 
+          "2.4", 
+          "1.8"
+        ], 
+        [
+          "-3.8", 
+          "-2.4", 
+          "1.8"
+        ], 
+        [
+          "-3.2", 
+          "-2.4", 
+          "4.2"
+        ], 
+        [
+          "-3.2", 
+          "-2.4", 
+          "1.8"
+        ], 
+        [
+          "-3.2", 
+          "2.4", 
+          "1.8"
+        ], 
+        [
+          "-3.2", 
+          "2.4", 
+          "4.2"
+        ]
+      ], 
+      "face_ids": [
+        "112", 
+        "113", 
+        "114", 
+        "115", 
+        "116", 
+        "117"
+      ], 
+      "name": "A_MAGNET_X_NEG", 
+      "cad_step": "cad/00002.step", 
+      "object_id": 111, 
+      "material": "Magrun_MAGNET_X_NEG"
+    }, 
+    {
+      "cad_volume_model_units3": 6.912, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "A_MAGNET_Y_POS", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"Magrun_MAGNET_Y_POS\"", 
+        "Color": "3355583", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "158", 
+        "159", 
+        "160", 
+        "161", 
+        "162", 
+        "163", 
+        "164", 
+        "165"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "-2.4", 
+          "3.2", 
+          "4.2"
+        ], 
+        [
+          "-2.4", 
+          "3.8", 
+          "4.2"
+        ], 
+        [
+          "-2.4", 
+          "3.8", 
+          "1.8"
+        ], 
+        [
+          "-2.4", 
+          "3.2", 
+          "1.8"
+        ], 
+        [
+          "2.4", 
+          "3.2", 
+          "4.2"
+        ], 
+        [
+          "2.4", 
+          "3.2", 
+          "1.8"
+        ], 
+        [
+          "2.4", 
+          "3.8", 
+          "1.8"
+        ], 
+        [
+          "2.4", 
+          "3.8", 
+          "4.2"
+        ]
+      ], 
+      "face_ids": [
+        "140", 
+        "141", 
+        "142", 
+        "143", 
+        "144", 
+        "145"
+      ], 
+      "name": "A_MAGNET_Y_POS", 
+      "cad_step": "cad/00003.step", 
+      "object_id": 139, 
+      "material": "Magrun_MAGNET_Y_POS"
+    }, 
+    {
+      "cad_volume_model_units3": 6.912, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "A_MAGNET_Y_NEG", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"Magrun_MAGNET_Y_NEG\"", 
+        "Color": "3355583", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "186", 
+        "187", 
+        "188", 
+        "189", 
+        "190", 
+        "191", 
+        "192", 
+        "193"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "-2.4", 
+          "-3.8", 
+          "4.2"
+        ], 
+        [
+          "-2.4", 
+          "-3.2", 
+          "4.2"
+        ], 
+        [
+          "-2.4", 
+          "-3.2", 
+          "1.8"
+        ], 
+        [
+          "-2.4", 
+          "-3.8", 
+          "1.8"
+        ], 
+        [
+          "2.4", 
+          "-3.8", 
+          "4.2"
+        ], 
+        [
+          "2.4", 
+          "-3.8", 
+          "1.8"
+        ], 
+        [
+          "2.4", 
+          "-3.2", 
+          "1.8"
+        ], 
+        [
+          "2.4", 
+          "-3.2", 
+          "4.2"
+        ]
+      ], 
+      "face_ids": [
+        "168", 
+        "169", 
+        "170", 
+        "171", 
+        "172", 
+        "173"
+      ], 
+      "name": "A_MAGNET_Y_NEG", 
+      "cad_step": "cad/00004.step", 
+      "object_id": 167, 
+      "material": "Magrun_MAGNET_Y_NEG"
+    }, 
+    {
+      "cad_volume_model_units3": 16.422, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "A_AF_COIL_COPPER", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"copper\"", 
+        "Color": "3044300", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "230", 
+        "231", 
+        "232", 
+        "233", 
+        "234", 
+        "235", 
+        "236", 
+        "237", 
+        "238", 
+        "239", 
+        "240", 
+        "241", 
+        "242", 
+        "243", 
+        "244", 
+        "245"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "-3.125", 
+          "-3.125", 
+          "4"
+        ], 
+        [
+          "-3.125", 
+          "3.125", 
+          "4"
+        ], 
+        [
+          "-3.125", 
+          "3.125", 
+          "1.7"
+        ], 
+        [
+          "-3.125", 
+          "-3.125", 
+          "1.7"
+        ], 
+        [
+          "3.125", 
+          "-3.125", 
+          "1.7"
+        ], 
+        [
+          "3.125", 
+          "-3.125", 
+          "4"
+        ], 
+        [
+          "3.125", 
+          "3.125", 
+          "4"
+        ], 
+        [
+          "2.825", 
+          "-2.825", 
+          "4"
+        ], 
+        [
+          "-2.825", 
+          "-2.825", 
+          "4"
+        ], 
+        [
+          "-2.825", 
+          "2.825", 
+          "4"
+        ], 
+        [
+          "2.825", 
+          "2.825", 
+          "4"
+        ], 
+        [
+          "3.125", 
+          "3.125", 
+          "1.7"
+        ], 
+        [
+          "2.825", 
+          "-2.825", 
+          "1.7"
+        ], 
+        [
+          "2.825", 
+          "2.825", 
+          "1.7"
+        ], 
+        [
+          "-2.825", 
+          "2.825", 
+          "1.7"
+        ], 
+        [
+          "-2.825", 
+          "-2.825", 
+          "1.7"
+        ]
+      ], 
+      "face_ids": [
+        "196", 
+        "197", 
+        "198", 
+        "199", 
+        "200", 
+        "201", 
+        "202", 
+        "203", 
+        "204", 
+        "205"
+      ], 
+      "name": "A_AF_COIL_COPPER", 
+      "cad_step": "cad/00005.step", 
+      "object_id": 195, 
+      "material": "copper"
+    }, 
+    {
+      "cad_volume_model_units3": 66.7500000000001, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "B_YOKE_SOFT_MAGNETIC", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"Magrun_Steel_BH\"", 
+        "Color": "6379865", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "299", 
+        "300", 
+        "301", 
+        "302", 
+        "303", 
+        "304", 
+        "305", 
+        "306", 
+        "307", 
+        "308", 
+        "309", 
+        "310", 
+        "311", 
+        "312", 
+        "313", 
+        "314", 
+        "315", 
+        "316", 
+        "317", 
+        "318", 
+        "319", 
+        "320", 
+        "321", 
+        "322"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "7.4", 
+          "-4.4", 
+          "4.8"
+        ], 
+        [
+          "7.4", 
+          "4.4", 
+          "4.8"
+        ], 
+        [
+          "7.4", 
+          "4.4", 
+          "1.4"
+        ], 
+        [
+          "7.4", 
+          "-4.4", 
+          "1.4"
+        ], 
+        [
+          "16.2", 
+          "-4.4", 
+          "4.8"
+        ], 
+        [
+          "16.2", 
+          "4.4", 
+          "4.8"
+        ], 
+        [
+          "15.15", 
+          "-3.35", 
+          "4.8"
+        ], 
+        [
+          "8.45", 
+          "-3.35", 
+          "4.8"
+        ], 
+        [
+          "8.45", 
+          "3.35", 
+          "4.8"
+        ], 
+        [
+          "15.15", 
+          "3.35", 
+          "4.8"
+        ], 
+        [
+          "8.45", 
+          "-3.35", 
+          "4.45"
+        ], 
+        [
+          "8.45", 
+          "3.35", 
+          "4.45"
+        ], 
+        [
+          "7.95", 
+          "-3.85", 
+          "4.45"
+        ], 
+        [
+          "7.95", 
+          "3.85", 
+          "4.45"
+        ], 
+        [
+          "15.65", 
+          "3.85", 
+          "4.45"
+        ], 
+        [
+          "15.65", 
+          "-3.85", 
+          "4.45"
+        ], 
+        [
+          "15.15", 
+          "-3.35", 
+          "4.45"
+        ], 
+        [
+          "15.15", 
+          "3.35", 
+          "4.45"
+        ], 
+        [
+          "15.65", 
+          "3.85", 
+          "1.4"
+        ], 
+        [
+          "15.65", 
+          "-3.85", 
+          "1.4"
+        ], 
+        [
+          "7.95", 
+          "3.85", 
+          "1.4"
+        ], 
+        [
+          "7.95", 
+          "-3.85", 
+          "1.4"
+        ], 
+        [
+          "16.2", 
+          "-4.4", 
+          "1.4"
+        ], 
+        [
+          "16.2", 
+          "4.4", 
+          "1.4"
+        ]
+      ], 
+      "face_ids": [
+        "248", 
+        "249", 
+        "250", 
+        "251", 
+        "252", 
+        "253", 
+        "254", 
+        "255", 
+        "256", 
+        "257", 
+        "258", 
+        "259", 
+        "260", 
+        "261", 
+        "262"
+      ], 
+      "name": "B_YOKE_SOFT_MAGNETIC", 
+      "cad_step": "cad/00006.step", 
+      "object_id": 247, 
+      "material": "Magrun_Steel_BH"
+    }, 
+    {
+      "cad_volume_model_units3": 6.91200000000002, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "B_MAGNET_X_POS", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"Magrun_MAGNET_X_POS\"", 
+        "Color": "3355583", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "343", 
+        "344", 
+        "345", 
+        "346", 
+        "347", 
+        "348", 
+        "349", 
+        "350"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "15", 
+          "-2.4", 
+          "4.2"
+        ], 
+        [
+          "15", 
+          "2.4", 
+          "4.2"
+        ], 
+        [
+          "15", 
+          "2.4", 
+          "1.8"
+        ], 
+        [
+          "15", 
+          "-2.4", 
+          "1.8"
+        ], 
+        [
+          "15.6", 
+          "-2.4", 
+          "4.2"
+        ], 
+        [
+          "15.6", 
+          "-2.4", 
+          "1.8"
+        ], 
+        [
+          "15.6", 
+          "2.4", 
+          "1.8"
+        ], 
+        [
+          "15.6", 
+          "2.4", 
+          "4.2"
+        ]
+      ], 
+      "face_ids": [
+        "325", 
+        "326", 
+        "327", 
+        "328", 
+        "329", 
+        "330"
+      ], 
+      "name": "B_MAGNET_X_POS", 
+      "cad_step": "cad/00007.step", 
+      "object_id": 324, 
+      "material": "Magrun_MAGNET_X_POS"
+    }, 
+    {
+      "cad_volume_model_units3": 6.91200000000002, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "B_MAGNET_X_NEG", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"Magrun_MAGNET_X_NEG\"", 
+        "Color": "3355583", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "371", 
+        "372", 
+        "373", 
+        "374", 
+        "375", 
+        "376", 
+        "377", 
+        "378"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "8", 
+          "-2.4", 
+          "4.2"
+        ], 
+        [
+          "8", 
+          "2.4", 
+          "4.2"
+        ], 
+        [
+          "8", 
+          "2.4", 
+          "1.8"
+        ], 
+        [
+          "8", 
+          "-2.4", 
+          "1.8"
+        ], 
+        [
+          "8.6", 
+          "-2.4", 
+          "4.2"
+        ], 
+        [
+          "8.6", 
+          "-2.4", 
+          "1.8"
+        ], 
+        [
+          "8.6", 
+          "2.4", 
+          "1.8"
+        ], 
+        [
+          "8.6", 
+          "2.4", 
+          "4.2"
+        ]
+      ], 
+      "face_ids": [
+        "353", 
+        "354", 
+        "355", 
+        "356", 
+        "357", 
+        "358"
+      ], 
+      "name": "B_MAGNET_X_NEG", 
+      "cad_step": "cad/00008.step", 
+      "object_id": 352, 
+      "material": "Magrun_MAGNET_X_NEG"
+    }, 
+    {
+      "cad_volume_model_units3": 6.912, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "B_MAGNET_Y_POS", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"Magrun_MAGNET_Y_POS\"", 
+        "Color": "3355583", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "399", 
+        "400", 
+        "401", 
+        "402", 
+        "403", 
+        "404", 
+        "405", 
+        "406"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "9.4", 
+          "3.2", 
+          "4.2"
+        ], 
+        [
+          "9.4", 
+          "3.8", 
+          "4.2"
+        ], 
+        [
+          "9.4", 
+          "3.8", 
+          "1.8"
+        ], 
+        [
+          "9.4", 
+          "3.2", 
+          "1.8"
+        ], 
+        [
+          "14.2", 
+          "3.2", 
+          "4.2"
+        ], 
+        [
+          "14.2", 
+          "3.2", 
+          "1.8"
+        ], 
+        [
+          "14.2", 
+          "3.8", 
+          "1.8"
+        ], 
+        [
+          "14.2", 
+          "3.8", 
+          "4.2"
+        ]
+      ], 
+      "face_ids": [
+        "381", 
+        "382", 
+        "383", 
+        "384", 
+        "385", 
+        "386"
+      ], 
+      "name": "B_MAGNET_Y_POS", 
+      "cad_step": "cad/00009.step", 
+      "object_id": 380, 
+      "material": "Magrun_MAGNET_Y_POS"
+    }, 
+    {
+      "cad_volume_model_units3": 6.912, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "B_MAGNET_Y_NEG", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"Magrun_MAGNET_Y_NEG\"", 
+        "Color": "3355583", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "427", 
+        "428", 
+        "429", 
+        "430", 
+        "431", 
+        "432", 
+        "433", 
+        "434"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "9.4", 
+          "-3.8", 
+          "4.2"
+        ], 
+        [
+          "9.4", 
+          "-3.2", 
+          "4.2"
+        ], 
+        [
+          "9.4", 
+          "-3.2", 
+          "1.8"
+        ], 
+        [
+          "9.4", 
+          "-3.8", 
+          "1.8"
+        ], 
+        [
+          "14.2", 
+          "-3.8", 
+          "4.2"
+        ], 
+        [
+          "14.2", 
+          "-3.8", 
+          "1.8"
+        ], 
+        [
+          "14.2", 
+          "-3.2", 
+          "1.8"
+        ], 
+        [
+          "14.2", 
+          "-3.2", 
+          "4.2"
+        ]
+      ], 
+      "face_ids": [
+        "409", 
+        "410", 
+        "411", 
+        "412", 
+        "413", 
+        "414"
+      ], 
+      "name": "B_MAGNET_Y_NEG", 
+      "cad_step": "cad/00010.step", 
+      "object_id": 408, 
+      "material": "Magrun_MAGNET_Y_NEG"
+    }, 
+    {
+      "cad_volume_model_units3": 16.422, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0", 
+        "Solve Inside": "true", 
+        "Name": "B_AF_COIL_COPPER", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Material": "\"copper\"", 
+        "Color": "3044300", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "471", 
+        "472", 
+        "473", 
+        "474", 
+        "475", 
+        "476", 
+        "477", 
+        "478", 
+        "479", 
+        "480", 
+        "481", 
+        "482", 
+        "483", 
+        "484", 
+        "485", 
+        "486"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "8.675", 
+          "-3.125", 
+          "4"
+        ], 
+        [
+          "8.675", 
+          "3.125", 
+          "4"
+        ], 
+        [
+          "8.675", 
+          "3.125", 
+          "1.7"
+        ], 
+        [
+          "8.675", 
+          "-3.125", 
+          "1.7"
+        ], 
+        [
+          "14.925", 
+          "-3.125", 
+          "1.7"
+        ], 
+        [
+          "14.925", 
+          "-3.125", 
+          "4"
+        ], 
+        [
+          "14.925", 
+          "3.125", 
+          "4"
+        ], 
+        [
+          "14.625", 
+          "-2.825", 
+          "4"
+        ], 
+        [
+          "8.975", 
+          "-2.825", 
+          "4"
+        ], 
+        [
+          "8.975", 
+          "2.825", 
+          "4"
+        ], 
+        [
+          "14.625", 
+          "2.825", 
+          "4"
+        ], 
+        [
+          "14.925", 
+          "3.125", 
+          "1.7"
+        ], 
+        [
+          "14.625", 
+          "-2.825", 
+          "1.7"
+        ], 
+        [
+          "14.625", 
+          "2.825", 
+          "1.7"
+        ], 
+        [
+          "8.975", 
+          "2.825", 
+          "1.7"
+        ], 
+        [
+          "8.975", 
+          "-2.825", 
+          "1.7"
+        ]
+      ], 
+      "face_ids": [
+        "437", 
+        "438", 
+        "439", 
+        "440", 
+        "441", 
+        "442", 
+        "443", 
+        "444", 
+        "445", 
+        "446"
+      ], 
+      "name": "B_AF_COIL_COPPER", 
+      "cad_step": "cad/00011.step", 
+      "object_id": 436, 
+      "material": "copper"
+    }, 
+    {
+      "cad_volume_model_units3": 128345.952, 
+      "group": "Solids", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0.75", 
+        "Solve Inside": "true", 
+        "Name": "Region", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "true", 
+        "Material": "\"vacuum\"", 
+        "Color": "9416591", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "537", 
+        "538", 
+        "539", 
+        "540", 
+        "541", 
+        "542", 
+        "543", 
+        "544"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "36.2", 
+          "-24.4", 
+          "24.8"
+        ], 
+        [
+          "36.2", 
+          "24.4", 
+          "24.8"
+        ], 
+        [
+          "-24.4", 
+          "24.4", 
+          "24.8"
+        ], 
+        [
+          "-24.4", 
+          "-24.4", 
+          "24.8"
+        ], 
+        [
+          "36.2", 
+          "24.4", 
+          "-18.6"
+        ], 
+        [
+          "36.2", 
+          "-24.4", 
+          "-18.6"
+        ], 
+        [
+          "-24.4", 
+          "-24.4", 
+          "-18.6"
+        ], 
+        [
+          "-24.4", 
+          "24.4", 
+          "-18.6"
+        ]
+      ], 
+      "face_ids": [
+        "519", 
+        "520", 
+        "521", 
+        "522", 
+        "523", 
+        "524"
+      ], 
+      "name": "Region", 
+      "object_id": 518, 
+      "mesh_omitted_reason": "Not a model Solve-Inside solid", 
+      "material": "vacuum"
+    }, 
+    {
+      "group": "Sheets", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0.8", 
+        "Name": "A_Terminal", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Color": "15132390", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "499", 
+        "500", 
+        "501", 
+        "502"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "0", 
+          "2.825", 
+          "1.7"
+        ], 
+        [
+          "0", 
+          "3.125", 
+          "1.7"
+        ], 
+        [
+          "0", 
+          "3.125", 
+          "4"
+        ], 
+        [
+          "0", 
+          "2.825", 
+          "4"
+        ]
+      ], 
+      "face_ids": [
+        "504"
+      ], 
+      "name": "A_Terminal", 
+      "object_id": 494, 
+      "mesh_omitted_reason": "Not a model Solve-Inside solid", 
+      "material": ""
+    }, 
+    {
+      "group": "Sheets", 
+      "attributes": {
+        "Model": "true", 
+        "Transparent": "0.8", 
+        "Name": "B_Terminal", 
+        "Orientation": "Global", 
+        "Material Appearance": "false", 
+        "Display Wireframe": "false", 
+        "Color": "15132390", 
+        "Group": "Model"
+      }, 
+      "vertex_ids": [
+        "511", 
+        "512", 
+        "513", 
+        "514"
+      ], 
+      "cad_vertex_positions": [
+        [
+          "11.8", 
+          "2.825", 
+          "1.7"
+        ], 
+        [
+          "11.8", 
+          "3.125", 
+          "1.7"
+        ], 
+        [
+          "11.8", 
+          "3.125", 
+          "4"
+        ], 
+        [
+          "11.8", 
+          "2.825", 
+          "4"
+        ]
+      ], 
+      "face_ids": [
+        "516"
+      ], 
+      "name": "B_Terminal", 
+      "object_id": 506, 
+      "mesh_omitted_reason": "Not a model Solve-Inside solid", 
+      "material": ""
+    }
+  ], 
+  "nominal_variation": "", 
+  "mode": "inputs_with_reference", 
+  "files": {
+    "cad/00003.step": {
+      "bytes": 7739, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "66888ec60da70a5bf59907e232fefe768cc1b7930c990d533b638ec61d5f602d"
+    }, 
+    "cad/00011.step": {
+      "bytes": 12986, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "6b09485857bf64e7a98ff114b82b6ec87c1375be932218b430ba6e2a90fdb2bc"
+    }, 
+    "native/B.fld": {
+      "bytes": 68309, 
+      "role": "native SI vector reference", 
+      "sha256": "893f0f2115bc6dd500c91bce955fea844c1921f216477acdcea9e457a5669e56"
+    }, 
+    "cad/00004.step": {
+      "bytes": 7765, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "519aee2171c02a9a0c25222a368bc96ec1d4654049b94e352dd8084c682f47ec"
+    }, 
+    "cad/00005.step": {
+      "bytes": 13000, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "7b9a67624b3cf855e283c96b648f10f18f3557c183a1e0475bfdad5684989edd"
+    }, 
+    "cad/00000.step": {
+      "bytes": 18218, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "8c983f836a40dfa42974b98a9f1e2b11d57f3e292bebdcc6d204dc8c41dfb362"
+    }, 
+    "cad/00001.step": {
+      "bytes": 7739, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "f9aab2c9b264431ed88d90625e4d1bc799926aa0076af3cc49f241b867d0c729"
+    }, 
+    "native/source_project.aedt": {
+      "bytes": 622954, 
+      "role": "saved original project inputs", 
+      "sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785"
+    }, 
+    "points.csv": {
+      "bytes": 37070, 
+      "role": "SI observation points", 
+      "sha256": "9e4867ab7b0846478e4f4825602352fe030dd12e799c3c679cc1f6f0d26806c6"
+    }, 
+    "points.pts": {
+      "bytes": 6559, 
+      "role": "native sample points in model units", 
+      "sha256": "bf60b200c0138a6f15d8e356236594195134af066bb0a58c2a3e1888c30b6ed8"
+    }, 
+    "native/convergence.txt": {
+      "bytes": 672, 
+      "role": "available native setup evidence", 
+      "sha256": "c041d2e102007962b129ff25dbb5cff78f857f30a9a2ddf2e9c32902d77f91d1"
+    }, 
+    "native/profile.txt": {
+      "bytes": 8334, 
+      "role": "available native setup evidence", 
+      "sha256": "d6a47dbc265e92586fbd263d5cede1362535902431a35f660e01795da0c98f72"
+    }, 
+    "cad/00008.step": {
+      "bytes": 7739, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "d5cda36f634e095b6c0b173044ee49fa3bef08908f91becfee903243ec879e12"
+    }, 
+    "cad/00009.step": {
+      "bytes": 7731, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "acba7190676ee5e0818d451949629fba2cba736432de6ccd8adbc2f99c4248fa"
+    }, 
+    "native/mesh_stats.txt": {
+      "bytes": 2602, 
+      "role": "available native setup evidence", 
+      "sha256": "0d0e0c7e5b701d255e1825bb500297e9d2ac59a3bcab0641e5bc2c6b4dd97382"
+    }, 
+    "cad/00010.step": {
+      "bytes": 7757, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "256fabd24d87094ee9fe3cfdb2ce2b0d77b7cfdeaab4c267d4fca1c07bdc00ee"
+    }, 
+    "cad/00006.step": {
+      "bytes": 18197, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "f2790df910af999626cb1ac6149d1e4ae80fae43d4561a26e46c0230e6e4f957"
+    }, 
+    "cad/00007.step": {
+      "bytes": 7765, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "bfe72c5ceca8646431c8131a4c3626e6aad08b26369d377909b28f980ae74c52"
+    }, 
+    "cad/00002.step": {
+      "bytes": 7765, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "7b8b5bfd9ad375252fe96fe509422c28b969ba7a07ea0cf29cbecb665ab30af3"
+    }
+  }, 
+  "variables": {}, 
+  "setups": [
+    "Reference"
+  ], 
+  "available_variations": [
+    ""
+  ], 
+  "elapsed_seconds": 11.290977478027344, 
+  "state": "complete", 
+  "reference_fields": {
+    "B": "native/B.fld"
+  }, 
+  "native_evidence": {
+    "profile.txt": {
+      "state": "exported", 
+      "file": "native/profile.txt"
+    }, 
+    "mesh_stats.txt": {
+      "state": "exported", 
+      "file": "native/mesh_stats.txt"
+    }, 
+    "convergence.txt": {
+      "state": "exported", 
+      "file": "native/convergence.txt"
+    }
+  }, 
+  "mesh_generation": {
+    "isolated_project": false, 
+    "source_results_present": true, 
+    "state": "not_requested", 
+    "policy": "auto", 
+    "setup": "Reference", 
+    "field_solve_submitted": false
+  }
+}

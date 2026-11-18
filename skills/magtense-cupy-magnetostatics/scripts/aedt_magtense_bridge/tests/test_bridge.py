@@ -299,6 +299,127 @@ def test_native_mesh_generation_failure_has_no_complete_manifest(tmp_path):
     assert not Path(config['project']).with_suffix('.aedtresults').exists()
 
 
+def test_native_cad_export_without_results_never_requests_maxwell_mesh(tmp_path):
+    from aedt_export_native import export_native
+    desktop,config,calls,opened=_native_export_api_fixture(tmp_path,'missing')
+    editor=desktop.OpenProject(config['project']).SetActiveDesign('fixture').SetActiveEditor('3D Modeler')
+    opened.clear()
+    def export(args):
+        assert args[args.index('Selections:=')+1]=='tetra'
+        path=Path(args[args.index('File Name:=')+1]);assert path.suffix=='.step'
+        path.write_text('STEP native API contract fixture');calls.append('cad_export')
+    editor.Export=export
+    config['mesh_source']='cad'
+    info=export_native(desktop,config)
+    assert info['mesh_generation']['state']=='not_requested'
+    assert not info['mesh_generation']['field_solve_submitted']
+    assert calls==['cad_export','close'] and info['objects'][0]['cad_step']
+    assert 'mesh_raw' not in info['objects'][0]
+    assert not Path(config['project']).with_suffix('.aedtresults').exists()
+
+
+def _cad_disk_fixture(root,offset,shape='box'):
+    """Exact mm-scale cubes/spheres, distinct mu=2/100, and skipped vacuum."""
+    gmsh=pytest.importorskip('gmsh')
+    info=_native_disk_fixture(root);original=info['objects'][0]
+    (root/original['mesh_raw']).unlink();(root/'cad').mkdir()
+    info.update(mesh_source='cad',objects=[],materials={})
+    gmsh.initialize([],readConfigFiles=False)
+    try:
+        gmsh.option.setNumber('General.Terminal',0)
+        gmsh.option.setString('Geometry.OCCTargetUnit','MM')
+        for k,x in enumerate([0.,offset]):
+            gmsh.model.add('part_'+str(k))
+            if shape=='sphere':gmsh.model.occ.addSphere(x,0,0,1)
+            else:gmsh.model.occ.addBox(x,0,0,1,1,1)
+            gmsh.model.occ.synchronize()
+            relative=f'cad/{k}.step';gmsh.write(str(root/relative))
+            obj=dict(original,name='piece_'+str(k),material='Fixture'+str(k),cad_step=relative,
+                cad_volume_model_units3=4*np.pi/3 if shape=='sphere' else 1.)
+            obj.pop('mesh_raw');info['objects'].append(obj)
+            info['materials'][obj['material']]=['NAME:'+obj['material'],'permeability:=',str([2,100][k])]
+    finally:gmsh.finalize()
+    info['objects'].append(dict(original,name='Region',material='vacuum'))
+    (root/'native_export.json').write_text(json.dumps(info),encoding='utf-8');_native_manifest(root)
+    return info
+
+
+@pytest.mark.parametrize('offset,components,contact',[(1.,1,True),(1.00001,2,False)])
+def test_cad_tetrahedralization_preserves_materials_units_and_contact_topology(tmp_path,offset,components,contact):
+    from bridge import read_model
+    from fem_bem import FEMBEM,material_laws
+    source=tmp_path/'cad_input';_cad_disk_fixture(source,offset)
+    sizes=tmp_path/'sizes.json';sizes.write_text(json.dumps({'piece_1':.25}))
+    output=tmp_path/'job'
+    assert main(['mesh-cad','--bundle',str(source),'--out',str(output),
+                 '--size-mm','.4','--part-sizes',str(sizes)])==0
+    model=read_model(output)
+    assert len(model['objects'])==2 and model['meshing']['passed']
+    assert model['meshing']['geometry']['components']==components
+    assert (model['meshing']['shared_interface_triangles']>0)==contact
+    assert [o['properties']['mu_r'] for o in model['objects']]==[2.,100.]
+    parts=[np.load(output/o['mesh_npz'])['tetra_m'] for o in model['objects']]
+    if not contact:
+        assert len(parts[1])>1.5*len(parts[0]), 'Separated equal cubes must retain their distinct target sizes'
+    for o in model['objects']:
+        assert abs(o['mesh_stats']['volume_m3']-1e-9)<1e-20
+        assert o['mesh_stats']['cad_volume_relative_mismatch']<1e-10
+    np.testing.assert_allclose(parts[0].min(axis=(0,1)),0,atol=1e-14)
+    np.testing.assert_allclose(parts[1].min(axis=(0,1)),[offset*1e-3,0,0],atol=1e-14)
+    ids=np.concatenate([np.full(len(t),k) for k,t in enumerate(parts)])
+    mesh=FEMBEM(np.concatenate(parts),material_laws([o['properties'] for o in model['objects']],ids),boundary_backend='geometry')
+    assert mesh.info['P0_boundary_faces']==model['meshing']['exterior_triangles']
+
+
+def test_cad_positive_volume_overlap_fails_without_publishing_model(tmp_path):
+    from cad_mesh import mesh_cad_bundle
+    from aedt_export import ConversionError
+    source=tmp_path/'input';_cad_disk_fixture(source,.5)
+    with pytest.raises(ConversionError,match='overlap'):
+        mesh_cad_bundle(source,tmp_path/'job',size_mm=.4)
+    assert not (tmp_path/'job/model.json').exists()
+    record=json.loads((tmp_path/'job/meshing_info.json').read_text())
+    assert record['state']=='failed' and not record['passed']
+
+
+def test_cad_integrity_and_unknown_size_override_fail_before_meshing(tmp_path):
+    from cad_mesh import mesh_cad_bundle
+    from aedt_export import ConversionError
+    source=tmp_path/'input';_cad_disk_fixture(source,2.)
+    sizes=tmp_path/'sizes.json';sizes.write_text('{"unknown_part": 0.1}')
+    with pytest.raises(ConversionError,match='Part sizes'):
+        mesh_cad_bundle(source,tmp_path/'job',size_mm=.4,part_sizes=sizes)
+    path=source/'cad/0.step';path.write_bytes(path.read_bytes()+b'broken')
+    with pytest.raises(ConversionError,match='size mismatch|SHA-256'):
+        mesh_cad_bundle(source,tmp_path/'job',size_mm=.4)
+    assert not (tmp_path/'job').exists()
+
+
+def test_cad_native_volume_rejects_millimetre_metre_ambiguity(tmp_path):
+    from cad_mesh import mesh_cad_bundle
+    from aedt_export import ConversionError
+    source=tmp_path/'input';info=_cad_disk_fixture(source,2.)
+    info['model_unit']='m'  # STEP is still mm: analytic volume must expose 1e9 mismatch.
+    (source/'native_export.json').write_text(json.dumps(info),encoding='utf-8');_native_manifest(source)
+    with pytest.raises(ConversionError,match='volume or unit mismatch'):
+        mesh_cad_bundle(source,tmp_path/'job',size_mm=.4)
+    assert not (tmp_path/'job/model.json').exists()
+
+
+def test_curved_cad_volume_requires_resolved_surface_mesh(tmp_path):
+    """Exact 1 mm spheres: coarse flat facets fail the same 0.5% volume gate."""
+    from cad_mesh import mesh_cad_bundle
+    from aedt_export import ConversionError
+    source=tmp_path/'input';_cad_disk_fixture(source,3.,shape='sphere')
+    with pytest.raises(ConversionError,match='tetra/CAD volume error'):
+        mesh_cad_bundle(source,tmp_path/'coarse',size_mm=.8)
+    assert not (tmp_path/'coarse/model.json').exists()
+    model=mesh_cad_bundle(source,tmp_path/'fine',size_mm=.12)
+    expected=4*np.pi/3*1e-9
+    for obj in model['objects']:
+        assert abs(obj['mesh_stats']['volume_m3']-expected)/expected<.005
+
+
 @pytest.mark.parametrize('policy,reference,message',[
     ('invalid',False,'mesh_policy'),('generate',True,'cannot export saved reference fields'),
     ('reuse',False,'No volume mesh'),('auto',True,'no saved field')])

@@ -368,6 +368,17 @@ def main(argv=None):
     native_points.add_argument('--points-csv');native_points.add_argument('--line-mm')
     native.add_argument('--overrides');native.add_argument('--max-tiles',type=int,default=10000)
 
+    cad=sub.add_parser('mesh-cad',help='Mesh magnetic STEP parts with Gmsh; no Maxwell volume mesh or air tetrahedra')
+    cad.add_argument('--bundle',required=True,help='Native mesh_source=cad transfer bundle')
+    cad.add_argument('--out',required=True)
+    cad.add_argument('--size-mm',type=float,required=True,help='Default target edge size in mm')
+    cad.add_argument('--part-sizes',help='JSON mapping object names to target edge sizes in mm')
+    cad_points=cad.add_mutually_exclusive_group()
+    cad_points.add_argument('--points-csv');cad_points.add_argument('--line-mm')
+    cad.add_argument('--overrides');cad.add_argument('--max-tiles',type=int,default=1000000)
+    cad.add_argument('--volume-rtol',type=float,default=.005,help='Tetra/CAD volume relative tolerance')
+    cad.add_argument('--threads',type=int,default=1)
+
     fem=sub.add_parser('solve-fem-bem',help='Offline P1/P0 scalar-potential solve; no Maxwell/PyAEDT required')
     fem.add_argument('--out',required=True)
     fem.add_argument('--result-prefix',default='fem_bem',help='New prefix for retry evidence, reusing the same imported mesh/cache')
@@ -417,6 +428,12 @@ def main(argv=None):
             print('Imported native disk bundle:',len(model['objects']),'magnetic objects,',model['total_magnetic_tetra'],'cells')
         elif args.cmd=='solve-fem-bem':
             command_fem_bem(args)
+        elif args.cmd=='mesh-cad':
+            from cad_mesh import mesh_cad_bundle
+            model=mesh_cad_bundle(args.bundle,args.out,size_mm=args.size_mm,part_sizes=args.part_sizes,
+                points_csv=args.points_csv,line_mm=args.line_mm,overrides_path=args.overrides,
+                max_tiles=args.max_tiles,volume_rtol=args.volume_rtol,threads=args.threads)
+            print('Meshed CAD:',len(model['objects']),'magnetic parts,',model['total_magnetic_tetra'],'TET4 cells')
         elif args.cmd=='solve':
             command_solve(args)
         elif args.cmd=='compare':

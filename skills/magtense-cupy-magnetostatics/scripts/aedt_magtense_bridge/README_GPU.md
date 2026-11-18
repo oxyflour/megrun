@@ -170,8 +170,10 @@ cmake --build "$amgxSource/build" --target amgxsh --parallel 4
 & .\skill-test\.venv\Scripts\python.exe validation/20261109_fmm_refined/benchmark_convergence.py --compare-backends --output validation/20261109_fmm_refined/convergence_resident_comparison_new.json
 ```
 
-本机该对照 45／45 通过；99,093 四面体真实模型的两对暖态复测约快 1.50 倍，
-首次 GPU 调用和这批小模型仍更慢。完整计时口径、逐例场误差及复现设置见
+修复 Jacobi 平滑权重前的本机对照为 45／45 通过；99,093 四面体模型的两对暖态
+复测约快 1.50 倍，首次 GPU 调用和小模型仍更慢。该性能数字保留历史源码哈希，
+不是显式权重 0.5 版本的复测；新 CAD 网格触发的问题与修复见验证记录 8.8。
+历史计时口径、逐例场误差及复现设置见
 [验证记录 8.7](../../../../docs/plan/02-validation-cases.md#87-femkrylovamgx-常驻-cuda2026-11-16)。
 
 从仓库根目录运行已有验证入口：

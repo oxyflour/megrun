@@ -180,7 +180,13 @@ class GPUAMG:
         self.cfg, self.resources, self.matrix, self.rhs, self.solution, self.solver = (ct.c_void_p() for _ in range(6))
         configuration = dict(config_version=2, determinism_flag=1,
             solver=dict(solver='AMG', scope='resident', algorithm='AGGREGATION', cycle='V',
-                smoother='BLOCK_JACOBI', selector='SIZE_2', presweeps=2, postsweeps=2,
+                # P1 cell Grams have at most four local DOFs (Robin faces
+                # three), so rho(D^-1 P) <= 4. The default AmgX weight .9
+                # can amplify obtuse-tet modes. Explicitly scope a stable
+                # .5 weight; an unscoped smoother reads AmgX defaults.
+                smoother=dict(solver='BLOCK_JACOBI',scope='resident_jacobi',
+                    relaxation_factor=.5,max_iters=1,monitor_residual=0,print_solve_stats=0),
+                selector='SIZE_2', presweeps=2, postsweeps=2,
                 min_coarse_rows=200, max_levels=30, coarse_solver='DENSE_LU_SOLVER',
                 amg_host_levels_rows=-1, verbosity_level=3,
                 max_iters=1, monitor_residual=0, print_grid_stats=1, print_solve_stats=0,

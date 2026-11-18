@@ -1,0 +1,565 @@
+{
+  "schema_version": 1,
+  "mesh_unit": "m",
+  "points": "points.csv",
+  "skipped": [
+    {
+      "name": "A_AF_COIL_COPPER",
+      "material": "copper",
+      "reason": "nonmagnetic mu_r\u22481, Hc=0"
+    },
+    {
+      "name": "B_AF_COIL_COPPER",
+      "material": "copper",
+      "reason": "nonmagnetic mu_r\u22481, Hc=0"
+    },
+    {
+      "name": "Region",
+      "material": "vacuum",
+      "reason": "air/vacuum"
+    },
+    {
+      "name": "A_Terminal",
+      "reason": "not a model solid"
+    },
+    {
+      "name": "B_Terminal",
+      "reason": "not a model solid"
+    }
+  ],
+  "objects": [
+    {
+      "name": "A_YOKE_SOFT_MAGNETIC",
+      "material": "Magrun_Steel_BH",
+      "properties": {
+        "kind": "nonlinear",
+        "bh_H_Apm_B_T": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            300.0,
+            1.9
+          ],
+          [
+            800.0,
+            2.1
+          ],
+          [
+            1600.0,
+            2.2
+          ],
+          [
+            4000.0,
+            2.255
+          ],
+          [
+            8000.0,
+            2.28
+          ],
+          [
+            16000.0,
+            2.3
+          ],
+          [
+            200000.0,
+            2.53122121930421
+          ]
+        ]
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00000.npz",
+      "mesh_stats": {
+        "tetra_count": 6663,
+        "volume_m3": 6.675e-08,
+        "cad_volume_m3": 6.675000000000007e-08,
+        "cad_volume_relative_mismatch": 9.91377513172167e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      "mesh_npz_sha256": "be25976bdeacb299ed7468709aec9e8ca047431713a41e10e4626a4af269d09b",
+      "source_CAD_sha256": "8c983f836a40dfa42974b98a9f1e2b11d57f3e292bebdcc6d204dc8c41dfb362"
+    },
+    {
+      "name": "A_MAGNET_X_POS",
+      "material": "Magrun_MAGNET_X_POS",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00001.npz",
+      "mesh_stats": {
+        "tetra_count": 652,
+        "volume_m3": 6.9119999999999985e-09,
+        "cad_volume_m3": 6.911999999999996e-09,
+        "cad_volume_relative_mismatch": 3.590193630872518e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      "mesh_npz_sha256": "bb634d29579478f9dd0bd178ecc3caa779fa3f05ff896152397ee047b39d4d3c",
+      "source_CAD_sha256": "f9aab2c9b264431ed88d90625e4d1bc799926aa0076af3cc49f241b867d0c729"
+    },
+    {
+      "name": "A_MAGNET_X_NEG",
+      "material": "Magrun_MAGNET_X_NEG",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00002.npz",
+      "mesh_stats": {
+        "tetra_count": 656,
+        "volume_m3": 6.911999999999999e-09,
+        "cad_volume_m3": 6.911999999999996e-09,
+        "cad_volume_relative_mismatch": 4.786924841163357e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      "mesh_npz_sha256": "5b203110e5a78a30a88f68b3328ee7d89493a4e7a9f0ba7d7ee18a555e3e3485",
+      "source_CAD_sha256": "7b8b5bfd9ad375252fe96fe509422c28b969ba7a07ea0cf29cbecb665ab30af3"
+    },
+    {
+      "name": "A_MAGNET_Y_POS",
+      "material": "Magrun_MAGNET_Y_POS",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00003.npz",
+      "mesh_stats": {
+        "tetra_count": 646,
+        "volume_m3": 6.9119999999999985e-09,
+        "cad_volume_m3": 6.911999999999997e-09,
+        "cad_volume_relative_mismatch": 2.3934624205816785e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      "mesh_npz_sha256": "e0c5734ab81d148923d6835112fab5b6652c1ff4328c4e24eae5141795a7b84b",
+      "source_CAD_sha256": "66888ec60da70a5bf59907e232fefe768cc1b7930c990d533b638ec61d5f602d"
+    },
+    {
+      "name": "A_MAGNET_Y_NEG",
+      "material": "Magrun_MAGNET_Y_NEG",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00004.npz",
+      "mesh_stats": {
+        "tetra_count": 646,
+        "volume_m3": 6.9119999999999985e-09,
+        "cad_volume_m3": 6.911999999999997e-09,
+        "cad_volume_relative_mismatch": 2.3934624205816785e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      "mesh_npz_sha256": "fd0ac8c30bd884ca9ba288acce987075acc9246036dd76496af10671b3cc06c3",
+      "source_CAD_sha256": "519aee2171c02a9a0c25222a368bc96ec1d4654049b94e352dd8084c682f47ec"
+    },
+    {
+      "name": "B_YOKE_SOFT_MAGNETIC",
+      "material": "Magrun_Steel_BH",
+      "properties": {
+        "kind": "nonlinear",
+        "bh_H_Apm_B_T": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            300.0,
+            1.9
+          ],
+          [
+            800.0,
+            2.1
+          ],
+          [
+            1600.0,
+            2.2
+          ],
+          [
+            4000.0,
+            2.255
+          ],
+          [
+            8000.0,
+            2.28
+          ],
+          [
+            16000.0,
+            2.3
+          ],
+          [
+            200000.0,
+            2.53122121930421
+          ]
+        ]
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00005.npz",
+      "mesh_stats": {
+        "tetra_count": 6678,
+        "volume_m3": 6.674999999999996e-08,
+        "cad_volume_m3": 6.674999999999999e-08,
+        "cad_volume_relative_mismatch": 3.965510052688673e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      "mesh_npz_sha256": "49736651f3b24fdfbfe14270620cb6aa07a9b8f0d9c48a6e713defb2a52ff8ef",
+      "source_CAD_sha256": "f2790df910af999626cb1ac6149d1e4ae80fae43d4561a26e46c0230e6e4f957"
+    },
+    {
+      "name": "B_MAGNET_X_POS",
+      "material": "Magrun_MAGNET_X_POS",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00006.npz",
+      "mesh_stats": {
+        "tetra_count": 658,
+        "volume_m3": 6.9119999999999985e-09,
+        "cad_volume_m3": 6.911999999999998e-09,
+        "cad_volume_relative_mismatch": 1.196731210290839e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      "mesh_npz_sha256": "5f1037f18fdd61cbf7d399697a98de672b7241a70f32c24f95dd6bd23d896749",
+      "source_CAD_sha256": "bfe72c5ceca8646431c8131a4c3626e6aad08b26369d377909b28f980ae74c52"
+    },
+    {
+      "name": "B_MAGNET_X_NEG",
+      "material": "Magrun_MAGNET_X_NEG",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00007.npz",
+      "mesh_stats": {
+        "tetra_count": 657,
+        "volume_m3": 6.911999999999998e-09,
+        "cad_volume_m3": 6.911999999999996e-09,
+        "cad_volume_relative_mismatch": 2.3934624205816785e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      "mesh_npz_sha256": "172f71be91095f8f9c1a18aa940044a7c0148beeb901577b6c66c12cbaeada32",
+      "source_CAD_sha256": "d5cda36f634e095b6c0b173044ee49fa3bef08908f91becfee903243ec879e12"
+    },
+    {
+      "name": "B_MAGNET_Y_POS",
+      "material": "Magrun_MAGNET_Y_POS",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00008.npz",
+      "mesh_stats": {
+        "tetra_count": 677,
+        "volume_m3": 6.911999999999998e-09,
+        "cad_volume_m3": 6.911999999999995e-09,
+        "cad_volume_relative_mismatch": 3.5901936308725185e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      "mesh_npz_sha256": "ac80b52d9d9d9c0de26aa47497c1a25603e3c923f95df7fc29cae11a388bebcd",
+      "source_CAD_sha256": "acba7190676ee5e0818d451949629fba2cba736432de6ccd8adbc2f99c4248fa"
+    },
+    {
+      "name": "B_MAGNET_Y_NEG",
+      "material": "Magrun_MAGNET_Y_NEG",
+      "properties": {
+        "kind": "permanent",
+        "br_T": 1.1999999999999995,
+        "direction": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "mu_r": 1.05
+      },
+      "properties_source": "native_aedt",
+      "mesh_npz": "mesh/00009.npz",
+      "mesh_stats": {
+        "tetra_count": 654,
+        "volume_m3": 6.911999999999998e-09,
+        "cad_volume_m3": 6.911999999999995e-09,
+        "cad_volume_relative_mismatch": 3.5901936308725185e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      "mesh_npz_sha256": "941dd17ab14469663d13582c5b1d9bf20fae339193a5b88b227595249dfaaac8",
+      "source_CAD_sha256": "256fabd24d87094ee9fe3cfdb2ce2b0d77b7cfdeaab4c267d4fca1c07bdc00ee"
+    }
+  ],
+  "source": {
+    "design": "Gap_3mm_CCW",
+    "solution": "Reference : LastAdaptive",
+    "aedt_version": "2022.2.0",
+    "project": "C:\\Projects\\magtense-gpu\\validation\\20261107_repair_staged\\full_pair_reference.aedt",
+    "project_sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785",
+    "exporter_sha256": "8ffbe9542cb931013ad433a143915aef9bb4961b06c2f937c27194495c2f4bb6",
+    "mesh_source": "Gmsh per-part STEP / conforming contact interfaces",
+    "native_manifest_sha256": "33b84a39a59470a32048b8c487c9049dd347ede901722855f088ee79f345dc6d",
+    "source_check": [
+      {
+        "type": "Current",
+        "name": "A_AmpereTurns",
+        "properties": {
+          "Name": "A_AmpereTurns",
+          "Type": "Current",
+          "Direction": "Point into terminal",
+          "IsSolid": "Stranded",
+          "Current": "0A"
+        }
+      },
+      {
+        "type": "Current",
+        "name": "B_AmpereTurns",
+        "properties": {
+          "Name": "B_AmpereTurns",
+          "Type": "Current",
+          "Direction": "Point into terminal",
+          "IsSolid": "Stranded",
+          "Current": "0A"
+        }
+      }
+    ],
+    "native_boundaries": [],
+    "native_variables": {},
+    "offline_exterior": "Infinite air; no air volume mesh"
+  },
+  "total_magnetic_tetra": 18587,
+  "points_sha256": "9e4867ab7b0846478e4f4825602352fe030dd12e799c3c679cc1f6f0d26806c6",
+  "maxwell_field": "maxwell_B.fld",
+  "meshing": {
+    "state": "complete",
+    "passed": true,
+    "gmsh_version": "4.15.2",
+    "source_manifest_sha256": "33b84a39a59470a32048b8c487c9049dd347ede901722855f088ee79f345dc6d",
+    "source_sha256": {
+      "cad_mesh.py": "7da4a3e21c856c6a6d06ff6a36d5dc5eae3cbc7d36abef13f175b864ec125f50",
+      "aedt_export.py": "eb9cd2092b79fea15cb61d89ae967576b6be4394500da7378e07264e702f7771",
+      "fem_bem.py": "a50ca64896278b55a9b3a318c31e579316f946ef5e7626dafe134d98bf818f7c"
+    },
+    "settings": {
+      "size_mm": 0.4,
+      "part_sizes_mm": {},
+      "volume_rtol": 0.005,
+      "threads": 1,
+      "algorithm_3d": 1,
+      "element_order": 1,
+      "STEP_target_unit": "MM",
+      "output_unit": "m",
+      "boolean_tolerance_m": 1e-11
+    },
+    "scope": "CAD geometry and conforming TET4 checks; field/Maxwell accuracy requires a separate solve",
+    "elapsed_seconds": 1.9291235003620386,
+    "geometry": {
+      "tetrahedra": 18587,
+      "P1_nodes": 6761,
+      "P0_boundary_faces": 13482,
+      "components": 10,
+      "quadrature_order": 10,
+      "boundary_backend": "geometry",
+      "geometry_seconds": 0.18384219985455275,
+      "gauge": "scattered potential zero at infinity; no pinned nodes or per-component zero means"
+    },
+    "shared_interface_triangles": 0,
+    "shared_CAD_surfaces": 0,
+    "exterior_triangles": 13482,
+    "objects": [
+      {
+        "name": "A_YOKE_SOFT_MAGNETIC",
+        "gmsh_volumes": [
+          1
+        ],
+        "tetra_count": 6663,
+        "volume_m3": 6.675e-08,
+        "cad_volume_m3": 6.675000000000007e-08,
+        "cad_volume_relative_mismatch": 9.91377513172167e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      {
+        "name": "A_MAGNET_X_POS",
+        "gmsh_volumes": [
+          2
+        ],
+        "tetra_count": 652,
+        "volume_m3": 6.9119999999999985e-09,
+        "cad_volume_m3": 6.911999999999996e-09,
+        "cad_volume_relative_mismatch": 3.590193630872518e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      {
+        "name": "A_MAGNET_X_NEG",
+        "gmsh_volumes": [
+          3
+        ],
+        "tetra_count": 656,
+        "volume_m3": 6.911999999999999e-09,
+        "cad_volume_m3": 6.911999999999996e-09,
+        "cad_volume_relative_mismatch": 4.786924841163357e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      {
+        "name": "A_MAGNET_Y_POS",
+        "gmsh_volumes": [
+          4
+        ],
+        "tetra_count": 646,
+        "volume_m3": 6.9119999999999985e-09,
+        "cad_volume_m3": 6.911999999999997e-09,
+        "cad_volume_relative_mismatch": 2.3934624205816785e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      {
+        "name": "A_MAGNET_Y_NEG",
+        "gmsh_volumes": [
+          5
+        ],
+        "tetra_count": 646,
+        "volume_m3": 6.9119999999999985e-09,
+        "cad_volume_m3": 6.911999999999997e-09,
+        "cad_volume_relative_mismatch": 2.3934624205816785e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      {
+        "name": "B_YOKE_SOFT_MAGNETIC",
+        "gmsh_volumes": [
+          6
+        ],
+        "tetra_count": 6678,
+        "volume_m3": 6.674999999999996e-08,
+        "cad_volume_m3": 6.674999999999999e-08,
+        "cad_volume_relative_mismatch": 3.965510052688673e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      {
+        "name": "B_MAGNET_X_POS",
+        "gmsh_volumes": [
+          7
+        ],
+        "tetra_count": 658,
+        "volume_m3": 6.9119999999999985e-09,
+        "cad_volume_m3": 6.911999999999998e-09,
+        "cad_volume_relative_mismatch": 1.196731210290839e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      {
+        "name": "B_MAGNET_X_NEG",
+        "gmsh_volumes": [
+          8
+        ],
+        "tetra_count": 657,
+        "volume_m3": 6.911999999999998e-09,
+        "cad_volume_m3": 6.911999999999996e-09,
+        "cad_volume_relative_mismatch": 2.3934624205816785e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      {
+        "name": "B_MAGNET_Y_POS",
+        "gmsh_volumes": [
+          9
+        ],
+        "tetra_count": 677,
+        "volume_m3": 6.911999999999998e-09,
+        "cad_volume_m3": 6.911999999999995e-09,
+        "cad_volume_relative_mismatch": 3.5901936308725185e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      },
+      {
+        "name": "B_MAGNET_Y_NEG",
+        "gmsh_volumes": [
+          10
+        ],
+        "tetra_count": 654,
+        "volume_m3": 6.911999999999998e-09,
+        "cad_volume_m3": 6.911999999999995e-09,
+        "cad_volume_relative_mismatch": 3.5901936308725185e-16,
+        "curved": false,
+        "element_order": 1,
+        "target_size_mm": 0.4
+      }
+    ]
+  }
+}

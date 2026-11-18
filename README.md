@@ -14,6 +14,8 @@
 
 新增 `--operator volume --k-builder cuda --backend cupy`，在 GPU 上计算完整 K 的解析源积分与近邻归约，保持原四点/256 点积分和材料方程。CPU 原生构建仍为兼容默认。见 [GPU K 耗时与精度报告](validation/20261107_gpu_k/FINAL_REPORT.txt) 及 [阶段数据](validation/20261107_gpu_k/summary.json)。
 
+新增 [按 CAD 零件独立剖分](skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/README.md#按-cad-零件独立剖分不生成-maxwell-网格)：源机用 `mesh_source=cad` 导出逐实体 STEP，服务器通过 `bridge.py mesh-cad`／Gmsh 生成磁性体 TET4，不依赖 Maxwell 体网格，也不剖分空气。接触面共享三角划分，材料和剩磁方向保留，输出直接接入现有 GPU FEM–BEM。
+
 ## 已有验证结果
 
 验证条件为 3 mm 间隔的双 camera 电磁模型、零线圈电流、公开材料 B–H 曲线。结果是与 Maxwell 的数值对比，不是实物精度认证。
@@ -46,7 +48,7 @@ python gpu_solver.py --self-test --backend numpy
 python -m pytest -q tests
 ```
 
-当前源码检查为 144 项通过、1 项因缺少 gfortran 跳过，包含 CUDA、FMM、自适应近场分块压缩、批量空气极限、FEM–BEM 积分/算子/AMG、GPU 常驻 Krylov／多层 AmgX 与迭代数组无下载检查、强多材料场修正收敛判据及薄片验证的舍入检查，以及原生磁盘包导入、完整性校验、缺失网格自动生成与离线求解检查。已有四组真实模型 FP64 稠密 K 与 Maxwell B 场对比的历史结论保持原范围；FMM 的检查与限制见上方使用说明。Maxwell 导出需已安装并授权的 AEDT；CUDA/CuPy 依赖需匹配本机环境。
+当前源码检查为 152 项通过、1 项因缺少 gfortran 跳过，包含 CUDA、FMM、自适应近场分块压缩、批量空气极限、FEM–BEM 积分/算子/AMG、GPU 常驻 Krylov／多层 AmgX 与迭代数组无下载检查、强多材料场修正收敛判据及薄片验证的舍入检查，以及原生磁盘包导入、完整性校验、缺失网格自动生成、逐 CAD 零件剖分／接触面／单位／曲面体积和 Jacobi 平滑稳定性检查。已有四组真实模型 FP64 稠密 K 与 Maxwell B 场对比的历史结论保持原范围；FMM 的检查与限制见上方使用说明。Maxwell 导出需已安装并授权的 AEDT；CUDA/CuPy 依赖需匹配本机环境。
 
 当前双模组模型已生成本机 [加密 AEDT 工程](validation/20261109_fmm_refined/gap3mm_fmm_3m.aedt)，实际为 **2,718,864 个磁性单元、8,679,245 个总单元**，并通过重新打开后的网格数量核对。复现入口为 [prepare_mesh.py](validation/20261109_fmm_refined/prepare_mesh.py)，计数和原工程不变性检查见 [mesh_generation.json](validation/20261109_fmm_refined/mesh_generation.json)。工程与同名 `.aedtresults` 网格目录保留本机；没有提交该大模型的 Maxwell 场求解。FMM 的 3629 单元流程验证见 [fmm_verification.json](validation/20261109_fmm_refined/fmm_verification.json)。大模型实际运行入口为 [run_fmm.py](validation/20261109_fmm_refined/run_fmm.py)，导出/求解状态、采样内存峰值及残差写入 [large_fmm_run.json](validation/20261109_fmm_refined/large_fmm_run.json)，原始资源采样为 `large_fmm_resources.csv`。失败阶段使用非零退出码，不能把完成网格导出当作求解通过。
 

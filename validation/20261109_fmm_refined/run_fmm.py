@@ -1008,6 +1008,113 @@ def diagnose_fem_bem_identity():
     assert record['passed'],record['maximum_exact_error']
 
 
+def validate_cad_mesh(sizes,h_gib=4.,result_prefix='fem_bem'):
+    """--validate-cad-mesh: real STEP -> per-part TET4 -> resident GPU -> Maxwell.
+
+    Input: native_transfer/cad_export from full_pair_reference, CAD-only export
+    with saved B at all original 485 air points. Requires Gmsh/CuPy/AmgX; missing
+    dependencies fail. Uses current bridge/cad_mesh/fem_bem, never meshes air.
+    One distinct grid per size in native_transfer/cad_h*, with canonical NPZ,
+    source hashes, meshing checks and solver evidence. Existing results remain.
+    Each solve retains the 5% Maxwell gate and original field-correction limits;
+    coarse failures remain recorded. Overall pass needs the two finest solves
+    to pass AND their all-point B difference <=0.5%. This is a mesh series, not
+    same-grid solver verification. Run with solver Python --validate-cad-mesh
+    --cad-sizes-mm 0.8 0.4 0.2. Fine H assembly needs substantial CPU/GPU memory.
+    Append evidence to the existing fmm_verification.json.
+    """
+    import numpy as np
+    import gmsh
+    from bridge import read_model,read_maxwell_fld
+    from aedt_export import _read_native_bundle
+    base=ROOT/'native_transfer';bundle=base/'cad_export'
+    _,_,native,member=_read_native_bundle(bundle)
+    assert native['state']=='complete' and native['mesh_source']=='cad'
+    assert native['source_project_unchanged'] and native['mesh_generation']['state']=='not_requested'
+    assert not native['mesh_generation']['field_solve_submitted']
+    assert all('mesh_raw' not in o for o in native['objects'])
+    prior=read_model(base/'offline');by_name={o['name']:o for o in prior['objects']}
+    path=ROOT/'fmm_verification.json';report=json.loads(path.read_text(encoding='utf-8'))
+    record=dict(state='running',passed=False,started_utc=datetime.now(timezone.utc).isoformat(),
+        command=[sys.executable,*sys.argv],gmsh_version=gmsh.__version__,
+        runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        source_sha256={n:hashlib.sha256((TOOL/n).read_bytes()).hexdigest() for n in
+            ('aedt_export_native.py','aedt_export.py','cad_mesh.py','bridge.py','fem_bem.py','fem_bem_cuda.py')},
+        CAD_manifest_sha256=hashlib.sha256((bundle/'manifest.json').read_bytes()).hexdigest(),
+        mesh_source='Native per-solid STEP; no Maxwell volume mesh or air tetrahedra',
+        boundary_budget_gib=h_gib,
+        solver_result_prefix=result_prefix,
+        gates=dict(native_air_B_relative_L2=.05,successive_mesh_air_B_relative_L2=.005),cases=[])
+    report.setdefault('cad_meshing_runs',[]).append(record);save(path,report)
+    env=os.environ.copy()
+    for name in ('OMP_NUM_THREADS','MKL_NUM_THREADS','OPENBLAS_NUM_THREADS'):env[name]='4'
+    env['MAGTENSE_CANONICAL_TOOL']=str(TOOL)
+    script="""import sys,os,json,importlib.abc
+class NoAnsys(importlib.abc.MetaPathFinder):
+ def find_spec(self,fullname,path=None,target=None):
+  if fullname.split('.')[0] in ('ansys','pyaedt','ScriptEnv','clr','win32com','pythoncom','magtense'):
+   raise RuntimeError('Independent CAD dependency violation: '+fullname)
+sys.meta_path.insert(0,NoAnsys());sys.path.insert(0,os.environ['MAGTENSE_CANONICAL_TOOL'])
+from bridge import main
+sys.exit(main(json.loads(os.environ['MAGTENSE_OFFLINE_ARGS'])))
+"""
+    def run(arguments):
+        env['MAGTENSE_OFFLINE_ARGS']=json.dumps(arguments)
+        return subprocess.run([sys.executable,'-u','-c',script],env=env,
+            check=False,creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0).returncode
+    try:
+        fields=[]
+        for size in sizes:
+            job=base/('cad_h'+format(size,'g').replace('.','p'))
+            item=dict(target_size_mm=size,job=str(job.relative_to(REPO)),state='running')
+            record['cases'].append(item);save(path,report)
+            if not (job/'model.json').exists():
+                code=run(['mesh-cad','--bundle',str(bundle),'--out',str(job),'--size-mm',str(size),'--threads','1'])
+                assert code==0,f'CAD meshing failed: {size} mm, exit={code}'
+            model=read_model(job)
+            assert model['meshing']['passed'] and len(model['objects'])==10
+            assert model['meshing']['settings']['size_mm']==size
+            for name,digest in model['meshing']['source_sha256'].items():
+                assert hashlib.sha256((TOOL/name).read_bytes()).hexdigest()==digest,'Stale CAD mesh source: '+name
+            assert model['meshing']['geometry']['components']==10
+            for obj in model['objects']:assert obj['properties']==by_name[obj['name']]['properties']
+            item.update(magnetic_tetrahedra=model['total_magnetic_tetra'],meshing=model['meshing'])
+            solve_info=job/(result_prefix+'_solve_info.json')
+            if not solve_info.exists():
+                item['solve_exit_code']=run(['solve-fem-bem','--out',str(job),'--boundary','cuda_hmatrix',
+                    '--fem-preconditioner','amg','--compute-backend','cupy','--tol','1e-9',
+                    '--linear-rtol','1e-10','--linear-cycles','30','--maxiter','40',
+                    '--h-gib',str(h_gib),'--max-reference-error','.05','--result-prefix',result_prefix])
+            solved=json.loads(solve_info.read_text(encoding='utf-8'))
+            for name,digest in solved.get('source_sha256',{}).items():
+                assert hashlib.sha256((TOOL/name).read_bytes()).hexdigest()==digest,'Stale CAD solve source: '+name
+            assert solved['source_model_sha256']==hashlib.sha256((job/'model.json').read_bytes()).hexdigest()
+            if solved.get('solution_sha256'):
+                assert hashlib.sha256((job/(result_prefix+'_solution.npz')).read_bytes()).hexdigest()==solved['solution_sha256']
+            item.update(state=solved['state'],passed=solved.get('passed',False),
+                native_air_B_relative_L2=solved.get('native_air_B_sample_relative_L2'),
+                solve_info=str(solve_info.relative_to(REPO)),solver=solved.get('solver'))
+            assert solved.get('solver',{}).get('converged'),solved.get('error')
+            actual=np.loadtxt(job/(result_prefix+'_B.csv'),delimiter=',',skiprows=1)
+            assert len(actual)==485
+            reference,scale=read_maxwell_fld(member(native['reference_fields']['B']),actual[:,:3])
+            assert scale==1.
+            independent_error=float(np.linalg.norm(actual[:,3:]-reference)/np.linalg.norm(reference))
+            assert abs(independent_error-item['native_air_B_relative_L2'])<1e-12
+            if fields:
+                np.testing.assert_array_equal(actual[:,:3],fields[-1][:,:3])
+                item['successive_mesh_air_B_relative_L2']=float(np.linalg.norm(actual[:,3:]-fields[-1][:,3:])/np.linalg.norm(actual[:,3:]))
+            fields.append(actual);save(path,report)
+        assert all(c['passed'] for c in record['cases'][-2:]),'Two finest meshes must satisfy the original 5% Maxwell gate'
+        assert record['cases'][-1]['successive_mesh_air_B_relative_L2']<=.005,'Mesh field change exceeds 0.5%'
+        record.update(state='complete',passed=True)
+    except Exception as error:
+        record.update(state='failed',passed=False,error=f'{type(error).__name__}: {error}')
+        raise
+    finally:
+        record['finished_utc']=datetime.now(timezone.utc).isoformat();save(path,report)
+
+
 def validate_native_transfer():
     """--validate-native-transfer: native IronPython -> disk -> offline FEM-BEM.
 
@@ -1903,6 +2010,10 @@ def main():
     parser.add_argument('--benchmark-fem-bem-large',action='store_true')
     parser.add_argument('--benchmark-fem-bem-assembly',action='store_true')
     parser.add_argument('--validate-native-transfer',action='store_true')
+    parser.add_argument('--validate-cad-mesh',action='store_true')
+    parser.add_argument('--cad-sizes-mm',type=float,nargs='+',default=[.8,.4,.2])
+    parser.add_argument('--cad-h-gib',type=float,default=4.)
+    parser.add_argument('--cad-result-prefix',default='fem_bem')
     parser.add_argument('--fem-bem-assembly-batches',type=int,nargs='+',choices=[64,256,1024],
         help='With assembly probe, compare ACA batch sizes against retained full-cache ranks and factor bytes')
     parser.add_argument('--solve-fem-bem-large',action='store_true')
@@ -1934,6 +2045,11 @@ def main():
     parser.add_argument('--fmm-neighbours',choices=['auto','cpu','cuda'],default='auto')
     parser.add_argument('--fmm-farfield',choices=['cpu','cuda'],default='cpu')
     args = parser.parse_args()
+    if args.validate_cad_mesh:
+        if len(args.cad_sizes_mm)<3 or any(not 0<v<float('inf') for v in args.cad_sizes_mm) or any(a<=b for a,b in zip(args.cad_sizes_mm,args.cad_sizes_mm[1:])):
+            parser.error('--cad-sizes-mm requires at least three strictly decreasing positive finite sizes')
+        if not 0<args.cad_h_gib<float('inf'):parser.error('--cad-h-gib must be positive and finite')
+        sys.path.insert(0,str(TOOL));validate_cad_mesh(args.cad_sizes_mm,args.cad_h_gib,args.cad_result_prefix);return
     if args.validate_native_transfer:
         sys.path.insert(0,str(TOOL));validate_native_transfer();return
     if args.fem_bem_check_solution and (not args.benchmark_fem_bem_large or args.solve_fem_bem_large):

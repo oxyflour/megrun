@@ -52,9 +52,17 @@ or empty. `generate` explicitly remeshes a fresh copy; `reuse` only reads an
 existing mesh. Never submit Analyze to obtain an export mesh. Keep the original
 project and result database intact, report generation time/return code, and
 disclose that initial meshing does not reproduce field-adaptive refinement.
-Meshing still requires AEDT on the source machine; the server imports the mesh
-and has no independent CAD mesher. Requesting native B/H still requires saved
-fields and cannot be combined with forced mesh generation.
+For independent per-part CAD meshing, set `mesh_source=cad` in the same native
+export configuration. This exports per-solid STEP without GenerateMesh or Mesh
+field plots. Transfer the verified bundle and run `bridge.py mesh-cad --bundle
+... --out ... --size-mm 0.4` with Gmsh 4.15.2 on the server, then the unchanged
+FEM-BEM solver. Mesh only magnetic solids; preserve material/coordinate mapping,
+share triangulation at contacts and reject positive-volume overlaps. Geometry
+checks are not field accuracy certification: retain the same Maxwell gates and
+perform a mesh-size sequence. Air is handled by BEM, not tetrahedralized.
+Requesting native B/H still requires saved fields and cannot be combined with
+forced Maxwell mesh generation. CAD export still needs AEDT on the source
+machine; independent tetrahedralization and solving do not.
 
 Require a **real project path**, design name, existing analysis setup, and observation points inside air. Unless the user provided them, discover locally with AEDT when possible; never manufacture names/paths. Work in a new output directory to avoid modifying the `.aedt` project. The legacy PyAEDT export below also requires saved native fields.
 

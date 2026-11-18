@@ -1,0 +1,106 @@
+{
+  "schema": "aedt-native-disk-1", 
+  "files": {
+    "cad/00003.step": {
+      "bytes": 7739, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "66888ec60da70a5bf59907e232fefe768cc1b7930c990d533b638ec61d5f602d"
+    }, 
+    "cad/00011.step": {
+      "bytes": 12986, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "6b09485857bf64e7a98ff114b82b6ec87c1375be932218b430ba6e2a90fdb2bc"
+    }, 
+    "native/B.fld": {
+      "bytes": 68309, 
+      "role": "native SI vector reference", 
+      "sha256": "893f0f2115bc6dd500c91bce955fea844c1921f216477acdcea9e457a5669e56"
+    }, 
+    "cad/00004.step": {
+      "bytes": 7765, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "519aee2171c02a9a0c25222a368bc96ec1d4654049b94e352dd8084c682f47ec"
+    }, 
+    "cad/00005.step": {
+      "bytes": 13000, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "7b9a67624b3cf855e283c96b648f10f18f3557c183a1e0475bfdad5684989edd"
+    }, 
+    "cad/00000.step": {
+      "bytes": 18218, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "8c983f836a40dfa42974b98a9f1e2b11d57f3e292bebdcc6d204dc8c41dfb362"
+    }, 
+    "cad/00001.step": {
+      "bytes": 7739, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "f9aab2c9b264431ed88d90625e4d1bc799926aa0076af3cc49f241b867d0c729"
+    }, 
+    "native/source_project.aedt": {
+      "bytes": 622954, 
+      "role": "saved original project inputs", 
+      "sha256": "deec455fa43d2581b88abf056e40a7e7c79a0340ef7c2c5f94d51997156e2785"
+    }, 
+    "points.csv": {
+      "bytes": 37070, 
+      "role": "SI observation points", 
+      "sha256": "9e4867ab7b0846478e4f4825602352fe030dd12e799c3c679cc1f6f0d26806c6"
+    }, 
+    "points.pts": {
+      "bytes": 6559, 
+      "role": "native sample points in model units", 
+      "sha256": "bf60b200c0138a6f15d8e356236594195134af066bb0a58c2a3e1888c30b6ed8"
+    }, 
+    "native/convergence.txt": {
+      "bytes": 672, 
+      "role": "available native setup evidence", 
+      "sha256": "c041d2e102007962b129ff25dbb5cff78f857f30a9a2ddf2e9c32902d77f91d1"
+    }, 
+    "native/profile.txt": {
+      "bytes": 8334, 
+      "role": "available native setup evidence", 
+      "sha256": "d6a47dbc265e92586fbd263d5cede1362535902431a35f660e01795da0c98f72"
+    }, 
+    "native_export.json": {
+      "bytes": 48554, 
+      "role": "native metadata and original settings", 
+      "sha256": "9557d7966ad2d7d1db8446d639723b7061b2a403be9902c1b4c80b89fc37488a"
+    }, 
+    "cad/00008.step": {
+      "bytes": 7739, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "d5cda36f634e095b6c0b173044ee49fa3bef08908f91becfee903243ec879e12"
+    }, 
+    "cad/00009.step": {
+      "bytes": 7731, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "acba7190676ee5e0818d451949629fba2cba736432de6ccd8adbc2f99c4248fa"
+    }, 
+    "native/mesh_stats.txt": {
+      "bytes": 2602, 
+      "role": "available native setup evidence", 
+      "sha256": "0d0e0c7e5b701d255e1825bb500297e9d2ac59a3bcab0641e5bc2c6b4dd97382"
+    }, 
+    "cad/00010.step": {
+      "bytes": 7757, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "256fabd24d87094ee9fe3cfdb2ce2b0d77b7cfdeaab4c267d4fca1c07bdc00ee"
+    }, 
+    "cad/00006.step": {
+      "bytes": 18197, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "f2790df910af999626cb1ac6149d1e4ae80fae43d4561a26e46c0230e6e4f957"
+    }, 
+    "cad/00007.step": {
+      "bytes": 7765, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "bfe72c5ceca8646431c8131a4c3626e6aad08b26369d377909b28f980ae74c52"
+    }, 
+    "cad/00002.step": {
+      "bytes": 7765, 
+      "role": "per-object STEP solid in assembly coordinates", 
+      "sha256": "7b8b5bfd9ad375252fe96fe509422c28b969ba7a07ea0cf29cbecb665ab30af3"
+    }
+  }, 
+  "state": "complete"
+}

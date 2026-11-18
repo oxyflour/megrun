@@ -9,3 +9,4 @@ scipy>=1.12
 # Native CUDA FMM uses the existing CuPy runtime; no FMM3D/JAX/WSL dependency.
 # Optional sparse AMG for the large FEM-BEM path: pyamg>=5.3,<6.
 # The CUDA boundary H-matrix uses the same installed CuPy runtime.
+# Optional independent per-part STEP tetrahedralization (bridge.py mesh-cad): gmsh==4.15.2.

@@ -419,3 +419,106 @@ CPU 按材料计算 H／B、按分量核对 q 并检查弱残差，四次均通�
 节省 33% 时间**。GPU 仍用了更多 GMRES 步数，不能把收益归因于迭代数减少。
 首次 GPU 调用比混合慢约 9%，小模型也仍更慢：本次实测支持这份真实中等网格在
 缓存建立后获得收益，尚未重跑 271 万四面体，不能把 1.50 倍当作其已验证加速比。
+
+### 8.8 逐 CAD 零件独立剖分与 GPU AMG 平滑稳定性（2026-11-17）
+
+本节供需要摆脱 Maxwell 体网格、控制各磁性零件网格的维护者复现使用。原生导出器
+增加 `mesh_source=cad`：在未修改的 `full_pair_reference.aedt / Gap_3mm_CCW` 上，
+用 AEDT 2022 R2 内置 IronPython 实际导出逐实体 STEP、材料及原有 485 点 B 参考，
+耗时 11.291 s。原工程哈希不变，`mesh_generation.state=not_requested`，没有调用
+GenerateMesh、创建 Mesh 场图或提交场求解。实际 CAD 包位于
+[cad_export](../../validation/20261109_fmm_refined/native_transfer/cad_export/native_export.json)。
+保留 12 个非空气实体的 STEP；服务器使用原材料解析／零电流检查，只剖分其中
+10 个磁性实体，跳过两个铜线圈和空气域。STEP 在原装配位置，B–H 与剩磁方向逐对象
+核对，与原 Maxwell 网格导入结果一致。
+
+当前源码入口为 `bridge.py mesh-cad`，调用同目录的 `cad_mesh.py`，复用
+`aedt_export.py` 的完整性、物理和材料检查。Gmsh 4.15.2／OpenCASCADE 按零件建立
+体单元和物理分组，fragment 共享接触面、保留材料归属，并拒绝正体积重叠。
+内部以毫米处理 CAD，输出统一转米，避免几何内核绝对容差影响微小气隙。每个零件
+输出原格式 TET4 NPZ，直接交给同一个全局 FEM–BEM／GPU 求解器，没有空气四面体。
+安装、原生导出配置和单件尺寸覆盖见 [CAD 使用说明](../../skills/magtense-cupy-magnetostatics/scripts/aedt_magtense_bridge/README.md#按-cad-零件独立剖分不生成-maxwell-网格)。
+
+几何验收要求 STEP／原生 CAD 体积在 `1e-6` 内一致，网格／CAD 体积差不超过 0.5%，
+并核对所有外表面三角形、共享接触面的双侧面关联、闭合性和非退化性。真实模型均为
+10 个相离连通体；接触面由两个不同尺寸网格的立方体检查覆盖。另检查 10 nm 气隙
+保持分离、不同零件尺寸确实改变单元密度、重叠拒绝、源文件篡改拒绝和毫米／米误判。
+1 mm 球的独立解析体积检查确认：粗曲面网格被相同 0.5% 门槛拒绝，加密后通过。
+这些是几何检查，不能替代磁场误差验收。
+
+**细网格触发的 AMG 问题。** 原 0.8／0.4／0.2 mm 三档 GPU 求解均通过 5% Maxwell
+门槛，但最后两档 B 变化为 0.5113486%，超过预设 0.5%；失败记录保留，随后补充
+0.15 mm，而没有改变门槛。该档网格无退化单元，形状质量 `12(3V)^(2/3)/sum(edge^2)`
+最小值约 0.310（正四面体为 1）；原 GPU
+AMG 却在第一轮 GMRES 达到 3000 步上限时仍未收敛。同网格／同 H 缓存的 CPU LU
+参考通过 4 次 Newton、1991 步 GMRES，空气 B 误差为 3.2762386%，证明该离散问题
+存在满足原判据的解。参考文件前缀为 `cad_h0p15/lu_reference`，失败的 GPU 前缀仍为
+`cad_h0p15/fem_bem`。
+
+独立计算初始 FEM 预条件矩阵 `P=A+E diag(V)^-1 E.T` 的对角缩放最大特征值，结果为：
+
+| 网格 | `lambda_max(D^-1/2 P D^-1/2)` | 默认 Jacobi 权重 0.9 的对应误差因子 |
+| --- | ---: | ---: |
+| 0.2 mm | 2.1880604 | −0.9692544 |
+| 0.15 mm | 2.5114676 | −1.2603208 |
+
+AmgX 未显式作用域的 BLOCK_JACOBI 使用默认权重 0.9；后一误差因子绝对值超过 1，
+使高频误差放大。现在在 `resident_jacobi` 独立作用域显式设置权重 0.5，保持同样的
+双侧两次平滑和固定一次 V-cycle。P1 单元 Gram 矩阵最多涉及四个自由度，Robin
+面最多三个；对该正定组装／聚合结构，对角缩放谱半径上界为 4，因此需要相应阻尼。
+补充的倾斜四面体／磁导率差 5000 多层回归，用独立求出的最高频 FEM 特征模态验证：
+原 V-cycle 将能量误差放大约 3.37 倍，修复后必须收缩。所有弱残差、完整场修正、
+线性求解和 Maxwell 场门槛均保持不变。
+
+该修复改变了多层 GPU 预条件器；8.7 的 1.50 倍计时保留原源码哈希，属于修复前的
+历史测量，不能当作新权重版本重新测得的性能。
+
+**修复后真实网格序列。** 在同一 CAD／材料／485 点 Maxwell 参考上重跑四档，均使用
+GPU FEM／GMRES／AmgX、原 CUDA H 算子与独立直接面元抽查。Newton 弱残差门槛
+仍为 `1e-9`、线性 `rtol=1e-10`、30 个重启周期／最多 40 次 Newton、原分材料
+H／B 与分量 q 修正门槛；H 的积分、压缩门槛保持不变。内存预算增至 4 GiB 以容纳
+细网格系数，数值误差门槛没有放宽。
+
+| 目标边长 mm | 磁性 TET4 | P1 节点 | 外部三角形 | CAD 剖分 s | GPU 求解 s | Newton／GMRES | Maxwell B 相对 L2 差 | 对前档 B 变化 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0.8 | 5,475 | 2,105 | 4,178 | 1.065 | 1.371 | 1／173 | 3.837406% | — |
+| 0.4 | 18,587 | 6,761 | 13,482 | 1.929 | 4.000 | 1／374 | 3.473245% | 0.801042% |
+| 0.2 | 130,125 | 34,083 | 50,040 | 7.290 | 54.591 | 3／1500 | 3.316755% | 0.511349% |
+| 0.15 | 284,998 | 69,105 | 88,844 | 14.682 | 171.198 | 4／2500 | 3.276239% | 0.144793% |
+
+最后两档满足原 5% Maxwell 门槛，B 变化为 0.144793%，通过预设 0.5% 网格稳定性
+检查。0.15 mm 最终弱残差 `7.398e-13`，完整场修正最大门槛比 `2.917e-7`（要求 ≤1）。
+独立进程阻止 Ansys／PyAEDT／COM／MagTense 模块导入，完成了 CAD 剖分和 GPU 求解。
+这验证了该工程的空气采样与网格稳定性，没有重新认证材料内部、局部界面或 Maxwell
+高阶精度。CAD 剖分时间很短，但边界面数随细化增长；BEM 冷构建仍是重要成本，
+上表的剖分、内部求解计时不含 H 冷构建，不能作为与 Maxwell 的端到端加速比。
+
+原始记录在 [fmm_verification.json](../../validation/20261109_fmm_refined/fmm_verification.json)
+的 `cad_meshing_runs`，保留前三档稳定性失败和旧 AMG 失败，再追加修复后的通过记录。
+各 `native_transfer/cad_h0p8`／`cad_h0p4`／`cad_h0p2`／`cad_h0p15` 保存实际 STEP 派生
+网格、`model.json`、`meshing_info.json`，当前 GPU 字段结果前缀为 `jacobi_stable`。
+源码／模型／解文件哈希、逐对象体积、每次收敛历史和门槛均可核对；复用结果时重新
+检查这些哈希，并独立从原始 Maxwell B 文件重算误差。
+
+```powershell
+python validation/20261109_fmm_refined/run_fmm.py --validate-cad-mesh --cad-sizes-mm 0.8 0.4 0.2 0.15 --cad-h-gib 4 --cad-result-prefix jacobi_stable
+```
+
+同一细网格上，用 CPU 重新计算所有单元 H／B 并逐材料比较 GPU 解与 LU 参考，
+最大相对 L2 差分别为 `6.326e-13`、`6.327e-13`；逐连通体 q 最大相对差
+`2.371e-14`，空气 B 差 `7.449e-13`。均通过原 `1e-5` 加 SI 绝对底限的场门槛；
+该后端一致性指标不等于 Maxwell 精度。
+
+平滑修复后的 [常驻后端 15 例完整记录](../../validation/20261109_fmm_refined/convergence_resident_damped.json)
+为 15／15 通过，输入、几何哈希、全部 `limits` 及场修正容差与原 CPU 基线一致。
+Newton 更新合计 58，GMRES 合计 2185，最大逐材料 B 相对差 `7.868e-8`；参考仍为
+同网格独立稠密 HYBR 及 12／24 阶积分核对。该批仅一层 AMG，细网格与倾斜四面体
+回归承担多层平滑稳定性的验证；没有将小模型通过当作多层验证。
+
+```powershell
+python validation/20261109_fmm_refined/benchmark_convergence.py --backend cuda_hmatrix --fem-preconditioner amg --compute-backend cupy --output validation/20261109_fmm_refined/convergence_resident_damped_new.json
+```
+
+最终当前源码全量检查为 **152 passed，1 skipped**，仅 gfortran 缺失项跳过；Gmsh、
+GPU、AmgX 相关检查均实际执行。CAD 导出在 AEDT 2022 R2 上实跑，18.2 和独立 Linux
+主机仍没有新增实跑认证。求解器核心仍为当前同一份源码，没有新增并行实现或源码副本。

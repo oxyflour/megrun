@@ -478,15 +478,9 @@ def _native_physics(info):
             raise ConversionError(f'Native boundary {item["name"]} ({kind or "unknown type"}) cannot be represented by infinite-air FEM-BEM')
 
 
-def import_native_bundle(bundle,out,*,points_csv=None,line_mm=None,overrides_path=None,max_tiles=10000):
-    """Verify a native disk archive and create self-contained existing inputs.
-
-    No AEDT/PyAEDT imports or license are used. Raw all-domain mesh and settings
-    stay in the transfer bundle; model.json embeds native metadata, while only
-    supported magnetic cells become canonical SI mesh NPZs for offline solving.
-    """
-    from aedt_export_native import _bool_value
-    root=Path(bundle).resolve();target=Path(out).resolve()
+def _read_native_bundle(bundle):
+    """Shared integrity/physics checks for Maxwell-mesh and independent CAD import."""
+    root=Path(bundle).resolve()
     manifest=json.loads((root/'manifest.json').read_text(encoding='utf-8-sig'))
     if manifest.get('schema')!='aedt-native-disk-1' or manifest.get('state')!='complete':
         raise ConversionError('Native archive is incomplete or has an unknown schema')
@@ -512,15 +506,12 @@ def import_native_bundle(bundle,out,*,points_csv=None,line_mm=None,overrides_pat
     if files['native/source_project.aedt']['sha256']!=info['source']['project_sha256']:
         raise ConversionError('Saved native project copy does not match the exported source hash')
     _native_physics(info)
-    if points_csv or line_mm:
-        points=load_points(points_csv,line_mm)
-    elif info.get('points'):
-        points=load_points(str(member(info['points'])),None)
-    else:
-        raise ConversionError('Provide --points-csv or --line-mm; native bundle contains no observation points')
-    overrides=json.loads(Path(overrides_path).read_text(encoding='utf-8')) if overrides_path else {}
-    # Validate all material/current/coordinate-system constraints before output.
-    selection=[];skipped=[];unit_scale=get_unit_scale(info['model_unit'])
+    return root,files,info,member
+
+
+def _select_native_solids(info,overrides,geometry):
+    from aedt_export_native import _bool_value
+    selection=[];skipped=[]
     for obj in info['objects']:
         name=obj['name'];material_name=obj['material'];attributes=obj['attributes']
         if obj['group']!='Solids' or not _bool_value(attributes.get('Model',True)):
@@ -536,10 +527,27 @@ def import_native_bundle(bundle,out,*,points_csv=None,line_mm=None,overrides_pat
             raise ConversionError('Unsupported normalized native material: '+name)
         if props['kind']=='permanent' and origin=='aedt' and attributes.get('Orientation','Global')!='Global':
             raise ConversionError(name+': local magnet orientation requires an explicit global-direction override')
-        if not _bool_value(attributes.get('Solve Inside',False)) or not obj.get('mesh_raw'):
-            raise ConversionError(name+': no solved interior volume mesh')
-        member(obj['mesh_raw']);selection.append((obj,props,origin))
+        if not _bool_value(attributes.get('Solve Inside',False)) or not obj.get(geometry):
+            raise ConversionError(name+': no supported interior geometry ('+geometry+')')
+        selection.append((obj,props,origin))
     if not selection:raise ConversionError('No supported magnetic volume cells in native bundle')
+    return selection,skipped
+
+
+def import_native_bundle(bundle,out,*,points_csv=None,line_mm=None,overrides_path=None,max_tiles=10000):
+    """Verify native meshes and create self-contained SI inputs without Ansys."""
+    root,files,info,member=_read_native_bundle(bundle);target=Path(out).resolve()
+    if points_csv or line_mm:
+        points=load_points(points_csv,line_mm)
+    elif info.get('points'):
+        points=load_points(str(member(info['points'])),None)
+    else:
+        raise ConversionError('Provide --points-csv or --line-mm; native bundle contains no observation points')
+    overrides=json.loads(Path(overrides_path).read_text(encoding='utf-8')) if overrides_path else {}
+    # Validate all material/current/coordinate-system constraints before output.
+    selection,skipped=_select_native_solids(info,overrides,'mesh_raw')
+    unit_scale=get_unit_scale(info['model_unit'])
+    for obj,_,_ in selection:member(obj['mesh_raw'])
     if target.exists() and any(target.iterdir()):
         raise ConversionError('Import output must be absent or empty; existing data is retained')
     target.mkdir(parents=True,exist_ok=True);(target/'mesh').mkdir()
